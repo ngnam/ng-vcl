@@ -29,7 +29,7 @@ __decorate([
     __metadata("design:type", String)
 ], TokenComponent.prototype, "label", void 0);
 __decorate([
-    HostListener('tap', ['$event']),
+    HostListener('click', ['$event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Event]),
     __metadata("design:returntype", void 0)

@@ -6,8 +6,6 @@ import { ObservableComponent } from '../core/index';
 import { ButtonStateContentDirective } from './button-state-content.directive';
 export declare class ButtonComponent extends ObservableComponent {
     private elementRef;
-    private latestInteractionTime;
-    private latestInteractionType;
     pressed: boolean;
     focused: boolean;
     hovered: boolean;
@@ -20,12 +18,14 @@ export declare class ButtonComponent extends ObservableComponent {
     flexLabel: boolean;
     label: string;
     prepIcon: string;
+    autoBlur: boolean;
     appIcon: string;
     private pressEvent;
     readonly press: Observable<any>;
     stateChange: Observable<"enabled" | "disabled" | "busy">;
     readonly state: 'busy' | 'disabled' | 'enabled';
     buttonContent: QueryList<ButtonStateContentDirective>;
+    pressSub: Subscription;
     stateSub: Subscription;
     constructor(elementRef: ElementRef);
     onKeypress(ev: KeyboardEvent): void;
@@ -35,9 +35,7 @@ export declare class ButtonComponent extends ObservableComponent {
     onMouseDown(e: any): void;
     onFocus(e: any): void;
     onBlur(e: any): void;
-    onTap(e: Event): void;
-    onClick(e: Event): void;
-    private handleGhostClick(type, e);
+    onClick(e: any): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
 }

@@ -118,7 +118,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CheckboxComponent.prototype, "onKeyup", null);
 __decorate([
-    HostListener('tap', ['$event']),
+    HostListener('click', ['$event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)

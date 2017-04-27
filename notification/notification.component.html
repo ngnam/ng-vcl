@@ -15,5 +15,5 @@
     <div *ngIf="notification.text && !notification.html">{{notification.text}}</div>
     <div *ngIf="notification.text && notification.html" [innerHtml]="notification.text"></div>
   </div>
-   <button vcl-button *ngIf="notification.showCloseButton" (tap)="notification.close()" class="vclSquare vclTransparent vclLayoutSelfStart" prepIcon="fa:times" title="Close"></button>
+   <button vcl-button *ngIf="notification.showCloseButton" (click)="notification.close()" class="vclSquare vclTransparent vclLayoutSelfStart" prepIcon="fa:times" title="Close"></button>
 </div>

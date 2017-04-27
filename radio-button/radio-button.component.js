@@ -114,7 +114,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], RadioButtonComponent.prototype, "onKeydown", null);
 __decorate([
-    HostListener('tap', ['$event']),
+    HostListener('click', ['$event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Event]),
     __metadata("design:returntype", void 0)

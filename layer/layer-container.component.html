@@ -8,7 +8,7 @@
   [style.z-index]="zIndex + 1"
   [style.pointer-events]="'all'" 
   role="dialog" 
-  (tap)='triggerOffClick($event)'
+  (click)='triggerOffClick($event)'
   >
   <div class="vclLayerBox" [class.vclLayerGutterPadding]="layer.gutterPadding" [style.pointer-events]="'all'" [style.z-index]="zIndex + 2">
     <div #layerContent></div>

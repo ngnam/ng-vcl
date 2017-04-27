@@ -1,7 +1,7 @@
 <div class="vclTokenContainer">
   <vcl-token *ngFor="let token of tokens"
              (remove)="remove(token)"
-             (tap)="select(token)"
+             (click)="select(token)"
              [selected]="token.selected"
              [removable]="true"
              [attr.tabindex]="-1"
