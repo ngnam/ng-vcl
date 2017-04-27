@@ -1,0 +1,4 @@
+<vcl-icon [icon]="checked ? checkedIcon : uncheckedIcon" *ngIf="labelPosition=='right'"></vcl-icon>
+<label vcl-form-control-label *ngIf="label" [label]="label"></label>
+<ng-content></ng-content>
+<vcl-icon [icon]="checked ? checkedIcon : uncheckedIcon" *ngIf="labelPosition=='left'"></vcl-icon>

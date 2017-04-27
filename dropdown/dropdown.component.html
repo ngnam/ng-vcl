@@ -1,0 +1,40 @@
+<ul vcl-metalist
+  [selectionMode]="selectionMode"
+  [maxSelectableItems]="maxSelectableItems"
+  #metalist
+  class="vclDropdown vclOpen"
+  role="listbox"
+  [attr.tabindex]="tabindex"
+  [attr.aria-multiselectable]="mode === 'multiple'"
+  [style.position]="'static'"
+  (change)="onMetalistChange($event)"
+  (blur)="onMetalistBlur()"
+  (keydown)="onMetalistKeydown($event)"
+  >
+  <!--  (mousedown) is used because tap will break scrolling on mobiles
+  -->
+  <vcl-metalist-item #metaItem
+                    *ngFor="let item of items" 
+                    [metadata]="item"
+                    [selected]="item.selected"
+                    [disabled]="item.disabled"
+                    [marked]="item.marked"
+                    [value]="item.value">
+    <li
+      role="option"
+      class="vclDropdownItem"
+      [class.vclSelected]="metaItem.selected"
+      [class.vclDisabled]="metaItem.disabled"
+      [class.vclHighlighted]="metaItem.marked"
+      [attr.aria-selected]="metaItem.selected"
+      (tap)="onMetalistItemTap(metaItem)">
+      <div *ngIf="item.label" class="vclDropdownItemLabel">
+        {{item.label}}
+      </div>
+      <div *ngIf="item.sublabel" class="vclDropdownItemSubLabel">
+        {{item.sublabel}}
+      </div>
+      <wormhole *ngIf="item.content" [connect]="item.content"></wormhole>
+    </li>
+  </vcl-metalist-item>
+</ul>
