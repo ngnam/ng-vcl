@@ -1,0 +1,9 @@
+<span class="vclTokenLabel">{{label}}</span>
+<button vcl-button
+        *ngIf="removable" 
+        class="vclTransparent"
+        type="button" 
+        title="Remove"
+        appIcon="fa:remove"
+        (click)="onRemoveClick($event)">
+</button>

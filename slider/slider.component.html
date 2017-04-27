@@ -1,0 +1,11 @@
+<div class="vclSliderRail">
+  <div class="vclSliderScale" horizontal="" justified="" layout="" #scale>
+    <div *ngFor="let point of scalePoints" class="vclSliderScalePointMark"></div>
+  </div>
+  <div *ngIf="valueValid" class="vclSliderKnobContainer" [style.left]="percentLeftKnob + '%'" (pan)="onPan($event)">
+    <div  class="vclSliderKnob"></div>
+  </div>
+</div>
+<div *ngIf="showScale" class="vclSliderScale" horizontal="" justified="" layout="">
+  <div *ngFor="let point of scalePoints" class="vclSliderScalePointLabel" (tap)="selectPoint(point)">{{point.label}}</div>
+</div>
