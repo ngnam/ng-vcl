@@ -48,12 +48,10 @@ var LayerManagerService = (function (_super) {
         var layerSub = layer.state$.subscribe(function (state) {
             if (state.visible && !containerWormholeRef.isConnected) {
                 containerWormholeRef.connect({
-                    attrs: {
-                        layer: layer,
-                        zIndex: _this.layerService.currentZIndex,
-                        layerAttrs: state.attrs,
-                        injector: injector || _this.injector
-                    }
+                    layer: layer,
+                    zIndex: _this.layerService.currentZIndex,
+                    layerAttrs: state.attrs,
+                    injector: injector || _this.injector
                 });
                 _this.layerService.addVisibleLayer(layer);
             }

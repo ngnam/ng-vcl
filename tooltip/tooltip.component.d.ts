@@ -1,9 +1,13 @@
-import { ElementRef } from '@angular/core';
-export declare class TooltipComponent {
+import { ElementRef, AfterViewInit } from '@angular/core';
+import { ICoordinate } from "./ICoordinate";
+export declare class TooltipComponent implements AfterViewInit {
     private element;
+    animationState: 'shown' | 'hidden';
     content: string;
-    position: string;
-    ref: any;
+    placement: "top" | "bottom" | "left" | "right";
+    hostElement: HTMLElement;
+    tooltipPlacement: ICoordinate;
     constructor(element: ElementRef);
-    readonly tooltipPosiiton: string;
+    ngAfterViewInit(): void;
+    readonly tooltipPosition: string;
 }

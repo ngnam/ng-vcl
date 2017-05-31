@@ -1,5 +1,5 @@
 import { ViewContainerRef, SimpleChanges } from '@angular/core';
-import { Wormhole, WormholeAttributes } from './wormhole';
+import { Wormhole, WormholeAttributes } from './wormhole-base';
 import { WormholeHost } from "./wormhole-host";
 export declare class WormholeDirective extends WormholeHost {
     constructor(viewContainerRef: ViewContainerRef);

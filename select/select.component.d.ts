@@ -3,6 +3,7 @@ import { ControlValueAccessor } from '@angular/forms';
 import { MetalistItem, SelectionMode } from '../metalist/index';
 import { DropdownComponent } from '../dropdown/index';
 import { SelectOption } from './select-option.component';
+import 'rxjs/add/operator/startWith';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class SelectComponent implements ControlValueAccessor {
     private elementRef;
@@ -24,9 +25,6 @@ export declare class SelectComponent implements ControlValueAccessor {
     keydown(ev: any): void;
     reFocus(): void;
     onFocus(event?: any): Promise<void>;
-    /**
-     * when the element losses focus, the dropdown should close
-     */
     onBlur(event?: any): void;
     toggle(): void;
     close(): void;
@@ -39,6 +37,7 @@ export declare class SelectComponent implements ControlValueAccessor {
     deselectItem(item: SelectOption, event?: any): void;
     ngAfterViewInit(): void;
     onDropdownChange(value: any): void;
+    setValue(value: any): void;
     /**
      * Things needed for ControlValueAccessor-Interface.
      */

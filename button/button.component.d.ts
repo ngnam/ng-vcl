@@ -2,6 +2,7 @@ import { ElementRef, QueryList } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/publishBehavior';
+import 'rxjs/add/operator/distinctUntilChanged';
 import { ObservableComponent } from '../core/index';
 import { ButtonStateContentDirective } from './button-state-content.directive';
 export declare class ButtonComponent extends ObservableComponent {
@@ -20,6 +21,8 @@ export declare class ButtonComponent extends ObservableComponent {
     prepIcon: string;
     autoBlur: boolean;
     appIcon: string;
+    appIconSrc: string;
+    prepIconSrc: string;
     private pressEvent;
     readonly press: Observable<any>;
     stateChange: Observable<"enabled" | "disabled" | "busy">;

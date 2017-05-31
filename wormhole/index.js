@@ -5,10 +5,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { NgModule } from '@angular/core';
-import { TemplateWormhole, ComponentWormhole, Wormhole, DomComponentWormhole } from './wormhole';
+import { Wormhole } from './wormhole-base';
+import { TemplateWormhole, ComponentWormhole } from './wormhole';
+import { DomComponentWormhole, DomTemplateWormhole } from './wormhole-dom';
 import { WormholeDirective } from './wormhole.directive';
 import { WormholeHost, DomWormholeHost } from "./wormhole-host";
-export { TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, WormholeHost, DomWormholeHost };
+export { TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost };
 var VCLWormholeModule = (function () {
     function VCLWormholeModule() {
     }

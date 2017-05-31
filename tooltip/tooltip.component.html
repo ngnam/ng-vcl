@@ -1,4 +1,7 @@
-<div role="tooltip" [class]="tooltipPosiiton">
-    <div class="vclTooltipContent">{{content}}</div>
-    <div class="vclArrowPointer"></div>
+<div [@enterAnimation]="animationState" [style.left]="tooltipPlacement.Left + 'px'" [style.top]="tooltipPlacement.Top + 'px'"
+  style="opacity:0; white-space:nowrap;" role="tooltip" [class]="tooltipPosition">
+  <div class="vclTooltipContent">
+    {{content}}
+  </div>
+  <div class="vclArrowPointer"></div>
 </div>

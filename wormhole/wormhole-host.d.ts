@@ -1,5 +1,5 @@
 import { ViewContainerRef, Type, TemplateRef, ApplicationRef, Injector } from "@angular/core";
-import { Wormhole, WormholeOptions } from "./wormhole";
+import { Wormhole, WormholeAttributes } from "./wormhole-base";
 export declare abstract class WormholeHostBase {
     protected _wormholes: Wormhole[];
     readonly wormholes: number;
@@ -8,8 +8,8 @@ export declare abstract class WormholeHostBase {
     abstract createWormhole<T>(component: Type<T>): Wormhole;
     abstract createWormhole<T>(templateRef: TemplateRef<T>): Wormhole;
     abstract createWormhole<T>(arg2: Type<T> | TemplateRef<T>): Wormhole;
-    connectWormhole<T>(component: Type<T>, opts?: WormholeOptions): Wormhole;
-    connectWormhole<T>(templateRef: TemplateRef<T>, opts?: WormholeOptions): Wormhole;
+    connectWormhole<T>(component: Type<T>, attrs?: WormholeAttributes, events?: string[]): Wormhole;
+    connectWormhole<T>(templateRef: TemplateRef<T>, attrs?: WormholeAttributes, events?: string[]): Wormhole;
     disconnectWormhole(index: number): void;
     disconnectWormholes(): void;
     clearWormholes(): void;

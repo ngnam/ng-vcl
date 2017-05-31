@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, ChangeDetectionStrategy, ViewChild, Input, ViewContainerRef, ChangeDetectorRef, ReflectiveInjector, ElementRef } from '@angular/core';
+import { Component, ViewChild, Input, ViewContainerRef, ChangeDetectorRef, ReflectiveInjector, ElementRef } from '@angular/core';
 import { trigger } from '@angular/animations';
 import { ComponentWormhole, TemplateWormhole } from '../wormhole/index';
 import { getMetadata } from './../core/index';
@@ -70,9 +70,7 @@ var LayerContainerComponent = (function () {
             if (!this.wormhole) {
                 throw 'invalid layer';
             }
-            this.wormhole.connect({
-                attrs: this._layerAttrs
-            });
+            this.wormhole.connect(this._layerAttrs);
         }
     };
     LayerContainerComponent.prototype.ngOnDestroy = function () {
@@ -119,7 +117,6 @@ __decorate([
 LayerContainerComponent = __decorate([
     Component({
         template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layer.customClass\" [class.vclTransparent]=\"layer.transparent\" [class.vclLayerFill]=\"layer.fill\" [class.vclLayerStickToBottom]=\"layer.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (click)='triggerOffClick($event)' > <div class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layer.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div *ngIf=\"layer.modal\" class=\"vclLayerCover\" [@layerState]=\"state\" [style.z-index]=\"zIndex\"></div> ",
-        changeDetection: ChangeDetectionStrategy.OnPush,
         animations: [
             trigger('boxState', []),
             trigger('layerState', [])
