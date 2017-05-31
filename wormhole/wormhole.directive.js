@@ -37,9 +37,7 @@ var WormholeDirective = (function (_super) {
             this.clearWormholes();
             var target = changes['target'].currentValue;
             if (target) {
-                this.wormhole = this.connectWormhole(target, {
-                    attrs: attrs
-                });
+                this.wormhole = this.connectWormhole(target, attrs);
             }
         }
         else if (attrs && this.wormhole) {

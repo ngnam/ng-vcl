@@ -33,5 +33,3 @@ export * from './busy-indicator/index';
 export * from './notification/index';
 export * from './l10n/index';
 export * from './tooltip/index';
-export declare class VCLModule {
-}

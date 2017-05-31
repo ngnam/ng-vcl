@@ -1,55 +1,26 @@
-import { Router } from '@angular/router';
 import { QueryList, EventEmitter } from '@angular/core';
-export interface NavigationItem {
-    label?: string;
-    active?: boolean;
-    selected?: boolean;
-    opened?: boolean;
-    heading?: boolean;
-    href?: string;
-    prepIcon?: string;
-    appIcon?: string;
-    class?: string;
-}
-export declare class NavigationItemComponent {
-    label: string;
-    route: any;
-    items: QueryList<NavigationItemComponent>;
-    active: boolean;
-    selected: boolean;
-    opened: boolean;
-    heading: boolean;
-    href: string;
-    prepIcon: string;
-    appIcon: string;
-    class: string;
-    constructor();
-    /**
-     * transforms this NavigationItemComponent insto an object,
-     * so it can be handled the same way as an inputList
-     */
-    toObject(): NavigationItem;
-}
+import { NavigationItem, NavigationItemDirective } from './navigation-item.directive';
+import { Router } from "@angular/router";
 export declare class NavigationComponent {
     private router;
-    constructor(router: Router);
     ident: string;
-    selectedItem: any;
     ariaRole: string;
     tabindex: number;
     type: string;
+    useRouter: boolean;
     subLevelHintIconClosed: string;
     subLevelHintIconOpened: string;
     subLevelHintIconSide: 'left' | 'right';
-    templateItems: QueryList<NavigationItemComponent>;
-    navigationItems: any[];
-    select: EventEmitter<{}>;
-    ngAfterContentInit(): void;
-    readonly _navigationItems: any[];
+    inputItems: QueryList<NavigationItem> | undefined;
+    select: EventEmitter<NavigationItem>;
+    navigate: EventEmitter<{}>;
+    contentItems: QueryList<NavigationItem>;
+    constructor(router: Router);
+    readonly navigationItems: QueryList<NavigationItem>;
     readonly isVertical: boolean;
-    getPrepIcon(item: any): string;
-    getAppIcon(item: any): string;
-    selectItem(item: any): void;
-    onSelect(item: any): void;
-    toggleMenu(item: any): void;
+    private runItems(cb);
+    selectRoute(route: any[], openParents?: boolean): void;
+    private selectedItem;
+    selectItem(item: NavigationItemDirective): void;
+    onSubItemSelect(item: any): void;
 }

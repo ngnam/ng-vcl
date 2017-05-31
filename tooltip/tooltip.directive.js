@@ -7,28 +7,34 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Directive, HostListener, Input, ElementRef, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Directive, HostListener, Input, ElementRef, ComponentFactoryResolver, ViewContainerRef, Inject } from '@angular/core';
 import { TooltipComponent } from './tooltip.component';
+import { DOCUMENT } from '@angular/platform-browser';
 var TooltipDirective = (function () {
-    function TooltipDirective(element, resolver, viewContainerRef) {
+    function TooltipDirective(element, resolver, viewContainerRef, document) {
         this.element = element;
         this.resolver = resolver;
         this.viewContainerRef = viewContainerRef;
+        this.document = document;
         this.content = '';
-        this.position = 'top';
+        this.position = "top";
     }
     TooltipDirective.prototype.onMouseEnter = function () {
         var factory = this.resolver.resolveComponentFactory(TooltipComponent);
         this.tooltip = this.viewContainerRef.createComponent(factory);
         this.tooltip.instance.content = this.content;
-        this.tooltip.instance.position = this.position;
-    };
-    TooltipDirective.prototype.onMouseLeave = function () {
-        this.tooltip.destroy();
+        this.tooltip.instance.placement = this.position;
+        this.tooltip.instance.hostElement = this.element.nativeElement;
+        this.document.querySelector('body').appendChild(this.viewContainerRef.element.nativeElement.nextSibling);
     };
     TooltipDirective.prototype.ngOnDestroy = function () {
-        if (this.tooltip)
+        // TODO: fade out animation instead of dispose
+        if (this.tooltip) {
             this.tooltip.destroy();
+        }
     };
     return TooltipDirective;
 }());
@@ -42,20 +48,23 @@ __decorate([
 ], TooltipDirective.prototype, "position", void 0);
 __decorate([
     HostListener('mouseenter'),
+    HostListener('focusin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], TooltipDirective.prototype, "onMouseEnter", null);
 __decorate([
+    HostListener('focusout'),
     HostListener('mouseleave'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], TooltipDirective.prototype, "onMouseLeave", null);
+], TooltipDirective.prototype, "ngOnDestroy", null);
 TooltipDirective = __decorate([
     Directive({ selector: '[vcl-tooltip]' }),
+    __param(3, Inject(DOCUMENT)),
     __metadata("design:paramtypes", [ElementRef,
         ComponentFactoryResolver,
-        ViewContainerRef])
+        ViewContainerRef, Object])
 ], TooltipDirective);
 export { TooltipDirective };

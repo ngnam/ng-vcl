@@ -7,25 +7,52 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, ElementRef } from '@angular/core';
+import { Component, ElementRef, trigger, state, transition, animate, style } from '@angular/core';
+import { tooltipService } from './tooltip.service';
 var TooltipComponent = (function () {
-    // TODO: calculate proper tooltip position
-    // TODO: calculate proper tooltip position
-    // @Input() offsetTop: number = 30;
-    // widthCorrection: number = 50;
     function TooltipComponent(element) {
         this.element = element;
+        this.animationState = 'hidden';
+        this.placement = "top";
+        // Initial position should out of screen
+        this.tooltipPlacement = { Top: -1000, Left: -1000 };
     }
-    Object.defineProperty(TooltipComponent.prototype, "tooltipPosiiton", {
+    TooltipComponent.prototype.ngAfterViewInit = function () {
+        if (this.hostElement) {
+            var tooltipOffset_1 = tooltipService.positionElements(this.hostElement, this.element.nativeElement.children[0].children[0], this.placement);
+            var context_1 = this;
+            // to avoid from ExpressionChangedAfterItHasBeenCheckedError
+            setTimeout(function () {
+                context_1.tooltipPlacement = {
+                    Top: tooltipOffset_1.Top,
+                    Left: tooltipOffset_1.Left
+                };
+                context_1.animationState = 'shown';
+            });
+        }
+        else {
+            console.error('Host element not specified');
+        }
+    };
+    Object.defineProperty(TooltipComponent.prototype, "tooltipPosition", {
         get: function () {
-            switch (this.position) {
+            switch (this.placement) {
                 case 'right':
-                    return 'vclTooltip vclArrowPointerRight';
+                    {
+                        return 'vclTooltip vclArrowPointerLeft';
+                    }
                 case 'left':
-                    return 'vclTooltip vclArrowPointerLeft';
+                    {
+                        return 'vclTooltip vclArrowPointerRight';
+                    }
                 case 'bottom':
-                    return 'vclTooltip vclArrowPointerBottom';
-                default: return 'vclTooltip vclArrowPointerTop';
+                    {
+                        return 'vclTooltip vclArrowPointerTop';
+                    }
+                default:
+                    {
+                        return 'vclTooltip vclArrowPointerBottom';
+                    }
             }
         },
         enumerable: true,
@@ -33,25 +60,21 @@ var TooltipComponent = (function () {
     });
     return TooltipComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TooltipComponent.prototype, "content", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TooltipComponent.prototype, "position", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], TooltipComponent.prototype, "ref", void 0);
 TooltipComponent = __decorate([
     Component({
         selector: 'vcl-tooltip-container',
-        template: "<div role=\"tooltip\" [class]=\"tooltipPosiiton\"> <div class=\"vclTooltipContent\">{{content}}</div> <div class=\"vclArrowPointer\"></div> </div>",
+        template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"opacity:0; white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} </div> <div class=\"vclArrowPointer\"></div> </div> ",
         host: {
             '[class.vclTooltip]': 'true',
-        }
+        },
+        styles: [":host{ top: 0; left: 0}"],
+        animations: [
+            trigger('enterAnimation', [
+                state('shown', style({ opacity: 1 })),
+                state('hidden', style({ opacity: 0 })),
+                transition('* => *', animate('.2s'))
+            ])
+        ]
     }),
     __metadata("design:paramtypes", [ElementRef])
 ], TooltipComponent);

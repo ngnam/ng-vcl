@@ -9,7 +9,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import { TemplateRef, ApplicationRef } from "@angular/core";
-import { DomComponentWormhole, ComponentWormhole, TemplateWormhole } from "./wormhole";
+import { ComponentWormhole, TemplateWormhole } from "./wormhole";
+import { DomComponentWormhole, DomTemplateWormhole } from "./wormhole-dom";
 var WormholeHostBase = (function () {
     function WormholeHostBase() {
         this._wormholes = [];
@@ -31,9 +32,9 @@ var WormholeHostBase = (function () {
     WormholeHostBase.prototype.getWormhole = function (index) {
         return this._wormholes[index];
     };
-    WormholeHostBase.prototype.connectWormhole = function (target, opts) {
+    WormholeHostBase.prototype.connectWormhole = function (target, attrs, events) {
         var wormhole = this.createWormhole(target);
-        wormhole.connect(opts);
+        wormhole.connect(attrs, events);
         return wormhole;
     };
     WormholeHostBase.prototype.disconnectWormhole = function (index) {
@@ -105,7 +106,7 @@ var DomWormholeHost = (function (_super) {
             wormhole = new DomComponentWormhole(arg2, this._host, this._node, this._injector);
         }
         else if (arg2 instanceof TemplateRef && this._host) {
-            throw 'templateRef not supported in DomWormholeHost';
+            wormhole = new DomTemplateWormhole(arg2, this._host, this._node, this._injector);
         }
         else {
             throw 'Parameter must be component class or templateRef';

@@ -1,0 +1,43 @@
+import { EmbeddedViewRef, TemplateRef, ComponentRef, Type } from "@angular/core";
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { WormholeAttributes } from './wormhole';
+export interface WormholeAttributes {
+    [key: string]: any;
+}
+export interface WormholeEvent {
+    event: string;
+    value: any;
+}
+export declare abstract class Wormhole {
+    readonly abstract isConnected: boolean;
+    abstract connect(attrs?: WormholeAttributes, events?: string[]): Observable<WormholeEvent>;
+    abstract disconnect(): any;
+    abstract setAttributes(attrs: WormholeAttributes): any;
+    readonly abstract currentIndex: number;
+}
+export declare abstract class TemplateWormholeBase extends Wormhole {
+    private templateRef;
+    private cachedAttrs;
+    viewRef: EmbeddedViewRef<any> | undefined;
+    constructor(templateRef: TemplateRef<any>);
+    readonly isConnected: boolean;
+    connect(attrs?: WormholeAttributes, events?: string[], index?: number): Observable<WormholeEvent>;
+    disconnect(): void;
+    setAttributes(attrs: WormholeAttributes): void;
+    abstract attach(templateRef: TemplateRef<any>, index?: number): EmbeddedViewRef<any>;
+    abstract detach(): any;
+}
+export declare abstract class ComponentWormholeBase<T> extends Wormhole {
+    private componentClass;
+    compRef: ComponentRef<T> | undefined;
+    private cachedAttrs;
+    constructor(componentClass: Type<T>);
+    readonly isConnected: boolean;
+    connect(attrs?: WormholeAttributes, events?: string[], index?: number): Observable<WormholeEvent>;
+    disconnect(): void;
+    setAttributes(attrs: WormholeAttributes): void;
+    abstract attach(factory: Type<T>, index?: number): ComponentRef<T>;
+    abstract detach(): any;
+}

@@ -22,6 +22,7 @@ export declare class DropdownComponent implements ControlValueAccessor {
     ngAfterViewInit(): void;
     onMetalistBlur(): void;
     onMetalistChange(value: any): void;
+    setValue(value: any): void;
     /**
      * things needed for ControlValueAccessor-Interface
      */

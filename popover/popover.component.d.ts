@@ -32,6 +32,7 @@ export declare class PopoverComponent extends ObservableComponent {
     readonly transform: string;
     readonly popoverState: string;
     constructor(me: ElementRef);
+    setTag(): void;
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnChanges(changes: SimpleChanges): void;

@@ -16,8 +16,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t;
-    return { next: verb(0), "throw": verb(1), "return": verb(2) };
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -47,6 +47,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SelectionMode } from '../metalist/index';
 import { DropdownComponent } from '../dropdown/index';
 import { SelectOption } from './select-option.component';
+import 'rxjs/add/operator/startWith';
 var DropDirection;
 (function (DropDirection) {
     DropDirection[DropDirection["Top"] = 0] = "Top";
@@ -144,11 +145,18 @@ var SelectComponent = (function () {
             });
         });
     };
-    /**
-     * when the element losses focus, the dropdown should close
-     */
     SelectComponent.prototype.onBlur = function (event) {
-        this.close();
+        var _this = this;
+        // When the element loses focus, the dropdown should close
+        // Only close when the active element is not a child element of the select component
+        setTimeout(function () {
+            var target = typeof document !== undefined && document.activeElement;
+            var nativeElement = _this.elementRef && _this.elementRef.nativeElement;
+            if (target && nativeElement && !_this.elementRef.nativeElement.contains(target)) {
+                _this.close();
+                _this.cdRef.markForCheck();
+            }
+        }, 1);
         this.focused = false;
         this.onTouched();
     };
@@ -242,7 +250,7 @@ var SelectComponent = (function () {
     };
     SelectComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        this.items.changes.subscribe(function () {
+        this.items.changes.startWith(null).subscribe(function () {
             _this.cdRef.markForCheck();
         });
     };
@@ -258,8 +266,11 @@ var SelectComponent = (function () {
         // refocus
         setTimeout(function () { return _this.reFocus(); }, 0);
     };
+    SelectComponent.prototype.setValue = function (value) {
+        this.dropdown.setValue(value);
+    };
     SelectComponent.prototype.writeValue = function (value) {
-        this.dropdown.metalist.setValue(value);
+        this.setValue(value);
     };
     SelectComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;

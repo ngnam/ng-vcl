@@ -20,6 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter, HostBinding, HostListener, ElementRef, ContentChildren, QueryList } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/publishBehavior';
+import 'rxjs/add/operator/distinctUntilChanged';
 import { ObservableComponent } from '../core/index';
 import { ButtonStateContentDirective } from './button-state-content.directive';
 import { dispatchTap } from './dispatch-tap';
@@ -173,6 +174,14 @@ __decorate([
     __metadata("design:type", String)
 ], ButtonComponent.prototype, "appIcon", void 0);
 __decorate([
+    Input(),
+    __metadata("design:type", String)
+], ButtonComponent.prototype, "appIconSrc", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], ButtonComponent.prototype, "prepIconSrc", void 0);
+__decorate([
     Output(),
     __metadata("design:type", Observable),
     __metadata("design:paramtypes", [])
@@ -245,7 +254,7 @@ ButtonComponent = __decorate([
         host: {
             '[class.vclButton]': 'true',
         },
-        template: "<vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> ",
+        template: "<vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\" [appIconSrc]=\"appIconSrc\" [prepIconSrc]=\"prepIconSrc\"> <ng-content></ng-content> </vcl-icogram> ",
         changeDetection: ChangeDetectionStrategy.OnPush,
     }),
     __metadata("design:paramtypes", [ElementRef])

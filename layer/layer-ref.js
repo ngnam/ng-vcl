@@ -14,9 +14,10 @@ var LayerRef = (function () {
         this.visible = true;
         this.attrs = attrs;
         this.stateChange.next({ attrs: attrs, visible: true });
-        if (!this.results) {
-            this.results = new Subject();
+        if (this.results) {
+            this.results.complete();
         }
+        this.results = new Subject();
         return this.results.asObservable();
     };
     LayerRef.prototype.close = function (data) {
