@@ -17,8 +17,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, EventEmitter, ElementRef, trigger, HostListener, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Component, Input, Output, EventEmitter, ElementRef, trigger, HostListener, HostBinding, ChangeDetectionStrategy, OpaqueToken, Inject, Optional } from '@angular/core';
 import { ObservableComponent } from "../core/index";
+import { AnimationBuilder } from "@angular/animations";
 export var AttachmentX = {
     Left: 'left',
     Center: 'center',
@@ -33,24 +37,30 @@ var Dimension = {
     Width: 'width',
     Height: 'height',
 };
-var PopoverState = {
-    Visible: 'visible',
-    Void: 'void',
-};
+export var PopoverState;
+(function (PopoverState) {
+    PopoverState[PopoverState["visible"] = 0] = "visible";
+    PopoverState[PopoverState["hidden"] = 1] = "hidden";
+    PopoverState[PopoverState["opening"] = 2] = "opening";
+    PopoverState[PopoverState["closing"] = 3] = "closing";
+})(PopoverState || (PopoverState = {}));
+export var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent = PopoverComponent_1 = (function (_super) {
     __extends(PopoverComponent, _super);
-    function PopoverComponent(me) {
+    function PopoverComponent(me, builder, animations) {
         var _this = _super.call(this) || this;
         _this.me = me;
+        _this.builder = builder;
+        _this.animations = animations;
         _this.targetX = AttachmentX.Left;
         _this.targetY = AttachmentY.Bottom;
         _this.attachmentX = AttachmentX.Left;
         _this.attachmentY = AttachmentY.Top;
-        _this._visible = false;
-        _this.visibleChange = new EventEmitter();
+        _this.willClose = new EventEmitter();
+        _this.willOpen = new EventEmitter();
+        _this.state = PopoverState.hidden;
         _this.translateX = 1;
         _this.translateY = 0;
-        _this.visibility = 'visible';
         _this.observeChanges('target').subscribe(function () {
             var tag = _this.tag + ".[target]$";
             _this.setTag();
@@ -67,30 +77,29 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
     }
     Object.defineProperty(PopoverComponent.prototype, "visible", {
         get: function () {
-            return this._visible;
+            return (this.state === PopoverState.opening || this.state === PopoverState.visible);
         },
         set: function (value) {
-            var _this = this;
-            // We have to wait one runloop before calling reposition(), so the element is rendered and the right bounds can be determined.
-            // Also hide the popover via the visibility-style. This avoids flashing up on the wrong position.
-            if (!this._visible && value) {
-                this.visibility = 'hidden';
-                setTimeout(function () {
-                    _this.reposition();
-                    _this.visibility = 'visible';
-                }, 0);
+            if (value) {
+                this.open();
             }
             else {
-                this.visibility = 'visible';
+                this.close();
             }
-            this._visible = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PopoverComponent.prototype, "hidden", {
+    Object.defineProperty(PopoverComponent.prototype, "classHidden", {
         get: function () {
-            return !this.visible;
+            return this.state === PopoverState.hidden;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PopoverComponent.prototype, "styleVisibility", {
+        get: function () {
+            return this.state === PopoverState.opening ? 'hidden' : 'visible';
         },
         enumerable: true,
         configurable: true
@@ -102,16 +111,6 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PopoverComponent.prototype, "popoverState", {
-        get: function () {
-            return this.visible ? PopoverState.Visible : PopoverState.Void;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    PopoverComponent.prototype.setTag = function () {
-        this.tag = PopoverComponent_1.Tag + "." + this.target;
-    };
     PopoverComponent.prototype.ngOnInit = function () {
         var tag = this.tag + ".ngOnInit()";
         if (this.debug)
@@ -121,6 +120,65 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
     PopoverComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         setTimeout(function () { return _this.reposition(); });
+        if (this.animations) {
+            if (this.animations.enter) {
+                this.enterAnimationFactory = this.builder.build(this.animations.enter);
+            }
+            if (this.animations.leave) {
+                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
+            }
+        }
+    };
+    PopoverComponent.prototype.open = function () {
+        var _this = this;
+        if (this.state === PopoverState.visible || this.state === PopoverState.opening) {
+            return;
+        }
+        this.state = PopoverState.opening;
+        this.willOpen.emit();
+        // We have to wait one runloop before calling reposition(), so the element is rendered and the right bounds can be determined.
+        // Also when opening the popover is hidden via the visibility-style. This avoids flashing up on the wrong position.
+        setTimeout(function () {
+            _this.reposition();
+            if (_this.enterAnimationFactory && _this.me) {
+                var player_1 = _this.enterAnimationFactory.create(_this.me.nativeElement);
+                player_1.onDone(function () {
+                    player_1.destroy();
+                });
+                player_1.play();
+            }
+            _this.state = PopoverState.visible;
+        }, 0);
+    };
+    PopoverComponent.prototype.close = function () {
+        var _this = this;
+        if (this.state === PopoverState.hidden || this.state === PopoverState.closing) {
+            return;
+        }
+        this.state = PopoverState.closing;
+        this.willClose.emit();
+        if (this.leaveAnimationFactory && this.me) {
+            var player_2 = this.leaveAnimationFactory.create(this.me.nativeElement);
+            player_2.onDone(function () {
+                player_2.destroy();
+                _this.state = PopoverState.hidden;
+            });
+            player_2.play();
+        }
+        else {
+            this.state = PopoverState.hidden;
+        }
+    };
+    PopoverComponent.prototype.toggle = function () {
+        if (this.visible) {
+            this.close();
+        }
+        else {
+            this.open();
+        }
+    };
+    PopoverComponent.prototype.setTag = function () {
+        this.tag = PopoverComponent_1.Tag + "." + this.target;
     };
     PopoverComponent.prototype.ngOnChanges = function (changes) {
         var tag = this.tag + ".ngOnChanges()";
@@ -149,21 +207,6 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
     };
     PopoverComponent.prototype.getAttachmentPosition = function () {
         return this.me.nativeElement.getBoundingClientRect();
-    };
-    PopoverComponent.prototype.open = function () {
-        if (this.visible)
-            return;
-        this.visible = true;
-        this.visibleChange.emit(this.visible);
-    };
-    PopoverComponent.prototype.close = function () {
-        if (!this.visible)
-            return;
-        this.visible = false;
-        this.visibleChange.emit(this.visible);
-    };
-    PopoverComponent.prototype.toggle = function () {
-        this.visible ? this.close() : this.open();
     };
     PopoverComponent.prototype.reposition = function () {
         var tag = this.tag + ".reposition()";
@@ -233,22 +276,27 @@ __decorate([
 ], PopoverComponent.prototype, "attachmentY", void 0);
 __decorate([
     Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
 ], PopoverComponent.prototype, "visible", null);
 __decorate([
     Output(),
     __metadata("design:type", Object)
-], PopoverComponent.prototype, "visibleChange", void 0);
+], PopoverComponent.prototype, "willClose", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", Object)
+], PopoverComponent.prototype, "willOpen", void 0);
 __decorate([
     HostBinding('class.vclLayoutHidden'),
     __metadata("design:type", Object),
     __metadata("design:paramtypes", [])
-], PopoverComponent.prototype, "hidden", null);
+], PopoverComponent.prototype, "classHidden", null);
 __decorate([
     HostBinding('style.visibility'),
-    __metadata("design:type", String)
-], PopoverComponent.prototype, "visibility", void 0);
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [])
+], PopoverComponent.prototype, "styleVisibility", null);
 __decorate([
     HostBinding('style.transform'),
     __metadata("design:type", Object),
@@ -265,19 +313,14 @@ PopoverComponent = PopoverComponent_1 = __decorate([
         selector: 'vcl-popover',
         template: '<ng-content></ng-content>',
         changeDetection: ChangeDetectionStrategy.OnPush,
-        // The close/open animation is set in the application itself through:
-        // setAnimations(PopoverComponent, [
-        //   trigger('popoverState', [
-        //     [..]
-        //   ]);
         animations: [trigger('popoverState', [])],
         host: {
-            '[@popoverState]': 'popoverState',
             '[class.vclPopOver]': 'true',
             '[style.position]': '"absolute"'
         }
     }),
-    __metadata("design:paramtypes", [ElementRef])
+    __param(2, Optional()), __param(2, Inject(POPOVER_ANIMATIONS)),
+    __metadata("design:paramtypes", [ElementRef, AnimationBuilder, Object])
 ], PopoverComponent);
 export { PopoverComponent };
 var PopoverComponent_1;

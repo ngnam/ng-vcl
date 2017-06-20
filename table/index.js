@@ -7,7 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { L10nModule } from '../l10n/index';
-import { TableComponent } from "./table.component";
+import { directives } from './directives/directives';
+import { SortIconComponent } from './components/sorticon.component';
 var VCLTableModule = (function () {
     function VCLTableModule() {
     }
@@ -16,8 +17,9 @@ var VCLTableModule = (function () {
 VCLTableModule = __decorate([
     NgModule({
         imports: [CommonModule, L10nModule],
-        exports: [TableComponent],
-        declarations: [TableComponent],
+        exports: [SortIconComponent].concat(directives),
+        declarations: [SortIconComponent].concat(directives),
+        entryComponents: [SortIconComponent],
         providers: [],
     })
 ], VCLTableModule);

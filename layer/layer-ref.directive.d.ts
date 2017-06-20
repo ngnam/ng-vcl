@@ -1,18 +1,18 @@
 import { TemplateRef, Injector } from '@angular/core';
-import { LayerService } from './layer.service';
 import { LayerRef } from './layer-ref';
-export declare class LayerRefDirective extends LayerRef {
+import { LayerOptions } from "./layer-container.component";
+import { LayerManagerService } from "./layer-manager.service";
+export declare class LayerRefDirective extends LayerRef implements LayerOptions {
     templateRef: TemplateRef<any>;
-    private layerService;
+    private layerManager;
     private injector;
-    base: string;
     modal: boolean;
     transparent: boolean;
     fill: boolean;
     stickToBottom: boolean;
     gutterPadding: boolean;
     customClass: string;
-    constructor(templateRef: TemplateRef<any>, layerService: LayerService, injector: Injector);
+    constructor(templateRef: TemplateRef<any>, layerManager: LayerManagerService, injector: Injector);
     ngOnInit(): void;
     ngOnDestroy(): void;
 }

@@ -35,8 +35,6 @@ var ButtonComponent = (function (_super) {
         var _this = _super.call(this) || this;
         _this.elementRef = elementRef;
         _this.latestInteractionTime = 0;
-        _this.pressed = false; // `true` if a pointer device is conducting a `down` gesture on the button
-        _this.focused = false; // `true` if the element is focused  (CSS' :focus)
         _this.hovered = false; // `true` if a pointer device is hovering the button (CSS' :hover)
         _this.selected = false;
         _this.disabled = false;
@@ -90,10 +88,6 @@ var ButtonComponent = (function (_super) {
     };
     ButtonComponent.prototype.onMouseEnter = function (e) { this.hovered = true; };
     ButtonComponent.prototype.onMouseLeave = function (e) { this.hovered = false; };
-    ButtonComponent.prototype.onMouseUp = function (e) { this.pressed = false; };
-    ButtonComponent.prototype.onMouseDown = function (e) { this.pressed = true; };
-    ButtonComponent.prototype.onFocus = function (e) { this.focused = true; };
-    ButtonComponent.prototype.onBlur = function (e) { this.focused = false; };
     ButtonComponent.prototype.onTap = function (e) {
         this.handleGhostClick(InteractionType.Tap, e);
     };
@@ -121,8 +115,6 @@ var ButtonComponent = (function (_super) {
     };
     ButtonComponent.prototype.ngOnDestroy = function () {
         _super.prototype.ngOnDestroy.call(this);
-        if (this.stateSub)
-            this.stateSub.unsubscribe();
     };
     return ButtonComponent;
 }(ObservableComponent));
@@ -212,30 +204,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ButtonComponent.prototype, "onMouseLeave", null);
-__decorate([
-    HostListener('mouseup', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseUp", null);
-__decorate([
-    HostListener('mousedown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseDown", null);
-__decorate([
-    HostListener('onfocus', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onFocus", null);
-__decorate([
-    HostListener('onblur', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onBlur", null);
 __decorate([
     HostListener('tap', ['$event']),
     __metadata("design:type", Function),

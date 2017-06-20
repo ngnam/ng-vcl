@@ -1,23 +1,53 @@
-import { ViewContainerRef, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { ViewContainerRef, ChangeDetectorRef, Type, ElementRef, TemplateRef, OpaqueToken } from '@angular/core';
+import { AnimationFactory, AnimationBuilder, AnimationMetadata } from '@angular/animations';
 import { Wormhole } from '../wormhole/index';
 import { LayerRef, LayerAttributes } from './layer-ref';
 export declare const COMPONENT_LAYER_ANNOTATION_ID = "ng-vcl_component_layer";
+export declare const LAYER_ANIMATIONS: OpaqueToken;
+export interface LayerAnimationConfig {
+    boxEnter?: AnimationMetadata | AnimationMetadata[];
+    boxLeave?: AnimationMetadata | AnimationMetadata[];
+    coverEnter?: AnimationMetadata | AnimationMetadata[];
+    coverLeave?: AnimationMetadata | AnimationMetadata[];
+}
+export interface LayerMeta {
+    component: Type<any>;
+    opts: LayerOptions;
+}
+export interface LayerOptions {
+    modal?: boolean;
+    transparent?: boolean;
+    fill?: boolean;
+    stickToBottom?: boolean;
+    gutterPadding?: boolean;
+    customClass?: string;
+    offClick?: {
+        (layerRef: LayerRef): void;
+    };
+    attrs?: LayerAttributes;
+}
 export declare class LayerContainerComponent {
     private cdRef;
     container: ElementRef;
-    layer: LayerRef;
+    cover: ElementRef;
+    box: ElementRef;
+    layerRef: LayerRef;
+    layerOpts: LayerOptions;
+    layerTarget: TemplateRef<any> | Type<any>;
+    layerInjector: any;
     layerAttrs: LayerAttributes;
     _layerAttrs: LayerAttributes;
+    readonly mergedLayerAttrs: LayerAttributes;
     zIndex: number;
-    injector: any;
-    visible: boolean;
-    readonly state: string;
     wormhole: Wormhole | undefined;
     layerContentContainer: ViewContainerRef;
-    constructor(cdRef: ChangeDetectorRef);
-    disconnect(): void;
-    connect(): void;
+    boxEnterAnimationFactory: AnimationFactory | undefined;
+    boxLeaveAnimationFactory: AnimationFactory | undefined;
+    coverEnterAnimationFactory: AnimationFactory | undefined;
+    coverLeaveAnimationFactory: AnimationFactory | undefined;
+    constructor(cdRef: ChangeDetectorRef, builder: AnimationBuilder, elementRef: ElementRef, animations: LayerAnimationConfig);
     ngAfterViewInit(): void;
+    animateLeave(): Promise<{}[]>;
     ngOnDestroy(): void;
     triggerOffClick(event: any): void;
 }

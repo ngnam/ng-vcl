@@ -1,35 +1,38 @@
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 export interface LayerAttributes {
     [key: string]: any;
 }
-export interface LayerOptions {
-    base?: string;
-    modal?: boolean;
-    transparent?: boolean;
-    fill?: boolean;
-    stickToBottom?: boolean;
-    gutterPadding?: boolean;
-    customClass?: string;
+export declare class LayerResult<T> extends Observable<T> {
+    source: Observable<any>;
+    private layerRef;
+    constructor(source: Observable<any>, layerRef: LayerRef);
+    close(data?: any): void;
+    closeWithError(data?: any): void;
 }
-export declare abstract class LayerRef implements LayerOptions {
-    base: string;
-    modal: boolean;
-    transparent: boolean;
-    fill: boolean;
-    stickToBottom: boolean;
-    gutterPadding: boolean;
-    customClass?: string;
+export declare abstract class LayerRef {
     visible: boolean;
     attrs: LayerAttributes | undefined;
-    private results;
+    protected results: Subject<any> | undefined;
     private stateChange;
     state$: Observable<{
         attrs?: LayerAttributes | undefined;
         visible: boolean;
     }>;
-    open(attrs?: LayerAttributes): Observable<any>;
+    open(attrs?: LayerAttributes): LayerResult<any>;
     close(data?: any): void;
     closeWithError(data?: any): void;
     send(data: any): void;
-    offClick(): void;
+}
+export declare class DynamicLayerRef extends LayerRef {
+    private _register;
+    private _unregister;
+    constructor(_register: {
+        (): void;
+    }, _unregister: {
+        (): void;
+    });
+    open(attrs?: LayerAttributes): LayerResult<any>;
+    close(data?: any): void;
+    closeWithError(data?: any): void;
 }

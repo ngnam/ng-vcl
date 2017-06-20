@@ -4,8 +4,8 @@ export declare class TextareaDirective {
     constructor(elRef: ElementRef);
     selectAllOnFocus: boolean;
     autogrow: boolean;
-    maxRows: number;
-    minRows: number;
+    maxRows: number | undefined;
+    minRows: number | undefined;
     rows: number;
     onModelChange(value: any): void;
     onFocus(value: any): void;

@@ -22,16 +22,25 @@ var TooltipDirective = (function () {
         this.content = '';
         this.position = "top";
     }
+    TooltipDirective.prototype.ngOnChanges = function (changes) {
+        if (this.tooltip) {
+            if (changes.content) {
+                this.tooltip.instance.content = this.content;
+            }
+            else if (changes.position) {
+                this.tooltip.instance.placement = this.position;
+            }
+        }
+    };
     TooltipDirective.prototype.onMouseEnter = function () {
         var factory = this.resolver.resolveComponentFactory(TooltipComponent);
         this.tooltip = this.viewContainerRef.createComponent(factory);
         this.tooltip.instance.content = this.content;
         this.tooltip.instance.placement = this.position;
         this.tooltip.instance.hostElement = this.element.nativeElement;
-        this.document.querySelector('body').appendChild(this.viewContainerRef.element.nativeElement.nextSibling);
+        this.tooltip.instance.showOnInit = true;
     };
     TooltipDirective.prototype.ngOnDestroy = function () {
-        // TODO: fade out animation instead of dispose
         if (this.tooltip) {
             this.tooltip.destroy();
         }

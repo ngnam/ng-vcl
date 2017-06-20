@@ -1,20 +1,17 @@
-import { ApplicationRef, Injector } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/debounceTime';
-import { Wormhole, DomWormholeHost } from '../wormhole/index';
-import { LayerService } from './layer.service';
+import { Injector, TemplateRef, Type, ApplicationRef } from '@angular/core';
 import { LayerRef } from './layer-ref';
-export declare class LayerManagerService extends DomWormholeHost {
-    private layerService;
+import { LayerOptions } from './layer-container.component';
+export declare class LayerManagerService {
     private injector;
-    layerMap: Map<LayerRef, {
-        subscription: Subscription;
-        wormhole: Wormhole;
-    }>;
-    sub: Subscription;
-    name: string;
-    constructor(layerService: LayerService, appRef: ApplicationRef, injector: Injector);
-    registerLayer(layer: LayerRef, injector: Injector | undefined): void;
-    unregisterLayer(layer: LayerRef): void;
+    private layerMetaMap;
+    baseZIndex: number;
+    visibleLayers: LayerRef[];
+    private host;
+    constructor(appRef: ApplicationRef, injector: Injector);
+    readonly currentZIndex: number;
+    private addVisibleLayer(layer);
+    private removeVisibleLayer(layer);
+    _register(layerRef: LayerRef, target: TemplateRef<any> | Type<any>, injector: Injector, opts?: LayerOptions): void;
+    _unregister(layer: LayerRef): void;
     ngOnDestroy(): void;
 }

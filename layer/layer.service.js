@@ -4,69 +4,53 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/distinctUntilChanged';
-import { LayerRef } from './layer-ref';
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+import { Injectable, Injector } from "@angular/core";
+import { LayerManagerService } from "./layer-manager.service";
+import { DynamicLayerRef } from "./layer-ref";
 var LayerService = (function () {
-    function LayerService() {
-        this.baseZIndex = 1000;
-        this.visibleLayers = [];
-        this.layerRegister = new ReplaySubject();
+    function LayerService(layerManager, injector) {
+        this.layerManager = layerManager;
+        this.injector = injector;
     }
-    Object.defineProperty(LayerService.prototype, "currentZIndex", {
-        get: function () {
-            return this.baseZIndex + (this.visibleLayers.length * 10);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    LayerService.prototype.getLayers$ = function (base) {
-        if (base === void 0) { base = 'default'; }
-        return this.layerRegister.asObservable().filter(function (lr) { return !!lr.ref && lr.ref.base === base; });
-    };
     LayerService.prototype.hasVisibleLayers = function () {
-        return this.visibleLayers.length > 0;
+        return this.layerManager.visibleLayers.length > 0;
+    };
+    LayerService.prototype.getVisibleLayers = function () {
+        return this.layerManager.visibleLayers.slice();
     };
     LayerService.prototype.getTopLayer = function () {
-        return this.visibleLayers.slice().pop();
+        return this.layerManager.visibleLayers.slice().pop();
     };
-    LayerService.prototype.closeAll = function (base) {
-        this.visibleLayers.forEach(function (layer) { return layer.close(); });
+    LayerService.prototype.closeAll = function () {
+        this.layerManager.visibleLayers.forEach(function (layer) { return layer.close(); });
     };
-    LayerService.prototype.closeTop = function (base) {
-        var layer = this.getTopLayer();
-        if (layer) {
-            layer.close();
+    LayerService.prototype.closeTop = function () {
+        var topLayer = this.getTopLayer();
+        if (topLayer) {
+            topLayer.close();
         }
     };
-    LayerService.prototype.addVisibleLayer = function (layer) {
-        this.visibleLayers = this.visibleLayers.concat([layer]);
-    };
-    LayerService.prototype.removeVisibleLayer = function (layer) {
-        this.visibleLayers = this.visibleLayers.filter(function (l) { return l !== layer; });
-    };
-    LayerService.prototype.register = function (layer, injector) {
-        if (!(layer instanceof LayerRef)) {
-            throw 'Invalid layer';
-        }
-        this.layerRegister.next({
-            ref: layer,
-            injector: injector,
-            register: true
+    LayerService.prototype.create = function (component, opts) {
+        var _this = this;
+        var layerRef = new DynamicLayerRef(function () {
+            _this.layerManager._register(layerRef, component, _this.injector, opts);
+        }, function () {
+            _this.layerManager._unregister(layerRef);
         });
+        return layerRef;
     };
-    LayerService.prototype.unregister = function (layer) {
-        this.layerRegister.next({
-            ref: layer,
-            register: false
-        });
+    LayerService.prototype.open = function (component, attrs, opts) {
+        var layerRef = this.create(component, opts);
+        layerRef.open(attrs);
+        return layerRef;
     };
     return LayerService;
 }());
 LayerService = __decorate([
-    Injectable()
+    Injectable(),
+    __metadata("design:paramtypes", [LayerManagerService, Injector])
 ], LayerService);
 export { LayerService };

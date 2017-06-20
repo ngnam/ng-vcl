@@ -9,10 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { AlertType, ALERT_DEFAULTS } from './types';
-import { AlertLayer } from './alert.component';
+import { AlertComponent, dismiss } from './alert.component';
+import { LayerService } from "@ng-vcl/ng-vcl";
 var AlertService = (function () {
-    function AlertService(alertLayerRef) {
-        this.alertLayerRef = alertLayerRef;
+    function AlertService(ls) {
+        this.ls = ls;
         this.noop = function () { };
     }
     AlertService.prototype.alert = function (text, opts) {
@@ -44,16 +45,27 @@ var AlertService = (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             opts[_i] = arguments[_i];
         }
-        var alert = Object.assign.apply(Object, [{}, ALERT_DEFAULTS].concat(opts));
-        return this.alertLayerRef.open({ alert: alert });
+        return this.create.apply(this, opts).open();
     };
-    AlertService.prototype.close = function () {
-        this.alertLayerRef.close();
+    AlertService.prototype.create = function () {
+        var opts = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            opts[_i] = arguments[_i];
+        }
+        var alert = Object.assign.apply(Object, [{}, ALERT_DEFAULTS].concat(opts));
+        return this.ls.create(AlertComponent, {
+            offClick: function (layer) {
+                dismiss(layer, 'offClick');
+            },
+            modal: true,
+            transparent: true,
+            attrs: { alert: alert }
+        });
     };
     return AlertService;
 }());
 AlertService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [AlertLayer])
+    __metadata("design:paramtypes", [LayerService])
 ], AlertService);
 export { AlertService };

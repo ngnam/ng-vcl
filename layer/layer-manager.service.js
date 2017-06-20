@@ -1,13 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17,43 +7,44 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Injectable, ApplicationRef, Injector } from '@angular/core';
-import 'rxjs/add/operator/debounceTime';
+import { Injectable, Injector, ApplicationRef } from '@angular/core';
 import { DomWormholeHost } from '../wormhole/index';
-import { LayerService } from './layer.service';
 import { LayerContainerComponent } from './layer-container.component';
-var LayerManagerService = (function (_super) {
-    __extends(LayerManagerService, _super);
-    function LayerManagerService(layerService, appRef, injector) {
-        var _this = _super.call(this, appRef, undefined, injector) || this;
-        _this.layerService = layerService;
-        _this.injector = injector;
-        _this.layerMap = new Map();
-        _this.name = 'default';
-        _this.sub = _this.layerService
-            .getLayers$(_this.name)
-            .subscribe(function (l) {
-            if (l.register) {
-                _this.registerLayer(l.ref, l.injector);
-            }
-            else {
-                _this.unregisterLayer(l.ref);
-            }
-        });
-        return _this;
+var LayerManagerService = (function () {
+    function LayerManagerService(appRef, injector) {
+        this.injector = injector;
+        this.layerMetaMap = new Map();
+        this.baseZIndex = 1000;
+        this.visibleLayers = [];
+        this.host = new DomWormholeHost(appRef, undefined, injector);
     }
-    LayerManagerService.prototype.registerLayer = function (layer, injector) {
+    Object.defineProperty(LayerManagerService.prototype, "currentZIndex", {
+        get: function () {
+            return this.baseZIndex + (this.visibleLayers.length * 10);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    LayerManagerService.prototype.addVisibleLayer = function (layer) {
+        this.visibleLayers = this.visibleLayers.concat([layer]);
+    };
+    LayerManagerService.prototype.removeVisibleLayer = function (layer) {
+        this.visibleLayers = this.visibleLayers.filter(function (l) { return l !== layer; });
+    };
+    LayerManagerService.prototype._register = function (layerRef, target, injector, opts) {
         var _this = this;
-        var containerWormholeRef = this.createWormhole(LayerContainerComponent);
-        var layerSub = layer.state$.subscribe(function (state) {
+        var containerWormholeRef = this.host.createWormhole(LayerContainerComponent);
+        var layerSub = layerRef.state$.subscribe(function (state) {
             if (state.visible && !containerWormholeRef.isConnected) {
                 containerWormholeRef.connect({
-                    layer: layer,
-                    zIndex: _this.layerService.currentZIndex,
+                    layerRef: layerRef,
                     layerAttrs: state.attrs,
-                    injector: injector || _this.injector
+                    layerOpts: opts || {},
+                    layerTarget: target,
+                    layerInjector: injector,
+                    zIndex: _this.currentZIndex,
                 });
-                _this.layerService.addVisibleLayer(layer);
+                _this.addVisibleLayer(layerRef);
             }
             else if (state.visible) {
                 containerWormholeRef.setAttributes({
@@ -61,34 +52,32 @@ var LayerManagerService = (function (_super) {
                 });
             }
             else {
-                containerWormholeRef.disconnect();
-                _this.layerService.removeVisibleLayer(layer);
+                if (containerWormholeRef.compInstance) {
+                    containerWormholeRef.compInstance.animateLeave().then(function () {
+                        containerWormholeRef.disconnect();
+                        _this.removeVisibleLayer(layerRef);
+                    });
+                }
             }
         });
-        this.layerMap.set(layer, {
-            subscription: layerSub,
-            wormhole: containerWormholeRef
-        });
+        this.layerMetaMap.set(layerRef, { wormhole: containerWormholeRef, subscription: layerSub });
     };
-    LayerManagerService.prototype.unregisterLayer = function (layer) {
-        layer.close();
-        var meta = this.layerMap.get(layer);
+    LayerManagerService.prototype._unregister = function (layer) {
+        var meta = this.layerMetaMap.get(layer);
         if (meta) {
-            meta.subscription.unsubscribe();
             meta.wormhole.disconnect();
+            meta.subscription.unsubscribe();
         }
-        this.layerMap.delete(layer);
     };
     LayerManagerService.prototype.ngOnDestroy = function () {
         var _this = this;
-        this.clearWormholes();
-        this.layerMap.forEach(function (meta, layer) { return _this.unregisterLayer(layer); });
-        this.sub && this.sub.unsubscribe();
+        this.layerMetaMap.forEach(function (meta, layer) { return _this._unregister(layer); });
+        this.host.clearWormholes();
     };
     return LayerManagerService;
-}(DomWormholeHost));
+}());
 LayerManagerService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [LayerService, ApplicationRef, Injector])
+    __metadata("design:paramtypes", [ApplicationRef, Injector])
 ], LayerManagerService);
 export { LayerManagerService };

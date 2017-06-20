@@ -8,4 +8,3 @@ export declare class TooltipService {
     private isStaticPositioned(nativeEl);
     private parentOffsetEl(nativeEl);
 }
-export declare const tooltipService: TooltipService;

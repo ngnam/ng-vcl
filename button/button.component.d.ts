@@ -9,8 +9,6 @@ export declare class ButtonComponent extends ObservableComponent {
     private elementRef;
     private latestInteractionTime;
     private latestInteractionType;
-    pressed: boolean;
-    focused: boolean;
     hovered: boolean;
     readonly isDisabled: boolean | null;
     selected: boolean;
@@ -34,10 +32,6 @@ export declare class ButtonComponent extends ObservableComponent {
     onKeypress(ev: KeyboardEvent): void;
     onMouseEnter(e: any): void;
     onMouseLeave(e: any): void;
-    onMouseUp(e: any): void;
-    onMouseDown(e: any): void;
-    onFocus(e: any): void;
-    onBlur(e: any): void;
     onTap(e: Event): void;
     onClick(e: Event): void;
     private handleGhostClick(type, e);

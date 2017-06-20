@@ -1,21 +1,23 @@
 import { Type, Injector, ModuleWithProviders, OpaqueToken } from '@angular/core';
 import { LayerManagerService } from './layer-manager.service';
 import { LayerService } from './layer.service';
-import { LayerRef, LayerAttributes } from './layer-ref';
-import { LayerContainerComponent } from './layer-container.component';
+import { LayerRef, LayerAttributes, DynamicLayerRef, LayerResult } from './layer-ref';
+import { LayerContainerComponent, LAYER_ANIMATIONS, LayerAnimationConfig, LayerOptions } from './layer-container.component';
 import { LayerRefDirective } from './layer-ref.directive';
-export { LayerRefDirective, LayerRef, LayerAttributes, LayerService, LayerManagerService, LayerContainerComponent };
-export declare const CHILD_LAYER_CONFIG: OpaqueToken;
-export interface LayerConfig {
+export { LayerRefDirective, LayerRef, LayerAttributes, LayerService, LayerContainerComponent, DynamicLayerRef, LayerAnimationConfig, LAYER_ANIMATIONS, LayerResult };
+export declare const LAYERS: OpaqueToken;
+export interface RootLayerConfig {
     layers?: Type<LayerRef>[];
 }
-export declare function Layer<T>(component: Type<T>): (target: any) => void;
+export interface ChildLayerConfig {
+    layers?: Type<LayerRef>[];
+}
+export declare function Layer<T>(component: Type<T>, opts?: LayerOptions): (target: any) => void;
 export declare class VCLLayerModule {
-    private configs;
-    private layerService;
-    private layerManagerService;
+    private layers;
+    private layerManager;
     private injector;
-    static forRoot(config?: LayerConfig): ModuleWithProviders;
-    static forChild(config?: LayerConfig): ModuleWithProviders;
-    constructor(configs: LayerConfig[], layerService: LayerService, layerManagerService: LayerManagerService, injector: Injector);
+    static forRoot(config?: RootLayerConfig): ModuleWithProviders;
+    static forChild(config?: ChildLayerConfig): ModuleWithProviders;
+    constructor(layers: Type<LayerRef>[], layerManager: LayerManagerService, injector: Injector);
 }

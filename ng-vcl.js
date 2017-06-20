@@ -2,7 +2,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishReplay';
-import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ContentChild, ContentChildren, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Inject, Injectable, Injector, Input, NgModule, OpaqueToken, Optional, Output, Pipe, QueryList, ReflectiveInjector, SkipSelf, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation, animate, forwardRef, state, style, transition, trigger } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ContentChild, ContentChildren, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Inject, Injectable, Injector, Input, NgModule, OpaqueToken, Optional, Output, Pipe, QueryList, ReflectiveInjector, Renderer, Renderer2, SkipSelf, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation, animate, forwardRef, state, style, transition, trigger } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/share';
@@ -20,11 +20,10 @@ import 'rxjs/add/operator/publishBehavior';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/skipUntil';
+import { AnimationBuilder, trigger as trigger$1 } from '@angular/animations';
 import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/debounceTime';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { trigger as trigger$1 } from '@angular/animations';
 import { NavigationEnd, Router } from '@angular/router';
+import { LayerService } from '@ng-vcl/ng-vcl';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/skipWhile';
@@ -525,7 +524,7 @@ __decorate$5([
 ], TextareaDirective.prototype, "onFocus", null);
 TextareaDirective = __decorate$5([
     Directive({
-        selector: '[vcl-textarea]',
+        selector: 'textarea[vcl-textarea]',
         host: {
             '[class.vclInput]': 'true',
         }
@@ -1159,6 +1158,13 @@ var ComponentWormholeBase = (function (_super) {
         }
         return _this;
     }
+    Object.defineProperty(ComponentWormholeBase.prototype, "compInstance", {
+        get: function () {
+            return this.compRef && this.compRef.instance;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ComponentWormholeBase.prototype, "isConnected", {
         get: function () {
             return !!this.compRef;
@@ -2523,8 +2529,6 @@ var ButtonComponent = (function (_super) {
         var _this = _super.call(this) || this;
         _this.elementRef = elementRef;
         _this.latestInteractionTime = 0;
-        _this.pressed = false; // `true` if a pointer device is conducting a `down` gesture on the button
-        _this.focused = false; // `true` if the element is focused  (CSS' :focus)
         _this.hovered = false; // `true` if a pointer device is hovering the button (CSS' :hover)
         _this.selected = false;
         _this.disabled = false;
@@ -2578,10 +2582,6 @@ var ButtonComponent = (function (_super) {
     };
     ButtonComponent.prototype.onMouseEnter = function (e) { this.hovered = true; };
     ButtonComponent.prototype.onMouseLeave = function (e) { this.hovered = false; };
-    ButtonComponent.prototype.onMouseUp = function (e) { this.pressed = false; };
-    ButtonComponent.prototype.onMouseDown = function (e) { this.pressed = true; };
-    ButtonComponent.prototype.onFocus = function (e) { this.focused = true; };
-    ButtonComponent.prototype.onBlur = function (e) { this.focused = false; };
     ButtonComponent.prototype.onTap = function (e) {
         this.handleGhostClick(InteractionType.Tap, e);
     };
@@ -2609,8 +2609,6 @@ var ButtonComponent = (function (_super) {
     };
     ButtonComponent.prototype.ngOnDestroy = function () {
         _super.prototype.ngOnDestroy.call(this);
-        if (this.stateSub)
-            this.stateSub.unsubscribe();
     };
     return ButtonComponent;
 }(ObservableComponent));
@@ -2700,30 +2698,6 @@ __decorate$29([
     __metadata$15("design:paramtypes", [Object]),
     __metadata$15("design:returntype", void 0)
 ], ButtonComponent.prototype, "onMouseLeave", null);
-__decorate$29([
-    HostListener('mouseup', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Object]),
-    __metadata$15("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseUp", null);
-__decorate$29([
-    HostListener('mousedown', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Object]),
-    __metadata$15("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseDown", null);
-__decorate$29([
-    HostListener('onfocus', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Object]),
-    __metadata$15("design:returntype", void 0)
-], ButtonComponent.prototype, "onFocus", null);
-__decorate$29([
-    HostListener('onblur', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Object]),
-    __metadata$15("design:returntype", void 0)
-], ButtonComponent.prototype, "onBlur", null);
 __decorate$29([
     HostListener('tap', ['$event']),
     __metadata$15("design:type", Function),
@@ -2851,6 +2825,9 @@ var __decorate$33 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$17 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param$3 = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var AttachmentX = {
     Left: 'left',
     Center: 'center',
@@ -2865,24 +2842,30 @@ var Dimension = {
     Width: 'width',
     Height: 'height',
 };
-var PopoverState = {
-    Visible: 'visible',
-    Void: 'void',
-};
+var PopoverState;
+(function (PopoverState) {
+    PopoverState[PopoverState["visible"] = 0] = "visible";
+    PopoverState[PopoverState["hidden"] = 1] = "hidden";
+    PopoverState[PopoverState["opening"] = 2] = "opening";
+    PopoverState[PopoverState["closing"] = 3] = "closing";
+})(PopoverState || (PopoverState = {}));
+var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent = PopoverComponent_1 = (function (_super) {
     __extends$9(PopoverComponent, _super);
-    function PopoverComponent(me) {
+    function PopoverComponent(me, builder, animations) {
         var _this = _super.call(this) || this;
         _this.me = me;
+        _this.builder = builder;
+        _this.animations = animations;
         _this.targetX = AttachmentX.Left;
         _this.targetY = AttachmentY.Bottom;
         _this.attachmentX = AttachmentX.Left;
         _this.attachmentY = AttachmentY.Top;
-        _this._visible = false;
-        _this.visibleChange = new EventEmitter();
+        _this.willClose = new EventEmitter();
+        _this.willOpen = new EventEmitter();
+        _this.state = PopoverState.hidden;
         _this.translateX = 1;
         _this.translateY = 0;
-        _this.visibility = 'visible';
         _this.observeChanges('target').subscribe(function () {
             var tag = _this.tag + ".[target]$";
             _this.setTag();
@@ -2899,30 +2882,29 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
     }
     Object.defineProperty(PopoverComponent.prototype, "visible", {
         get: function () {
-            return this._visible;
+            return (this.state === PopoverState.opening || this.state === PopoverState.visible);
         },
         set: function (value) {
-            var _this = this;
-            // We have to wait one runloop before calling reposition(), so the element is rendered and the right bounds can be determined.
-            // Also hide the popover via the visibility-style. This avoids flashing up on the wrong position.
-            if (!this._visible && value) {
-                this.visibility = 'hidden';
-                setTimeout(function () {
-                    _this.reposition();
-                    _this.visibility = 'visible';
-                }, 0);
+            if (value) {
+                this.open();
             }
             else {
-                this.visibility = 'visible';
+                this.close();
             }
-            this._visible = value;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PopoverComponent.prototype, "hidden", {
+    Object.defineProperty(PopoverComponent.prototype, "classHidden", {
         get: function () {
-            return !this.visible;
+            return this.state === PopoverState.hidden;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PopoverComponent.prototype, "styleVisibility", {
+        get: function () {
+            return this.state === PopoverState.opening ? 'hidden' : 'visible';
         },
         enumerable: true,
         configurable: true
@@ -2934,16 +2916,6 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PopoverComponent.prototype, "popoverState", {
-        get: function () {
-            return this.visible ? PopoverState.Visible : PopoverState.Void;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    PopoverComponent.prototype.setTag = function () {
-        this.tag = PopoverComponent_1.Tag + "." + this.target;
-    };
     PopoverComponent.prototype.ngOnInit = function () {
         var tag = this.tag + ".ngOnInit()";
         if (this.debug)
@@ -2953,6 +2925,65 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
     PopoverComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
         setTimeout(function () { return _this.reposition(); });
+        if (this.animations) {
+            if (this.animations.enter) {
+                this.enterAnimationFactory = this.builder.build(this.animations.enter);
+            }
+            if (this.animations.leave) {
+                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
+            }
+        }
+    };
+    PopoverComponent.prototype.open = function () {
+        var _this = this;
+        if (this.state === PopoverState.visible || this.state === PopoverState.opening) {
+            return;
+        }
+        this.state = PopoverState.opening;
+        this.willOpen.emit();
+        // We have to wait one runloop before calling reposition(), so the element is rendered and the right bounds can be determined.
+        // Also when opening the popover is hidden via the visibility-style. This avoids flashing up on the wrong position.
+        setTimeout(function () {
+            _this.reposition();
+            if (_this.enterAnimationFactory && _this.me) {
+                var player_1 = _this.enterAnimationFactory.create(_this.me.nativeElement);
+                player_1.onDone(function () {
+                    player_1.destroy();
+                });
+                player_1.play();
+            }
+            _this.state = PopoverState.visible;
+        }, 0);
+    };
+    PopoverComponent.prototype.close = function () {
+        var _this = this;
+        if (this.state === PopoverState.hidden || this.state === PopoverState.closing) {
+            return;
+        }
+        this.state = PopoverState.closing;
+        this.willClose.emit();
+        if (this.leaveAnimationFactory && this.me) {
+            var player_2 = this.leaveAnimationFactory.create(this.me.nativeElement);
+            player_2.onDone(function () {
+                player_2.destroy();
+                _this.state = PopoverState.hidden;
+            });
+            player_2.play();
+        }
+        else {
+            this.state = PopoverState.hidden;
+        }
+    };
+    PopoverComponent.prototype.toggle = function () {
+        if (this.visible) {
+            this.close();
+        }
+        else {
+            this.open();
+        }
+    };
+    PopoverComponent.prototype.setTag = function () {
+        this.tag = PopoverComponent_1.Tag + "." + this.target;
     };
     PopoverComponent.prototype.ngOnChanges = function (changes) {
         var tag = this.tag + ".ngOnChanges()";
@@ -2981,21 +3012,6 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
     };
     PopoverComponent.prototype.getAttachmentPosition = function () {
         return this.me.nativeElement.getBoundingClientRect();
-    };
-    PopoverComponent.prototype.open = function () {
-        if (this.visible)
-            return;
-        this.visible = true;
-        this.visibleChange.emit(this.visible);
-    };
-    PopoverComponent.prototype.close = function () {
-        if (!this.visible)
-            return;
-        this.visible = false;
-        this.visibleChange.emit(this.visible);
-    };
-    PopoverComponent.prototype.toggle = function () {
-        this.visible ? this.close() : this.open();
     };
     PopoverComponent.prototype.reposition = function () {
         var tag = this.tag + ".reposition()";
@@ -3065,22 +3081,27 @@ __decorate$33([
 ], PopoverComponent.prototype, "attachmentY", void 0);
 __decorate$33([
     Input(),
-    __metadata$17("design:type", Boolean),
-    __metadata$17("design:paramtypes", [Boolean])
+    __metadata$17("design:type", Object),
+    __metadata$17("design:paramtypes", [Object])
 ], PopoverComponent.prototype, "visible", null);
 __decorate$33([
     Output(),
     __metadata$17("design:type", Object)
-], PopoverComponent.prototype, "visibleChange", void 0);
+], PopoverComponent.prototype, "willClose", void 0);
+__decorate$33([
+    Output(),
+    __metadata$17("design:type", Object)
+], PopoverComponent.prototype, "willOpen", void 0);
 __decorate$33([
     HostBinding('class.vclLayoutHidden'),
     __metadata$17("design:type", Object),
     __metadata$17("design:paramtypes", [])
-], PopoverComponent.prototype, "hidden", null);
+], PopoverComponent.prototype, "classHidden", null);
 __decorate$33([
     HostBinding('style.visibility'),
-    __metadata$17("design:type", String)
-], PopoverComponent.prototype, "visibility", void 0);
+    __metadata$17("design:type", Object),
+    __metadata$17("design:paramtypes", [])
+], PopoverComponent.prototype, "styleVisibility", null);
 __decorate$33([
     HostBinding('style.transform'),
     __metadata$17("design:type", Object),
@@ -3097,19 +3118,14 @@ PopoverComponent = PopoverComponent_1 = __decorate$33([
         selector: 'vcl-popover',
         template: '<ng-content></ng-content>',
         changeDetection: ChangeDetectionStrategy.OnPush,
-        // The close/open animation is set in the application itself through:
-        // setAnimations(PopoverComponent, [
-        //   trigger('popoverState', [
-        //     [..]
-        //   ]);
         animations: [trigger('popoverState', [])],
         host: {
-            '[@popoverState]': 'popoverState',
             '[class.vclPopOver]': 'true',
             '[style.position]': '"absolute"'
         }
     }),
-    __metadata$17("design:paramtypes", [ElementRef])
+    __param$3(2, Optional()), __param$3(2, Inject(POPOVER_ANIMATIONS)),
+    __metadata$17("design:paramtypes", [ElementRef, AnimationBuilder, Object])
 ], PopoverComponent);
 var PopoverComponent_1;
 
@@ -4097,14 +4113,34 @@ VCLButtonGroupModule = __decorate$40([
     })
 ], VCLButtonGroupModule);
 
+var __extends$10 = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var LayerResult = (function (_super) {
+    __extends$10(LayerResult, _super);
+    function LayerResult(source, layerRef) {
+        var _this = _super.call(this) || this;
+        _this.source = source;
+        _this.layerRef = layerRef;
+        return _this;
+    }
+    LayerResult.prototype.close = function (data) {
+        this.layerRef.close();
+    };
+    LayerResult.prototype.closeWithError = function (data) {
+        this.layerRef.closeWithError();
+    };
+    return LayerResult;
+}(Observable));
 var LayerRef = (function () {
     function LayerRef() {
-        this.base = 'default';
-        this.modal = false;
-        this.transparent = false;
-        this.fill = false;
-        this.stickToBottom = false;
-        this.gutterPadding = false;
         this.stateChange = new Subject();
         this.state$ = this.stateChange.asObservable();
     }
@@ -4116,7 +4152,7 @@ var LayerRef = (function () {
             this.results.complete();
         }
         this.results = new Subject();
-        return this.results.asObservable();
+        return new LayerResult(this.results, this);
     };
     LayerRef.prototype.close = function (data) {
         this.visible = false;
@@ -4142,13 +4178,30 @@ var LayerRef = (function () {
             this.results.next(data);
         }
     };
-    LayerRef.prototype.offClick = function () {
-        if (!this.modal) {
-            this.close();
-        }
-    };
     return LayerRef;
 }());
+var DynamicLayerRef = (function (_super) {
+    __extends$10(DynamicLayerRef, _super);
+    function DynamicLayerRef(_register, _unregister) {
+        var _this = _super.call(this) || this;
+        _this._register = _register;
+        _this._unregister = _unregister;
+        return _this;
+    }
+    DynamicLayerRef.prototype.open = function (attrs) {
+        this._register();
+        return _super.prototype.open.call(this, attrs);
+    };
+    DynamicLayerRef.prototype.close = function (data) {
+        _super.prototype.close.call(this, data);
+        this._unregister();
+    };
+    DynamicLayerRef.prototype.closeWithError = function (data) {
+        _super.prototype.closeWithError.call(this, data);
+        this._unregister();
+    };
+    return DynamicLayerRef;
+}(LayerRef));
 
 var __decorate$44 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4156,65 +4209,308 @@ var __decorate$44 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var LayerService = (function () {
-    function LayerService() {
+var __metadata$26 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
+var LAYER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#layer_animations');
+var LayerContainerComponent = (function () {
+    function LayerContainerComponent(cdRef, builder, elementRef, animations) {
+        this.cdRef = cdRef;
+        this.zIndex = 1000;
+        if (animations && animations.boxEnter) {
+            this.boxEnterAnimationFactory = builder.build(animations.boxEnter);
+        }
+        if (animations && animations.boxLeave) {
+            this.boxLeaveAnimationFactory = builder.build(animations.boxLeave);
+        }
+        if (animations && animations.coverEnter) {
+            this.coverEnterAnimationFactory = builder.build(animations.coverEnter);
+        }
+        if (animations && animations.coverLeave) {
+            this.coverLeaveAnimationFactory = builder.build(animations.coverLeave);
+        }
+    }
+    Object.defineProperty(LayerContainerComponent.prototype, "layerAttrs", {
+        set: function (layerAttrs) {
+            this._layerAttrs = layerAttrs;
+            if (this.wormhole && this.wormhole instanceof ComponentWormhole) {
+                this.wormhole.setAttributes(this.mergedLayerAttrs);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(LayerContainerComponent.prototype, "mergedLayerAttrs", {
+        get: function () {
+            return this.layerOpts.attrs ? Object.assign({}, this.layerOpts.attrs, this._layerAttrs) : this._layerAttrs;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    LayerContainerComponent.prototype.ngAfterViewInit = function () {
+        var layer = this.layerRef;
+        if (layer && this.layerContentContainer) {
+            // Creates a wormhole out of the LayerRef
+            if (this.layerTarget instanceof TemplateRef) {
+                this.wormhole = new TemplateWormhole(this.layerTarget, this.layerContentContainer);
+            }
+            else {
+                // The created injector injects this instance as LayerRef
+                // It is used in the component instance created within the wormhole
+                var layerInjector = ReflectiveInjector.resolveAndCreate([{
+                        provide: LayerRef,
+                        useValue: this.layerRef
+                    }], this.layerInjector);
+                this.wormhole = new ComponentWormhole(this.layerTarget, this.layerContentContainer, layerInjector);
+            }
+            if (!this.wormhole) {
+                throw 'invalid layer';
+            }
+            this.wormhole.connect(this.mergedLayerAttrs);
+            if (this.boxEnterAnimationFactory && this.box) {
+                this.boxEnterAnimationFactory.create(this.box.nativeElement).play();
+            }
+            if (this.coverEnterAnimationFactory && this.cover) {
+                var player_1 = this.coverEnterAnimationFactory.create(this.cover.nativeElement);
+                player_1.onDone(function () { return player_1.destroy(); });
+                player_1.play();
+            }
+        }
+    };
+    LayerContainerComponent.prototype.animateLeave = function () {
+        var _this = this;
+        return Promise.all([
+            new Promise(function (resolve) {
+                if (_this.boxLeaveAnimationFactory && _this.box) {
+                    var player = _this.boxLeaveAnimationFactory.create(_this.box.nativeElement);
+                    player.onDone(resolve);
+                    player.play();
+                }
+                else {
+                    resolve();
+                }
+            }),
+            new Promise(function (resolve) {
+                if (_this.coverLeaveAnimationFactory && _this.cover) {
+                    var player_2 = _this.coverLeaveAnimationFactory.create(_this.cover.nativeElement);
+                    player_2.onDone(function () {
+                        player_2.destroy();
+                        resolve();
+                    });
+                    player_2.play();
+                }
+                else {
+                    resolve();
+                }
+            }),
+        ]);
+    };
+    LayerContainerComponent.prototype.ngOnDestroy = function () {
+        if (this.wormhole) {
+            this.wormhole.disconnect();
+        }
+    };
+    LayerContainerComponent.prototype.triggerOffClick = function (event) {
+        if (event.target === this.container.nativeElement) {
+            if (this.layerOpts.offClick) {
+                this.layerOpts.offClick(this.layerRef);
+            }
+            else {
+                if (!this.layerOpts.modal) {
+                    this.layerRef.close();
+                }
+            }
+        }
+    };
+    return LayerContainerComponent;
+}());
+__decorate$44([
+    ViewChild('container'),
+    __metadata$26("design:type", ElementRef)
+], LayerContainerComponent.prototype, "container", void 0);
+__decorate$44([
+    ViewChild('cover'),
+    __metadata$26("design:type", ElementRef)
+], LayerContainerComponent.prototype, "cover", void 0);
+__decorate$44([
+    ViewChild('box'),
+    __metadata$26("design:type", ElementRef)
+], LayerContainerComponent.prototype, "box", void 0);
+__decorate$44([
+    Input(),
+    __metadata$26("design:type", LayerRef)
+], LayerContainerComponent.prototype, "layerRef", void 0);
+__decorate$44([
+    Input(),
+    __metadata$26("design:type", Object)
+], LayerContainerComponent.prototype, "layerOpts", void 0);
+__decorate$44([
+    Input(),
+    __metadata$26("design:type", Object)
+], LayerContainerComponent.prototype, "layerTarget", void 0);
+__decorate$44([
+    Input(),
+    __metadata$26("design:type", Object)
+], LayerContainerComponent.prototype, "layerInjector", void 0);
+__decorate$44([
+    Input(),
+    __metadata$26("design:type", Object),
+    __metadata$26("design:paramtypes", [Object])
+], LayerContainerComponent.prototype, "layerAttrs", null);
+__decorate$44([
+    Input(),
+    __metadata$26("design:type", Object)
+], LayerContainerComponent.prototype, "zIndex", void 0);
+__decorate$44([
+    ViewChild('layerContent', { read: ViewContainerRef }),
+    __metadata$26("design:type", ViewContainerRef)
+], LayerContainerComponent.prototype, "layerContentContainer", void 0);
+LayerContainerComponent = __decorate$44([
+    Component({
+        template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layerOpts.customClass\" [class.vclTransparent]=\"layerOpts.transparent\" [class.vclLayerFill]=\"layerOpts.fill\" [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (tap)='triggerOffClick($event)' > <div #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div> ",
+    }),
+    __param$5(3, Optional()), __param$5(3, Inject(LAYER_ANIMATIONS)),
+    __metadata$26("design:paramtypes", [ChangeDetectorRef,
+        AnimationBuilder,
+        ElementRef, Object])
+], LayerContainerComponent);
+
+var __decorate$43 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$25 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var LayerManagerService = (function () {
+    function LayerManagerService(appRef, injector) {
+        this.injector = injector;
+        this.layerMetaMap = new Map();
         this.baseZIndex = 1000;
         this.visibleLayers = [];
-        this.layerRegister = new ReplaySubject();
+        this.host = new DomWormholeHost(appRef, undefined, injector);
     }
-    Object.defineProperty(LayerService.prototype, "currentZIndex", {
+    Object.defineProperty(LayerManagerService.prototype, "currentZIndex", {
         get: function () {
             return this.baseZIndex + (this.visibleLayers.length * 10);
         },
         enumerable: true,
         configurable: true
     });
-    LayerService.prototype.getLayers$ = function (base) {
-        if (base === void 0) { base = 'default'; }
-        return this.layerRegister.asObservable().filter(function (lr) { return !!lr.ref && lr.ref.base === base; });
-    };
-    LayerService.prototype.hasVisibleLayers = function () {
-        return this.visibleLayers.length > 0;
-    };
-    LayerService.prototype.getTopLayer = function () {
-        return this.visibleLayers.slice().pop();
-    };
-    LayerService.prototype.closeAll = function (base) {
-        this.visibleLayers.forEach(function (layer) { return layer.close(); });
-    };
-    LayerService.prototype.closeTop = function (base) {
-        var layer = this.getTopLayer();
-        if (layer) {
-            layer.close();
-        }
-    };
-    LayerService.prototype.addVisibleLayer = function (layer) {
+    LayerManagerService.prototype.addVisibleLayer = function (layer) {
         this.visibleLayers = this.visibleLayers.concat([layer]);
     };
-    LayerService.prototype.removeVisibleLayer = function (layer) {
+    LayerManagerService.prototype.removeVisibleLayer = function (layer) {
         this.visibleLayers = this.visibleLayers.filter(function (l) { return l !== layer; });
     };
-    LayerService.prototype.register = function (layer, injector) {
-        if (!(layer instanceof LayerRef)) {
-            throw 'Invalid layer';
+    LayerManagerService.prototype._register = function (layerRef, target, injector, opts) {
+        var _this = this;
+        var containerWormholeRef = this.host.createWormhole(LayerContainerComponent);
+        var layerSub = layerRef.state$.subscribe(function (state$$1) {
+            if (state$$1.visible && !containerWormholeRef.isConnected) {
+                containerWormholeRef.connect({
+                    layerRef: layerRef,
+                    layerAttrs: state$$1.attrs,
+                    layerOpts: opts || {},
+                    layerTarget: target,
+                    layerInjector: injector,
+                    zIndex: _this.currentZIndex,
+                });
+                _this.addVisibleLayer(layerRef);
+            }
+            else if (state$$1.visible) {
+                containerWormholeRef.setAttributes({
+                    layerAttrs: state$$1.attrs
+                });
+            }
+            else {
+                if (containerWormholeRef.compInstance) {
+                    containerWormholeRef.compInstance.animateLeave().then(function () {
+                        containerWormholeRef.disconnect();
+                        _this.removeVisibleLayer(layerRef);
+                    });
+                }
+            }
+        });
+        this.layerMetaMap.set(layerRef, { wormhole: containerWormholeRef, subscription: layerSub });
+    };
+    LayerManagerService.prototype._unregister = function (layer) {
+        var meta = this.layerMetaMap.get(layer);
+        if (meta) {
+            meta.wormhole.disconnect();
+            meta.subscription.unsubscribe();
         }
-        this.layerRegister.next({
-            ref: layer,
-            injector: injector,
-            register: true
-        });
     };
-    LayerService.prototype.unregister = function (layer) {
-        this.layerRegister.next({
-            ref: layer,
-            register: false
-        });
+    LayerManagerService.prototype.ngOnDestroy = function () {
+        var _this = this;
+        this.layerMetaMap.forEach(function (meta, layer) { return _this._unregister(layer); });
+        this.host.clearWormholes();
     };
-    return LayerService;
+    return LayerManagerService;
 }());
-LayerService = __decorate$44([
-    Injectable()
-], LayerService);
+LayerManagerService = __decorate$43([
+    Injectable(),
+    __metadata$25("design:paramtypes", [ApplicationRef, Injector])
+], LayerManagerService);
+
+var __decorate$45 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$27 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var LayerService$1 = (function () {
+    function LayerService$$1(layerManager, injector) {
+        this.layerManager = layerManager;
+        this.injector = injector;
+    }
+    LayerService$$1.prototype.hasVisibleLayers = function () {
+        return this.layerManager.visibleLayers.length > 0;
+    };
+    LayerService$$1.prototype.getVisibleLayers = function () {
+        return this.layerManager.visibleLayers.slice();
+    };
+    LayerService$$1.prototype.getTopLayer = function () {
+        return this.layerManager.visibleLayers.slice().pop();
+    };
+    LayerService$$1.prototype.closeAll = function () {
+        this.layerManager.visibleLayers.forEach(function (layer) { return layer.close(); });
+    };
+    LayerService$$1.prototype.closeTop = function () {
+        var topLayer = this.getTopLayer();
+        if (topLayer) {
+            topLayer.close();
+        }
+    };
+    LayerService$$1.prototype.create = function (component, opts) {
+        var _this = this;
+        var layerRef = new DynamicLayerRef(function () {
+            _this.layerManager._register(layerRef, component, _this.injector, opts);
+        }, function () {
+            _this.layerManager._unregister(layerRef);
+        });
+        return layerRef;
+    };
+    LayerService$$1.prototype.open = function (component, attrs, opts) {
+        var layerRef = this.create(component, opts);
+        layerRef.open(attrs);
+        return layerRef;
+    };
+    return LayerService$$1;
+}());
+LayerService$1 = __decorate$45([
+    Injectable(),
+    __metadata$27("design:paramtypes", [LayerManagerService, Injector])
+], LayerService$1);
 
 var __extends$11 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -4232,276 +4528,57 @@ var __decorate$46 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$27 = (this && this.__metadata) || function (k, v) {
+var __metadata$28 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var LayerRefDirective = (function (_super) {
     __extends$11(LayerRefDirective, _super);
-    function LayerRefDirective(templateRef, layerService, injector) {
+    function LayerRefDirective(templateRef, layerManager, injector) {
         var _this = _super.call(this) || this;
         _this.templateRef = templateRef;
-        _this.layerService = layerService;
+        _this.layerManager = layerManager;
         _this.injector = injector;
-        _this.base = 'default';
         return _this;
     }
     LayerRefDirective.prototype.ngOnInit = function () {
-        this.layerService.register(this, this.injector);
+        this.layerManager._register(this, this.templateRef, this.injector, this);
     };
     LayerRefDirective.prototype.ngOnDestroy = function () {
-        this.layerService.unregister(this);
+        this.layerManager._unregister(this);
     };
     return LayerRefDirective;
 }(LayerRef));
 __decorate$46([
     Input(),
-    __metadata$27("design:type", String)
-], LayerRefDirective.prototype, "base", void 0);
-__decorate$46([
-    Input(),
-    __metadata$27("design:type", Boolean)
+    __metadata$28("design:type", Boolean)
 ], LayerRefDirective.prototype, "modal", void 0);
 __decorate$46([
     Input(),
-    __metadata$27("design:type", Boolean)
+    __metadata$28("design:type", Boolean)
 ], LayerRefDirective.prototype, "transparent", void 0);
 __decorate$46([
     Input(),
-    __metadata$27("design:type", Boolean)
+    __metadata$28("design:type", Boolean)
 ], LayerRefDirective.prototype, "fill", void 0);
 __decorate$46([
     Input(),
-    __metadata$27("design:type", Boolean)
+    __metadata$28("design:type", Boolean)
 ], LayerRefDirective.prototype, "stickToBottom", void 0);
 __decorate$46([
     Input(),
-    __metadata$27("design:type", Boolean)
+    __metadata$28("design:type", Boolean)
 ], LayerRefDirective.prototype, "gutterPadding", void 0);
 __decorate$46([
     Input(),
-    __metadata$27("design:type", String)
+    __metadata$28("design:type", String)
 ], LayerRefDirective.prototype, "customClass", void 0);
 LayerRefDirective = __decorate$46([
     Directive({
         selector: '[vcl-layer]',
         exportAs: 'layer',
     }),
-    __metadata$27("design:paramtypes", [TemplateRef, LayerService, Injector])
+    __metadata$28("design:paramtypes", [TemplateRef, LayerManagerService, Injector])
 ], LayerRefDirective);
-
-var __decorate$45 = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$26 = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
-var LayerContainerComponent = (function () {
-    function LayerContainerComponent(cdRef) {
-        this.cdRef = cdRef;
-        this.zIndex = 1000;
-        this.visible = false;
-    }
-    Object.defineProperty(LayerContainerComponent.prototype, "layerAttrs", {
-        get: function () {
-            return this._layerAttrs;
-        },
-        set: function (layerAttrs) {
-            this._layerAttrs = layerAttrs;
-            if (this.wormhole && this.wormhole instanceof ComponentWormhole) {
-                this.wormhole.setAttributes(layerAttrs);
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(LayerContainerComponent.prototype, "state", {
-        get: function () {
-            return this.visible ? 'visible' : 'hidden';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    LayerContainerComponent.prototype.disconnect = function () {
-        if (this.wormhole) {
-            this.wormhole.disconnect();
-        }
-    };
-    LayerContainerComponent.prototype.connect = function () {
-        if (this.wormhole) {
-            this.wormhole.connect();
-        }
-    };
-    LayerContainerComponent.prototype.ngAfterViewInit = function () {
-        var layer = this.layer;
-        if (layer && this.layerContentContainer) {
-            // Creates a wormhole out of the LayerRef
-            if (this.layer instanceof LayerRefDirective) {
-                this.wormhole = new TemplateWormhole(this.layer.templateRef, this.layerContentContainer);
-            }
-            else {
-                var component = getMetadata(COMPONENT_LAYER_ANNOTATION_ID, this.layer.constructor);
-                // The created injector injects this instance as LayerRef
-                // It is used in the component instance created within the wormhole
-                var layerInjector = ReflectiveInjector.resolveAndCreate([{
-                        provide: LayerRef,
-                        useValue: this.layer
-                    }], this.injector);
-                this.wormhole = component ? new ComponentWormhole(component, this.layerContentContainer, layerInjector) : undefined;
-            }
-            if (!this.wormhole) {
-                throw 'invalid layer';
-            }
-            this.wormhole.connect(this._layerAttrs);
-        }
-    };
-    LayerContainerComponent.prototype.ngOnDestroy = function () {
-        if (this.wormhole) {
-            this.wormhole.disconnect();
-        }
-    };
-    LayerContainerComponent.prototype.triggerOffClick = function (event) {
-        if (event.target === this.container.nativeElement) {
-            this.layer.offClick();
-        }
-    };
-    return LayerContainerComponent;
-}());
-__decorate$45([
-    ViewChild('container'),
-    __metadata$26("design:type", ElementRef)
-], LayerContainerComponent.prototype, "container", void 0);
-__decorate$45([
-    Input(),
-    __metadata$26("design:type", LayerRef)
-], LayerContainerComponent.prototype, "layer", void 0);
-__decorate$45([
-    Input(),
-    __metadata$26("design:type", Object),
-    __metadata$26("design:paramtypes", [Object])
-], LayerContainerComponent.prototype, "layerAttrs", null);
-__decorate$45([
-    Input(),
-    __metadata$26("design:type", Object)
-], LayerContainerComponent.prototype, "zIndex", void 0);
-__decorate$45([
-    Input(),
-    __metadata$26("design:type", Object)
-], LayerContainerComponent.prototype, "injector", void 0);
-__decorate$45([
-    Input(),
-    __metadata$26("design:type", Boolean)
-], LayerContainerComponent.prototype, "visible", void 0);
-__decorate$45([
-    ViewChild('layerContent', { read: ViewContainerRef }),
-    __metadata$26("design:type", ViewContainerRef)
-], LayerContainerComponent.prototype, "layerContentContainer", void 0);
-LayerContainerComponent = __decorate$45([
-    Component({
-        template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layer.customClass\" [class.vclTransparent]=\"layer.transparent\" [class.vclLayerFill]=\"layer.fill\" [class.vclLayerStickToBottom]=\"layer.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (tap)='triggerOffClick($event)' > <div class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layer.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div *ngIf=\"layer.modal\" class=\"vclLayerCover\" [@layerState]=\"state\" [style.z-index]=\"zIndex\"></div> ",
-        animations: [
-            trigger$1('boxState', []),
-            trigger$1('layerState', [])
-        ],
-        host: {
-            '[@boxState]': 'true',
-            '[@layerState]': 'true'
-        }
-    }),
-    __metadata$26("design:paramtypes", [ChangeDetectorRef])
-], LayerContainerComponent);
-
-var __extends$10 = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate$43 = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$25 = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var LayerManagerService = (function (_super) {
-    __extends$10(LayerManagerService, _super);
-    function LayerManagerService(layerService, appRef, injector) {
-        var _this = _super.call(this, appRef, undefined, injector) || this;
-        _this.layerService = layerService;
-        _this.injector = injector;
-        _this.layerMap = new Map();
-        _this.name = 'default';
-        _this.sub = _this.layerService
-            .getLayers$(_this.name)
-            .subscribe(function (l) {
-            if (l.register) {
-                _this.registerLayer(l.ref, l.injector);
-            }
-            else {
-                _this.unregisterLayer(l.ref);
-            }
-        });
-        return _this;
-    }
-    LayerManagerService.prototype.registerLayer = function (layer, injector) {
-        var _this = this;
-        var containerWormholeRef = this.createWormhole(LayerContainerComponent);
-        var layerSub = layer.state$.subscribe(function (state$$1) {
-            if (state$$1.visible && !containerWormholeRef.isConnected) {
-                containerWormholeRef.connect({
-                    layer: layer,
-                    zIndex: _this.layerService.currentZIndex,
-                    layerAttrs: state$$1.attrs,
-                    injector: injector || _this.injector
-                });
-                _this.layerService.addVisibleLayer(layer);
-            }
-            else if (state$$1.visible) {
-                containerWormholeRef.setAttributes({
-                    layerAttrs: state$$1.attrs
-                });
-            }
-            else {
-                containerWormholeRef.disconnect();
-                _this.layerService.removeVisibleLayer(layer);
-            }
-        });
-        this.layerMap.set(layer, {
-            subscription: layerSub,
-            wormhole: containerWormholeRef
-        });
-    };
-    LayerManagerService.prototype.unregisterLayer = function (layer) {
-        layer.close();
-        var meta = this.layerMap.get(layer);
-        if (meta) {
-            meta.subscription.unsubscribe();
-            meta.wormhole.disconnect();
-        }
-        this.layerMap.delete(layer);
-    };
-    LayerManagerService.prototype.ngOnDestroy = function () {
-        var _this = this;
-        this.clearWormholes();
-        this.layerMap.forEach(function (meta, layer) { return _this.unregisterLayer(layer); });
-        this.sub && this.sub.unsubscribe();
-    };
-    return LayerManagerService;
-}(DomWormholeHost));
-LayerManagerService = __decorate$43([
-    Injectable(),
-    __metadata$25("design:paramtypes", [LayerService, ApplicationRef, Injector])
-], LayerManagerService);
 
 var __decorate$42 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4512,37 +4589,34 @@ var __decorate$42 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$24 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$3 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$4 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var CHILD_LAYER_CONFIG = new OpaqueToken('@ng-vcl/ng-vcl#child_layer_config');
+var LAYERS = new OpaqueToken('@ng-vcl/ng-vcl#layers');
 // The @Layer annotation
-function Layer(component) {
+function Layer(component, opts) {
     return function (target) {
         Injectable()(target);
-        defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, component, target);
+        defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, { component: component, opts: opts }, target);
     };
 }
 var VCLLayerModule = VCLLayerModule_1 = (function () {
-    function VCLLayerModule(configs, layerService, layerManagerService, injector) {
-        var _this = this;
-        this.configs = configs;
-        this.layerService = layerService;
-        this.layerManagerService = layerManagerService;
+    function VCLLayerModule(layers, layerManager, injector) {
+        this.layers = layers;
+        this.layerManager = layerManager;
         this.injector = injector;
-        if (configs) {
-            configs.forEach(function (config) {
-                (config.layers || []).forEach(function (layerCls) {
-                    var layerRef = _this.injector.get(layerCls);
-                    _this.layerService.register(layerRef, injector);
-                });
+        if (layers) {
+            (layers || []).forEach(function (layerCls) {
+                var layerMeta = getMetadata(COMPONENT_LAYER_ANNOTATION_ID, layerCls);
+                var layerRef = injector.get(layerCls);
+                layerManager._register(layerRef, layerMeta.component, injector, layerMeta.opts);
             });
         }
     }
     VCLLayerModule.forRoot = function (config) {
         if (config === void 0) { config = {}; }
         return { ngModule: VCLLayerModule_1, providers: [
-                LayerService,
+                LayerService$1,
                 LayerManagerService
             ].concat((config.layers || []), [
                 {
@@ -4550,9 +4624,8 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
                     useValue: null
                 },
                 {
-                    provide: CHILD_LAYER_CONFIG,
-                    multi: true,
-                    useValue: config
+                    provide: LAYERS,
+                    useValue: config.layers
                 }
             ]) };
     };
@@ -4560,11 +4633,12 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
         if (config === void 0) { config = {}; }
         return {
             ngModule: VCLLayerModule_1,
-            providers: (config.layers || []).concat([
+            providers: [
+                LayerService$1
+            ].concat((config.layers || []), [
                 {
-                    provide: CHILD_LAYER_CONFIG,
-                    multi: true,
-                    useValue: config
+                    provide: LAYERS,
+                    useValue: config.layers
                 }
             ])
         };
@@ -4582,9 +4656,8 @@ VCLLayerModule = VCLLayerModule_1 = __decorate$42([
         entryComponents: [LayerContainerComponent],
         providers: []
     }),
-    __param$3(0, Inject(CHILD_LAYER_CONFIG)),
-    __metadata$24("design:paramtypes", [Array, LayerService,
-        LayerManagerService,
+    __param$4(0, Inject(LAYERS)),
+    __metadata$24("design:paramtypes", [Array, LayerManagerService,
         Injector])
 ], VCLLayerModule);
 var VCLLayerModule_1;
@@ -4595,7 +4668,7 @@ var __decorate$49 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$29 = (this && this.__metadata) || function (k, v) {
+var __metadata$30 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TabLabelDirective = (function () {
@@ -4615,19 +4688,19 @@ var TabComponent = (function () {
 }());
 __decorate$49([
     ContentChild(TabLabelDirective, { read: TemplateRef }),
-    __metadata$29("design:type", TabLabelDirective)
+    __metadata$30("design:type", TabLabelDirective)
 ], TabComponent.prototype, "label", void 0);
 __decorate$49([
     ViewChild(TemplateRef),
-    __metadata$29("design:type", TemplateRef)
+    __metadata$30("design:type", TemplateRef)
 ], TabComponent.prototype, "content", void 0);
 __decorate$49([
     Input(),
-    __metadata$29("design:type", Object)
+    __metadata$30("design:type", Object)
 ], TabComponent.prototype, "disabled", void 0);
 __decorate$49([
     Input(),
-    __metadata$29("design:type", String)
+    __metadata$30("design:type", String)
 ], TabComponent.prototype, "tabClass", void 0);
 TabComponent = __decorate$49([
     Component({
@@ -4642,7 +4715,7 @@ var __decorate$48 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$28 = (this && this.__metadata) || function (k, v) {
+var __metadata$29 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TabNavComponent = (function () {
@@ -4704,41 +4777,41 @@ var TabNavComponent = (function () {
 }());
 __decorate$48([
     ViewChild('tabContent', { read: ViewContainerRef }),
-    __metadata$28("design:type", ViewContainerRef),
-    __metadata$28("design:paramtypes", [ViewContainerRef])
+    __metadata$29("design:type", ViewContainerRef),
+    __metadata$29("design:paramtypes", [ViewContainerRef])
 ], TabNavComponent.prototype, "tabContent", null);
 __decorate$48([
     ContentChildren(TabComponent),
-    __metadata$28("design:type", QueryList)
+    __metadata$29("design:type", QueryList)
 ], TabNavComponent.prototype, "tabs", void 0);
 __decorate$48([
     Input(),
-    __metadata$28("design:type", String)
+    __metadata$29("design:type", String)
 ], TabNavComponent.prototype, "layout", void 0);
 __decorate$48([
     Input(),
-    __metadata$28("design:type", String)
+    __metadata$29("design:type", String)
 ], TabNavComponent.prototype, "tabbableClass", void 0);
 __decorate$48([
     Input(),
-    __metadata$28("design:type", String)
+    __metadata$29("design:type", String)
 ], TabNavComponent.prototype, "tabsClass", void 0);
 __decorate$48([
     Input(),
-    __metadata$28("design:type", String)
+    __metadata$29("design:type", String)
 ], TabNavComponent.prototype, "tabContentClass", void 0);
 __decorate$48([
     Input(),
-    __metadata$28("design:type", Boolean)
+    __metadata$29("design:type", Boolean)
 ], TabNavComponent.prototype, "borders", void 0);
 __decorate$48([
     Input(),
-    __metadata$28("design:type", Number)
+    __metadata$29("design:type", Number)
 ], TabNavComponent.prototype, "selectedTabIndex", void 0);
 __decorate$48([
     Output(),
-    __metadata$28("design:type", Observable),
-    __metadata$28("design:paramtypes", [])
+    __metadata$29("design:type", Observable),
+    __metadata$29("design:paramtypes", [])
 ], TabNavComponent.prototype, "selectedTabIndexChange", null);
 TabNavComponent = __decorate$48([
     Component({
@@ -4783,10 +4856,10 @@ var __decorate$52 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$30 = (this && this.__metadata) || function (k, v) {
+var __metadata$31 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$4 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var LinkComponent = (function (_super) {
@@ -4829,60 +4902,60 @@ var LinkComponent = (function (_super) {
 }(ObservableComponent));
 __decorate$52([
     Input(),
-    __metadata$30("design:type", String)
+    __metadata$31("design:type", String)
 ], LinkComponent.prototype, "href", void 0);
 __decorate$52([
     Input(),
-    __metadata$30("design:type", String)
+    __metadata$31("design:type", String)
 ], LinkComponent.prototype, "label", void 0);
 __decorate$52([
     Input(),
-    __metadata$30("design:type", String)
+    __metadata$31("design:type", String)
 ], LinkComponent.prototype, "title", void 0);
 __decorate$52([
     Input(),
-    __metadata$30("design:type", String)
+    __metadata$31("design:type", String)
 ], LinkComponent.prototype, "prepIcon", void 0);
 __decorate$52([
     Input(),
-    __metadata$30("design:type", String)
+    __metadata$31("design:type", String)
 ], LinkComponent.prototype, "appIcon", void 0);
 __decorate$52([
     Input(),
-    __metadata$30("design:type", String)
+    __metadata$31("design:type", String)
 ], LinkComponent.prototype, "scheme", void 0);
 __decorate$52([
     HostBinding('class.vclDisabled'),
     Input(),
-    __metadata$30("design:type", Boolean)
+    __metadata$31("design:type", Boolean)
 ], LinkComponent.prototype, "disabled", void 0);
 __decorate$52([
     HostBinding('attr.title'),
     HostBinding('attr.aria-label'),
-    __metadata$30("design:type", String)
+    __metadata$31("design:type", String)
 ], LinkComponent.prototype, "locTitle", void 0);
 __decorate$52([
     HostBinding('style.cursor'),
-    __metadata$30("design:type", Object),
-    __metadata$30("design:paramtypes", [])
+    __metadata$31("design:type", Object),
+    __metadata$31("design:paramtypes", [])
 ], LinkComponent.prototype, "styleCursor", null);
 __decorate$52([
     HostBinding('attr.href'),
-    __metadata$30("design:type", String),
-    __metadata$30("design:paramtypes", [])
+    __metadata$31("design:type", String),
+    __metadata$31("design:paramtypes", [])
 ], LinkComponent.prototype, "attrHref", null);
 __decorate$52([
     HostBinding('class.vclContentLink'),
-    __metadata$30("design:type", Object),
-    __metadata$30("design:paramtypes", [])
+    __metadata$31("design:type", Object),
+    __metadata$31("design:paramtypes", [])
 ], LinkComponent.prototype, "useIcogram", null);
 LinkComponent = __decorate$52([
     Component({
         selector: '[vcl-link]',
         template: "<vcl-icogram *ngIf=\"useIcogram\" [label]=\"(locLabel$ | async) || href\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> <ng-container *ngIf=\"!useIcogram\"> {{(locLabel$ | async) || href}} <ng-content></ng-content> </ng-container> "
     }),
-    __param$4(0, Optional()),
-    __metadata$30("design:paramtypes", [L10nService])
+    __param$6(0, Optional()),
+    __metadata$31("design:paramtypes", [L10nService])
 ], LinkComponent);
 
 var __decorate$51 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4911,10 +4984,10 @@ var __decorate$54 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$32 = (this && this.__metadata) || function (k, v) {
+var __metadata$33 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var NavigationItemDirective = NavigationItemDirective_1 = (function () {
@@ -4990,48 +5063,48 @@ var NavigationItemDirective = NavigationItemDirective_1 = (function () {
 }());
 __decorate$54([
     Input(),
-    __metadata$32("design:type", String)
+    __metadata$33("design:type", String)
 ], NavigationItemDirective.prototype, "label", void 0);
 __decorate$54([
     Input(),
-    __metadata$32("design:type", Boolean)
+    __metadata$33("design:type", Boolean)
 ], NavigationItemDirective.prototype, "opened", void 0);
 __decorate$54([
     Input(),
-    __metadata$32("design:type", Object)
+    __metadata$33("design:type", Object)
 ], NavigationItemDirective.prototype, "heading", void 0);
 __decorate$54([
     Input(),
-    __metadata$32("design:type", String)
+    __metadata$33("design:type", String)
 ], NavigationItemDirective.prototype, "prepIcon", void 0);
 __decorate$54([
     Input(),
-    __metadata$32("design:type", String)
+    __metadata$33("design:type", String)
 ], NavigationItemDirective.prototype, "appIcon", void 0);
 __decorate$54([
     Input(),
-    __metadata$32("design:type", String)
+    __metadata$33("design:type", String)
 ], NavigationItemDirective.prototype, "class", void 0);
 __decorate$54([
     Input(),
-    __metadata$32("design:type", String)
+    __metadata$33("design:type", String)
 ], NavigationItemDirective.prototype, "href", void 0);
 __decorate$54([
     Input(),
-    __metadata$32("design:type", Array),
-    __metadata$32("design:paramtypes", [Array])
+    __metadata$33("design:type", Array),
+    __metadata$33("design:paramtypes", [Array])
 ], NavigationItemDirective.prototype, "route", null);
 __decorate$54([
     ContentChildren(NavigationItemDirective_1),
-    __metadata$32("design:type", QueryList)
+    __metadata$33("design:type", QueryList)
 ], NavigationItemDirective.prototype, "contentItems", void 0);
 NavigationItemDirective = NavigationItemDirective_1 = __decorate$54([
     Directive({
         selector: 'vcl-navitem'
     }),
-    __param$5(1, Inject(forwardRef(function () { return NavigationComponent; }))),
-    __param$5(2, Optional()), __param$5(2, SkipSelf()), __param$5(2, Inject(NavigationItemDirective_1)),
-    __metadata$32("design:paramtypes", [Router,
+    __param$7(1, Inject(forwardRef(function () { return NavigationComponent; }))),
+    __param$7(2, Optional()), __param$7(2, SkipSelf()), __param$7(2, Inject(NavigationItemDirective_1)),
+    __metadata$33("design:paramtypes", [Router,
         NavigationComponent,
         NavigationItemDirective])
 ], NavigationItemDirective);
@@ -5043,7 +5116,7 @@ var __decorate$53 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$31 = (this && this.__metadata) || function (k, v) {
+var __metadata$32 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 // import { containsTree } from "@angular/router/url_tree";
@@ -5132,56 +5205,56 @@ var NavigationComponent = (function () {
 }());
 __decorate$53([
     Input(),
-    __metadata$31("design:type", String)
+    __metadata$32("design:type", String)
 ], NavigationComponent.prototype, "ident", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", String)
+    __metadata$32("design:type", String)
 ], NavigationComponent.prototype, "ariaRole", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", Number)
+    __metadata$32("design:type", Number)
 ], NavigationComponent.prototype, "tabindex", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", String)
+    __metadata$32("design:type", String)
 ], NavigationComponent.prototype, "type", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", Object)
+    __metadata$32("design:type", Object)
 ], NavigationComponent.prototype, "useRouter", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", String)
+    __metadata$32("design:type", String)
 ], NavigationComponent.prototype, "subLevelHintIconClosed", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", String)
+    __metadata$32("design:type", String)
 ], NavigationComponent.prototype, "subLevelHintIconOpened", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", String)
+    __metadata$32("design:type", String)
 ], NavigationComponent.prototype, "subLevelHintIconSide", void 0);
 __decorate$53([
     Input(),
-    __metadata$31("design:type", QueryList)
+    __metadata$32("design:type", QueryList)
 ], NavigationComponent.prototype, "inputItems", void 0);
 __decorate$53([
     Output(),
-    __metadata$31("design:type", Object)
+    __metadata$32("design:type", Object)
 ], NavigationComponent.prototype, "select", void 0);
 __decorate$53([
     Output(),
-    __metadata$31("design:type", Object)
+    __metadata$32("design:type", Object)
 ], NavigationComponent.prototype, "navigate", void 0);
 __decorate$53([
     ContentChildren(NavigationItemDirective),
-    __metadata$31("design:type", QueryList)
+    __metadata$32("design:type", QueryList)
 ], NavigationComponent.prototype, "contentItems", void 0);
 __decorate$53([
     HostBinding('class.vclVertical'),
-    __metadata$31("design:type", Object),
-    __metadata$31("design:paramtypes", [])
+    __metadata$32("design:type", Object),
+    __metadata$32("design:paramtypes", [])
 ], NavigationComponent.prototype, "isVertical", null);
 NavigationComponent = __decorate$53([
     Component({
@@ -5191,7 +5264,7 @@ NavigationComponent = __decorate$53([
         },
         template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (tap)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
     }),
-    __metadata$31("design:paramtypes", [Router])
+    __metadata$32("design:paramtypes", [Router])
 ], NavigationComponent);
 
 var __decorate$50 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5220,7 +5293,7 @@ var __decorate$56 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$33 = (this && this.__metadata) || function (k, v) {
+var __metadata$34 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ToolbarComponent = (function () {
@@ -5231,7 +5304,7 @@ var ToolbarComponent = (function () {
 }());
 __decorate$56([
     Input(),
-    __metadata$33("design:type", Number)
+    __metadata$34("design:type", Number)
 ], ToolbarComponent.prototype, "ariaLevel", void 0);
 ToolbarComponent = __decorate$56([
     Component({
@@ -5246,7 +5319,7 @@ ToolbarComponent = __decorate$56([
             '[attr.role]': '"menubar"',
         }
     }),
-    __metadata$33("design:paramtypes", [])
+    __metadata$34("design:paramtypes", [])
 ], ToolbarComponent);
 
 var __decorate$55 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5275,7 +5348,7 @@ var __decorate$58 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$34 = (this && this.__metadata) || function (k, v) {
+var __metadata$35 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ProgressBarComponent = (function () {
@@ -5341,27 +5414,27 @@ var ProgressBarComponent = (function () {
 }());
 __decorate$58([
     Input(),
-    __metadata$34("design:type", Number)
+    __metadata$35("design:type", Number)
 ], ProgressBarComponent.prototype, "value", void 0);
 __decorate$58([
     Input(),
-    __metadata$34("design:type", Number)
+    __metadata$35("design:type", Number)
 ], ProgressBarComponent.prototype, "secondaryValue", void 0);
 __decorate$58([
     Input(),
-    __metadata$34("design:type", Number)
+    __metadata$35("design:type", Number)
 ], ProgressBarComponent.prototype, "minValue", void 0);
 __decorate$58([
     Input(),
-    __metadata$34("design:type", Number)
+    __metadata$35("design:type", Number)
 ], ProgressBarComponent.prototype, "maxValue", void 0);
 __decorate$58([
     Input(),
-    __metadata$34("design:type", Boolean)
+    __metadata$35("design:type", Boolean)
 ], ProgressBarComponent.prototype, "indeterminate", void 0);
 __decorate$58([
     Input(),
-    __metadata$34("design:type", String)
+    __metadata$35("design:type", String)
 ], ProgressBarComponent.prototype, "label", void 0);
 ProgressBarComponent = __decorate$58([
     Component({
@@ -5399,7 +5472,7 @@ var __decorate$60 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$35 = (this && this.__metadata) || function (k, v) {
+var __metadata$36 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$8 = {
@@ -5463,54 +5536,54 @@ var RadioButtonComponent = (function () {
 }());
 __decorate$60([
     Input(),
-    __metadata$35("design:type", Object)
+    __metadata$36("design:type", Object)
 ], RadioButtonComponent.prototype, "checkedIcon", void 0);
 __decorate$60([
     Input(),
-    __metadata$35("design:type", Object)
+    __metadata$36("design:type", Object)
 ], RadioButtonComponent.prototype, "uncheckedIcon", void 0);
 __decorate$60([
     HostBinding('attr.aria-disabled'),
     HostBinding('class.vclDisabled'),
     Input(),
-    __metadata$35("design:type", Object)
+    __metadata$36("design:type", Object)
 ], RadioButtonComponent.prototype, "disabled", void 0);
 __decorate$60([
     Input('value'),
-    __metadata$35("design:type", Object)
+    __metadata$36("design:type", Object)
 ], RadioButtonComponent.prototype, "value", void 0);
 __decorate$60([
     Input(),
-    __metadata$35("design:type", String)
+    __metadata$36("design:type", String)
 ], RadioButtonComponent.prototype, "labelPosition", void 0);
 __decorate$60([
     Input(),
-    __metadata$35("design:type", String)
+    __metadata$36("design:type", String)
 ], RadioButtonComponent.prototype, "label", void 0);
 __decorate$60([
     HostBinding(),
-    __metadata$35("design:type", Object)
+    __metadata$36("design:type", Object)
 ], RadioButtonComponent.prototype, "tabindex", void 0);
 __decorate$60([
     HostBinding('attr.checked'),
     Input(),
-    __metadata$35("design:type", Boolean)
+    __metadata$36("design:type", Boolean)
 ], RadioButtonComponent.prototype, "checked", void 0);
 __decorate$60([
     Output(),
-    __metadata$35("design:type", Object)
+    __metadata$36("design:type", Object)
 ], RadioButtonComponent.prototype, "checkedChange", void 0);
 __decorate$60([
     HostListener('keydown', ['$event']),
-    __metadata$35("design:type", Function),
-    __metadata$35("design:paramtypes", [KeyboardEvent]),
-    __metadata$35("design:returntype", void 0)
+    __metadata$36("design:type", Function),
+    __metadata$36("design:paramtypes", [KeyboardEvent]),
+    __metadata$36("design:returntype", void 0)
 ], RadioButtonComponent.prototype, "onKeydown", null);
 __decorate$60([
     HostListener('tap', ['$event']),
-    __metadata$35("design:type", Function),
-    __metadata$35("design:paramtypes", [Event]),
-    __metadata$35("design:returntype", void 0)
+    __metadata$36("design:type", Function),
+    __metadata$36("design:paramtypes", [Event]),
+    __metadata$36("design:returntype", void 0)
 ], RadioButtonComponent.prototype, "onTap", null);
 RadioButtonComponent = __decorate$60([
     Component({
@@ -5524,7 +5597,7 @@ RadioButtonComponent = __decorate$60([
         changeDetection: ChangeDetectionStrategy.OnPush,
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$8]
     }),
-    __metadata$35("design:paramtypes", [ElementRef, ChangeDetectorRef])
+    __metadata$36("design:paramtypes", [ElementRef, ChangeDetectorRef])
 ], RadioButtonComponent);
 
 var __decorate$61 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5533,7 +5606,7 @@ var __decorate$61 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$36 = (this && this.__metadata) || function (k, v) {
+var __metadata$37 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var SelectionMode$2;
@@ -5618,11 +5691,11 @@ var RadioGroupComponent = (function () {
 }());
 __decorate$61([
     Output(),
-    __metadata$36("design:type", Object)
+    __metadata$37("design:type", Object)
 ], RadioGroupComponent.prototype, "change", void 0);
 __decorate$61([
     ContentChildren(RadioButtonComponent),
-    __metadata$36("design:type", QueryList)
+    __metadata$37("design:type", QueryList)
 ], RadioGroupComponent.prototype, "radioButtons", void 0);
 RadioGroupComponent = __decorate$61([
     Component({
@@ -5639,7 +5712,7 @@ var __decorate$63 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$37 = (this && this.__metadata) || function (k, v) {
+var __metadata$38 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var FormControlLabelComponent = (function () {
@@ -5660,37 +5733,37 @@ var FormControlLabelComponent = (function () {
 }());
 __decorate$63([
     ViewChild('content'),
-    __metadata$37("design:type", ElementRef)
+    __metadata$38("design:type", ElementRef)
 ], FormControlLabelComponent.prototype, "content", void 0);
 __decorate$63([
     Input(),
     HostBinding('class.vclDisabled'),
-    __metadata$37("design:type", Object)
+    __metadata$38("design:type", Object)
 ], FormControlLabelComponent.prototype, "disabled", void 0);
 __decorate$63([
     Input(),
-    __metadata$37("design:type", String)
+    __metadata$38("design:type", String)
 ], FormControlLabelComponent.prototype, "requiredIndicatorCharacter", void 0);
 __decorate$63([
     Input(),
-    __metadata$37("design:type", String)
+    __metadata$38("design:type", String)
 ], FormControlLabelComponent.prototype, "label", void 0);
 __decorate$63([
     Input(),
-    __metadata$37("design:type", String)
+    __metadata$38("design:type", String)
 ], FormControlLabelComponent.prototype, "subLabel", void 0);
 __decorate$63([
     HostBinding('class.vclFormControlLabelWrapping'),
     Input(),
-    __metadata$37("design:type", Object)
+    __metadata$38("design:type", Object)
 ], FormControlLabelComponent.prototype, "wrapping", void 0);
 __decorate$63([
     Input(),
-    __metadata$37("design:type", Boolean)
+    __metadata$38("design:type", Boolean)
 ], FormControlLabelComponent.prototype, "required", void 0);
 __decorate$63([
     Input(),
-    __metadata$37("design:type", String)
+    __metadata$38("design:type", String)
 ], FormControlLabelComponent.prototype, "requiredIndLabel", void 0);
 FormControlLabelComponent = __decorate$63([
     Component({
@@ -5747,7 +5820,7 @@ var __decorate$65 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$38 = (this && this.__metadata) || function (k, v) {
+var __metadata$39 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10 = {
@@ -5822,52 +5895,52 @@ var CheckboxComponent = (function () {
 }());
 __decorate$65([
     HostBinding(),
-    __metadata$38("design:type", Object)
+    __metadata$39("design:type", Object)
 ], CheckboxComponent.prototype, "tabindex", void 0);
 __decorate$65([
     Input(),
-    __metadata$38("design:type", String)
+    __metadata$39("design:type", String)
 ], CheckboxComponent.prototype, "checkedIcon", void 0);
 __decorate$65([
     Input(),
-    __metadata$38("design:type", String)
+    __metadata$39("design:type", String)
 ], CheckboxComponent.prototype, "uncheckedIcon", void 0);
 __decorate$65([
     HostBinding('attr.aria-disabled'),
     HostBinding('class.vclDisabled'),
     Input(),
-    __metadata$38("design:type", Boolean)
+    __metadata$39("design:type", Boolean)
 ], CheckboxComponent.prototype, "disabled", void 0);
 __decorate$65([
     Input(),
-    __metadata$38("design:type", String)
+    __metadata$39("design:type", String)
 ], CheckboxComponent.prototype, "labelPosition", void 0);
 __decorate$65([
     HostBinding('attr.checked'),
     Input(),
-    __metadata$38("design:type", Boolean)
+    __metadata$39("design:type", Boolean)
 ], CheckboxComponent.prototype, "checked", void 0);
 __decorate$65([
     Output(),
-    __metadata$38("design:type", Object)
+    __metadata$39("design:type", Object)
 ], CheckboxComponent.prototype, "checkedChange", void 0);
 __decorate$65([
     HostListener('keydown', ['$event']),
-    __metadata$38("design:type", Function),
-    __metadata$38("design:paramtypes", [Object]),
-    __metadata$38("design:returntype", void 0)
+    __metadata$39("design:type", Function),
+    __metadata$39("design:paramtypes", [Object]),
+    __metadata$39("design:returntype", void 0)
 ], CheckboxComponent.prototype, "onKeyup", null);
 __decorate$65([
     HostListener('tap', ['$event']),
-    __metadata$38("design:type", Function),
-    __metadata$38("design:paramtypes", [Object]),
-    __metadata$38("design:returntype", void 0)
+    __metadata$39("design:type", Function),
+    __metadata$39("design:paramtypes", [Object]),
+    __metadata$39("design:returntype", void 0)
 ], CheckboxComponent.prototype, "onTap", null);
 __decorate$65([
     HostListener('blur'),
-    __metadata$38("design:type", Function),
-    __metadata$38("design:paramtypes", [Object]),
-    __metadata$38("design:returntype", void 0)
+    __metadata$39("design:type", Function),
+    __metadata$39("design:paramtypes", [Object]),
+    __metadata$39("design:returntype", void 0)
 ], CheckboxComponent.prototype, "onBlur", null);
 CheckboxComponent = __decorate$65([
     Component({
@@ -5882,7 +5955,7 @@ CheckboxComponent = __decorate$65([
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10],
         changeDetection: ChangeDetectionStrategy.OnPush
     }),
-    __metadata$38("design:paramtypes", [ElementRef])
+    __metadata$39("design:paramtypes", [ElementRef])
 ], CheckboxComponent);
 
 var __decorate$64 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6126,7 +6199,7 @@ var __decorate$67 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$39 = (this && this.__metadata) || function (k, v) {
+var __metadata$40 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$11 = {
@@ -6261,63 +6334,63 @@ var DatePickerComponent = (function () {
 }());
 __decorate$67([
     Input('closeOnSelect'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "closeOnSelect", void 0);
 __decorate$67([
     Input('highlightToday'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "highlightToday", void 0);
 __decorate$67([
     Input('highlightSelected'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "highlightSelected", void 0);
 __decorate$67([
     Input('displayWeekNumbers'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayWeekNumbers", void 0);
 __decorate$67([
     Input('displayWeekdays'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayWeekdays", void 0);
 __decorate$67([
     Input('prevYearBtnIcon'),
-    __metadata$39("design:type", String)
+    __metadata$40("design:type", String)
 ], DatePickerComponent.prototype, "prevYearBtnIcon", void 0);
 __decorate$67([
     Input('nextYearBtnIcon'),
-    __metadata$39("design:type", String)
+    __metadata$40("design:type", String)
 ], DatePickerComponent.prototype, "nextYearBtnIcon", void 0);
 __decorate$67([
     Input('displayJumpToday'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayJumpToday", void 0);
 __decorate$67([
     Input('displayJumpSelected'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayJumpSelected", void 0);
 __decorate$67([
     Input('selectedDate'),
-    __metadata$39("design:type", Date)
+    __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "selectedDate", void 0);
 __decorate$67([
     Input('selectRange'),
-    __metadata$39("design:type", Boolean)
+    __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "selectRange", void 0);
 __decorate$67([
     Input('selectedRangeEnd'),
-    __metadata$39("design:type", Date)
+    __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "selectedRangeEnd", void 0);
 __decorate$67([
     Input('maxRangeLength'),
-    __metadata$39("design:type", Number)
+    __metadata$40("design:type", Number)
 ], DatePickerComponent.prototype, "maxRangeLength", void 0);
 __decorate$67([
     Input('minDate'),
-    __metadata$39("design:type", Date)
+    __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "minDate", void 0);
 __decorate$67([
     Input('maxDate'),
-    __metadata$39("design:type", Date)
+    __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "maxDate", void 0);
 DatePickerComponent = __decorate$67([
     Component({
@@ -6363,7 +6436,7 @@ var __decorate$69 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$40 = (this && this.__metadata) || function (k, v) {
+var __metadata$41 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var MonthPickerComponent = MonthPickerComponent_1 = (function () {
@@ -6634,103 +6707,103 @@ MonthPickerComponent.Tag = 'MonthPickerComponent';
 MonthPickerComponent.MonthCount = 12;
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Boolean)
+    __metadata$41("design:type", Boolean)
 ], MonthPickerComponent.prototype, "debug", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Boolean)
+    __metadata$41("design:type", Boolean)
 ], MonthPickerComponent.prototype, "expanded", void 0);
 __decorate$69([
     Output(),
-    __metadata$40("design:type", EventEmitter)
+    __metadata$41("design:type", EventEmitter)
 ], MonthPickerComponent.prototype, "expandedChange", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Number)
+    __metadata$41("design:type", Number)
 ], MonthPickerComponent.prototype, "currentYear", void 0);
 __decorate$69([
     Output(),
-    __metadata$40("design:type", EventEmitter)
+    __metadata$41("design:type", EventEmitter)
 ], MonthPickerComponent.prototype, "currentYearChange", void 0);
 __decorate$69([
     Output(),
-    __metadata$40("design:type", Object)
+    __metadata$41("design:type", Object)
 ], MonthPickerComponent.prototype, "prevYearBtnTap", void 0);
 __decorate$69([
     Output(),
-    __metadata$40("design:type", Object)
+    __metadata$41("design:type", Object)
 ], MonthPickerComponent.prototype, "nextYearBtnTap", void 0);
 __decorate$69([
     Output(),
-    __metadata$40("design:type", Object)
+    __metadata$41("design:type", Object)
 ], MonthPickerComponent.prototype, "select", void 0);
 __decorate$69([
     Output(),
-    __metadata$40("design:type", Object)
+    __metadata$41("design:type", Object)
 ], MonthPickerComponent.prototype, "deselect", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Number)
+    __metadata$41("design:type", Number)
 ], MonthPickerComponent.prototype, "tabindex", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Number)
+    __metadata$41("design:type", Number)
 ], MonthPickerComponent.prototype, "monthsPerRow", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Array)
+    __metadata$41("design:type", Array)
 ], MonthPickerComponent.prototype, "colors", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Object)
+    __metadata$41("design:type", Object)
 ], MonthPickerComponent.prototype, "locales", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Object)
+    __metadata$41("design:type", Object)
 ], MonthPickerComponent.prototype, "dateOptions", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Boolean)
+    __metadata$41("design:type", Boolean)
 ], MonthPickerComponent.prototype, "expandable", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Boolean)
+    __metadata$41("design:type", Boolean)
 ], MonthPickerComponent.prototype, "prevYearAvailable", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Boolean)
+    __metadata$41("design:type", Boolean)
 ], MonthPickerComponent.prototype, "nextYearAvailable", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Boolean)
+    __metadata$41("design:type", Boolean)
 ], MonthPickerComponent.prototype, "useAvailableMonths", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", String)
+    __metadata$41("design:type", String)
 ], MonthPickerComponent.prototype, "closeBtnIcon", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", String)
+    __metadata$41("design:type", String)
 ], MonthPickerComponent.prototype, "prevYearBtnIcon", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", String)
+    __metadata$41("design:type", String)
 ], MonthPickerComponent.prototype, "nextYearBtnIcon", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Number)
+    __metadata$41("design:type", Number)
 ], MonthPickerComponent.prototype, "maxSelectableMonths", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Number)
+    __metadata$41("design:type", Number)
 ], MonthPickerComponent.prototype, "minSelectableMonths", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Number)
+    __metadata$41("design:type", Number)
 ], MonthPickerComponent.prototype, "minYear", void 0);
 __decorate$69([
     Input(),
-    __metadata$40("design:type", Number)
+    __metadata$41("design:type", Number)
 ], MonthPickerComponent.prototype, "maxYear", void 0);
 MonthPickerComponent = MonthPickerComponent_1 = __decorate$69([
     Component({
@@ -6738,7 +6811,7 @@ MonthPickerComponent = MonthPickerComponent_1 = __decorate$69([
         template: "<div class=\"vclDatePicker\" [class.vclLayoutHidden]=\"!expanded\"> <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" [attr.role]=\"'grid'\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"maxSelectableMonths > 1\" [attr.aria-expanded]=\"expanded\"> <div class=\"vclLayoutFlex vclDGRow vclLayoutAuto\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button vcl-button class=\"vclButton vclTransparent vclSquare\" type=\"button\" [class.vclDisabled]=\"!prevYearAvailable\" [appIcon]=\"prevYearBtnIcon\" (click)=\"onPrevYearTap()\"> </button> <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span> <button vcl-button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [class.vclDisabled]=\"!nextYearAvailable\" [appIcon]=\"nextYearBtnIcon\" (click)=\"onNextYearTap()\"> </button> <button vcl-button *ngIf=\"expandable\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" [appIcon]=\"closeBtnIcon\" (click)=\"onCloseBtnTap()\"> </button> </div> </div> <div class=\"vclSeparator\"></div> <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\"> <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclLayoutFlex vclDGRow vclLayoutAuto\" role=\"row\"> <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\" (click)=\"selectMonth(currentYear, i+j)\" class=\"vclDGCell vclCalItem\" [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\" [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclToday]=\"isCurrentMonth(i+j)\" [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\" [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" [style.background-color]=\"currentMeta[i+j].color\" [style.order]=\"i+j\" [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" role=\"gridcell\" tabindex=\"0\"> <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\"> {{months[i + j]}} </div> </div> </div> </ng-template> </div> </div> ",
         changeDetection: ChangeDetectionStrategy.OnPush
     }),
-    __metadata$40("design:paramtypes", [ChangeDetectorRef])
+    __metadata$41("design:paramtypes", [ChangeDetectorRef])
 ], MonthPickerComponent);
 var MonthPickerComponent_1;
 
@@ -6768,7 +6841,7 @@ var __decorate$71 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$41 = (this && this.__metadata) || function (k, v) {
+var __metadata$42 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var LabelComponent = (function () {
@@ -6821,36 +6894,36 @@ var LabelComponent = (function () {
 }());
 __decorate$71([
     Input('label'),
-    __metadata$41("design:type", String)
+    __metadata$42("design:type", String)
 ], LabelComponent.prototype, "label", void 0);
 __decorate$71([
     Input('type'),
-    __metadata$41("design:type", String)
+    __metadata$42("design:type", String)
 ], LabelComponent.prototype, "type", void 0);
 __decorate$71([
     HostBinding('class.vclPrimary'),
-    __metadata$41("design:type", Object),
-    __metadata$41("design:paramtypes", [])
+    __metadata$42("design:type", Object),
+    __metadata$42("design:paramtypes", [])
 ], LabelComponent.prototype, "vclPrimary", null);
 __decorate$71([
     HostBinding('class.vclSuccess'),
-    __metadata$41("design:type", Object),
-    __metadata$41("design:paramtypes", [])
+    __metadata$42("design:type", Object),
+    __metadata$42("design:paramtypes", [])
 ], LabelComponent.prototype, "vclSuccess", null);
 __decorate$71([
     HostBinding('class.vclInfo'),
-    __metadata$41("design:type", Object),
-    __metadata$41("design:paramtypes", [])
+    __metadata$42("design:type", Object),
+    __metadata$42("design:paramtypes", [])
 ], LabelComponent.prototype, "vclInfo", null);
 __decorate$71([
     HostBinding('class.vclWarning'),
-    __metadata$41("design:type", Object),
-    __metadata$41("design:paramtypes", [])
+    __metadata$42("design:type", Object),
+    __metadata$42("design:paramtypes", [])
 ], LabelComponent.prototype, "vclWarning", null);
 __decorate$71([
     HostBinding('class.vclError'),
-    __metadata$41("design:type", Object),
-    __metadata$41("design:paramtypes", [])
+    __metadata$42("design:type", Object),
+    __metadata$42("design:paramtypes", [])
 ], LabelComponent.prototype, "vclError", null);
 LabelComponent = __decorate$71([
     Component({
@@ -6888,7 +6961,7 @@ var __decorate$73 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$42 = (this && this.__metadata) || function (k, v) {
+var __metadata$43 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var MoveDirection;
@@ -7152,78 +7225,78 @@ var SliderComponent = (function () {
 }());
 __decorate$73([
     HostBinding(),
-    __metadata$42("design:type", Object)
+    __metadata$43("design:type", Object)
 ], SliderComponent.prototype, "tabindex", void 0);
 __decorate$73([
     Input(),
-    __metadata$42("design:type", Number)
+    __metadata$43("design:type", Number)
 ], SliderComponent.prototype, "value", void 0);
 __decorate$73([
     Output(),
-    __metadata$42("design:type", Object)
+    __metadata$43("design:type", Object)
 ], SliderComponent.prototype, "valueChange", void 0);
 __decorate$73([
     HostBinding('class.vclDisabled'),
     Input(),
-    __metadata$42("design:type", Boolean)
+    __metadata$43("design:type", Boolean)
 ], SliderComponent.prototype, "disabled", void 0);
 __decorate$73([
     Input(),
-    __metadata$42("design:type", Number)
+    __metadata$43("design:type", Number)
 ], SliderComponent.prototype, "min", void 0);
 __decorate$73([
     Input(),
-    __metadata$42("design:type", Number)
+    __metadata$43("design:type", Number)
 ], SliderComponent.prototype, "max", void 0);
 __decorate$73([
     Input('mousewheel'),
-    __metadata$42("design:type", Boolean)
+    __metadata$43("design:type", Boolean)
 ], SliderComponent.prototype, "wheel", void 0);
 __decorate$73([
     Input(),
-    __metadata$42("design:type", Boolean)
+    __metadata$43("design:type", Boolean)
 ], SliderComponent.prototype, "lock", void 0);
 __decorate$73([
     Input(),
-    __metadata$42("design:type", Object)
+    __metadata$43("design:type", Object)
 ], SliderComponent.prototype, "scale", void 0);
 __decorate$73([
     HostBinding('class.vclFocused'),
-    __metadata$42("design:type", Boolean)
+    __metadata$43("design:type", Boolean)
 ], SliderComponent.prototype, "focused", void 0);
 __decorate$73([
     ViewChild('scale'),
-    __metadata$42("design:type", ElementRef)
+    __metadata$43("design:type", ElementRef)
 ], SliderComponent.prototype, "scaleElement", void 0);
 __decorate$73([
     HostListener('focus'),
-    __metadata$42("design:type", Function),
-    __metadata$42("design:paramtypes", []),
-    __metadata$42("design:returntype", void 0)
+    __metadata$43("design:type", Function),
+    __metadata$43("design:paramtypes", []),
+    __metadata$43("design:returntype", void 0)
 ], SliderComponent.prototype, "onFocus", null);
 __decorate$73([
     HostListener('blur'),
-    __metadata$42("design:type", Function),
-    __metadata$42("design:paramtypes", []),
-    __metadata$42("design:returntype", void 0)
+    __metadata$43("design:type", Function),
+    __metadata$43("design:paramtypes", []),
+    __metadata$43("design:returntype", void 0)
 ], SliderComponent.prototype, "onBlur", null);
 __decorate$73([
     HostListener('tap', ['$event']),
-    __metadata$42("design:type", Function),
-    __metadata$42("design:paramtypes", [Object]),
-    __metadata$42("design:returntype", void 0)
+    __metadata$43("design:type", Function),
+    __metadata$43("design:paramtypes", [Object]),
+    __metadata$43("design:returntype", void 0)
 ], SliderComponent.prototype, "onTap", null);
 __decorate$73([
     HostListener('wheel', ['$event']),
-    __metadata$42("design:type", Function),
-    __metadata$42("design:paramtypes", [Object]),
-    __metadata$42("design:returntype", void 0)
+    __metadata$43("design:type", Function),
+    __metadata$43("design:paramtypes", [Object]),
+    __metadata$43("design:returntype", void 0)
 ], SliderComponent.prototype, "onWheel", null);
 __decorate$73([
     HostListener('keydown', ['$event']),
-    __metadata$42("design:type", Function),
-    __metadata$42("design:paramtypes", [Object]),
-    __metadata$42("design:returntype", void 0)
+    __metadata$43("design:type", Function),
+    __metadata$43("design:paramtypes", [Object]),
+    __metadata$43("design:returntype", void 0)
 ], SliderComponent.prototype, "keydown", null);
 SliderComponent = __decorate$73([
     Component({
@@ -7263,7 +7336,7 @@ var __decorate$75 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$43 = (this && this.__metadata) || function (k, v) {
+var __metadata$44 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var InputControlGroup = (function () {
@@ -7278,11 +7351,11 @@ var InputControlGroup = (function () {
 }());
 __decorate$75([
     Input('type'),
-    __metadata$43("design:type", String)
+    __metadata$44("design:type", String)
 ], InputControlGroup.prototype, "type", void 0);
 __decorate$75([
     Input('label'),
-    __metadata$43("design:type", String)
+    __metadata$44("design:type", String)
 ], InputControlGroup.prototype, "label", void 0);
 InputControlGroup = __decorate$75([
     Component({
@@ -7293,7 +7366,7 @@ InputControlGroup = __decorate$75([
         },
         template: "<ng-content></ng-content> <div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\" [class.vclError]=\"type=='error'\" [class.vclWarning]=\"type=='warning'\" [class.vclSuccess]=\"type=='success'\"> {{label}} </div> "
     }),
-    __metadata$43("design:paramtypes", [ElementRef])
+    __metadata$44("design:paramtypes", [ElementRef])
 ], InputControlGroup);
 
 var __decorate$74 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7316,7 +7389,7 @@ VCLInputControlGroupModule = __decorate$74([
     })
 ], VCLInputControlGroupModule);
 
-var __extends$14 = (this && this.__extends) || (function () {
+var __extends$13 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -7403,7 +7476,7 @@ var BUTTON_ALIGNMENT_CLASS_MAP = (_c = {},
     _c[AlertAlignment.Right] = 'vclLayoutEndJustified',
     _c);
 var AlertError = (function (_super) {
-    __extends$14(AlertError, _super);
+    __extends$13(AlertError, _super);
     function AlertError(reason, message) {
         var _this = _super.call(this, message) || this;
         _this.reason = reason;
@@ -7415,30 +7488,26 @@ var _a;
 var _b;
 var _c;
 
-var __extends$13 = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate$77 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$44 = (this && this.__metadata) || function (k, v) {
+var __metadata$45 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
+function dismiss(layer, err) {
+    if (err instanceof Error) {
+        layer.closeWithError(err);
+    }
+    else {
+        layer.closeWithError(new AlertError(err));
+    }
+}
 var AlertComponent = (function () {
     function AlertComponent(alertLayer, layerService, cdRef) {
+        this.alertLayer = alertLayer;
         this.layerService = layerService;
         this.cdRef = cdRef;
         this.alert = {};
@@ -7448,7 +7517,7 @@ var AlertComponent = (function () {
         // Check if the top layer is the alert layer
         if (this.layerService.getTopLayer() === this.alertLayer) {
             if (ev.key === 'Escape' && this.alert.escClose) {
-                this.alertLayer.dismiss('esc');
+                dismiss(this.alertLayer, 'esc');
             }
             else if (ev.key === 'Enter') {
                 this.confirm();
@@ -7498,6 +7567,7 @@ var AlertComponent = (function () {
         configurable: true
     });
     AlertComponent.prototype.confirm = function () {
+        var _this = this;
         if (this.alert.loader)
             return;
         var result = {};
@@ -7518,22 +7588,37 @@ var AlertComponent = (function () {
                 }
             }
         }
-        if (this.alert.loaderOnConfirm) {
+        if (this.alert.confirmAction) {
             this.alert.loader = true;
             this.cdRef.markForCheck();
-            this.alertLayer.send(result);
+            var $ = Observable.from(typeof this.alert.confirmAction === 'function' ? this.alert.confirmAction(result) : this.alert.confirmAction);
+            $.subscribe(function (value) {
+                var asyncResult = {};
+                asyncResult.value = value;
+                _this.alertLayer.send(asyncResult);
+            }, function (err) {
+                dismiss(_this.alertLayer, err);
+            }, function () {
+                _this.alertLayer.close();
+            });
         }
         else {
-            this.alertLayer.close(result);
+            if (this.alert.loaderOnConfirm) {
+                this.alert.loader = true;
+                this.cdRef.markForCheck();
+                result.close = function () { return _this.alertLayer.close(); };
+                this.alertLayer.send(result);
+            }
+            else {
+                this.alertLayer.close(result);
+            }
         }
     };
     AlertComponent.prototype.cancel = function (reason) {
-        this.alertLayer.dismiss('cancel');
-    };
-    AlertComponent.prototype.offClick = function () {
+        dismiss(this.alertLayer, 'cancel');
     };
     AlertComponent.prototype.close = function (reason) {
-        this.alertLayer.dismiss('close');
+        dismiss(this.alertLayer, 'close');
     };
     AlertComponent.prototype.valueChange = function (value) {
         this.value = value;
@@ -7542,50 +7627,21 @@ var AlertComponent = (function () {
 }());
 __decorate$77([
     Input(),
-    __metadata$44("design:type", Object)
+    __metadata$45("design:type", Object)
 ], AlertComponent.prototype, "alert", void 0);
 __decorate$77([
     HostListener('document:keyup', ['$event']),
-    __metadata$44("design:type", Function),
-    __metadata$44("design:paramtypes", [KeyboardEvent]),
-    __metadata$44("design:returntype", void 0)
+    __metadata$45("design:type", Function),
+    __metadata$45("design:paramtypes", [KeyboardEvent]),
+    __metadata$45("design:returntype", void 0)
 ], AlertComponent.prototype, "onKeyUp", null);
 AlertComponent = __decorate$77([
     Component({
         template: "<div class=\"vclNotification\" [ngClass]=\"alertClass\"> <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" [ngClass]=\"titleAlignmentClass\" *ngIf=\"alert.title\"> <div class=\"vclLayoutFlex\">{{alert.title}}</div> <button *ngIf=\"alert.showCloseButton\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" (tap)=\"close()\"><i class=\"fa fa-times\"></i></button> </div> <div class=\"vclNotificationContent vclLayoutVertical vclLayoutCenterJustified \"> <div style=\"padding-bottom: 1em\" *ngIf=\"iconClass\" [ngClass]=\"iconAlignmentClass\"> <span class=\"vclIcon vclNotificationIcon\" [ngClass]=\"iconClass\"></span> </div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" *ngIf=\"alert.text && !alert.html\">{{alert.text}}</div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" [innerHtml]=\"alert.text\" *ngIf=\"alert.text && alert.html\"></div> <div style=\"padding-bottom: 0.5em\" *ngIf=\"alert.input\"><alert-input [alert]=\"alert\" (valueChange)=\"valueChange($event)\"></alert-input></div> <div *ngIf=\"validationError\" class=\"vclNotification vclError\"> <div class=\"vclNotificationContent\"> <vcl-icogram label=\"{{validationError}}\" prepIcon=\"fa:exclamation-circle\"></vcl-icogram> </div> </div> <div class=\"vclLayoutHorizontal vclLooseButtonGroup\" [ngClass]=\"buttonAlignmentClass\"> <button vcl-button *ngIf=\"!!alert.showConfirmButton\" (tap)=\"confirm()\" [style.background-color]=\"alert.confirmButtonColor\" [ngClass]=\"alert.confirmButtonClass\" [busy]=\"!!alert.loader\" type=\"button\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.confirmButtonAppIcon\" [prepIcon]=\"alert.confirmButtonPrepIcon\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> </button> <button vcl-button *ngIf=\"!!alert.showCancelButton\" [style.background-color]=\"!!alert.cancelButtonColor\" [ngClass]=\"alert.cancelButtonClass\" [busy]=\"!alert.showConfirmButton && !!alert.loader\" [disabled]=\"!!alert.showConfirmButton && !!alert.loader\" type=\"button\" (tap)=\"cancel()\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.cancelButtonAppIcon\" [prepIcon]=\"alert.cancelButtonPrepIcon\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> </button> </div> <div *ngIf=\"!alert.showCancelButton && !alert.showConfirmButton && !!alert.loader\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i class=\"vclBusy-busyIndCircular\"></i> </div> </div> </div> </div> ",
         changeDetection: ChangeDetectionStrategy.OnPush
     }),
-    __param$6(0, Inject(forwardRef(function () { return AlertLayer; }))),
-    __metadata$44("design:paramtypes", [AlertLayer, LayerService, ChangeDetectorRef])
+    __metadata$45("design:paramtypes", [LayerRef, LayerService$1, ChangeDetectorRef])
 ], AlertComponent);
-var AlertLayer = (function (_super) {
-    __extends$13(AlertLayer, _super);
-    function AlertLayer() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.modal = true;
-        _this.transparent = true;
-        return _this;
-    }
-    AlertLayer.prototype.dismiss = function (reason) {
-        this.closeWithError(new AlertError(reason));
-    };
-    Object.defineProperty(AlertLayer.prototype, "alert", {
-        get: function () {
-            return (this.attrs && this.attrs['alert']) || {};
-        },
-        enumerable: true,
-        configurable: true
-    });
-    AlertLayer.prototype.offClick = function () {
-        if (this.alert.offClickClose) {
-            this.dismiss('offClick');
-        }
-    };
-    return AlertLayer;
-}(LayerRef));
-AlertLayer = __decorate$77([
-    Layer(AlertComponent)
-], AlertLayer);
 
 var __decorate$78 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7593,7 +7649,7 @@ var __decorate$78 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$45 = (this && this.__metadata) || function (k, v) {
+var __metadata$46 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 // TODO: support text, password, textarea, select, radio, checkbox file.
@@ -7638,15 +7694,15 @@ var AlertInputComponent = (function () {
 }());
 __decorate$78([
     ViewChild('input'),
-    __metadata$45("design:type", ElementRef)
+    __metadata$46("design:type", ElementRef)
 ], AlertInputComponent.prototype, "input", void 0);
 __decorate$78([
     Input(),
-    __metadata$45("design:type", Object)
+    __metadata$46("design:type", Object)
 ], AlertInputComponent.prototype, "alert", void 0);
 __decorate$78([
     Output(),
-    __metadata$45("design:type", Object)
+    __metadata$46("design:type", Object)
 ], AlertInputComponent.prototype, "valueChange", void 0);
 AlertInputComponent = __decorate$78([
     Component({
@@ -7662,12 +7718,12 @@ var __decorate$79 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$46 = (this && this.__metadata) || function (k, v) {
+var __metadata$47 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var AlertService = (function () {
-    function AlertService(alertLayerRef) {
-        this.alertLayerRef = alertLayerRef;
+    function AlertService(ls) {
+        this.ls = ls;
         this.noop = function () { };
     }
     AlertService.prototype.alert = function (text, opts) {
@@ -7699,17 +7755,28 @@ var AlertService = (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             opts[_i] = arguments[_i];
         }
-        var alert = Object.assign.apply(Object, [{}, ALERT_DEFAULTS].concat(opts));
-        return this.alertLayerRef.open({ alert: alert });
+        return this.create.apply(this, opts).open();
     };
-    AlertService.prototype.close = function () {
-        this.alertLayerRef.close();
+    AlertService.prototype.create = function () {
+        var opts = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            opts[_i] = arguments[_i];
+        }
+        var alert = Object.assign.apply(Object, [{}, ALERT_DEFAULTS].concat(opts));
+        return this.ls.create(AlertComponent, {
+            offClick: function (layer) {
+                dismiss(layer, 'offClick');
+            },
+            modal: true,
+            transparent: true,
+            attrs: { alert: alert }
+        });
     };
     return AlertService;
 }());
 AlertService = __decorate$79([
     Injectable(),
-    __metadata$46("design:paramtypes", [AlertLayer])
+    __metadata$47("design:paramtypes", [LayerService])
 ], AlertService);
 
 var __decorate$76 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7731,7 +7798,7 @@ VCLAlertModule = __decorate$76([
             VCLButtonModule,
             VCLInputModule,
             VCLIcogramModule,
-            VCLLayerModule.forChild({ layers: [AlertLayer] })
+            VCLLayerModule.forChild({ layers: [] })
         ],
         exports: [],
         declarations: [AlertComponent, AlertInputComponent],
@@ -7746,7 +7813,7 @@ var __decorate$81 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$47 = (this && this.__metadata) || function (k, v) {
+var __metadata$48 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var BusyIndicatorComponent = (function () {
@@ -7764,7 +7831,7 @@ var BusyIndicatorComponent = (function () {
 }());
 __decorate$81([
     Input(),
-    __metadata$47("design:type", String)
+    __metadata$48("design:type", String)
 ], BusyIndicatorComponent.prototype, "type", void 0);
 BusyIndicatorComponent = __decorate$81([
     Component({
@@ -7780,7 +7847,7 @@ var __decorate$82 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$48 = (this && this.__metadata) || function (k, v) {
+var __metadata$49 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var BusyComponent = (function () {
@@ -7792,15 +7859,15 @@ var BusyComponent = (function () {
 __decorate$82([
     Input('vclBusy'),
     HostBinding('class.vclLoadingLayerContainer'),
-    __metadata$48("design:type", Object)
+    __metadata$49("design:type", Object)
 ], BusyComponent.prototype, "busy", void 0);
 __decorate$82([
     Input(),
-    __metadata$48("design:type", String)
+    __metadata$49("design:type", String)
 ], BusyComponent.prototype, "busyIndicatorType", void 0);
 __decorate$82([
     Input(),
-    __metadata$48("design:type", String)
+    __metadata$49("design:type", String)
 ], BusyComponent.prototype, "busyLabel", void 0);
 BusyComponent = __decorate$82([
     Component({
@@ -7835,7 +7902,7 @@ var __decorate$84 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$49 = (this && this.__metadata) || function (k, v) {
+var __metadata$50 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var NotificationComponent = (function () {
@@ -7846,7 +7913,7 @@ var NotificationComponent = (function () {
 }());
 __decorate$84([
     Input(),
-    __metadata$49("design:type", Object)
+    __metadata$50("design:type", Object)
 ], NotificationComponent.prototype, "notifications", void 0);
 NotificationComponent = __decorate$84([
     Component({
@@ -7876,7 +7943,7 @@ NotificationComponent = __decorate$84([
     })
 ], NotificationComponent);
 
-var __extends$15 = (this && this.__extends) || (function () {
+var __extends$14 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -7893,10 +7960,9 @@ var __decorate$85 = (this && this.__decorate) || function (decorators, target, k
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var NotificationLayer = (function (_super) {
-    __extends$15(NotificationLayer, _super);
+    __extends$14(NotificationLayer, _super);
     function NotificationLayer() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.transparent = true;
         _this.notifications = [];
         return _this;
     }
@@ -7913,92 +7979,73 @@ var NotificationLayer = (function (_super) {
         this.notifications = this.notifications.filter(function (g) { return g !== notification; });
         if (this.notifications.length === 0) {
             this.close();
-            // this.open({ notifications: this.notifications });
         }
         else {
             this.open({ notifications: this.notifications });
         }
     };
-    NotificationLayer.prototype.offClick = function () {
-    };
     return NotificationLayer;
 }(LayerRef));
+function noop() { }
 var NotificationLayerTopRight = (function (_super) {
-    __extends$15(NotificationLayerTopRight, _super);
+    __extends$14(NotificationLayerTopRight, _super);
     function NotificationLayerTopRight() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationTopRight';
-        _this.reverse = true;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerTopRight;
 }(NotificationLayer));
 NotificationLayerTopRight = __decorate$85([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopRight', offClick: noop })
 ], NotificationLayerTopRight);
 var NotificationLayerTop = (function (_super) {
-    __extends$15(NotificationLayerTop, _super);
+    __extends$14(NotificationLayerTop, _super);
     function NotificationLayerTop() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.reverse = true;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerTop;
 }(NotificationLayer));
 NotificationLayerTop = __decorate$85([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTop', offClick: noop })
 ], NotificationLayerTop);
 var NotificationLayerTopLeft = (function (_super) {
-    __extends$15(NotificationLayerTopLeft, _super);
+    __extends$14(NotificationLayerTopLeft, _super);
     function NotificationLayerTopLeft() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationTopLeft';
-        _this.reverse = true;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerTopLeft;
 }(NotificationLayer));
 NotificationLayerTopLeft = __decorate$85([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopLeft', offClick: noop })
 ], NotificationLayerTopLeft);
 var NotificationLayerBottomRight = (function (_super) {
-    __extends$15(NotificationLayerBottomRight, _super);
+    __extends$14(NotificationLayerBottomRight, _super);
     function NotificationLayerBottomRight() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationBottomRight';
-        _this.reverse = false;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerBottomRight;
 }(NotificationLayer));
 NotificationLayerBottomRight = __decorate$85([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomRight', offClick: noop })
 ], NotificationLayerBottomRight);
 var NotificationLayerBottom = (function (_super) {
-    __extends$15(NotificationLayerBottom, _super);
+    __extends$14(NotificationLayerBottom, _super);
     function NotificationLayerBottom() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationBottom';
-        _this.reverse = false;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerBottom;
 }(NotificationLayer));
 NotificationLayerBottom = __decorate$85([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottom', offClick: noop })
 ], NotificationLayerBottom);
 var NotificationLayerBottomLeft = (function (_super) {
-    __extends$15(NotificationLayerBottomLeft, _super);
+    __extends$14(NotificationLayerBottomLeft, _super);
     function NotificationLayerBottomLeft() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationBottomLeft';
-        _this.reverse = false;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerBottomLeft;
 }(NotificationLayer));
 NotificationLayerBottomLeft = __decorate$85([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomLeft', offClick: noop })
 ], NotificationLayerBottomLeft);
 
 var NotificationType;
@@ -8049,7 +8096,7 @@ var TYPE_CLASS_MAP$1 = (_b$1 = {},
     _b$1);
 var _b$1;
 
-var __extends$16 = (this && this.__extends) || (function () {
+var __extends$15 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -8060,7 +8107,7 @@ var __extends$16 = (this && this.__extends) || (function () {
     };
 })();
 var Notification = (function (_super) {
-    __extends$16(Notification, _super);
+    __extends$15(Notification, _super);
     function Notification(opts) {
         var _this = _super.call(this) || this;
         _this.opts = opts;
@@ -8164,7 +8211,7 @@ var __decorate$86 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$50 = (this && this.__metadata) || function (k, v) {
+var __metadata$51 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var NotificationService = (function () {
@@ -8230,7 +8277,7 @@ var NotificationService = (function () {
 }());
 NotificationService = __decorate$86([
     Injectable(),
-    __metadata$50("design:paramtypes", [NotificationLayerTopRight,
+    __metadata$51("design:paramtypes", [NotificationLayerTopRight,
         NotificationLayerBottomRight,
         NotificationLayerBottom,
         NotificationLayerBottomLeft,
@@ -8391,88 +8438,8 @@ var TooltipService = (function () {
 TooltipService = __decorate$89([
     Injectable()
 ], TooltipService);
-var tooltipService = new TooltipService();
 
 var __decorate$88 = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$51 = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var TooltipComponent = (function () {
-    function TooltipComponent(element) {
-        this.element = element;
-        this.animationState = 'hidden';
-        this.placement = "top";
-        // Initial position should out of screen
-        this.tooltipPlacement = { Top: -1000, Left: -1000 };
-    }
-    TooltipComponent.prototype.ngAfterViewInit = function () {
-        if (this.hostElement) {
-            var tooltipOffset_1 = tooltipService.positionElements(this.hostElement, this.element.nativeElement.children[0].children[0], this.placement);
-            var context_1 = this;
-            // to avoid from ExpressionChangedAfterItHasBeenCheckedError
-            setTimeout(function () {
-                context_1.tooltipPlacement = {
-                    Top: tooltipOffset_1.Top,
-                    Left: tooltipOffset_1.Left
-                };
-                context_1.animationState = 'shown';
-            });
-        }
-        else {
-            console.error('Host element not specified');
-        }
-    };
-    Object.defineProperty(TooltipComponent.prototype, "tooltipPosition", {
-        get: function () {
-            switch (this.placement) {
-                case 'right':
-                    {
-                        return 'vclTooltip vclArrowPointerLeft';
-                    }
-                case 'left':
-                    {
-                        return 'vclTooltip vclArrowPointerRight';
-                    }
-                case 'bottom':
-                    {
-                        return 'vclTooltip vclArrowPointerTop';
-                    }
-                default:
-                    {
-                        return 'vclTooltip vclArrowPointerBottom';
-                    }
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return TooltipComponent;
-}());
-TooltipComponent = __decorate$88([
-    Component({
-        selector: 'vcl-tooltip-container',
-        template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"opacity:0; white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} </div> <div class=\"vclArrowPointer\"></div> </div> ",
-        host: {
-            '[class.vclTooltip]': 'true',
-        },
-        styles: [":host{ top: 0; left: 0}"],
-        animations: [
-            trigger('enterAnimation', [
-                state('shown', style({ opacity: 1 })),
-                state('hidden', style({ opacity: 0 })),
-                transition('* => *', animate('.2s'))
-            ])
-        ]
-    }),
-    __metadata$51("design:paramtypes", [ElementRef])
-], TooltipComponent);
-
-var __decorate$90 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -8481,7 +8448,135 @@ var __decorate$90 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$52 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$8 = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var TooltipComponent = (function () {
+    function TooltipComponent(element, document, renderer, tooltipService) {
+        this.element = element;
+        this.document = document;
+        this.renderer = renderer;
+        this.tooltipService = tooltipService;
+        this.placement = "top";
+        this.animationState = 'none';
+        // Initial position should out of screen
+        this.tooltipPlacement = { Top: -1000, Left: -1000 };
+        this.tooltipPosition = 'vclTooltip vclArrowPointerTop';
+        // true if initialized by directive
+        this.showOnInit = false;
+    }
+    TooltipComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.placement || changes.content) {
+            this.ShowTooltip()();
+        }
+    };
+    TooltipComponent.prototype.ngAfterViewInit = function () {
+        var context = this;
+        // behavior being handled by directive
+        if (context.showOnInit) {
+            setTimeout(function () {
+                context.ShowTooltip()();
+            });
+        }
+        else {
+            context.animationState = 'none';
+            context.renderer.listen(context.hostElement, 'mouseenter', context.ShowTooltip(context));
+            context.renderer.listen(context.hostElement, 'focusin', context.ShowTooltip(context));
+            context.renderer.listen(context.hostElement, 'focusout', function () { context.animationState = 'hidden'; });
+            context.renderer.listen(context.hostElement, 'mouseleave', function () { context.animationState = 'hidden'; });
+        }
+    };
+    TooltipComponent.prototype.ShowTooltip = function (context) {
+        if (context === void 0) { context = this; }
+        return function () {
+            if (context.hostElement) {
+                var tooltipOffset = context.tooltipService.positionElements(context.hostElement, context.element.nativeElement.children[0].children[0], context.placement);
+                context.tooltipPlacement = {
+                    Top: tooltipOffset.Top,
+                    Left: tooltipOffset.Left
+                };
+                context.animationState = 'shown';
+                context.tooltipPosition = context.TooltipPosition();
+                context.document.querySelector('body').appendChild(context.element.nativeElement);
+                return true;
+            }
+            else {
+                console.error('Host element not specified');
+                return false;
+            }
+        };
+    };
+    TooltipComponent.prototype.TooltipPosition = function () {
+        switch (this.placement) {
+            case 'right':
+                {
+                    return 'vclTooltip vclArrowPointerLeft';
+                }
+            case 'left':
+                {
+                    return 'vclTooltip vclArrowPointerRight';
+                }
+            case 'bottom':
+                {
+                    return 'vclTooltip vclArrowPointerTop';
+                }
+            default:
+                {
+                    return 'vclTooltip vclArrowPointerBottom';
+                }
+        }
+    };
+    TooltipComponent.prototype.ngOnDestroy = function () {
+        if (!this.showOnInit) {
+            this.element.nativeElement.parentNode.removeChild(this.element.nativeElement);
+        }
+    };
+    return TooltipComponent;
+}());
+__decorate$88([
+    Input(),
+    __metadata$52("design:type", String)
+], TooltipComponent.prototype, "content", void 0);
+__decorate$88([
+    Input(),
+    __metadata$52("design:type", String)
+], TooltipComponent.prototype, "placement", void 0);
+__decorate$88([
+    Input(),
+    __metadata$52("design:type", HTMLElement)
+], TooltipComponent.prototype, "hostElement", void 0);
+TooltipComponent = __decorate$88([
+    Component({
+        selector: 'vcl-tooltip',
+        template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} <ng-content></ng-content> </div> <div class=\"vclArrowPointer\"></div> </div> ",
+        host: {
+            '[class.vclTooltip]': 'true',
+        },
+        styles: [":host{ top: 0; left: 0 }"],
+        animations: [
+            trigger('enterAnimation', [
+                state('shown', style({ opacity: 1, 'z-index': 'initial' })),
+                state('hidden', style({ opacity: 0, 'z-index': '-1' })),
+                state('none', style({ opacity: 0 })),
+                transition('hidden => shown', animate('0.2s')),
+            ])
+        ]
+    }),
+    __param$8(1, Inject(DOCUMENT)),
+    __metadata$52("design:paramtypes", [ElementRef, Object, Renderer,
+        TooltipService])
+], TooltipComponent);
+
+var __decorate$90 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$53 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param$9 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var TooltipDirective = (function () {
@@ -8493,16 +8588,25 @@ var TooltipDirective = (function () {
         this.content = '';
         this.position = "top";
     }
+    TooltipDirective.prototype.ngOnChanges = function (changes) {
+        if (this.tooltip) {
+            if (changes.content) {
+                this.tooltip.instance.content = this.content;
+            }
+            else if (changes.position) {
+                this.tooltip.instance.placement = this.position;
+            }
+        }
+    };
     TooltipDirective.prototype.onMouseEnter = function () {
         var factory = this.resolver.resolveComponentFactory(TooltipComponent);
         this.tooltip = this.viewContainerRef.createComponent(factory);
         this.tooltip.instance.content = this.content;
         this.tooltip.instance.placement = this.position;
         this.tooltip.instance.hostElement = this.element.nativeElement;
-        this.document.querySelector('body').appendChild(this.viewContainerRef.element.nativeElement.nextSibling);
+        this.tooltip.instance.showOnInit = true;
     };
     TooltipDirective.prototype.ngOnDestroy = function () {
-        // TODO: fade out animation instead of dispose
         if (this.tooltip) {
             this.tooltip.destroy();
         }
@@ -8511,30 +8615,30 @@ var TooltipDirective = (function () {
 }());
 __decorate$90([
     Input(),
-    __metadata$52("design:type", String)
+    __metadata$53("design:type", String)
 ], TooltipDirective.prototype, "content", void 0);
 __decorate$90([
     Input(),
-    __metadata$52("design:type", String)
+    __metadata$53("design:type", String)
 ], TooltipDirective.prototype, "position", void 0);
 __decorate$90([
     HostListener('mouseenter'),
     HostListener('focusin'),
-    __metadata$52("design:type", Function),
-    __metadata$52("design:paramtypes", []),
-    __metadata$52("design:returntype", void 0)
+    __metadata$53("design:type", Function),
+    __metadata$53("design:paramtypes", []),
+    __metadata$53("design:returntype", void 0)
 ], TooltipDirective.prototype, "onMouseEnter", null);
 __decorate$90([
     HostListener('focusout'),
     HostListener('mouseleave'),
-    __metadata$52("design:type", Function),
-    __metadata$52("design:paramtypes", []),
-    __metadata$52("design:returntype", void 0)
+    __metadata$53("design:type", Function),
+    __metadata$53("design:paramtypes", []),
+    __metadata$53("design:returntype", void 0)
 ], TooltipDirective.prototype, "ngOnDestroy", null);
 TooltipDirective = __decorate$90([
     Directive({ selector: '[vcl-tooltip]' }),
-    __param$7(3, Inject(DOCUMENT)),
-    __metadata$52("design:paramtypes", [ElementRef,
+    __param$9(3, Inject(DOCUMENT)),
+    __metadata$53("design:paramtypes", [ElementRef,
         ComponentFactoryResolver,
         ViewContainerRef, Object])
 ], TooltipDirective);
@@ -8555,11 +8659,1003 @@ VCLTooltipModule = __decorate$87([
         imports: [CommonModule, L10nModule],
         exports: [TooltipComponent, TooltipDirective],
         declarations: [TooltipComponent, TooltipDirective],
-        providers: [],
+        providers: [TooltipService],
         entryComponents: [TooltipComponent]
     })
 ], VCLTooltipModule);
 
-// export * from './table/index';
+var __decorate$93 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$55 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var TableService = (function () {
+    function TableService(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+    }
+    TableService.prototype.ClassToggle = function (className, add, targetEl) {
+        if (this.el.nativeElement.localName == targetEl || !targetEl) {
+            if (add === '' || add) {
+                // For table tag vclTable class is required to enable vcl table behavior
+                if (targetEl == 'table' && className != 'vclTable') {
+                    this.addClass('vclTable');
+                }
+                return this.addClass(className);
+            }
+            else {
+                return this.removeClass(className);
+            }
+        }
+        else {
+            console.error(className + " can only be used on " + targetEl + " tag!");
+            return false;
+        }
+    };
+    TableService.prototype.addClass = function (className) {
+        this.renderer.addClass(this.el.nativeElement, className);
+        return true;
+    };
+    TableService.prototype.removeClass = function (className) {
+        this.renderer.removeClass(this.el.nativeElement, className);
+        return false;
+    };
+    return TableService;
+}());
+TableService = __decorate$93([
+    Injectable(),
+    __metadata$55("design:paramtypes", [Renderer2, ElementRef])
+], TableService);
 
-export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerManagerService, LayerContainerComponent, CHILD_LAYER_CONFIG, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule };
+/*
+Enables VCL table behavior
+*/
+var __decorate$92 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$54 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var VclTableDirective = (function () {
+    function VclTableDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    VclTableDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.alt) {
+            this.selectable = this.tableService.ClassToggle('vclTable', this.selectable, 'table');
+        }
+    };
+    return VclTableDirective;
+}());
+__decorate$92([
+    Input('selectable'),
+    __metadata$54("design:type", Object)
+], VclTableDirective.prototype, "selectable", void 0);
+VclTableDirective = __decorate$92([
+    Directive({
+        selector: '[vcl-table]',
+    }),
+    __metadata$54("design:paramtypes", [Renderer2, ElementRef])
+], VclTableDirective);
+
+/*
+Column width
+
+The column width can be defined in the table header using one of
+the layout spans vclSpan-5p - vclSpan-100p from the corresponding module.
+*/
+var __decorate$94 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$56 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var SpanDirective = (function () {
+    function SpanDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+    }
+    SpanDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.width) {
+            this.ngAfterContentInit();
+        }
+    };
+    SpanDirective.prototype.ngAfterContentInit = function () {
+        // Apply class only on header
+        if (this.el.nativeElement.localName == "th") {
+            var vclSpan = "vclSpan-" + this.width + "p";
+            this.renderer.addClass(this.el.nativeElement, vclSpan);
+        }
+        else {
+            console.error('Column width can be set only for header tag!');
+        }
+    };
+    return SpanDirective;
+}());
+__decorate$94([
+    Input('span'),
+    __metadata$56("design:type", Number)
+], SpanDirective.prototype, "width", void 0);
+SpanDirective = __decorate$94([
+    Directive({
+        selector: '[span]',
+    }),
+    __metadata$56("design:paramtypes", [Renderer2, ElementRef])
+], SpanDirective);
+
+/*
+Cell and column highlighting
+
+Single cells and columns can be highlighted by using the
+vclCellHighlight class on each tdin the respective column or on single cells only.
+*/
+var __decorate$95 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$57 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var HighlightDirective = (function () {
+    function HighlightDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    HighlightDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.hightlight) {
+            this.hightlight = this.tableService.ClassToggle('vclCellHighlight', this.hightlight, 'td');
+        }
+    };
+    return HighlightDirective;
+}());
+__decorate$95([
+    Input('hightlight'),
+    __metadata$57("design:type", Object)
+], HighlightDirective.prototype, "hightlight", void 0);
+HighlightDirective = __decorate$95([
+    Directive({
+        selector: '[hightlight]',
+    }),
+    __metadata$57("design:paramtypes", [Renderer2, ElementRef])
+], HighlightDirective);
+
+var __decorate$97 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$59 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param$10 = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+var SortIconComponent = (function () {
+    function SortIconComponent(document, element) {
+        this.document = document;
+        this.element = element;
+        this.faIcon = 'fa-sort';
+    }
+    SortIconComponent.prototype.ChangeSortOrder = function (order) {
+        switch (order) {
+            case 1: {
+                this.faIcon = 'fa-sort-up';
+                break;
+            }
+            case -1: {
+                this.faIcon = 'fa-sort-down';
+                break;
+            }
+            default: {
+                this.faIcon = 'fa-sort';
+                break;
+            }
+        }
+    };
+    return SortIconComponent;
+}());
+__decorate$97([
+    Input(),
+    __metadata$59("design:type", Object)
+], SortIconComponent.prototype, "sort", void 0);
+SortIconComponent = __decorate$97([
+    Component({
+        selector: 'sort-icon',
+        template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
+    }),
+    __param$10(0, Inject(DOCUMENT)),
+    __metadata$59("design:paramtypes", [Object, ElementRef])
+], SortIconComponent);
+
+/*
+Column sortability
+
+Sortable columns are defined with the vclSortableCol class on the respective ths.
+This class gives the whole header a pointer cursor on hover to indicate an action.
+The application must register an appropriate event handler to change the sort order
+for the whole th accordingly. Also an icon which indicates sortability should be
+used as shown in the second column. The currently active sort order is indicated
+by a respective icon and the classes vclSortAsc or vclSortDesc on the th element.
+*/
+var __decorate$96 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$58 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var SortDirective = (function () {
+    function SortDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.change = new EventEmitter();
+        this.isHeader = false;
+        this.tableService = new TableService(renderer, el);
+        this.isHeader =
+            this.tableService.ClassToggle('vclSortableCol', true, 'th') &&
+                this.tableService.ClassToggle('vclClearFix', true, 'th');
+    }
+    SortDirective.prototype.OnChangeOrder = function () {
+        if (this.isHeader) {
+            this.order = this.order == 1 ? -1 : 1;
+            this.change.emit(this.order);
+            switch (this.order) {
+                case 1: {
+                    this.renderer.removeClass(this.el.nativeElement, 'vclClearFix');
+                    this.renderer.removeClass(this.el.nativeElement, 'vclSortDesc');
+                    this.renderer.addClass(this.el.nativeElement, 'vclSortAsc');
+                    if (this.sortIconComponent) {
+                        this.sortIconComponent.ChangeSortOrder(1);
+                    }
+                    break;
+                }
+                case -1: {
+                    this.renderer.removeClass(this.el.nativeElement, 'vclSortAsc');
+                    this.renderer.addClass(this.el.nativeElement, 'vclSortDesc');
+                    if (this.sortIconComponent) {
+                        this.sortIconComponent.ChangeSortOrder(-1);
+                    }
+                    break;
+                }
+            }
+        }
+    };
+    return SortDirective;
+}());
+__decorate$96([
+    ContentChild(SortIconComponent),
+    __metadata$58("design:type", SortIconComponent)
+], SortDirective.prototype, "sortIconComponent", void 0);
+__decorate$96([
+    Output(),
+    __metadata$58("design:type", EventEmitter)
+], SortDirective.prototype, "change", void 0);
+__decorate$96([
+    HostListener('click'),
+    __metadata$58("design:type", Function),
+    __metadata$58("design:paramtypes", []),
+    __metadata$58("design:returntype", void 0)
+], SortDirective.prototype, "OnChangeOrder", null);
+SortDirective = __decorate$96([
+    Directive({
+        selector: '[sort]',
+        exportAs: 'sort-directive'
+    }),
+    __metadata$58("design:paramtypes", [Renderer2,
+        ElementRef])
+], SortDirective);
+
+/*
+Row and cell selection
+
+Individual cells and thus rows can be visually selected using the vclSelected class.
+*/
+var __decorate$98 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$60 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var SelectDirective = (function () {
+    function SelectDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    SelectDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.selected) {
+            this.selected = this.tableService.ClassToggle('vclSelected', this.selected, 'tr');
+        }
+    };
+    return SelectDirective;
+}());
+__decorate$98([
+    Input('selected'),
+    __metadata$60("design:type", Object)
+], SelectDirective.prototype, "selected", void 0);
+SelectDirective = __decorate$98([
+    Directive({
+        selector: '[selected]'
+    }),
+    __metadata$60("design:paramtypes", [Renderer2, ElementRef])
+], SelectDirective);
+
+/*
+Row and cell selectability
+
+Rows can be styled to suggest their selectability (single or multiple) using the vclRowSelectability modifier which makes rows show a pointer cursor on hover.
+*/
+var __decorate$99 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$61 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var SelectableDirective = (function () {
+    function SelectableDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    SelectableDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.alt) {
+            this.selectable = this.tableService.ClassToggle('vclRowSelectability', this.selectable, 'tr');
+        }
+    };
+    return SelectableDirective;
+}());
+__decorate$99([
+    Input('selectable'),
+    __metadata$61("design:type", Object)
+], SelectableDirective.prototype, "selectable", void 0);
+SelectableDirective = __decorate$99([
+    Directive({
+        selector: '[selectable]',
+    }),
+    __metadata$61("design:paramtypes", [Renderer2, ElementRef])
+], SelectableDirective);
+
+/*
+Row hover highlighting
+
+If a table row should be highlighted on hover, the vclRowHoverHighlight
+modifier class can be used. This hovering's intention is just for the
+sake of readability and should not indicate an action.
+*/
+var __decorate$100 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$62 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var HoverDirective = (function () {
+    function HoverDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        if (this.el.nativeElement.localName == "table") {
+            renderer.addClass(el.nativeElement, 'vclRowHoverHighlight');
+        }
+        else {
+            console.error('[hover] should be used for table tag only!');
+        }
+    }
+    return HoverDirective;
+}());
+HoverDirective = __decorate$100([
+    Directive({
+        selector: '[hover]',
+    }),
+    __metadata$62("design:paramtypes", [Renderer2, ElementRef])
+], HoverDirective);
+
+/*
+Disabled rows
+
+Rows can be visually disabled with the vclDisabled modifier.
+*/
+var __decorate$101 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$63 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var DisableDirective = (function () {
+    function DisableDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    DisableDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.disabled) {
+            this.disabled = this.tableService.ClassToggle('vclDisabled', this.disabled, 'tr');
+        }
+    };
+    return DisableDirective;
+}());
+__decorate$101([
+    Input('disabled'),
+    __metadata$63("design:type", Object)
+], DisableDirective.prototype, "disabled", void 0);
+DisableDirective = __decorate$101([
+    Directive({
+        selector: '[disabled]'
+    }),
+    __metadata$63("design:paramtypes", [Renderer2, ElementRef])
+], DisableDirective);
+
+/*
+Alternating row color
+
+Optionally an alternating row color can be defined by using the modifier vclAltRowColor.
+*/
+var __decorate$102 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$64 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var AltRowColorDirective = (function () {
+    function AltRowColorDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    AltRowColorDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.alt) {
+            this.alt = this.tableService.ClassToggle('vclAltRowColor', this.alt, 'table');
+        }
+    };
+    return AltRowColorDirective;
+}());
+__decorate$102([
+    Input('altrow'),
+    __metadata$64("design:type", Object)
+], AltRowColorDirective.prototype, "alt", void 0);
+AltRowColorDirective = __decorate$102([
+    Directive({
+        selector: '[altrow]',
+    }),
+    __metadata$64("design:paramtypes", [Renderer2, ElementRef])
+], AltRowColorDirective);
+
+/*
+Border configuration
+
+The cell borders are removed with vclNoBorder. The border style can be changed from solid to dotted by using the vclDottedBorder modifier.
+*/
+var __decorate$103 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$65 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var NoBorderDirective = (function () {
+    function NoBorderDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    NoBorderDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.noborder) {
+            this.noborder = this.tableService.ClassToggle('vclNoBorder', this.noborder, 'table');
+        }
+    };
+    return NoBorderDirective;
+}());
+__decorate$103([
+    Input('noborder'),
+    __metadata$65("design:type", Object)
+], NoBorderDirective.prototype, "noborder", void 0);
+NoBorderDirective = __decorate$103([
+    Directive({
+        selector: '[noborder]',
+    }),
+    __metadata$65("design:paramtypes", [Renderer2, ElementRef])
+], NoBorderDirective);
+
+/*
+Border configuration
+
+The cell borders are removed with vclNoBorder. The border style can be changed from solid to dotted by using the vclDottedBorder modifier.
+*/
+var __decorate$104 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$66 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var DottedBorderDirective = (function () {
+    function DottedBorderDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    DottedBorderDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.dottedborder) {
+            this.dottedborder = this.tableService.ClassToggle('vclDottedBorder', this.dottedborder, 'table');
+        }
+    };
+    return DottedBorderDirective;
+}());
+__decorate$104([
+    Input('dottedborder'),
+    __metadata$66("design:type", Object)
+], DottedBorderDirective.prototype, "dottedborder", void 0);
+DottedBorderDirective = __decorate$104([
+    Directive({
+        selector: '[dottedborder]',
+    }),
+    __metadata$66("design:paramtypes", [Renderer2, ElementRef])
+], DottedBorderDirective);
+
+/*
+Padding style
+
+If the default cell padding is too extensive, vclCondensed makes it more compact.
+*/
+var __decorate$105 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$67 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var CondensedDirective = (function () {
+    function CondensedDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    CondensedDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.condensed) {
+            this.condensed = this.tableService.ClassToggle('vclCondensed', this.condensed, 'table');
+        }
+    };
+    return CondensedDirective;
+}());
+__decorate$105([
+    Input('condensed'),
+    __metadata$67("design:type", Object)
+], CondensedDirective.prototype, "condensed", void 0);
+CondensedDirective = __decorate$105([
+    Directive({
+        selector: '[condensed]',
+    }),
+    __metadata$67("design:paramtypes", [Renderer2, ElementRef])
+], CondensedDirective);
+
+/*
+Borders style
+
+By default, only horizontal borders are shown. For vertical borders, use the vclVerticalBorder modifier.
+*/
+var __decorate$106 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$68 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var VerticalBorderDirective = (function () {
+    function VerticalBorderDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    VerticalBorderDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.border) {
+            this.border = this.tableService.ClassToggle('vclVerticalBorder', this.border, 'table');
+        }
+    };
+    return VerticalBorderDirective;
+}());
+__decorate$106([
+    Input('vertical-border'),
+    __metadata$68("design:type", Object)
+], VerticalBorderDirective.prototype, "border", void 0);
+VerticalBorderDirective = __decorate$106([
+    Directive({
+        selector: '[vertical-border]',
+    }),
+    __metadata$68("design:paramtypes", [Renderer2, ElementRef])
+], VerticalBorderDirective);
+
+/*
+Text alignment
+
+Left alignment is default, for centered text use class vclAlignCentered and for right aligned text vclAlignRight on tds.
+*/
+var __decorate$107 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$69 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var AlignmentCenterDirective = (function () {
+    function AlignmentCenterDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    AlignmentCenterDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.align) {
+            this.align = this.tableService.ClassToggle('vclAlignCentered', this.align, 'td');
+        }
+    };
+    return AlignmentCenterDirective;
+}());
+__decorate$107([
+    Input('align-center'),
+    __metadata$69("design:type", Object)
+], AlignmentCenterDirective.prototype, "align", void 0);
+AlignmentCenterDirective = __decorate$107([
+    Directive({
+        selector: '[align-center]',
+    }),
+    __metadata$69("design:paramtypes", [Renderer2, ElementRef])
+], AlignmentCenterDirective);
+
+/*
+Text alignment
+
+Left alignment is default, for centered text use class vclAlignCentered and for right aligned text vclAlignRight on tds.
+*/
+var __decorate$108 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$70 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var AlignmentRightDirective = (function () {
+    function AlignmentRightDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    AlignmentRightDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.align) {
+            this.align = this.tableService.ClassToggle('vclAlignRight', this.align, 'td');
+        }
+    };
+    return AlignmentRightDirective;
+}());
+__decorate$108([
+    Input('align-right'),
+    __metadata$70("design:type", Object)
+], AlignmentRightDirective.prototype, "align", void 0);
+AlignmentRightDirective = __decorate$108([
+    Directive({
+        selector: '[align-right]',
+    }),
+    __metadata$70("design:paramtypes", [Renderer2, ElementRef])
+], AlignmentRightDirective);
+
+/*
+Vertical alignment
+
+Top alignment is default, for vertically centered content use class
+vclVAlignMiddle and for bottom aligned content vclVAlignBottom on a table or tds.
+*/
+var __decorate$109 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$71 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var AlignmentbottomDirective = (function () {
+    function AlignmentbottomDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    AlignmentbottomDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.align) {
+            this.align = this.tableService.ClassToggle('vclVAlignBottom', this.align, '');
+        }
+    };
+    return AlignmentbottomDirective;
+}());
+__decorate$109([
+    Input('align-bottom'),
+    __metadata$71("design:type", Object)
+], AlignmentbottomDirective.prototype, "align", void 0);
+AlignmentbottomDirective = __decorate$109([
+    Directive({
+        selector: '[align-bottom]',
+    }),
+    __metadata$71("design:paramtypes", [Renderer2, ElementRef])
+], AlignmentbottomDirective);
+
+/*
+Vertical alignment
+
+Top alignment is default, for vertically centered content use class
+vclVAlignMiddle and for bottom aligned content vclVAlignBottom on a table or tds.
+*/
+var __decorate$110 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$72 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var AlignmentMiddleDirective = (function () {
+    function AlignmentMiddleDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    AlignmentMiddleDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.align) {
+            this.align = this.tableService.ClassToggle('vclVAlignMiddle', this.align, '');
+        }
+    };
+    return AlignmentMiddleDirective;
+}());
+__decorate$110([
+    Input('align-middle'),
+    __metadata$72("design:type", Object)
+], AlignmentMiddleDirective.prototype, "align", void 0);
+AlignmentMiddleDirective = __decorate$110([
+    Directive({
+        selector: '[align-middle]',
+    }),
+    __metadata$72("design:paramtypes", [Renderer2, ElementRef])
+], AlignmentMiddleDirective);
+
+/*
+Layout
+
+The auto layout mode is used by default. For tables with toolbars however, the vclFixed class must be used to enable the fixed table layout mode.
+*/
+var __decorate$111 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$73 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var LayoutDirective = (function () {
+    function LayoutDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    LayoutDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.fixed) {
+            this.fixed = this.tableService.ClassToggle('vclFixed', this.fixed, 'table');
+        }
+    };
+    return LayoutDirective;
+}());
+__decorate$111([
+    Input('fixed'),
+    __metadata$73("design:type", Object)
+], LayoutDirective.prototype, "fixed", void 0);
+LayoutDirective = __decorate$111([
+    Directive({
+        selector: '[fixed]',
+    }),
+    __metadata$73("design:paramtypes", [Renderer2, ElementRef])
+], LayoutDirective);
+
+/*
+Truncation
+
+In conjunction with the fixed layout mode, the modifier vclNoWrap can be used to truncate all cell content which would
+span more than one line and show an ellipsis to indicate truncated content instead.
+Individual cells can also be truncated using the general vclNoWrap and vclOverflowEllipsis modifiers from the utils module.
+*/
+var __decorate$112 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$74 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var NoWrapDirective = (function () {
+    function NoWrapDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    NoWrapDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.nowrap) {
+            this.nowrap = this.tableService.ClassToggle('vclNoWrap', this.nowrap, 'td');
+        }
+    };
+    return NoWrapDirective;
+}());
+__decorate$112([
+    Input('nowrap'),
+    __metadata$74("design:type", Object)
+], NoWrapDirective.prototype, "nowrap", void 0);
+NoWrapDirective = __decorate$112([
+    Directive({
+        selector: '[nowrap]'
+    }),
+    __metadata$74("design:paramtypes", [Renderer2, ElementRef])
+], NoWrapDirective);
+
+/*
+Truncation
+
+In conjunction with the fixed layout mode, the modifier vclNoWrap can be used to truncate all cell content which would
+span more than one line and show an ellipsis to indicate truncated content instead.
+Individual cells can also be truncated using the general vclNoWrap and vclOverflowEllipsis modifiers from the utils module.
+*/
+var __decorate$113 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$75 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var OverflowEllipsisDirective = (function () {
+    function OverflowEllipsisDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    OverflowEllipsisDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.ellipsis) {
+            this.ellipsis = this.tableService.ClassToggle('vclOverflowEllipsis', this.ellipsis, 'td');
+        }
+    };
+    return OverflowEllipsisDirective;
+}());
+__decorate$113([
+    Input('overflow-ellipsis'),
+    __metadata$75("design:type", Object)
+], OverflowEllipsisDirective.prototype, "ellipsis", void 0);
+OverflowEllipsisDirective = __decorate$113([
+    Directive({
+        selector: '[overflow-ellipsis]'
+    }),
+    __metadata$75("design:paramtypes", [Renderer2, ElementRef])
+], OverflowEllipsisDirective);
+
+/*
+Wrapping behavior
+
+To allow breaking words of textual cell content apart, use the modifier vclBreakWords. This works best in combination with the fixed layout mode.
+*/
+var __decorate$114 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$76 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var BreakingWordsDirective = (function () {
+    function BreakingWordsDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    BreakingWordsDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.breakWords) {
+            this.breakWords = this.tableService.ClassToggle('vclBreakWords', this.breakWords, '');
+        }
+    };
+    return BreakingWordsDirective;
+}());
+__decorate$114([
+    Input('break-words'),
+    __metadata$76("design:type", Object)
+], BreakingWordsDirective.prototype, "breakWords", void 0);
+BreakingWordsDirective = __decorate$114([
+    Directive({
+        selector: '[break-words]',
+    }),
+    __metadata$76("design:paramtypes", [Renderer2, ElementRef])
+], BreakingWordsDirective);
+
+var directives = [
+    VclTableDirective,
+    SpanDirective,
+    HighlightDirective,
+    SortDirective,
+    SelectDirective,
+    SelectableDirective,
+    HoverDirective,
+    DisableDirective,
+    AltRowColorDirective,
+    NoBorderDirective,
+    DottedBorderDirective,
+    CondensedDirective,
+    VerticalBorderDirective,
+    AlignmentCenterDirective,
+    AlignmentRightDirective,
+    AlignmentbottomDirective,
+    AlignmentMiddleDirective,
+    LayoutDirective,
+    NoWrapDirective,
+    OverflowEllipsisDirective,
+    BreakingWordsDirective
+];
+
+var __decorate$91 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var VCLTableModule = (function () {
+    function VCLTableModule() {
+    }
+    return VCLTableModule;
+}());
+VCLTableModule = __decorate$91([
+    NgModule({
+        imports: [CommonModule, L10nModule],
+        exports: [SortIconComponent].concat(directives),
+        declarations: [SortIconComponent].concat(directives),
+        entryComponents: [SortIconComponent],
+        providers: [],
+    })
+], VCLTableModule);
+
+export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService$1 as LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule, VCLTableModule };
