@@ -17,7 +17,7 @@ export declare class DomTemplateWormhole extends TemplateWormholeBase {
     private injector;
     constructor(templateRef: TemplateRef<any>, appRef: ApplicationRef, node?: HTMLElement, injector?: Injector);
     readonly rootComponentRef: ComponentRef<any>;
-    attach(templateRef: TemplateRef<any>, index?: number): EmbeddedViewRef<any>;
-    detach(): void;
+    protected attach(templateRef: TemplateRef<any>, index?: number): EmbeddedViewRef<any>;
+    protected detach(): void;
     readonly currentIndex: number;
 }

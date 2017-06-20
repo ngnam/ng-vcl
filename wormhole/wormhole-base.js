@@ -76,6 +76,13 @@ var ComponentWormholeBase = (function (_super) {
         }
         return _this;
     }
+    Object.defineProperty(ComponentWormholeBase.prototype, "compInstance", {
+        get: function () {
+            return this.compRef && this.compRef.instance;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ComponentWormholeBase.prototype, "isConnected", {
         get: function () {
             return !!this.compRef;

@@ -23,33 +23,30 @@ import 'rxjs/add/operator/publishBehavior';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { ObservableComponent } from '../core/index';
 import { ButtonStateContentDirective } from './button-state-content.directive';
+import { dispatchTap } from './dispatch-tap';
+var InteractionType;
+(function (InteractionType) {
+    InteractionType[InteractionType["Click"] = 0] = "Click";
+    InteractionType[InteractionType["Tap"] = 1] = "Tap";
+})(InteractionType || (InteractionType = {}));
 var ButtonComponent = (function (_super) {
     __extends(ButtonComponent, _super);
     function ButtonComponent(elementRef) {
         var _this = _super.call(this) || this;
         _this.elementRef = elementRef;
-        _this.pressed = false; // `true` if a pointer device is conducting a `down` gesture on the button
-        _this.focused = false; // `true` if the element is focused  (CSS' :focus)
+        _this.latestInteractionTime = 0;
         _this.hovered = false; // `true` if a pointer device is hovering the button (CSS' :hover)
         _this.selected = false;
         _this.disabled = false;
         _this.disableA11yClick = false;
         _this.busy = false;
         _this.flexLabel = false;
-        _this.autoBlur = true;
         _this.pressEvent = new EventEmitter();
         _this.stateChange = Observable.merge(_this.observeChange('disabled'), _this.observeChange('busy'))
             .map(function () { return _this.state; })
             .distinctUntilChanged()
             .publishBehavior(_this.state)
             .refCount();
-        _this.pressSub = _this.press.subscribe(function () {
-            if (_this.autoBlur) {
-                if (_this.elementRef.nativeElement && _this.elementRef.nativeElement.blur) {
-                    _this.elementRef.nativeElement.blur();
-                }
-            }
-        });
         _this.stateSub = _this.stateChange.subscribe(function (state) {
             if (_this.buttonContent) {
                 _this.buttonContent.forEach(function (bc) { return bc.updateState(state); });
@@ -86,17 +83,31 @@ var ButtonComponent = (function (_super) {
                 ev.code === 'NumpadEnter' ||
                 ev.code === 'Enter')) {
             ev.preventDefault();
-            this.elementRef.nativeElement.click();
+            dispatchTap(this.elementRef.nativeElement);
         }
     };
     ButtonComponent.prototype.onMouseEnter = function (e) { this.hovered = true; };
     ButtonComponent.prototype.onMouseLeave = function (e) { this.hovered = false; };
-    ButtonComponent.prototype.onMouseUp = function (e) { this.pressed = false; };
-    ButtonComponent.prototype.onMouseDown = function (e) { this.pressed = true; };
-    ButtonComponent.prototype.onFocus = function (e) { this.focused = true; };
-    ButtonComponent.prototype.onBlur = function (e) { this.focused = false; };
+    ButtonComponent.prototype.onTap = function (e) {
+        this.handleGhostClick(InteractionType.Tap, e);
+    };
     ButtonComponent.prototype.onClick = function (e) {
-        this.pressEvent.emit(e);
+        this.handleGhostClick(InteractionType.Click, e);
+    };
+    ButtonComponent.prototype.handleGhostClick = function (type, e) {
+        var ANTI_GHOST_DELAY = 2000;
+        var now = Date.now();
+        if (type !== this.latestInteractionType) {
+            if ((now - this.latestInteractionTime) > ANTI_GHOST_DELAY) {
+                this.latestInteractionType = type;
+                this.pressEvent.emit(e);
+            }
+        }
+        else {
+            this.latestInteractionType = type;
+            this.pressEvent.emit(e);
+        }
+        this.latestInteractionTime = now;
     };
     ButtonComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -104,8 +115,6 @@ var ButtonComponent = (function (_super) {
     };
     ButtonComponent.prototype.ngOnDestroy = function () {
         _super.prototype.ngOnDestroy.call(this);
-        this.stateSub && this.stateSub.unsubscribe();
-        this.pressSub && this.pressSub.unsubscribe();
     };
     return ButtonComponent;
 }(ObservableComponent));
@@ -154,10 +163,6 @@ __decorate([
 ], ButtonComponent.prototype, "prepIcon", void 0);
 __decorate([
     Input(),
-    __metadata("design:type", Boolean)
-], ButtonComponent.prototype, "autoBlur", void 0);
-__decorate([
-    Input(),
     __metadata("design:type", String)
 ], ButtonComponent.prototype, "appIcon", void 0);
 __decorate([
@@ -200,33 +205,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ButtonComponent.prototype, "onMouseLeave", null);
 __decorate([
-    HostListener('mouseup', ['$event']),
+    HostListener('click', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Event]),
     __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseUp", null);
-__decorate([
-    HostListener('mousedown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseDown", null);
-__decorate([
-    HostListener('onfocus', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onFocus", null);
-__decorate([
-    HostListener('onblur', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onBlur", null);
+], ButtonComponent.prototype, "onTap", null);
 __decorate([
     HostListener('click', ['$event']),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Event]),
     __metadata("design:returntype", void 0)
 ], ButtonComponent.prototype, "onClick", null);
 ButtonComponent = __decorate([

@@ -18,30 +18,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Input, TemplateRef, Directive, Injector } from '@angular/core';
-import { LayerService } from './layer.service';
 import { LayerRef } from './layer-ref';
+import { LayerManagerService } from "./layer-manager.service";
 var LayerRefDirective = (function (_super) {
     __extends(LayerRefDirective, _super);
-    function LayerRefDirective(templateRef, layerService, injector) {
+    function LayerRefDirective(templateRef, layerManager, injector) {
         var _this = _super.call(this) || this;
         _this.templateRef = templateRef;
-        _this.layerService = layerService;
+        _this.layerManager = layerManager;
         _this.injector = injector;
-        _this.base = 'default';
         return _this;
     }
     LayerRefDirective.prototype.ngOnInit = function () {
-        this.layerService.register(this, this.injector);
+        this.layerManager._register(this, this.templateRef, this.injector, this);
     };
     LayerRefDirective.prototype.ngOnDestroy = function () {
-        this.layerService.unregister(this);
+        this.layerManager._unregister(this);
     };
     return LayerRefDirective;
 }(LayerRef));
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LayerRefDirective.prototype, "base", void 0);
 __decorate([
     Input(),
     __metadata("design:type", Boolean)
@@ -71,6 +66,6 @@ LayerRefDirective = __decorate([
         selector: '[vcl-layer]',
         exportAs: 'layer',
     }),
-    __metadata("design:paramtypes", [TemplateRef, LayerService, Injector])
+    __metadata("design:paramtypes", [TemplateRef, LayerManagerService, Injector])
 ], LayerRefDirective);
 export { LayerRefDirective };

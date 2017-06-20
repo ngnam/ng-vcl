@@ -7,8 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VCLOffClickModule } from '../off-click/index';
-import { PopoverComponent, AttachmentX, AttachmentY } from './popover.component';
-export { PopoverComponent, AttachmentX, AttachmentY };
+import { PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS } from './popover.component';
+export { PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS };
 var VCLPopoverModule = (function () {
     function VCLPopoverModule() {
     }

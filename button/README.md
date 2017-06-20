@@ -31,7 +31,7 @@ A button can have content that is only visible in a specified state
 
 ### API
 
-#### Properties:
+#### Attributes
 
 | Name                | Type        | Default  | Description
 | ------------        | ----------- | -------- |--------------
@@ -42,7 +42,6 @@ A button can have content that is only visible in a specified state
 | `prepIcon`          | string      |          | icon to be prepended to the label
 | `appIcon`           | string      |          | Same as prepIcon but appended
 | `title`             | string      |          | Sets aria-label
-| `autoBlur`          | boolean     | true     | if true, the focus is removed via blur() after the action.
 | `disableA11yClick`  | boolean     | false    | Deactivate triggering `click` via spacebar or enter  
 
 #### Events:

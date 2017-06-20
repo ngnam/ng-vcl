@@ -118,4 +118,3 @@ TooltipService = __decorate([
     Injectable()
 ], TooltipService);
 export { TooltipService };
-export var tooltipService = new TooltipService();

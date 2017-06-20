@@ -1,6 +1,6 @@
-import { OnDestroy, ElementRef, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
+import { OnDestroy, ElementRef, ComponentFactoryResolver, ViewContainerRef, ComponentRef, OnChanges, SimpleChanges } from '@angular/core';
 import { TooltipComponent } from './tooltip.component';
-export declare class TooltipDirective implements OnDestroy {
+export declare class TooltipDirective implements OnDestroy, OnChanges {
     private element;
     private resolver;
     private viewContainerRef;
@@ -9,6 +9,7 @@ export declare class TooltipDirective implements OnDestroy {
     position: "top" | "bottom" | "left" | "right";
     tooltip: ComponentRef<TooltipComponent>;
     constructor(element: ElementRef, resolver: ComponentFactoryResolver, viewContainerRef: ViewContainerRef, document: any);
+    ngOnChanges(changes: SimpleChanges): void;
     onMouseEnter(): void;
     ngOnDestroy(): void;
 }

@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Directive, Input, HostListener, ElementRef, HostBinding } from '@angular/core';
+import { Directive, ElementRef, Input, HostBinding, HostListener } from '@angular/core';
 var TextareaDirective = (function () {
     function TextareaDirective(elRef) {
         this.elRef = elRef;
@@ -73,7 +73,7 @@ __decorate([
 ], TextareaDirective.prototype, "onFocus", null);
 TextareaDirective = __decorate([
     Directive({
-        selector: '[vcl-textarea]',
+        selector: 'textarea[vcl-textarea]',
         host: {
             '[class.vclInput]': 'true',
         }

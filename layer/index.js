@@ -13,34 +13,31 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { NgModule, Inject, Injectable, Injector, OpaqueToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VCLWormholeModule } from '../wormhole/index';
-import { defineMetadata } from './../core/index';
+import { defineMetadata, getMetadata } from './../core/index';
 import { LayerManagerService } from './layer-manager.service';
 import { LayerService } from './layer.service';
-import { LayerRef } from './layer-ref';
-import { LayerContainerComponent, COMPONENT_LAYER_ANNOTATION_ID } from './layer-container.component';
+import { LayerRef, DynamicLayerRef, LayerResult } from './layer-ref';
+import { LayerContainerComponent, COMPONENT_LAYER_ANNOTATION_ID, LAYER_ANIMATIONS } from './layer-container.component';
 import { LayerRefDirective } from './layer-ref.directive';
-export { LayerRefDirective, LayerRef, LayerService, LayerManagerService, LayerContainerComponent };
-export var CHILD_LAYER_CONFIG = new OpaqueToken('@ng-vcl/ng-vcl#child_layer_config');
+export { LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult };
+export var LAYERS = new OpaqueToken('@ng-vcl/ng-vcl#layers');
 // The @Layer annotation
-export function Layer(component) {
+export function Layer(component, opts) {
     return function (target) {
         Injectable()(target);
-        defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, component, target);
+        defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, { component: component, opts: opts }, target);
     };
 }
 var VCLLayerModule = VCLLayerModule_1 = (function () {
-    function VCLLayerModule(configs, layerService, layerManagerService, injector) {
-        var _this = this;
-        this.configs = configs;
-        this.layerService = layerService;
-        this.layerManagerService = layerManagerService;
+    function VCLLayerModule(layers, layerManager, injector) {
+        this.layers = layers;
+        this.layerManager = layerManager;
         this.injector = injector;
-        if (configs) {
-            configs.forEach(function (config) {
-                (config.layers || []).forEach(function (layerCls) {
-                    var layerRef = _this.injector.get(layerCls);
-                    _this.layerService.register(layerRef, injector);
-                });
+        if (layers) {
+            (layers || []).forEach(function (layerCls) {
+                var layerMeta = getMetadata(COMPONENT_LAYER_ANNOTATION_ID, layerCls);
+                var layerRef = injector.get(layerCls);
+                layerManager._register(layerRef, layerMeta.component, injector, layerMeta.opts);
             });
         }
     }
@@ -55,9 +52,8 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
                     useValue: null
                 },
                 {
-                    provide: CHILD_LAYER_CONFIG,
-                    multi: true,
-                    useValue: config
+                    provide: LAYERS,
+                    useValue: config.layers
                 }
             ]) };
     };
@@ -65,11 +61,12 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
         if (config === void 0) { config = {}; }
         return {
             ngModule: VCLLayerModule_1,
-            providers: (config.layers || []).concat([
+            providers: [
+                LayerService
+            ].concat((config.layers || []), [
                 {
-                    provide: CHILD_LAYER_CONFIG,
-                    multi: true,
-                    useValue: config
+                    provide: LAYERS,
+                    useValue: config.layers
                 }
             ])
         };
@@ -87,9 +84,8 @@ VCLLayerModule = VCLLayerModule_1 = __decorate([
         entryComponents: [LayerContainerComponent],
         providers: []
     }),
-    __param(0, Inject(CHILD_LAYER_CONFIG)),
-    __metadata("design:paramtypes", [Array, LayerService,
-        LayerManagerService,
+    __param(0, Inject(LAYERS)),
+    __metadata("design:paramtypes", [Array, LayerManagerService,
         Injector])
 ], VCLLayerModule);
 export { VCLLayerModule };

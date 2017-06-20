@@ -26,18 +26,19 @@ export declare abstract class TemplateWormholeBase extends Wormhole {
     connect(attrs?: WormholeAttributes, events?: string[], index?: number): Observable<WormholeEvent>;
     disconnect(): void;
     setAttributes(attrs: WormholeAttributes): void;
-    abstract attach(templateRef: TemplateRef<any>, index?: number): EmbeddedViewRef<any>;
-    abstract detach(): any;
+    protected abstract attach(templateRef: TemplateRef<any>, index?: number): EmbeddedViewRef<any>;
+    protected abstract detach(): any;
 }
 export declare abstract class ComponentWormholeBase<T> extends Wormhole {
     private componentClass;
     compRef: ComponentRef<T> | undefined;
+    readonly compInstance: T | undefined;
     private cachedAttrs;
     constructor(componentClass: Type<T>);
     readonly isConnected: boolean;
     connect(attrs?: WormholeAttributes, events?: string[], index?: number): Observable<WormholeEvent>;
     disconnect(): void;
     setAttributes(attrs: WormholeAttributes): void;
-    abstract attach(factory: Type<T>, index?: number): ComponentRef<T>;
-    abstract detach(): any;
+    protected abstract attach(factory: Type<T>, index?: number): ComponentRef<T>;
+    protected abstract detach(): any;
 }

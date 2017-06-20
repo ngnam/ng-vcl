@@ -20,7 +20,6 @@ var NotificationLayer = (function (_super) {
     __extends(NotificationLayer, _super);
     function NotificationLayer() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.transparent = true;
         _this.notifications = [];
         return _this;
     }
@@ -37,97 +36,78 @@ var NotificationLayer = (function (_super) {
         this.notifications = this.notifications.filter(function (g) { return g !== notification; });
         if (this.notifications.length === 0) {
             this.close();
-            // this.open({ notifications: this.notifications });
         }
         else {
             this.open({ notifications: this.notifications });
         }
     };
-    NotificationLayer.prototype.offClick = function () {
-    };
     return NotificationLayer;
 }(LayerRef));
 export { NotificationLayer };
+export function noop() { }
 var NotificationLayerTopRight = (function (_super) {
     __extends(NotificationLayerTopRight, _super);
     function NotificationLayerTopRight() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationTopRight';
-        _this.reverse = true;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerTopRight;
 }(NotificationLayer));
 NotificationLayerTopRight = __decorate([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopRight', offClick: noop })
 ], NotificationLayerTopRight);
 export { NotificationLayerTopRight };
 var NotificationLayerTop = (function (_super) {
     __extends(NotificationLayerTop, _super);
     function NotificationLayerTop() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.reverse = true;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerTop;
 }(NotificationLayer));
 NotificationLayerTop = __decorate([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTop', offClick: noop })
 ], NotificationLayerTop);
 export { NotificationLayerTop };
 var NotificationLayerTopLeft = (function (_super) {
     __extends(NotificationLayerTopLeft, _super);
     function NotificationLayerTopLeft() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationTopLeft';
-        _this.reverse = true;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerTopLeft;
 }(NotificationLayer));
 NotificationLayerTopLeft = __decorate([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopLeft', offClick: noop })
 ], NotificationLayerTopLeft);
 export { NotificationLayerTopLeft };
 var NotificationLayerBottomRight = (function (_super) {
     __extends(NotificationLayerBottomRight, _super);
     function NotificationLayerBottomRight() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationBottomRight';
-        _this.reverse = false;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerBottomRight;
 }(NotificationLayer));
 NotificationLayerBottomRight = __decorate([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomRight', offClick: noop })
 ], NotificationLayerBottomRight);
 export { NotificationLayerBottomRight };
 var NotificationLayerBottom = (function (_super) {
     __extends(NotificationLayerBottom, _super);
     function NotificationLayerBottom() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationBottom';
-        _this.reverse = false;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerBottom;
 }(NotificationLayer));
 NotificationLayerBottom = __decorate([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottom', offClick: noop })
 ], NotificationLayerBottom);
 export { NotificationLayerBottom };
 var NotificationLayerBottomLeft = (function (_super) {
     __extends(NotificationLayerBottomLeft, _super);
     function NotificationLayerBottomLeft() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.customClass = 'vclLayerNotificationBottomLeft';
-        _this.reverse = false;
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerBottomLeft;
 }(NotificationLayer));
 NotificationLayerBottomLeft = __decorate([
-    Layer(NotificationComponent)
+    Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomLeft', offClick: noop })
 ], NotificationLayerBottomLeft);
 export { NotificationLayerBottomLeft };

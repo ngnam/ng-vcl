@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { TooltipComponent } from './tooltip.component';
 import { TooltipDirective } from './tooltip.directive';
 import { L10nModule } from '../l10n/index';
+import { TooltipService } from './tooltip.service';
 var VCLTooltipModule = (function () {
     function VCLTooltipModule() {
     }
@@ -19,7 +20,7 @@ VCLTooltipModule = __decorate([
         imports: [CommonModule, L10nModule],
         exports: [TooltipComponent, TooltipDirective],
         declarations: [TooltipComponent, TooltipDirective],
-        providers: [],
+        providers: [TooltipService],
         entryComponents: [TooltipComponent]
     })
 ], VCLTooltipModule);

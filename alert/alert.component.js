@@ -1,13 +1,3 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17,14 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-import { forwardRef, Inject, Component, ChangeDetectionStrategy, ChangeDetectorRef, HostListener, Input } from '@angular/core';
-import { LayerRef, LayerService, Layer } from './../layer/index';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, HostListener, Input } from '@angular/core';
+import { LayerRef, LayerService } from './../layer/index';
 import { AlertError, AlertType, AlertAlignment, TYPE_CLASS_MAP, TEXT_ALIGNMENT_CLASS_MAP, BUTTON_ALIGNMENT_CLASS_MAP } from './types';
+import { Observable } from "rxjs/Observable";
+export function dismiss(layer, err) {
+    if (err instanceof Error) {
+        layer.closeWithError(err);
+    }
+    else {
+        layer.closeWithError(new AlertError(err));
+    }
+}
 var AlertComponent = (function () {
     function AlertComponent(alertLayer, layerService, cdRef) {
+        this.alertLayer = alertLayer;
         this.layerService = layerService;
         this.cdRef = cdRef;
         this.alert = {};
@@ -34,7 +31,7 @@ var AlertComponent = (function () {
         // Check if the top layer is the alert layer
         if (this.layerService.getTopLayer() === this.alertLayer) {
             if (ev.key === 'Escape' && this.alert.escClose) {
-                this.alertLayer.dismiss('esc');
+                dismiss(this.alertLayer, 'esc');
             }
             else if (ev.key === 'Enter') {
                 this.confirm();
@@ -84,6 +81,7 @@ var AlertComponent = (function () {
         configurable: true
     });
     AlertComponent.prototype.confirm = function () {
+        var _this = this;
         if (this.alert.loader)
             return;
         var result = {};
@@ -104,22 +102,37 @@ var AlertComponent = (function () {
                 }
             }
         }
-        if (this.alert.loaderOnConfirm) {
+        if (this.alert.confirmAction) {
             this.alert.loader = true;
             this.cdRef.markForCheck();
-            this.alertLayer.send(result);
+            var $ = Observable.from(typeof this.alert.confirmAction === 'function' ? this.alert.confirmAction(result) : this.alert.confirmAction);
+            $.subscribe(function (value) {
+                var asyncResult = {};
+                asyncResult.value = value;
+                _this.alertLayer.send(asyncResult);
+            }, function (err) {
+                dismiss(_this.alertLayer, err);
+            }, function () {
+                _this.alertLayer.close();
+            });
         }
         else {
-            this.alertLayer.close(result);
+            if (this.alert.loaderOnConfirm) {
+                this.alert.loader = true;
+                this.cdRef.markForCheck();
+                result.close = function () { return _this.alertLayer.close(); };
+                this.alertLayer.send(result);
+            }
+            else {
+                this.alertLayer.close(result);
+            }
         }
     };
     AlertComponent.prototype.cancel = function (reason) {
-        this.alertLayer.dismiss('cancel');
-    };
-    AlertComponent.prototype.offClick = function () {
+        dismiss(this.alertLayer, 'cancel');
     };
     AlertComponent.prototype.close = function (reason) {
-        this.alertLayer.dismiss('close');
+        dismiss(this.alertLayer, 'close');
     };
     AlertComponent.prototype.valueChange = function (value) {
         this.value = value;
@@ -141,36 +154,6 @@ AlertComponent = __decorate([
         template: "<div class=\"vclNotification\" [ngClass]=\"alertClass\"> <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" [ngClass]=\"titleAlignmentClass\" *ngIf=\"alert.title\"> <div class=\"vclLayoutFlex\">{{alert.title}}</div> <button *ngIf=\"alert.showCloseButton\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"close()\"><i class=\"fa fa-times\"></i></button> </div> <div class=\"vclNotificationContent vclLayoutVertical vclLayoutCenterJustified \"> <div style=\"padding-bottom: 1em\" *ngIf=\"iconClass\" [ngClass]=\"iconAlignmentClass\"> <span class=\"vclIcon vclNotificationIcon\" [ngClass]=\"iconClass\"></span> </div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" *ngIf=\"alert.text && !alert.html\">{{alert.text}}</div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" [innerHtml]=\"alert.text\" *ngIf=\"alert.text && alert.html\"></div> <div style=\"padding-bottom: 0.5em\" *ngIf=\"alert.input\"><alert-input [alert]=\"alert\" (valueChange)=\"valueChange($event)\"></alert-input></div> <div *ngIf=\"validationError\" class=\"vclNotification vclError\"> <div class=\"vclNotificationContent\"> <vcl-icogram label=\"{{validationError}}\" prepIcon=\"fa:exclamation-circle\"></vcl-icogram> </div> </div> <div class=\"vclLayoutHorizontal vclLooseButtonGroup\" [ngClass]=\"buttonAlignmentClass\"> <button vcl-button *ngIf=\"!!alert.showConfirmButton\" (click)=\"confirm()\" [style.background-color]=\"alert.confirmButtonColor\" [ngClass]=\"alert.confirmButtonClass\" [busy]=\"!!alert.loader\" type=\"button\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.confirmButtonAppIcon\" [prepIcon]=\"alert.confirmButtonPrepIcon\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> </button> <button vcl-button *ngIf=\"!!alert.showCancelButton\" [style.background-color]=\"!!alert.cancelButtonColor\" [ngClass]=\"alert.cancelButtonClass\" [busy]=\"!alert.showConfirmButton && !!alert.loader\" [disabled]=\"!!alert.showConfirmButton && !!alert.loader\" type=\"button\" (click)=\"cancel()\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.cancelButtonAppIcon\" [prepIcon]=\"alert.cancelButtonPrepIcon\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> </button> </div> <div *ngIf=\"!alert.showCancelButton && !alert.showConfirmButton && !!alert.loader\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i class=\"vclBusy-busyIndCircular\"></i> </div> </div> </div> </div> ",
         changeDetection: ChangeDetectionStrategy.OnPush
     }),
-    __param(0, Inject(forwardRef(function () { return AlertLayer; }))),
-    __metadata("design:paramtypes", [AlertLayer, LayerService, ChangeDetectorRef])
+    __metadata("design:paramtypes", [LayerRef, LayerService, ChangeDetectorRef])
 ], AlertComponent);
 export { AlertComponent };
-var AlertLayer = (function (_super) {
-    __extends(AlertLayer, _super);
-    function AlertLayer() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.modal = true;
-        _this.transparent = true;
-        return _this;
-    }
-    AlertLayer.prototype.dismiss = function (reason) {
-        this.closeWithError(new AlertError(reason));
-    };
-    Object.defineProperty(AlertLayer.prototype, "alert", {
-        get: function () {
-            return (this.attrs && this.attrs['alert']) || {};
-        },
-        enumerable: true,
-        configurable: true
-    });
-    AlertLayer.prototype.offClick = function () {
-        if (this.alert.offClickClose) {
-            this.dismiss('offClick');
-        }
-    };
-    return AlertLayer;
-}(LayerRef));
-AlertLayer = __decorate([
-    Layer(AlertComponent)
-], AlertLayer);
-export { AlertLayer };

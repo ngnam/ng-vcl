@@ -1,3 +1,4 @@
+import { Observable } from "rxjs/Observable";
 export declare enum AlertType {
     None = 0,
     Question = 1,
@@ -48,6 +49,7 @@ export interface AlertOptions {
     titleAlignment?: AlertAlignment;
     iconAlignment?: AlertAlignment;
     buttonAlignment?: AlertAlignment;
+    confirmAction?: Function | Observable<any>;
 }
 export declare const ALERT_DEFAULTS: AlertOptions;
 export declare const TYPE_CLASS_MAP: {
@@ -64,6 +66,9 @@ export declare const BUTTON_ALIGNMENT_CLASS_MAP: {
 };
 export interface AlertResult {
     value?: any;
+    close?: {
+        (): void;
+    };
 }
 export declare class AlertError extends Error {
     reason: string;

@@ -1,11 +1,12 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { LayerRef, LayerService } from './../layer/index';
-import { AlertOptions } from './types';
+import { AlertOptions, AlertError } from './types';
+export declare function dismiss(layer: LayerRef, err: AlertError | any): void;
 export declare class AlertComponent {
+    private alertLayer;
     private layerService;
     private cdRef;
-    constructor(alertLayer: AlertLayer, layerService: LayerService, cdRef: ChangeDetectorRef);
-    alertLayer: AlertLayer;
+    constructor(alertLayer: LayerRef, layerService: LayerService, cdRef: ChangeDetectorRef);
     alert: AlertOptions;
     value: any;
     validationError: string;
@@ -18,14 +19,6 @@ export declare class AlertComponent {
     readonly buttonAlignmentClass: string;
     confirm(): void;
     cancel(reason: string): void;
-    offClick(): void;
     close(reason: string): void;
     valueChange(value: any): void;
-}
-export declare class AlertLayer extends LayerRef {
-    modal: boolean;
-    transparent: boolean;
-    dismiss(reason: string): void;
-    readonly alert: AlertOptions;
-    offClick(): void;
 }
