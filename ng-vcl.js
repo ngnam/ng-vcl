@@ -20,12 +20,12 @@ import 'rxjs/add/operator/publishBehavior';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/skipUntil';
+import 'rxjs/add/operator/first';
 import { AnimationBuilder, trigger as trigger$1 } from '@angular/animations';
 import 'rxjs/add/operator/startWith';
 import { NavigationEnd, Router } from '@angular/router';
 import { LayerService } from '@ng-vcl/ng-vcl';
 import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/skipWhile';
 import { DOCUMENT } from '@angular/platform-browser';
 
