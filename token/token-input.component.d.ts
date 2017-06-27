@@ -2,11 +2,26 @@ import { EventEmitter, ElementRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { Token } from './token.component';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
+export declare class TokenInputLabelPre {
+}
+export declare class TokenInputLabelPost {
+}
 export declare class TokenInputComponent implements ControlValueAccessor {
     tokens: Token[];
     input: ElementRef;
     selectable: boolean;
+    selectedAfterAdd: boolean;
+    placeholder: string | undefined;
+    inputClass: string | undefined;
+    icon: string;
     tabindex: number;
+    tokenClass: string | undefined;
+    change: EventEmitter<Token[]>;
+    add: EventEmitter<Token>;
+    remove: EventEmitter<Token>;
+    confirm: EventEmitter<Token[]>;
+    labelPre: TokenInputLabelPre;
+    labelPost: TokenInputLabelPost;
     onFocus(ev?: any): Promise<void>;
     focused: boolean;
     onInputFocus(): void;
@@ -15,12 +30,11 @@ export declare class TokenInputComponent implements ControlValueAccessor {
     /**
      * remove last token on double-backspace
      */
-    lastKey: string | null;
+    private lastKey;
     onKeydown(ev?: KeyboardEvent): void;
-    change: EventEmitter<{}>;
-    add(label: string): void;
+    addToken(label: string): void;
     select(token: Token): void;
-    remove(token: Token): void;
+    removeToken(token: Token): void;
     triggerChange(): void;
     /**
      * things needed for ControlValueAccessor-Interface

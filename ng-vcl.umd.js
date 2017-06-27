@@ -3140,6 +3140,7 @@ exports.TokenComponent = (function () {
     function TokenComponent() {
         this.selected = false;
         this.removable = false;
+        this.icon = 'fa:remove';
         this.remove = new _angular_core.EventEmitter();
         this.select = new _angular_core.EventEmitter();
     }
@@ -3163,6 +3164,7 @@ __decorate$35([
     __metadata$18("design:returntype", void 0)
 ], exports.TokenComponent.prototype, "onTap", null);
 __decorate$35([
+    _angular_core.HostBinding('class.vclSelected'),
     _angular_core.Input(),
     __metadata$18("design:type", Boolean)
 ], exports.TokenComponent.prototype, "selected", void 0);
@@ -3170,6 +3172,10 @@ __decorate$35([
     _angular_core.Input(),
     __metadata$18("design:type", Boolean)
 ], exports.TokenComponent.prototype, "removable", void 0);
+__decorate$35([
+    _angular_core.Input(),
+    __metadata$18("design:type", String)
+], exports.TokenComponent.prototype, "icon", void 0);
 __decorate$35([
     _angular_core.Output(),
     __metadata$18("design:type", Object)
@@ -3181,11 +3187,10 @@ __decorate$35([
 exports.TokenComponent = __decorate$35([
     _angular_core.Component({
         selector: 'vcl-token',
-        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" appIcon=\"fa:remove\" (click)=\"onRemoveClick($event)\"> </button> ",
+        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" [appIcon]=\"icon\" (click)=\"onRemoveClick($event)\"> </button> ",
         animations: [_angular_core.trigger('checkState', [])],
         host: {
             '[class.vclToken]': 'true',
-            '[class.vclSelected]': 'selected',
             '[@checkState]': 'selected'
         }
     })
@@ -3341,17 +3346,35 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$5 = {
     useExisting: _angular_core.forwardRef(function () { return exports.TokenInputComponent; }),
     multi: true
 };
+var TokenInputLabelPre = (function () {
+    function TokenInputLabelPre() {
+    }
+    return TokenInputLabelPre;
+}());
+TokenInputLabelPre = __decorate$37([
+    _angular_core.Directive({ selector: '[vcl-token-input-pre]' })
+], TokenInputLabelPre);
+var TokenInputLabelPost = (function () {
+    function TokenInputLabelPost() {
+    }
+    return TokenInputLabelPost;
+}());
+TokenInputLabelPost = __decorate$37([
+    _angular_core.Directive({ selector: '[vcl-token-input-post]' })
+], TokenInputLabelPost);
 exports.TokenInputComponent = (function () {
     function TokenInputComponent() {
         this.tokens = [];
         this.selectable = true;
+        this.selectedAfterAdd = false;
+        this.placeholder = 'Type to add tokens';
+        this.icon = 'fa:remove';
         this.tabindex = 0;
-        this.focused = false;
-        /**
-         * remove last token on double-backspace
-         */
-        this.lastKey = null;
         this.change = new _angular_core.EventEmitter();
+        this.add = new _angular_core.EventEmitter();
+        this.remove = new _angular_core.EventEmitter();
+        this.confirm = new _angular_core.EventEmitter();
+        this.focused = false;
         /**
          * things needed for ControlValueAccessor-Interface
          */
@@ -3386,24 +3409,31 @@ exports.TokenInputComponent = (function () {
         configurable: true
     });
     TokenInputComponent.prototype.onKeydown = function (ev) {
+        var value = this.input && this.input.nativeElement.value;
         var code = ev && (ev.code || ev.key); // fallback for ie11
-        if (code == 'Backspace' && this.lastKey == 'Backspace' && this.input.nativeElement.value === '') {
+        if (code == 'Backspace' && this.lastKey == 'Backspace' && value === '') {
             // remove last token
-            this.tokens.pop();
+            var token = this.tokens.pop();
+            this.remove.emit(token);
             this.triggerChange();
         }
         else if (code) {
             this.lastKey = code;
         }
     };
-    TokenInputComponent.prototype.add = function (label) {
+    TokenInputComponent.prototype.addToken = function (label) {
         if (label) {
-            this.tokens.push({
-                selected: false,
+            var token = {
+                selected: this.selectedAfterAdd,
                 label: label
-            });
+            };
+            this.tokens.push(token);
             this.input.nativeElement.value = '';
+            this.add.emit(token);
             this.triggerChange();
+        }
+        else if (label === '') {
+            this.confirm.emit(this.tokens);
         }
     };
     TokenInputComponent.prototype.select = function (token) {
@@ -3412,17 +3442,20 @@ exports.TokenInputComponent = (function () {
             this.triggerChange();
         }
     };
-    TokenInputComponent.prototype.remove = function (token) {
+    TokenInputComponent.prototype.removeToken = function (token) {
         this.tokens = this.tokens.filter(function (t) { return t !== token; });
+        this.remove.emit(token);
         this.triggerChange();
+        this.input.nativeElement.focus();
     };
     TokenInputComponent.prototype.triggerChange = function () {
         this.change.emit(this.tokens);
         this.onChange(this.tokens);
     };
     TokenInputComponent.prototype.writeValue = function (tokens) {
+        var _this = this;
         if (Array.isArray(tokens)) {
-            this.tokens = tokens.map(function (t) { return typeof t === 'string' ? { label: t, selected: false } : t; })
+            this.tokens = tokens.map(function (t) { return typeof t === 'string' ? { label: t, selected: _this.selectedAfterAdd } : t; })
                 .filter(function (t) { return typeof t === 'object' && t; });
         }
     };
@@ -3444,8 +3477,52 @@ __decorate$37([
 ], exports.TokenInputComponent.prototype, "selectable", void 0);
 __decorate$37([
     _angular_core.Input(),
+    __metadata$20("design:type", Boolean)
+], exports.TokenInputComponent.prototype, "selectedAfterAdd", void 0);
+__decorate$37([
+    _angular_core.Input(),
+    __metadata$20("design:type", String)
+], exports.TokenInputComponent.prototype, "placeholder", void 0);
+__decorate$37([
+    _angular_core.Input(),
+    __metadata$20("design:type", String)
+], exports.TokenInputComponent.prototype, "inputClass", void 0);
+__decorate$37([
+    _angular_core.Input(),
+    __metadata$20("design:type", String)
+], exports.TokenInputComponent.prototype, "icon", void 0);
+__decorate$37([
+    _angular_core.Input(),
     __metadata$20("design:type", Number)
 ], exports.TokenInputComponent.prototype, "tabindex", void 0);
+__decorate$37([
+    _angular_core.Input(),
+    __metadata$20("design:type", String)
+], exports.TokenInputComponent.prototype, "tokenClass", void 0);
+__decorate$37([
+    _angular_core.Output(),
+    __metadata$20("design:type", Object)
+], exports.TokenInputComponent.prototype, "change", void 0);
+__decorate$37([
+    _angular_core.Output(),
+    __metadata$20("design:type", Object)
+], exports.TokenInputComponent.prototype, "add", void 0);
+__decorate$37([
+    _angular_core.Output(),
+    __metadata$20("design:type", Object)
+], exports.TokenInputComponent.prototype, "remove", void 0);
+__decorate$37([
+    _angular_core.Output(),
+    __metadata$20("design:type", Object)
+], exports.TokenInputComponent.prototype, "confirm", void 0);
+__decorate$37([
+    _angular_core.ContentChild(TokenInputLabelPre, { read: _angular_core.TemplateRef }),
+    __metadata$20("design:type", TokenInputLabelPre)
+], exports.TokenInputComponent.prototype, "labelPre", void 0);
+__decorate$37([
+    _angular_core.ContentChild(TokenInputLabelPost, { read: _angular_core.TemplateRef }),
+    __metadata$20("design:type", TokenInputLabelPost)
+], exports.TokenInputComponent.prototype, "labelPost", void 0);
 __decorate$37([
     _angular_core.HostListener('focus', ['$event']),
     __metadata$20("design:type", Function),
@@ -3462,14 +3539,10 @@ __decorate$37([
     __metadata$20("design:paramtypes", [KeyboardEvent]),
     __metadata$20("design:returntype", void 0)
 ], exports.TokenInputComponent.prototype, "onKeydown", null);
-__decorate$37([
-    _angular_core.Output(),
-    __metadata$20("design:type", Object)
-], exports.TokenInputComponent.prototype, "change", void 0);
 exports.TokenInputComponent = __decorate$37([
     _angular_core.Component({
         selector: 'vcl-token-input',
-        template: "<div class=\"vclTokenContainer\"> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"remove(token)\" (tap)=\"select(token)\" [selected]=\"token.selected\" [removable]=\"true\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> </div> <input  vcl-input #input placeholder=\"Type to add tokens\"  autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"add(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
+        template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (tap)=\"select(token)\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
         host: {
             '[class.vclInput]': 'true',
             '[class.vclTokenInput]': 'true',
@@ -3495,9 +3568,9 @@ exports.VCLTokenModule = (function () {
 }());
 exports.VCLTokenModule = __decorate$34([
     _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLInputModule, exports.VCLButtonModule, _angular_forms.FormsModule, exports.VCLIconModule],
-        exports: [exports.TokenComponent, exports.TokenListComponent, exports.TokenInputComponent],
-        declarations: [exports.TokenComponent, exports.TokenListComponent, exports.TokenInputComponent],
+        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLInputModule, exports.VCLButtonModule, _angular_forms.FormsModule, exports.VCLIconModule, exports.VCLWormholeModule],
+        exports: [exports.TokenComponent, exports.TokenListComponent, exports.TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
+        declarations: [exports.TokenComponent, exports.TokenListComponent, exports.TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
         providers: [],
     })
 ], exports.VCLTokenModule);

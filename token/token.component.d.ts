@@ -10,6 +10,7 @@ export declare class TokenComponent implements Token {
     onRemoveClick(event: any): void;
     selected: boolean;
     removable: boolean;
+    icon: string;
     remove: EventEmitter<{}>;
     select: EventEmitter<{}>;
 }

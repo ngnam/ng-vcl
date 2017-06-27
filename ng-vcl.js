@@ -3165,6 +3165,7 @@ var TokenComponent = (function () {
     function TokenComponent() {
         this.selected = false;
         this.removable = false;
+        this.icon = 'fa:remove';
         this.remove = new EventEmitter();
         this.select = new EventEmitter();
     }
@@ -3188,6 +3189,7 @@ __decorate$35([
     __metadata$18("design:returntype", void 0)
 ], TokenComponent.prototype, "onTap", null);
 __decorate$35([
+    HostBinding('class.vclSelected'),
     Input(),
     __metadata$18("design:type", Boolean)
 ], TokenComponent.prototype, "selected", void 0);
@@ -3195,6 +3197,10 @@ __decorate$35([
     Input(),
     __metadata$18("design:type", Boolean)
 ], TokenComponent.prototype, "removable", void 0);
+__decorate$35([
+    Input(),
+    __metadata$18("design:type", String)
+], TokenComponent.prototype, "icon", void 0);
 __decorate$35([
     Output(),
     __metadata$18("design:type", Object)
@@ -3206,11 +3212,10 @@ __decorate$35([
 TokenComponent = __decorate$35([
     Component({
         selector: 'vcl-token',
-        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" appIcon=\"fa:remove\" (click)=\"onRemoveClick($event)\"> </button> ",
+        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" [appIcon]=\"icon\" (click)=\"onRemoveClick($event)\"> </button> ",
         animations: [trigger('checkState', [])],
         host: {
             '[class.vclToken]': 'true',
-            '[class.vclSelected]': 'selected',
             '[@checkState]': 'selected'
         }
     })
@@ -3366,17 +3371,35 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$5 = {
     useExisting: forwardRef(function () { return TokenInputComponent; }),
     multi: true
 };
+var TokenInputLabelPre = (function () {
+    function TokenInputLabelPre() {
+    }
+    return TokenInputLabelPre;
+}());
+TokenInputLabelPre = __decorate$37([
+    Directive({ selector: '[vcl-token-input-pre]' })
+], TokenInputLabelPre);
+var TokenInputLabelPost = (function () {
+    function TokenInputLabelPost() {
+    }
+    return TokenInputLabelPost;
+}());
+TokenInputLabelPost = __decorate$37([
+    Directive({ selector: '[vcl-token-input-post]' })
+], TokenInputLabelPost);
 var TokenInputComponent = (function () {
     function TokenInputComponent() {
         this.tokens = [];
         this.selectable = true;
+        this.selectedAfterAdd = false;
+        this.placeholder = 'Type to add tokens';
+        this.icon = 'fa:remove';
         this.tabindex = 0;
-        this.focused = false;
-        /**
-         * remove last token on double-backspace
-         */
-        this.lastKey = null;
         this.change = new EventEmitter();
+        this.add = new EventEmitter();
+        this.remove = new EventEmitter();
+        this.confirm = new EventEmitter();
+        this.focused = false;
         /**
          * things needed for ControlValueAccessor-Interface
          */
@@ -3411,24 +3434,31 @@ var TokenInputComponent = (function () {
         configurable: true
     });
     TokenInputComponent.prototype.onKeydown = function (ev) {
+        var value = this.input && this.input.nativeElement.value;
         var code = ev && (ev.code || ev.key); // fallback for ie11
-        if (code == 'Backspace' && this.lastKey == 'Backspace' && this.input.nativeElement.value === '') {
+        if (code == 'Backspace' && this.lastKey == 'Backspace' && value === '') {
             // remove last token
-            this.tokens.pop();
+            var token = this.tokens.pop();
+            this.remove.emit(token);
             this.triggerChange();
         }
         else if (code) {
             this.lastKey = code;
         }
     };
-    TokenInputComponent.prototype.add = function (label) {
+    TokenInputComponent.prototype.addToken = function (label) {
         if (label) {
-            this.tokens.push({
-                selected: false,
+            var token = {
+                selected: this.selectedAfterAdd,
                 label: label
-            });
+            };
+            this.tokens.push(token);
             this.input.nativeElement.value = '';
+            this.add.emit(token);
             this.triggerChange();
+        }
+        else if (label === '') {
+            this.confirm.emit(this.tokens);
         }
     };
     TokenInputComponent.prototype.select = function (token) {
@@ -3437,17 +3467,20 @@ var TokenInputComponent = (function () {
             this.triggerChange();
         }
     };
-    TokenInputComponent.prototype.remove = function (token) {
+    TokenInputComponent.prototype.removeToken = function (token) {
         this.tokens = this.tokens.filter(function (t) { return t !== token; });
+        this.remove.emit(token);
         this.triggerChange();
+        this.input.nativeElement.focus();
     };
     TokenInputComponent.prototype.triggerChange = function () {
         this.change.emit(this.tokens);
         this.onChange(this.tokens);
     };
     TokenInputComponent.prototype.writeValue = function (tokens) {
+        var _this = this;
         if (Array.isArray(tokens)) {
-            this.tokens = tokens.map(function (t) { return typeof t === 'string' ? { label: t, selected: false } : t; })
+            this.tokens = tokens.map(function (t) { return typeof t === 'string' ? { label: t, selected: _this.selectedAfterAdd } : t; })
                 .filter(function (t) { return typeof t === 'object' && t; });
         }
     };
@@ -3469,8 +3502,52 @@ __decorate$37([
 ], TokenInputComponent.prototype, "selectable", void 0);
 __decorate$37([
     Input(),
+    __metadata$20("design:type", Boolean)
+], TokenInputComponent.prototype, "selectedAfterAdd", void 0);
+__decorate$37([
+    Input(),
+    __metadata$20("design:type", String)
+], TokenInputComponent.prototype, "placeholder", void 0);
+__decorate$37([
+    Input(),
+    __metadata$20("design:type", String)
+], TokenInputComponent.prototype, "inputClass", void 0);
+__decorate$37([
+    Input(),
+    __metadata$20("design:type", String)
+], TokenInputComponent.prototype, "icon", void 0);
+__decorate$37([
+    Input(),
     __metadata$20("design:type", Number)
 ], TokenInputComponent.prototype, "tabindex", void 0);
+__decorate$37([
+    Input(),
+    __metadata$20("design:type", String)
+], TokenInputComponent.prototype, "tokenClass", void 0);
+__decorate$37([
+    Output(),
+    __metadata$20("design:type", Object)
+], TokenInputComponent.prototype, "change", void 0);
+__decorate$37([
+    Output(),
+    __metadata$20("design:type", Object)
+], TokenInputComponent.prototype, "add", void 0);
+__decorate$37([
+    Output(),
+    __metadata$20("design:type", Object)
+], TokenInputComponent.prototype, "remove", void 0);
+__decorate$37([
+    Output(),
+    __metadata$20("design:type", Object)
+], TokenInputComponent.prototype, "confirm", void 0);
+__decorate$37([
+    ContentChild(TokenInputLabelPre, { read: TemplateRef }),
+    __metadata$20("design:type", TokenInputLabelPre)
+], TokenInputComponent.prototype, "labelPre", void 0);
+__decorate$37([
+    ContentChild(TokenInputLabelPost, { read: TemplateRef }),
+    __metadata$20("design:type", TokenInputLabelPost)
+], TokenInputComponent.prototype, "labelPost", void 0);
 __decorate$37([
     HostListener('focus', ['$event']),
     __metadata$20("design:type", Function),
@@ -3487,14 +3564,10 @@ __decorate$37([
     __metadata$20("design:paramtypes", [KeyboardEvent]),
     __metadata$20("design:returntype", void 0)
 ], TokenInputComponent.prototype, "onKeydown", null);
-__decorate$37([
-    Output(),
-    __metadata$20("design:type", Object)
-], TokenInputComponent.prototype, "change", void 0);
 TokenInputComponent = __decorate$37([
     Component({
         selector: 'vcl-token-input',
-        template: "<div class=\"vclTokenContainer\"> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"remove(token)\" (tap)=\"select(token)\" [selected]=\"token.selected\" [removable]=\"true\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> </div> <input  vcl-input #input placeholder=\"Type to add tokens\"  autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"add(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
+        template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (tap)=\"select(token)\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
         host: {
             '[class.vclInput]': 'true',
             '[class.vclTokenInput]': 'true',
@@ -3520,9 +3593,9 @@ var VCLTokenModule = (function () {
 }());
 VCLTokenModule = __decorate$34([
     NgModule({
-        imports: [CommonModule, L10nModule, VCLInputModule, VCLButtonModule, FormsModule, VCLIconModule],
-        exports: [TokenComponent, TokenListComponent, TokenInputComponent],
-        declarations: [TokenComponent, TokenListComponent, TokenInputComponent],
+        imports: [CommonModule, L10nModule, VCLInputModule, VCLButtonModule, FormsModule, VCLIconModule, VCLWormholeModule],
+        exports: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
+        declarations: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
         providers: [],
     })
 ], VCLTokenModule);
