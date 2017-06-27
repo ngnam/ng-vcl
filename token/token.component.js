@@ -7,11 +7,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, EventEmitter, trigger, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, trigger, HostListener, HostBinding } from '@angular/core';
 var TokenComponent = (function () {
     function TokenComponent() {
         this.selected = false;
         this.removable = false;
+        this.icon = 'fa:remove';
         this.remove = new EventEmitter();
         this.select = new EventEmitter();
     }
@@ -35,6 +36,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TokenComponent.prototype, "onTap", null);
 __decorate([
+    HostBinding('class.vclSelected'),
     Input(),
     __metadata("design:type", Boolean)
 ], TokenComponent.prototype, "selected", void 0);
@@ -42,6 +44,10 @@ __decorate([
     Input(),
     __metadata("design:type", Boolean)
 ], TokenComponent.prototype, "removable", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], TokenComponent.prototype, "icon", void 0);
 __decorate([
     Output(),
     __metadata("design:type", Object)
@@ -53,11 +59,10 @@ __decorate([
 TokenComponent = __decorate([
     Component({
         selector: 'vcl-token',
-        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" appIcon=\"fa:remove\" (click)=\"onRemoveClick($event)\"> </button> ",
+        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" [appIcon]=\"icon\" (click)=\"onRemoveClick($event)\"> </button> ",
         animations: [trigger('checkState', [])],
         host: {
             '[class.vclToken]': 'true',
-            '[class.vclSelected]': 'selected',
             '[@checkState]': 'selected'
         }
     })
