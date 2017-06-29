@@ -231,7 +231,8 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var FileInputComponent = (function () {
-    function FileInputComponent() {
+    function FileInputComponent(cdRef) {
+        this.cdRef = cdRef;
         this.accept = '*';
         this.multiple = false;
         this.files = new EventEmitter();
@@ -328,6 +329,7 @@ var FileInputComponent = (function () {
     };
     FileInputComponent.prototype.writeValue = function (files) {
         this.value = files;
+        this.cdRef.markForCheck();
     };
     FileInputComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -427,7 +429,8 @@ FileInputComponent = __decorate$3([
         },
         changeDetection: ChangeDetectionStrategy.OnPush,
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
-    })
+    }),
+    __metadata$1("design:paramtypes", [ChangeDetectorRef])
 ], FileInputComponent);
 
 var __decorate$2 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -567,7 +570,8 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$1 = {
     multi: true
 };
 var FlipSwitchComponent = (function () {
-    function FlipSwitchComponent() {
+    function FlipSwitchComponent(cdRef) {
+        this.cdRef = cdRef;
         this.tabindex = 0;
         this.onLabel = 'On';
         this.offLabel = 'Off';
@@ -604,6 +608,7 @@ var FlipSwitchComponent = (function () {
     };
     FlipSwitchComponent.prototype.writeValue = function (value) {
         this.value = value;
+        this.cdRef.markForCheck();
     };
     FlipSwitchComponent.prototype.registerOnChange = function (fn) {
         this.onChangeCallback = fn;
@@ -658,7 +663,8 @@ FlipSwitchComponent = __decorate$7([
             '[attr.aria-pressed]': 'value',
             '[attr.touch-action]': '"pan-y"'
         }
-    })
+    }),
+    __metadata$3("design:paramtypes", [ChangeDetectorRef])
 ], FlipSwitchComponent);
 
 var __extends = (this && this.__extends) || (function () {
@@ -3236,7 +3242,8 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$4 = {
     multi: true
 };
 var TokenListComponent = (function () {
-    function TokenListComponent() {
+    function TokenListComponent(cdRef) {
+        this.cdRef = cdRef;
         this.selectable = false;
         this.change = new EventEmitter();
     }
@@ -3289,6 +3296,7 @@ var TokenListComponent = (function () {
     TokenListComponent.prototype.writeValue = function (value) {
         this.labels = value;
         this.syncTokens();
+        this.cdRef.markForCheck();
     };
     TokenListComponent.prototype.registerOnChange = function (fn) {
         this.onChangeCallback = fn;
@@ -3319,7 +3327,8 @@ TokenListComponent = __decorate$36([
             '[class.vclTokenContainer]': 'true'
         },
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$4]
-    })
+    }),
+    __metadata$19("design:paramtypes", [ChangeDetectorRef])
 ], TokenListComponent);
 
 var __decorate$37 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3388,7 +3397,8 @@ TokenInputLabelPost = __decorate$37([
     Directive({ selector: '[vcl-token-input-post]' })
 ], TokenInputLabelPost);
 var TokenInputComponent = (function () {
-    function TokenInputComponent() {
+    function TokenInputComponent(cdRef) {
+        this.cdRef = cdRef;
         this.tokens = [];
         this.selectable = true;
         this.selectedAfterAdd = false;
@@ -3483,6 +3493,10 @@ var TokenInputComponent = (function () {
             this.tokens = tokens.map(function (t) { return typeof t === 'string' ? { label: t, selected: _this.selectedAfterAdd } : t; })
                 .filter(function (t) { return typeof t === 'object' && t; });
         }
+        else {
+            this.tokens = [];
+        }
+        this.cdRef.markForCheck();
     };
     TokenInputComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -3577,7 +3591,8 @@ TokenInputComponent = __decorate$37([
         },
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$5],
         changeDetection: ChangeDetectionStrategy.OnPush
-    })
+    }),
+    __metadata$20("design:paramtypes", [ChangeDetectorRef])
 ], TokenInputComponent);
 
 var __decorate$34 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5693,7 +5708,8 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$9 = {
     multi: true
 };
 var RadioGroupComponent = (function () {
-    function RadioGroupComponent() {
+    function RadioGroupComponent(cdRef) {
+        this.cdRef = cdRef;
         this.change = new EventEmitter();
         /**
         * things needed for ControlValueAccessor-Interface
@@ -5719,6 +5735,7 @@ var RadioGroupComponent = (function () {
                 var value = rbtn.value === undefined ? idx : rbtn.value;
                 rbtn.setChecked(_this.value === value);
             });
+            this.cdRef.markForCheck();
         }
     };
     RadioGroupComponent.prototype.triggerChange = function () {
@@ -5776,7 +5793,8 @@ RadioGroupComponent = __decorate$61([
         template: "<ng-content></ng-content>",
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$9],
         changeDetection: ChangeDetectionStrategy.OnPush,
-    })
+    }),
+    __metadata$37("design:paramtypes", [ChangeDetectorRef])
 ], RadioGroupComponent);
 
 var __decorate$63 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5902,8 +5920,9 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10 = {
     multi: true
 };
 var CheckboxComponent = (function () {
-    function CheckboxComponent(elementRef) {
+    function CheckboxComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
+        this.cdRef = cdRef;
         this.tabindex = 0;
         this.checkedIcon = 'fa:check-square-o';
         this.uncheckedIcon = 'fa:square-o';
@@ -5957,6 +5976,7 @@ var CheckboxComponent = (function () {
     };
     CheckboxComponent.prototype.writeValue = function (value) {
         this.checked = !!value;
+        this.cdRef.markForCheck();
     };
     CheckboxComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -6028,7 +6048,7 @@ CheckboxComponent = __decorate$65([
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10],
         changeDetection: ChangeDetectionStrategy.OnPush
     }),
-    __metadata$39("design:paramtypes", [ElementRef])
+    __metadata$39("design:paramtypes", [ElementRef, ChangeDetectorRef])
 ], CheckboxComponent);
 
 var __decorate$64 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -6281,7 +6301,8 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$11 = {
     multi: true
 };
 var DatePickerComponent = (function () {
-    function DatePickerComponent() {
+    function DatePickerComponent(cdRef) {
+        this.cdRef = cdRef;
         // behaviour
         this.closeOnSelect = false;
         // styling
@@ -6396,6 +6417,7 @@ var DatePickerComponent = (function () {
         this.pickedDate = PickDateCreate(value);
         if (!value)
             this.pickedDate = PickDateCreate();
+        this.cdRef.markForCheck();
     };
     DatePickerComponent.prototype.registerOnChange = function (fn) {
         this.onChangeCallback = fn;
@@ -6480,7 +6502,8 @@ DatePickerComponent = __decorate$67([
             '[attr.aria-multiselectable]': 'false',
             '[style.height]': '"284px"' // TODO this fixes for IE11
         }
-    })
+    }),
+    __metadata$40("design:paramtypes", [ChangeDetectorRef])
 ], DatePickerComponent);
 
 var __decorate$66 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7048,7 +7071,8 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$12 = {
     multi: true
 };
 var SliderComponent = (function () {
-    function SliderComponent() {
+    function SliderComponent(cdRef) {
+        this.cdRef = cdRef;
         this.tabindex = 0;
         this.value = 0;
         this.valueChange = new EventEmitter();
@@ -7287,6 +7311,7 @@ var SliderComponent = (function () {
     };
     SliderComponent.prototype.writeValue = function (value) {
         this.setValue(value, true);
+        this.cdRef.markForCheck();
     };
     SliderComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -7380,7 +7405,8 @@ SliderComponent = __decorate$73([
             '[class.vclSlider]': 'true'
         },
         changeDetection: ChangeDetectionStrategy.OnPush
-    })
+    }),
+    __metadata$43("design:paramtypes", [ChangeDetectorRef])
 ], SliderComponent);
 
 var __decorate$72 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -7579,7 +7605,8 @@ function dismiss(layer, err) {
     }
 }
 var AlertComponent = (function () {
-    function AlertComponent(alertLayer, layerService, cdRef) {
+    function AlertComponent(elementRef, alertLayer, layerService, cdRef) {
+        this.elementRef = elementRef;
         this.alertLayer = alertLayer;
         this.layerService = layerService;
         this.cdRef = cdRef;
@@ -7599,7 +7626,7 @@ var AlertComponent = (function () {
     };
     Object.defineProperty(AlertComponent.prototype, "alertClass", {
         get: function () {
-            return TYPE_CLASS_MAP[this.alert.type || AlertType.None].alertClass + ' ' + this.alert.customClass || '';
+            return TYPE_CLASS_MAP[this.alert.type || AlertType.None].alertClass + ' ' + (this.alert.customClass || '');
         },
         enumerable: true,
         configurable: true
@@ -7639,6 +7666,9 @@ var AlertComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    AlertComponent.prototype.ngAfterViewInit = function () {
+        this.elementRef.nativeElement.focus();
+    };
     AlertComponent.prototype.confirm = function () {
         var _this = this;
         if (this.alert.loader)
@@ -7703,7 +7733,7 @@ __decorate$77([
     __metadata$45("design:type", Object)
 ], AlertComponent.prototype, "alert", void 0);
 __decorate$77([
-    HostListener('document:keyup', ['$event']),
+    HostListener('keyup', ['$event']),
     __metadata$45("design:type", Function),
     __metadata$45("design:paramtypes", [KeyboardEvent]),
     __metadata$45("design:returntype", void 0)
@@ -7711,9 +7741,13 @@ __decorate$77([
 AlertComponent = __decorate$77([
     Component({
         template: "<div class=\"vclNotification\" [ngClass]=\"alertClass\"> <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" [ngClass]=\"titleAlignmentClass\" *ngIf=\"alert.title\"> <div class=\"vclLayoutFlex\">{{alert.title}}</div> <button *ngIf=\"alert.showCloseButton\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" (tap)=\"close()\"><i class=\"fa fa-times\"></i></button> </div> <div class=\"vclNotificationContent vclLayoutVertical vclLayoutCenterJustified \"> <div style=\"padding-bottom: 1em\" *ngIf=\"iconClass\" [ngClass]=\"iconAlignmentClass\"> <span class=\"vclIcon vclNotificationIcon\" [ngClass]=\"iconClass\"></span> </div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" *ngIf=\"alert.text && !alert.html\">{{alert.text}}</div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" [innerHtml]=\"alert.text\" *ngIf=\"alert.text && alert.html\"></div> <div style=\"padding-bottom: 0.5em\" *ngIf=\"alert.input\"><alert-input [alert]=\"alert\" (valueChange)=\"valueChange($event)\"></alert-input></div> <div *ngIf=\"validationError\" class=\"vclNotification vclError\"> <div class=\"vclNotificationContent\"> <vcl-icogram label=\"{{validationError}}\" prepIcon=\"fa:exclamation-circle\"></vcl-icogram> </div> </div> <div class=\"vclLayoutHorizontal vclLooseButtonGroup\" [ngClass]=\"buttonAlignmentClass\"> <button vcl-button *ngIf=\"!!alert.showConfirmButton\" (tap)=\"confirm()\" [style.background-color]=\"alert.confirmButtonColor\" [ngClass]=\"alert.confirmButtonClass\" [busy]=\"!!alert.loader\" type=\"button\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.confirmButtonAppIcon\" [prepIcon]=\"alert.confirmButtonPrepIcon\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> </button> <button vcl-button *ngIf=\"!!alert.showCancelButton\" [style.background-color]=\"!!alert.cancelButtonColor\" [ngClass]=\"alert.cancelButtonClass\" [busy]=\"!alert.showConfirmButton && !!alert.loader\" [disabled]=\"!!alert.showConfirmButton && !!alert.loader\" type=\"button\" (tap)=\"cancel()\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.cancelButtonAppIcon\" [prepIcon]=\"alert.cancelButtonPrepIcon\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> </button> </div> <div *ngIf=\"!alert.showCancelButton && !alert.showConfirmButton && !!alert.loader\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i class=\"vclBusy-busyIndCircular\"></i> </div> </div> </div> </div> ",
-        changeDetection: ChangeDetectionStrategy.OnPush
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        host: {
+            '[tabindex]': '0',
+            '[style.outline]': '"none"'
+        }
     }),
-    __metadata$45("design:paramtypes", [LayerRef, LayerService$1, ChangeDetectorRef])
+    __metadata$45("design:paramtypes", [ElementRef, LayerRef, LayerService$1, ChangeDetectorRef])
 ], AlertComponent);
 
 var __decorate$78 = (this && this.__decorate) || function (decorators, target, key, desc) {

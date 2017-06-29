@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { Component, Input, Output, forwardRef, EventEmitter, HostListener, ElementRef, ViewChild, ChangeDetectionStrategy, HostBinding, Directive, ContentChild, TemplateRef } from '@angular/core';
+import { Component, Input, Output, forwardRef, EventEmitter, HostListener, ElementRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, HostBinding, Directive, ContentChild, TemplateRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
@@ -68,7 +68,8 @@ TokenInputLabelPost = __decorate([
 ], TokenInputLabelPost);
 export { TokenInputLabelPost };
 var TokenInputComponent = (function () {
-    function TokenInputComponent() {
+    function TokenInputComponent(cdRef) {
+        this.cdRef = cdRef;
         this.tokens = [];
         this.selectable = true;
         this.selectedAfterAdd = false;
@@ -163,6 +164,10 @@ var TokenInputComponent = (function () {
             this.tokens = tokens.map(function (t) { return typeof t === 'string' ? { label: t, selected: _this.selectedAfterAdd } : t; })
                 .filter(function (t) { return typeof t === 'object' && t; });
         }
+        else {
+            this.tokens = [];
+        }
+        this.cdRef.markForCheck();
     };
     TokenInputComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -257,6 +262,7 @@ TokenInputComponent = __decorate([
         },
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
         changeDetection: ChangeDetectionStrategy.OnPush
-    })
+    }),
+    __metadata("design:paramtypes", [ChangeDetectorRef])
 ], TokenInputComponent);
 export { TokenInputComponent };

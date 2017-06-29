@@ -1,4 +1,4 @@
-import { OnDestroy, QueryList, EventEmitter } from '@angular/core';
+import { OnDestroy, QueryList, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { RadioButtonComponent } from './radio-button.component';
 import { ControlValueAccessor } from "@angular/forms";
@@ -8,10 +8,12 @@ export declare enum SelectionMode {
 }
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class RadioGroupComponent implements OnDestroy, ControlValueAccessor {
+    private cdRef;
     checkedSubscription: Subscription | undefined;
     value: any;
     change: EventEmitter<any>;
     radioButtons: QueryList<RadioButtonComponent>;
+    constructor(cdRef: ChangeDetectorRef);
     private syncValue();
     private syncRadioButtons();
     private triggerChange();

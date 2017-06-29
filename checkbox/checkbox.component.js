@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, HostBinding, HostListener, EventEmitter, ChangeDetectionStrategy, forwardRef, ElementRef } from '@angular/core';
+import { Component, Input, Output, HostBinding, HostListener, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, forwardRef, ElementRef } from '@angular/core';
 import { trigger } from '@angular/animations';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
@@ -16,8 +16,9 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var CheckboxComponent = (function () {
-    function CheckboxComponent(elementRef) {
+    function CheckboxComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
+        this.cdRef = cdRef;
         this.tabindex = 0;
         this.checkedIcon = 'fa:check-square-o';
         this.uncheckedIcon = 'fa:square-o';
@@ -71,6 +72,7 @@ var CheckboxComponent = (function () {
     };
     CheckboxComponent.prototype.writeValue = function (value) {
         this.checked = !!value;
+        this.cdRef.markForCheck();
     };
     CheckboxComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -142,6 +144,6 @@ CheckboxComponent = __decorate([
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
         changeDetection: ChangeDetectionStrategy.OnPush
     }),
-    __metadata("design:paramtypes", [ElementRef])
+    __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
 ], CheckboxComponent);
 export { CheckboxComponent };

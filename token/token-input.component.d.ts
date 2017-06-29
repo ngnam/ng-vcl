@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef } from '@angular/core';
+import { EventEmitter, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { Token } from './token.component';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
@@ -7,6 +7,7 @@ export declare class TokenInputLabelPre {
 export declare class TokenInputLabelPost {
 }
 export declare class TokenInputComponent implements ControlValueAccessor {
+    private cdRef;
     tokens: Token[];
     input: ElementRef;
     selectable: boolean;
@@ -22,6 +23,7 @@ export declare class TokenInputComponent implements ControlValueAccessor {
     confirm: EventEmitter<Token[]>;
     labelPre: TokenInputLabelPre;
     labelPost: TokenInputLabelPost;
+    constructor(cdRef: ChangeDetectorRef);
     onFocus(ev?: any): Promise<void>;
     focused: boolean;
     onInputFocus(): void;

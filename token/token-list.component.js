@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, forwardRef, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, forwardRef, ChangeDetectorRef, } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TokenComponent } from './token.component';
@@ -17,7 +17,8 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var TokenListComponent = (function () {
-    function TokenListComponent() {
+    function TokenListComponent(cdRef) {
+        this.cdRef = cdRef;
         this.selectable = false;
         this.change = new EventEmitter();
     }
@@ -70,6 +71,7 @@ var TokenListComponent = (function () {
     TokenListComponent.prototype.writeValue = function (value) {
         this.labels = value;
         this.syncTokens();
+        this.cdRef.markForCheck();
     };
     TokenListComponent.prototype.registerOnChange = function (fn) {
         this.onChangeCallback = fn;
@@ -100,6 +102,7 @@ TokenListComponent = __decorate([
             '[class.vclTokenContainer]': 'true'
         },
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
-    })
+    }),
+    __metadata("design:paramtypes", [ChangeDetectorRef])
 ], TokenListComponent);
 export { TokenListComponent };

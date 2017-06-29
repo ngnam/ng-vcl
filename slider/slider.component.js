@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, HostListener, ChangeDetectionStrategy, HostBinding, Output, EventEmitter, ViewChild, ElementRef, forwardRef } from '@angular/core';
+import { Component, Input, HostListener, ChangeDetectionStrategy, HostBinding, Output, EventEmitter, ViewChild, ElementRef, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export var MoveDirection;
 (function (MoveDirection) {
@@ -20,7 +20,8 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var SliderComponent = (function () {
-    function SliderComponent() {
+    function SliderComponent(cdRef) {
+        this.cdRef = cdRef;
         this.tabindex = 0;
         this.value = 0;
         this.valueChange = new EventEmitter();
@@ -259,6 +260,7 @@ var SliderComponent = (function () {
     };
     SliderComponent.prototype.writeValue = function (value) {
         this.setValue(value, true);
+        this.cdRef.markForCheck();
     };
     SliderComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -352,6 +354,7 @@ SliderComponent = __decorate([
             '[class.vclSlider]': 'true'
         },
         changeDetection: ChangeDetectionStrategy.OnPush
-    })
+    }),
+    __metadata("design:paramtypes", [ChangeDetectorRef])
 ], SliderComponent);
 export { SliderComponent };
