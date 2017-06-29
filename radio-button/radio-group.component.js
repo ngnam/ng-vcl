@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, ChangeDetectionStrategy, ContentChildren, QueryList, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ContentChildren, QueryList, Output, EventEmitter, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { RadioButtonComponent } from './radio-button.component';
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
@@ -22,7 +22,8 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var RadioGroupComponent = (function () {
-    function RadioGroupComponent() {
+    function RadioGroupComponent(cdRef) {
+        this.cdRef = cdRef;
         this.change = new EventEmitter();
         /**
         * things needed for ControlValueAccessor-Interface
@@ -48,6 +49,7 @@ var RadioGroupComponent = (function () {
                 var value = rbtn.value === undefined ? idx : rbtn.value;
                 rbtn.setChecked(_this.value === value);
             });
+            this.cdRef.markForCheck();
         }
     };
     RadioGroupComponent.prototype.triggerChange = function () {
@@ -105,6 +107,7 @@ RadioGroupComponent = __decorate([
         template: "<ng-content></ng-content>",
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
         changeDetection: ChangeDetectionStrategy.OnPush,
-    })
+    }),
+    __metadata("design:paramtypes", [ChangeDetectorRef])
 ], RadioGroupComponent);
 export { RadioGroupComponent };

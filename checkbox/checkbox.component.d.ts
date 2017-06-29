@@ -1,8 +1,9 @@
-import { EventEmitter, ElementRef } from '@angular/core';
+import { EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class CheckboxComponent implements ControlValueAccessor {
     private elementRef;
+    private cdRef;
     tabindex: number;
     checkedIcon: string;
     uncheckedIcon: string;
@@ -17,7 +18,7 @@ export declare class CheckboxComponent implements ControlValueAccessor {
     Action fired when the `checked` state changes due to user interaction.
     */
     checkedChange: EventEmitter<boolean>;
-    constructor(elementRef: ElementRef);
+    constructor(elementRef: ElementRef, cdRef: ChangeDetectorRef);
     onKeyup(e: any): void;
     onTap(e: any): void;
     updateValue(): void;

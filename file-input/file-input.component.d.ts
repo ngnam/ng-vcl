@@ -1,10 +1,11 @@
-import { ElementRef, EventEmitter } from '@angular/core';
+import { ElementRef, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/publishReplay';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class FileInputComponent implements ControlValueAccessor {
+    private cdRef;
     accept: string;
     multiple: boolean;
     files: EventEmitter<FileList>;
@@ -16,6 +17,7 @@ export declare class FileInputComponent implements ControlValueAccessor {
     input: ElementRef;
     value: FileList | undefined;
     filename: string | undefined;
+    constructor(cdRef: ChangeDetectorRef);
     readonly fileInput: HTMLInputElement | undefined;
     onFocus(): void;
     onBlur(): void;

@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, forwardRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PickDateCreate } from './pick-date';
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
@@ -16,7 +16,8 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var DatePickerComponent = (function () {
-    function DatePickerComponent() {
+    function DatePickerComponent(cdRef) {
+        this.cdRef = cdRef;
         // behaviour
         this.closeOnSelect = false;
         // styling
@@ -131,6 +132,7 @@ var DatePickerComponent = (function () {
         this.pickedDate = PickDateCreate(value);
         if (!value)
             this.pickedDate = PickDateCreate();
+        this.cdRef.markForCheck();
     };
     DatePickerComponent.prototype.registerOnChange = function (fn) {
         this.onChangeCallback = fn;
@@ -215,6 +217,7 @@ DatePickerComponent = __decorate([
             '[attr.aria-multiselectable]': 'false',
             '[style.height]': '"284px"' // TODO this fixes for IE11
         }
-    })
+    }),
+    __metadata("design:paramtypes", [ChangeDetectorRef])
 ], DatePickerComponent);
 export { DatePickerComponent };

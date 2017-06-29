@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter, forwardRef, HostBinding, HostListener } from '@angular/core';
+import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter, forwardRef, HostBinding, HostListener, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
@@ -15,7 +15,8 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var FlipSwitchComponent = (function () {
-    function FlipSwitchComponent() {
+    function FlipSwitchComponent(cdRef) {
+        this.cdRef = cdRef;
         this.tabindex = 0;
         this.onLabel = 'On';
         this.offLabel = 'Off';
@@ -52,6 +53,7 @@ var FlipSwitchComponent = (function () {
     };
     FlipSwitchComponent.prototype.writeValue = function (value) {
         this.value = value;
+        this.cdRef.markForCheck();
     };
     FlipSwitchComponent.prototype.registerOnChange = function (fn) {
         this.onChangeCallback = fn;
@@ -106,6 +108,7 @@ FlipSwitchComponent = __decorate([
             '[attr.aria-pressed]': 'value',
             '[attr.touch-action]': '"pan-y"'
         }
-    })
+    }),
+    __metadata("design:paramtypes", [ChangeDetectorRef])
 ], FlipSwitchComponent);
 export { FlipSwitchComponent };

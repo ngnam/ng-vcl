@@ -1,4 +1,4 @@
-import { SimpleChanges, EventEmitter, ElementRef } from '@angular/core';
+import { SimpleChanges, EventEmitter, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 export declare enum MoveDirection {
     Left = 0,
@@ -10,6 +10,7 @@ export interface ScalePoint {
 }
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class SliderComponent implements ControlValueAccessor {
+    private cdRef;
     tabindex: number;
     value: number;
     valueChange: EventEmitter<number>;
@@ -23,6 +24,7 @@ export declare class SliderComponent implements ControlValueAccessor {
     scaleElement: ElementRef;
     percentLeftKnob: number;
     scalePoints: ScalePoint[];
+    constructor(cdRef: ChangeDetectorRef);
     ngAfterContentInit(): void;
     readonly valueValid: boolean;
     validateValue(value: number): boolean;

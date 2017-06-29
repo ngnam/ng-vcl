@@ -1,8 +1,9 @@
-import { OnInit } from '@angular/core';
+import { OnInit, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { PickDate } from './pick-date';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class DatePickerComponent implements OnInit, ControlValueAccessor {
+    private cdRef;
     closeOnSelect: boolean;
     highlightToday: boolean;
     highlightSelected: boolean;
@@ -23,6 +24,7 @@ export declare class DatePickerComponent implements OnInit, ControlValueAccessor
     viewDate: PickDate;
     today: PickDate;
     showYearPick: boolean;
+    constructor(cdRef: ChangeDetectorRef);
     ngOnInit(): void;
     /**
      * activate the given date

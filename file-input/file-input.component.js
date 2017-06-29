@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, forwardRef, ChangeDetectionStrategy, Input, Output, ViewChild, HostBinding, ElementRef, EventEmitter, HostListener } from '@angular/core';
+import { Component, forwardRef, ChangeDetectionStrategy, Input, Output, ViewChild, HostBinding, ElementRef, EventEmitter, HostListener, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/share';
@@ -19,7 +19,8 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var FileInputComponent = (function () {
-    function FileInputComponent() {
+    function FileInputComponent(cdRef) {
+        this.cdRef = cdRef;
         this.accept = '*';
         this.multiple = false;
         this.files = new EventEmitter();
@@ -116,6 +117,7 @@ var FileInputComponent = (function () {
     };
     FileInputComponent.prototype.writeValue = function (files) {
         this.value = files;
+        this.cdRef.markForCheck();
     };
     FileInputComponent.prototype.registerOnChange = function (fn) {
         this.onChange = fn;
@@ -215,6 +217,7 @@ FileInputComponent = __decorate([
         },
         changeDetection: ChangeDetectionStrategy.OnPush,
         providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
-    })
+    }),
+    __metadata("design:paramtypes", [ChangeDetectorRef])
 ], FileInputComponent);
 export { FileInputComponent };
