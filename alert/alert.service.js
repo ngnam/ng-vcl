@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable } from '@angular/core';
 import { AlertType, ALERT_DEFAULTS } from './types';
 import { AlertComponent, dismiss } from './alert.component';
-import { LayerService } from "@ng-vcl/ng-vcl";
+import { LayerService } from './../layer/index';
 var AlertService = (function () {
     function AlertService(ls) {
         this.ls = ls;
