@@ -24,7 +24,6 @@ import 'rxjs/add/operator/first';
 import { AnimationBuilder, trigger as trigger$1 } from '@angular/animations';
 import 'rxjs/add/operator/startWith';
 import { NavigationEnd, Router } from '@angular/router';
-import { LayerService } from '@ng-vcl/ng-vcl';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/skipWhile';
 import { DOCUMENT } from '@angular/platform-browser';
@@ -4533,30 +4532,30 @@ var __decorate$45 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$27 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var LayerService$1 = (function () {
-    function LayerService$$1(layerManager, injector) {
+var LayerService = (function () {
+    function LayerService(layerManager, injector) {
         this.layerManager = layerManager;
         this.injector = injector;
     }
-    LayerService$$1.prototype.hasVisibleLayers = function () {
+    LayerService.prototype.hasVisibleLayers = function () {
         return this.layerManager.visibleLayers.length > 0;
     };
-    LayerService$$1.prototype.getVisibleLayers = function () {
+    LayerService.prototype.getVisibleLayers = function () {
         return this.layerManager.visibleLayers.slice();
     };
-    LayerService$$1.prototype.getTopLayer = function () {
+    LayerService.prototype.getTopLayer = function () {
         return this.layerManager.visibleLayers.slice().pop();
     };
-    LayerService$$1.prototype.closeAll = function () {
+    LayerService.prototype.closeAll = function () {
         this.layerManager.visibleLayers.forEach(function (layer) { return layer.close(); });
     };
-    LayerService$$1.prototype.closeTop = function () {
+    LayerService.prototype.closeTop = function () {
         var topLayer = this.getTopLayer();
         if (topLayer) {
             topLayer.close();
         }
     };
-    LayerService$$1.prototype.create = function (component, opts) {
+    LayerService.prototype.create = function (component, opts) {
         var _this = this;
         var layerRef = new DynamicLayerRef(function () {
             _this.layerManager._register(layerRef, component, _this.injector, opts);
@@ -4565,17 +4564,17 @@ var LayerService$1 = (function () {
         });
         return layerRef;
     };
-    LayerService$$1.prototype.open = function (component, attrs, opts) {
+    LayerService.prototype.open = function (component, attrs, opts) {
         var layerRef = this.create(component, opts);
         layerRef.open(attrs);
         return layerRef;
     };
-    return LayerService$$1;
+    return LayerService;
 }());
-LayerService$1 = __decorate$45([
+LayerService = __decorate$45([
     Injectable(),
     __metadata$27("design:paramtypes", [LayerManagerService, Injector])
-], LayerService$1);
+], LayerService);
 
 var __extends$11 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -4681,7 +4680,7 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
     VCLLayerModule.forRoot = function (config) {
         if (config === void 0) { config = {}; }
         return { ngModule: VCLLayerModule_1, providers: [
-                LayerService$1,
+                LayerService,
                 LayerManagerService
             ].concat((config.layers || []), [
                 {
@@ -4699,7 +4698,7 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
         return {
             ngModule: VCLLayerModule_1,
             providers: [
-                LayerService$1
+                LayerService
             ].concat((config.layers || []), [
                 {
                     provide: LAYERS,
@@ -7724,7 +7723,7 @@ AlertComponent = __decorate$77([
             '[style.outline]': '"none"'
         }
     }),
-    __metadata$45("design:paramtypes", [ElementRef, LayerRef, LayerService$1, ChangeDetectorRef])
+    __metadata$45("design:paramtypes", [ElementRef, LayerRef, LayerService, ChangeDetectorRef])
 ], AlertComponent);
 
 var __decorate$78 = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -9742,4 +9741,4 @@ VCLTableModule = __decorate$91([
     })
 ], VCLTableModule);
 
-export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService$1 as LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule, VCLTableModule };
+export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule, VCLTableModule };

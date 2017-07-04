@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { AlertOptions, AlertResult } from './types';
-import { LayerService, LayerRef, LayerResult } from "@ng-vcl/ng-vcl";
+import { LayerService, LayerRef, LayerResult } from './../layer/index';
 export declare class AlertService {
     private ls;
     constructor(ls: LayerService);
