@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component, Input, forwardRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PickDateCreate } from './pick-date';
+import { CalendarDate } from './calendar-date';
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return DatePickerComponent; }),
@@ -18,7 +18,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 var DatePickerComponent = (function () {
     function DatePickerComponent(cdRef) {
         this.cdRef = cdRef;
-        // behaviour
+        // behavior
         this.closeOnSelect = false;
         // styling
         this.highlightToday = true;
@@ -32,106 +32,106 @@ var DatePickerComponent = (function () {
         // values
         this.selectedDate = new Date();
         this.selectRange = false;
-        this.today = PickDateCreate();
+        this.maxRangeLength = Infinity;
+        this.today = new CalendarDate();
         this.showYearPick = false;
     }
     DatePickerComponent.prototype.ngOnInit = function () {
-        if (this.selectedRangeEnd)
-            this.selectRange = true;
-        this.pickedDate = PickDateCreate(this.selectedDate);
-        this.viewDate = PickDateCreate();
+        this.currentDate = new CalendarDate(this.selectedDate);
+        this.viewDate = new CalendarDate();
         if (this.selectedRangeEnd) {
             this.selectRange = true;
-            this.select(PickDateCreate(this.selectedRangeEnd));
+            this.select(new CalendarDate(this.selectedRangeEnd));
         }
-        if (!this.minDate)
-            this.minDate = new Date(0, 0, 1);
-        if (!this.maxDate)
-            this.maxDate = new Date(10000, 0, 1);
     };
     /**
      * activate the given date
      */
     DatePickerComponent.prototype.select = function (date) {
-        if (!this.selectRange) {
-            this.pickedDate = date;
-            !!this.onChangeCallback && this.onChangeCallback(this.pickedDate.date);
+        if (this.isDisabled(date)) {
             return;
         }
-        if (this.pickedDate && this.pickedRangeEnd) {
+        if (!this.selectRange) {
+            this.currentDate = date;
+            if (!date.isSameMonthAndYear(this.viewDate)) {
+                this.gotoSelected();
+            }
+            !!this.onChangeCallback && this.onChangeCallback(this.currentDate.date);
+            return;
+        }
+        if (this.currentDate && this.currentRangeEnd) {
             // reset all
-            this.pickedDate = null;
-            this.pickedRangeEnd = null;
+            this.currentDate = null;
+            this.currentRangeEnd = null;
         }
-        else if (this.pickedDate && !this.pickedRangeEnd) {
-            this.pickedRangeEnd = date;
+        else if (this.currentDate && !this.currentRangeEnd) {
+            this.currentRangeEnd = date;
         }
-        else if (!this.pickedDate) {
-            this.pickedDate = date;
+        else if (!this.currentDate) {
+            this.currentDate = date;
         }
-        // swap values if pickedDate > pickedRangeEnd
-        if (this.pickedRangeEnd &&
-            this.pickedDate &&
-            this.pickedRangeEnd.date < this.pickedDate.date) {
-            this.pickedRangeEnd.date = [this.pickedDate.date, this.pickedDate.date = this.pickedRangeEnd.date][0]; // swap values
+        // swap values if currentDate > currentRangeEnd
+        if (this.currentRangeEnd &&
+            this.currentDate &&
+            this.currentRangeEnd.date < this.currentDate.date) {
+            this.currentRangeEnd.date = [this.currentDate.date, this.currentDate.date = this.currentRangeEnd.date][0]; // swap values
         }
         // if more days selected than maxRangeLength, strip days
         if (this.selectRange &&
-            this.pickedRangeEnd &&
-            this.pickedDate &&
-            this.pickedDate.daysInRange(this.pickedRangeEnd) > this.maxRangeLength) {
-            var diffDays = this.pickedDate.daysInRange(this.pickedRangeEnd) - this.maxRangeLength;
-            this.pickedRangeEnd.moveDays(diffDays * (-1));
+            this.currentRangeEnd &&
+            this.currentDate &&
+            this.currentDate.daysInRange(this.currentRangeEnd) > this.maxRangeLength) {
+            var diffDays = this.currentDate.daysInRange(this.currentRangeEnd) - this.maxRangeLength;
+            this.currentRangeEnd.moveDays(diffDays * (-1));
         }
-        if (this.pickedDate) {
-            !!this.onChangeCallback && this.onChangeCallback(this.pickedDate.date);
+        if (this.currentDate) {
+            !!this.onChangeCallback && this.onChangeCallback(this.currentDate.date);
         }
     };
     /**
      * ui-markers
      */
     DatePickerComponent.prototype.isMarked = function (date) {
-        if (!this.selectRange && this.pickedDate && this.pickedDate.isSameDay(date))
+        if (!this.selectRange && this.currentDate && this.currentDate.isSameDay(date))
             return true;
-        return !!this.pickedDate && !!this.pickedRangeEnd && date.inRange(this.pickedDate, this.pickedRangeEnd);
+        return !!this.currentDate && !!this.currentRangeEnd && date.inRange(this.currentDate, this.currentRangeEnd);
     };
     DatePickerComponent.prototype.isDisabled = function (day) {
-        if (!this.viewDate.isSameMonthAndYear(day) ||
-            day.gt(this.maxDate) ||
-            day.lt(this.minDate)) {
-            return true;
-        }
-        return false;
+        var minDate = this.minDate || new Date(0, 0, 1);
+        var maxDate = this.maxDate || new Date(10000, 0, 1);
+        return day.gt(maxDate) || day.lt(minDate);
     };
     /**
      * functions to move viewDate
      */
     DatePickerComponent.prototype.nextMonth = function () {
-        if (this.showYearPick)
+        if (this.showYearPick) {
             this.viewDate = this.viewDate.addYears(1);
-        else
+        }
+        else {
             this.viewDate = this.viewDate.incrementMonths(1);
+        }
     };
     DatePickerComponent.prototype.prevMonth = function () {
-        if (this.showYearPick)
+        if (this.showYearPick) {
             this.viewDate = this.viewDate.addYears(-1);
-        else
+        }
+        else {
             this.viewDate = this.viewDate.incrementMonths(-1);
+        }
     };
     DatePickerComponent.prototype.gotoToday = function () {
-        this.viewDate = PickDateCreate();
+        this.viewDate = new CalendarDate();
     };
     DatePickerComponent.prototype.gotoSelected = function () {
-        this.viewDate = this.pickedDate || PickDateCreate();
+        this.viewDate = this.currentDate || new CalendarDate();
     };
     DatePickerComponent.prototype.yearPickSelect = function (year) {
         this.viewDate = this.viewDate.moveToYear(year);
         this.showYearPick = false;
     };
     DatePickerComponent.prototype.writeValue = function (value) {
-        this.pickedDate = PickDateCreate(value);
-        if (!value)
-            this.pickedDate = PickDateCreate();
+        this.currentDate = new CalendarDate(value);
         this.cdRef.markForCheck();
     };
     DatePickerComponent.prototype.registerOnChange = function (fn) {
@@ -143,69 +143,69 @@ var DatePickerComponent = (function () {
     return DatePickerComponent;
 }());
 __decorate([
-    Input('closeOnSelect'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "closeOnSelect", void 0);
 __decorate([
-    Input('highlightToday'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "highlightToday", void 0);
 __decorate([
-    Input('highlightSelected'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "highlightSelected", void 0);
 __decorate([
-    Input('displayWeekNumbers'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayWeekNumbers", void 0);
 __decorate([
-    Input('displayWeekdays'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayWeekdays", void 0);
 __decorate([
-    Input('prevYearBtnIcon'),
+    Input(),
     __metadata("design:type", String)
 ], DatePickerComponent.prototype, "prevYearBtnIcon", void 0);
 __decorate([
-    Input('nextYearBtnIcon'),
+    Input(),
     __metadata("design:type", String)
 ], DatePickerComponent.prototype, "nextYearBtnIcon", void 0);
 __decorate([
-    Input('displayJumpToday'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayJumpToday", void 0);
 __decorate([
-    Input('displayJumpSelected'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayJumpSelected", void 0);
 __decorate([
-    Input('selectedDate'),
+    Input(),
     __metadata("design:type", Date)
 ], DatePickerComponent.prototype, "selectedDate", void 0);
 __decorate([
-    Input('selectRange'),
+    Input(),
     __metadata("design:type", Boolean)
 ], DatePickerComponent.prototype, "selectRange", void 0);
 __decorate([
-    Input('selectedRangeEnd'),
+    Input(),
     __metadata("design:type", Date)
 ], DatePickerComponent.prototype, "selectedRangeEnd", void 0);
 __decorate([
-    Input('maxRangeLength'),
+    Input(),
     __metadata("design:type", Number)
 ], DatePickerComponent.prototype, "maxRangeLength", void 0);
 __decorate([
-    Input('minDate'),
+    Input(),
     __metadata("design:type", Date)
 ], DatePickerComponent.prototype, "minDate", void 0);
 __decorate([
-    Input('maxDate'),
+    Input(),
     __metadata("design:type", Date)
 ], DatePickerComponent.prototype, "maxDate", void 0);
 DatePickerComponent = __decorate([
     Component({
         selector: 'vcl-date-picker',
-        template: "<div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\"> <div class=\"vclDGRow\"> <div class=\"vclDGCell vclToolbar\"> <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"prevMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div> </div> </button> <span class=\"vclCalHeaderLabel\" (tap)=\"showYearPick=true\" [class.date-picker-pointer]=\"!showYearPick\"> {{viewDate.getMonthString() | loc}}&nbsp;&nbsp;{{viewDate.getYearString()}} </span> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"nextMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div> </div> </button> </div> </div> </div> <ng-container *ngIf=\"!showYearPick\"> <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\"> <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\"> {{'week' | loc}} </div> <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\"> <ng-container *ngIf=\"displayWeekdays\"> {{day | loc}} </ng-container> </div> </div> <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\"> <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\"> {{week[5].getWeekNumber()}} </div> <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"isDisabled(day)\" [class.vclSelected]=\"isMarked(day)\" (tap)=\"!isDisabled(day) && select(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear()\"> {{day.date.getDate()}} </div> </div> <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\"> <div class=\"vclDGCell\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\"> <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoToday()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to today</span> </div> </button> <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoSelected()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to selected</span> </div> </button> </div> </div> </div> </ng-container> <ng-container *ngIf=\"showYearPick\"> <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\"> <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\"> {{year}} </div> </div> </ng-container> </div> ",
+        template: "<div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\"> <div class=\"vclDGRow\"> <div class=\"vclDGCell vclToolbar\"> <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"prevMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div> </div> </button> <span class=\"vclCalHeaderLabel\" (tap)=\"showYearPick=true\" [class.date-picker-pointer]=\"!showYearPick\"> {{viewDate.getMonthString() | loc}}&nbsp;&nbsp;{{viewDate.getYearString()}} </span> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"nextMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div> </div> </button> </div> </div> </div> <ng-container *ngIf=\"!showYearPick\"> <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\"> <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\"> {{'week' | loc}} </div> <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\"> <ng-container *ngIf=\"displayWeekdays\"> {{day | loc}} </ng-container> </div> </div> <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\"> <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\"> {{week[5].getWeekNumber()}} </div> <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"isDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (tap)=\"select(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\"> {{day.date.getDate()}} </div> </div> <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\"> <div class=\"vclDGCell\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\"> <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoToday()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to today</span> </div> </button> <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoSelected()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to selected</span> </div> </button> </div> </div> </div> </ng-container> <ng-container *ngIf=\"showYearPick\"> <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\"> <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\"> {{year}} </div> </div> </ng-container> </div> ",
         styles: [
             ".hidden{display:none;}\n     .date-picker-pointer{cursor: pointer;}\n    "
         ],

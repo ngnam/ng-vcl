@@ -1,6 +1,6 @@
 import { OnInit, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { PickDate } from './pick-date';
+import { CalendarDate } from './calendar-date';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class DatePickerComponent implements OnInit, ControlValueAccessor {
     private cdRef;
@@ -15,26 +15,26 @@ export declare class DatePickerComponent implements OnInit, ControlValueAccessor
     displayJumpSelected: boolean;
     selectedDate: Date;
     selectRange: boolean;
-    selectedRangeEnd: Date;
+    selectedRangeEnd: Date | undefined;
     maxRangeLength: number;
-    minDate: Date;
-    maxDate: Date;
-    pickedDate: PickDate | null;
-    pickedRangeEnd: PickDate | null;
-    viewDate: PickDate;
-    today: PickDate;
+    minDate: Date | undefined;
+    maxDate: Date | undefined;
+    currentDate: CalendarDate | null;
+    currentRangeEnd: CalendarDate | null;
+    viewDate: CalendarDate;
+    today: CalendarDate;
     showYearPick: boolean;
     constructor(cdRef: ChangeDetectorRef);
     ngOnInit(): void;
     /**
      * activate the given date
      */
-    select(date: PickDate): void;
+    select(date: CalendarDate): void;
     /**
      * ui-markers
      */
-    isMarked(date: PickDate): boolean;
-    isDisabled(day: PickDate): boolean;
+    isMarked(date: CalendarDate): boolean;
+    isDisabled(day: CalendarDate): boolean;
     /**
      * functions to move viewDate
      */

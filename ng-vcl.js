@@ -6073,50 +6073,78 @@ VCLCheckboxModule = __decorate$64([
  * this is a helper-class so that the Date-logic
  * is not mashed with the components logic
  */
-var PickDate = (function () {
-    function PickDate(date) {
-        if (date === void 0) { date = new Date(); }
+var MONTH_NAMES = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+];
+var WEEK_DAYS = [
+    'Mo',
+    'Tu',
+    'We',
+    'Th',
+    'Fr',
+    'Sa',
+    'Su'
+];
+var CalendarDate = (function () {
+    function CalendarDate(date) {
+        if (!(date instanceof Date)) {
+            date = new Date;
+        }
         this.date = date;
     }
-    PickDate.prototype.getMonthString = function () {
-        var monthNr = this.date.getMonth();
-        return PickDate.monthNames[monthNr];
+    CalendarDate.prototype.getWeekDays = function () {
+        return WEEK_DAYS;
     };
-    PickDate.prototype.getYearString = function () {
+    CalendarDate.prototype.getMonthString = function () {
+        var monthNr = this.date.getMonth();
+        return MONTH_NAMES[monthNr];
+    };
+    CalendarDate.prototype.getYearString = function () {
         return this.date.getFullYear().toString();
     };
     /**
      * gets the first day of the month for the given date's month.
      */
-    PickDate.prototype.getFirstDateOfMonth = function (date) {
+    CalendarDate.prototype.getFirstDateOfMonth = function (date) {
         return new Date(date.getFullYear(), date.getMonth(), 1, 12, date.getMinutes(), date.getSeconds());
     };
-    PickDate.prototype.moveToYear = function (year) {
+    CalendarDate.prototype.moveToYear = function (year) {
         var newDate = new Date(year, this.date.getMonth(), 1, this.date.getHours(), this.date.getMinutes(), this.date.getSeconds());
-        return new PickDate(newDate);
+        return new CalendarDate(newDate);
     };
-    PickDate.prototype.addYears = function (amount) {
+    CalendarDate.prototype.addYears = function (amount) {
         if (amount === void 0) { amount = 1; }
         var newDate = new Date(this.date.getFullYear() + amount, this.date.getMonth(), 1, this.date.getHours(), this.date.getMinutes(), this.date.getSeconds());
-        return new PickDate(newDate);
+        return new CalendarDate(newDate);
     };
-    PickDate.prototype.addDays = function (date, amount) {
+    CalendarDate.prototype.addDays = function (date, amount) {
         if (amount === void 0) { amount = 1; }
         return new Date(date.getTime() + 24 * 60 * 60 * 1000 * amount);
     };
-    PickDate.prototype.moveDays = function (amount) {
+    CalendarDate.prototype.moveDays = function (amount) {
         this.date = this.addDays(this.date, amount);
     };
     /**
      * returns true if this is greater than that
      */
-    PickDate.prototype.gt = function (date) {
+    CalendarDate.prototype.gt = function (date) {
         return this.date > date;
     };
     /**
      * returns true if this is lower than that
      */
-    PickDate.prototype.lt = function (date) {
+    CalendarDate.prototype.lt = function (date) {
         return this.date < date;
     };
     /**
@@ -6124,7 +6152,7 @@ var PickDate = (function () {
      * If the date of the given month does not match the target month, the date will be set to the
      * last day of the month.
      */
-    PickDate.prototype.incrementMonths = function (numberOfMonths) {
+    CalendarDate.prototype.incrementMonths = function (numberOfMonths) {
         var dateInTargetMonth = new Date(this.date.getFullYear(), this.date.getMonth() + numberOfMonths, 1);
         var numberOfDaysInMonth = this.getNumberOfDaysInMonth(dateInTargetMonth);
         if (numberOfDaysInMonth < this.date.getDate()) {
@@ -6133,42 +6161,42 @@ var PickDate = (function () {
         else {
             dateInTargetMonth.setDate(this.date.getDate());
         }
-        return new PickDate(dateInTargetMonth);
+        return new CalendarDate(dateInTargetMonth);
     };
     /**
       * Gets the number of days in the month for the given date's month
       */
-    PickDate.prototype.getNumberOfDaysInMonth = function (date) {
+    CalendarDate.prototype.getNumberOfDaysInMonth = function (date) {
         return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     };
-    PickDate.prototype.getLastDateOfMonth = function (date) {
+    CalendarDate.prototype.getLastDateOfMonth = function (date) {
         var dayNr = this.getNumberOfDaysInMonth(date);
         return new Date(date.getFullYear(), date.getMonth(), dayNr, date.getHours(), date.getMinutes(), date.getSeconds());
     };
     /**
       * Gets whether two dates have the same month and year
       */
-    PickDate.prototype.isSameMonthAndYear = function (date) {
-        if (date === void 0) { date = new PickDate(); }
+    CalendarDate.prototype.isSameMonthAndYear = function (date) {
+        if (date === void 0) { date = new CalendarDate(); }
         return this.date.getFullYear() === date.date.getFullYear() && this.date.getMonth() === date.date.getMonth();
     };
     /**
      * Gets whether two dates are the same day (not not necesarily the same time)
      */
-    PickDate.prototype.isSameDay = function (date) {
+    CalendarDate.prototype.isSameDay = function (date) {
         return this.date.getDate() == date.date.getDate() && this.isSameMonthAndYear(date);
     };
-    PickDate.prototype.isToday = function () {
-        return this.isSameDay(new PickDate());
+    CalendarDate.prototype.isToday = function () {
+        return this.isSameDay(new CalendarDate());
     };
-    PickDate.prototype.isInYear = function (year) {
+    CalendarDate.prototype.isInYear = function (year) {
         return this.date.getFullYear() === year;
     };
     /**
      * returns a set of days which are in the given month or
      * are in the same weekNumber as a day in the given month
      */
-    PickDate.prototype.getMonthBlock = function () {
+    CalendarDate.prototype.getMonthBlock = function () {
         var dates = [];
         var firstDayOfMonth = this.getFirstDateOfMonth(this.date);
         var lastDayOfMonth = this.getLastDateOfMonth(this.date);
@@ -6193,7 +6221,7 @@ var PickDate = (function () {
             dates.push(this.addDays(lastDayOfMonth, plus));
             addDays--;
         }
-        var ret = dates.map(function (date) { return new PickDate(date); });
+        var ret = dates.map(function (date) { return new CalendarDate(date); });
         var blocks = [];
         // split in weeks
         var chunk = 7;
@@ -6204,7 +6232,7 @@ var PickDate = (function () {
         }
         return blocks;
     };
-    PickDate.prototype.getYearsBlock = function () {
+    CalendarDate.prototype.getYearsBlock = function () {
         var years = [];
         var currentYear = this.date.getFullYear() - 12;
         while (years.length < 25) {
@@ -6221,10 +6249,7 @@ var PickDate = (function () {
         }
         return ret;
     };
-    PickDate.prototype.getWeekDays = function () {
-        return PickDate.weekDays;
-    };
-    PickDate.prototype.getWeekNumber = function () {
+    CalendarDate.prototype.getWeekNumber = function () {
         // Copy date so don't modify original
         var d = new Date(+this.date);
         d.setHours(0, 0, 0);
@@ -6241,49 +6266,19 @@ var PickDate = (function () {
     /**
      * returns true if this is between the given dates
      */
-    PickDate.prototype.inRange = function (from, to) {
-        if (!(from instanceof PickDate) || !(to instanceof PickDate))
+    CalendarDate.prototype.inRange = function (from, to) {
+        if (!(from instanceof CalendarDate) || !(to instanceof CalendarDate)) {
             return false;
+        }
         return (this.date >= from.date && this.date <= to.date)
             || this.isSameDay(from) || this.isSameDay(to);
     };
-    PickDate.prototype.daysInRange = function (to) {
+    CalendarDate.prototype.daysInRange = function (to) {
         var oneDay = 24 * 60 * 60 * 1000;
         return Math.round(Math.abs((this.date.getTime() - to.date.getTime()) / (oneDay))) + 1;
     };
-    PickDate.prototype.dir = function () {
-        console.dir(this.date);
-        return '';
-    };
-    return PickDate;
+    return CalendarDate;
 }());
-PickDate.monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-];
-PickDate.weekDays = [
-    'Mo',
-    'Tu',
-    'We',
-    'Th',
-    'Fr',
-    'Sa',
-    'Su'
-];
-function PickDateCreate(date) {
-    if (date === void 0) { date = new Date(); }
-    return new PickDate(date);
-}
 
 var __decorate$67 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6302,7 +6297,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$11 = {
 var DatePickerComponent = (function () {
     function DatePickerComponent(cdRef) {
         this.cdRef = cdRef;
-        // behaviour
+        // behavior
         this.closeOnSelect = false;
         // styling
         this.highlightToday = true;
@@ -6316,106 +6311,106 @@ var DatePickerComponent = (function () {
         // values
         this.selectedDate = new Date();
         this.selectRange = false;
-        this.today = PickDateCreate();
+        this.maxRangeLength = Infinity;
+        this.today = new CalendarDate();
         this.showYearPick = false;
     }
     DatePickerComponent.prototype.ngOnInit = function () {
-        if (this.selectedRangeEnd)
-            this.selectRange = true;
-        this.pickedDate = PickDateCreate(this.selectedDate);
-        this.viewDate = PickDateCreate();
+        this.currentDate = new CalendarDate(this.selectedDate);
+        this.viewDate = new CalendarDate();
         if (this.selectedRangeEnd) {
             this.selectRange = true;
-            this.select(PickDateCreate(this.selectedRangeEnd));
+            this.select(new CalendarDate(this.selectedRangeEnd));
         }
-        if (!this.minDate)
-            this.minDate = new Date(0, 0, 1);
-        if (!this.maxDate)
-            this.maxDate = new Date(10000, 0, 1);
     };
     /**
      * activate the given date
      */
     DatePickerComponent.prototype.select = function (date) {
-        if (!this.selectRange) {
-            this.pickedDate = date;
-            !!this.onChangeCallback && this.onChangeCallback(this.pickedDate.date);
+        if (this.isDisabled(date)) {
             return;
         }
-        if (this.pickedDate && this.pickedRangeEnd) {
+        if (!this.selectRange) {
+            this.currentDate = date;
+            if (!date.isSameMonthAndYear(this.viewDate)) {
+                this.gotoSelected();
+            }
+            !!this.onChangeCallback && this.onChangeCallback(this.currentDate.date);
+            return;
+        }
+        if (this.currentDate && this.currentRangeEnd) {
             // reset all
-            this.pickedDate = null;
-            this.pickedRangeEnd = null;
+            this.currentDate = null;
+            this.currentRangeEnd = null;
         }
-        else if (this.pickedDate && !this.pickedRangeEnd) {
-            this.pickedRangeEnd = date;
+        else if (this.currentDate && !this.currentRangeEnd) {
+            this.currentRangeEnd = date;
         }
-        else if (!this.pickedDate) {
-            this.pickedDate = date;
+        else if (!this.currentDate) {
+            this.currentDate = date;
         }
-        // swap values if pickedDate > pickedRangeEnd
-        if (this.pickedRangeEnd &&
-            this.pickedDate &&
-            this.pickedRangeEnd.date < this.pickedDate.date) {
-            this.pickedRangeEnd.date = [this.pickedDate.date, this.pickedDate.date = this.pickedRangeEnd.date][0]; // swap values
+        // swap values if currentDate > currentRangeEnd
+        if (this.currentRangeEnd &&
+            this.currentDate &&
+            this.currentRangeEnd.date < this.currentDate.date) {
+            this.currentRangeEnd.date = [this.currentDate.date, this.currentDate.date = this.currentRangeEnd.date][0]; // swap values
         }
         // if more days selected than maxRangeLength, strip days
         if (this.selectRange &&
-            this.pickedRangeEnd &&
-            this.pickedDate &&
-            this.pickedDate.daysInRange(this.pickedRangeEnd) > this.maxRangeLength) {
-            var diffDays = this.pickedDate.daysInRange(this.pickedRangeEnd) - this.maxRangeLength;
-            this.pickedRangeEnd.moveDays(diffDays * (-1));
+            this.currentRangeEnd &&
+            this.currentDate &&
+            this.currentDate.daysInRange(this.currentRangeEnd) > this.maxRangeLength) {
+            var diffDays = this.currentDate.daysInRange(this.currentRangeEnd) - this.maxRangeLength;
+            this.currentRangeEnd.moveDays(diffDays * (-1));
         }
-        if (this.pickedDate) {
-            !!this.onChangeCallback && this.onChangeCallback(this.pickedDate.date);
+        if (this.currentDate) {
+            !!this.onChangeCallback && this.onChangeCallback(this.currentDate.date);
         }
     };
     /**
      * ui-markers
      */
     DatePickerComponent.prototype.isMarked = function (date) {
-        if (!this.selectRange && this.pickedDate && this.pickedDate.isSameDay(date))
+        if (!this.selectRange && this.currentDate && this.currentDate.isSameDay(date))
             return true;
-        return !!this.pickedDate && !!this.pickedRangeEnd && date.inRange(this.pickedDate, this.pickedRangeEnd);
+        return !!this.currentDate && !!this.currentRangeEnd && date.inRange(this.currentDate, this.currentRangeEnd);
     };
     DatePickerComponent.prototype.isDisabled = function (day) {
-        if (!this.viewDate.isSameMonthAndYear(day) ||
-            day.gt(this.maxDate) ||
-            day.lt(this.minDate)) {
-            return true;
-        }
-        return false;
+        var minDate = this.minDate || new Date(0, 0, 1);
+        var maxDate = this.maxDate || new Date(10000, 0, 1);
+        return day.gt(maxDate) || day.lt(minDate);
     };
     /**
      * functions to move viewDate
      */
     DatePickerComponent.prototype.nextMonth = function () {
-        if (this.showYearPick)
+        if (this.showYearPick) {
             this.viewDate = this.viewDate.addYears(1);
-        else
+        }
+        else {
             this.viewDate = this.viewDate.incrementMonths(1);
+        }
     };
     DatePickerComponent.prototype.prevMonth = function () {
-        if (this.showYearPick)
+        if (this.showYearPick) {
             this.viewDate = this.viewDate.addYears(-1);
-        else
+        }
+        else {
             this.viewDate = this.viewDate.incrementMonths(-1);
+        }
     };
     DatePickerComponent.prototype.gotoToday = function () {
-        this.viewDate = PickDateCreate();
+        this.viewDate = new CalendarDate();
     };
     DatePickerComponent.prototype.gotoSelected = function () {
-        this.viewDate = this.pickedDate || PickDateCreate();
+        this.viewDate = this.currentDate || new CalendarDate();
     };
     DatePickerComponent.prototype.yearPickSelect = function (year) {
         this.viewDate = this.viewDate.moveToYear(year);
         this.showYearPick = false;
     };
     DatePickerComponent.prototype.writeValue = function (value) {
-        this.pickedDate = PickDateCreate(value);
-        if (!value)
-            this.pickedDate = PickDateCreate();
+        this.currentDate = new CalendarDate(value);
         this.cdRef.markForCheck();
     };
     DatePickerComponent.prototype.registerOnChange = function (fn) {
@@ -6427,69 +6422,69 @@ var DatePickerComponent = (function () {
     return DatePickerComponent;
 }());
 __decorate$67([
-    Input('closeOnSelect'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "closeOnSelect", void 0);
 __decorate$67([
-    Input('highlightToday'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "highlightToday", void 0);
 __decorate$67([
-    Input('highlightSelected'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "highlightSelected", void 0);
 __decorate$67([
-    Input('displayWeekNumbers'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayWeekNumbers", void 0);
 __decorate$67([
-    Input('displayWeekdays'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayWeekdays", void 0);
 __decorate$67([
-    Input('prevYearBtnIcon'),
+    Input(),
     __metadata$40("design:type", String)
 ], DatePickerComponent.prototype, "prevYearBtnIcon", void 0);
 __decorate$67([
-    Input('nextYearBtnIcon'),
+    Input(),
     __metadata$40("design:type", String)
 ], DatePickerComponent.prototype, "nextYearBtnIcon", void 0);
 __decorate$67([
-    Input('displayJumpToday'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayJumpToday", void 0);
 __decorate$67([
-    Input('displayJumpSelected'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "displayJumpSelected", void 0);
 __decorate$67([
-    Input('selectedDate'),
+    Input(),
     __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "selectedDate", void 0);
 __decorate$67([
-    Input('selectRange'),
+    Input(),
     __metadata$40("design:type", Boolean)
 ], DatePickerComponent.prototype, "selectRange", void 0);
 __decorate$67([
-    Input('selectedRangeEnd'),
+    Input(),
     __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "selectedRangeEnd", void 0);
 __decorate$67([
-    Input('maxRangeLength'),
+    Input(),
     __metadata$40("design:type", Number)
 ], DatePickerComponent.prototype, "maxRangeLength", void 0);
 __decorate$67([
-    Input('minDate'),
+    Input(),
     __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "minDate", void 0);
 __decorate$67([
-    Input('maxDate'),
+    Input(),
     __metadata$40("design:type", Date)
 ], DatePickerComponent.prototype, "maxDate", void 0);
 DatePickerComponent = __decorate$67([
     Component({
         selector: 'vcl-date-picker',
-        template: "<div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\"> <div class=\"vclDGRow\"> <div class=\"vclDGCell vclToolbar\"> <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"prevMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div> </div> </button> <span class=\"vclCalHeaderLabel\" (tap)=\"showYearPick=true\" [class.date-picker-pointer]=\"!showYearPick\"> {{viewDate.getMonthString() | loc}}&nbsp;&nbsp;{{viewDate.getYearString()}} </span> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"nextMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div> </div> </button> </div> </div> </div> <ng-container *ngIf=\"!showYearPick\"> <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\"> <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\"> {{'week' | loc}} </div> <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\"> <ng-container *ngIf=\"displayWeekdays\"> {{day | loc}} </ng-container> </div> </div> <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\"> <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\"> {{week[5].getWeekNumber()}} </div> <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"isDisabled(day)\" [class.vclSelected]=\"isMarked(day)\" (tap)=\"!isDisabled(day) && select(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear()\"> {{day.date.getDate()}} </div> </div> <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\"> <div class=\"vclDGCell\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\"> <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoToday()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to today</span> </div> </button> <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoSelected()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to selected</span> </div> </button> </div> </div> </div> </ng-container> <ng-container *ngIf=\"showYearPick\"> <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\"> <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\"> {{year}} </div> </div> </ng-container> </div> ",
+        template: "<div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\"> <div class=\"vclDGRow\"> <div class=\"vclDGCell vclToolbar\"> <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"prevMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div> </div> </button> <span class=\"vclCalHeaderLabel\" (tap)=\"showYearPick=true\" [class.date-picker-pointer]=\"!showYearPick\"> {{viewDate.getMonthString() | loc}}&nbsp;&nbsp;{{viewDate.getYearString()}} </span> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"nextMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div> </div> </button> </div> </div> </div> <ng-container *ngIf=\"!showYearPick\"> <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\"> <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\"> {{'week' | loc}} </div> <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\"> <ng-container *ngIf=\"displayWeekdays\"> {{day | loc}} </ng-container> </div> </div> <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\"> <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\"> {{week[5].getWeekNumber()}} </div> <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"isDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (tap)=\"select(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\"> {{day.date.getDate()}} </div> </div> <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\"> <div class=\"vclDGCell\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\"> <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoToday()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to today</span> </div> </button> <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" (tap)=\"gotoSelected()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to selected</span> </div> </button> </div> </div> </div> </ng-container> <ng-container *ngIf=\"showYearPick\"> <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\"> <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\"> {{year}} </div> </div> </ng-container> </div> ",
         styles: [
             ".hidden{display:none;}\n     .date-picker-pointer{cursor: pointer;}\n    "
         ],
@@ -9764,4 +9759,4 @@ VCLTableModule = __decorate$91([
     })
 ], VCLTableModule);
 
-export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule, VCLTableModule };
+export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule, VCLTableModule };
