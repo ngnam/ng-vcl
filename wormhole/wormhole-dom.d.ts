@@ -5,7 +5,7 @@ export declare class DomComponentWormhole<T> extends ComponentWormholeBase<T> {
     private node;
     private injector;
     private compFactory;
-    constructor(componentClass: Type<T>, appRef: ApplicationRef, node?: HTMLElement, injector?: Injector);
+    constructor(componentClass: Type<T>, appRef: ApplicationRef, node?: HTMLElement | undefined, injector?: Injector | undefined);
     readonly rootComponentRef: ComponentRef<any>;
     attach(componentClass: Type<T>, index?: number): ComponentRef<T>;
     detach(): void;
@@ -15,7 +15,7 @@ export declare class DomTemplateWormhole extends TemplateWormholeBase {
     private appRef;
     private node;
     private injector;
-    constructor(templateRef: TemplateRef<any>, appRef: ApplicationRef, node?: HTMLElement, injector?: Injector);
+    constructor(templateRef: TemplateRef<any>, appRef: ApplicationRef, node?: HTMLElement | undefined, injector?: Injector | undefined);
     readonly rootComponentRef: ComponentRef<any>;
     protected attach(templateRef: TemplateRef<any>, index?: number): EmbeddedViewRef<any>;
     protected detach(): void;

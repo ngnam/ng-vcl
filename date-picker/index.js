@@ -13,14 +13,14 @@ export { DatePickerComponent };
 var VCLDatePickerModule = (function () {
     function VCLDatePickerModule() {
     }
+    VCLDatePickerModule = __decorate([
+        NgModule({
+            imports: [CommonModule, VCLButtonModule, L10nModule],
+            exports: [DatePickerComponent],
+            declarations: [DatePickerComponent],
+            providers: [],
+        })
+    ], VCLDatePickerModule);
     return VCLDatePickerModule;
 }());
-VCLDatePickerModule = __decorate([
-    NgModule({
-        imports: [CommonModule, VCLButtonModule, L10nModule],
-        exports: [DatePickerComponent],
-        declarations: [DatePickerComponent],
-        providers: [],
-    })
-], VCLDatePickerModule);
 export { VCLDatePickerModule };

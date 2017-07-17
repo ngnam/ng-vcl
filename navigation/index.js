@@ -14,14 +14,14 @@ export { NavigationComponent, NavigationItemDirective };
 var VCLNavigationModule = (function () {
     function VCLNavigationModule() {
     }
+    VCLNavigationModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLLinkModule],
+            exports: [NavigationComponent, NavigationItemDirective],
+            declarations: [NavigationComponent, NavigationItemDirective],
+            providers: [],
+        })
+    ], VCLNavigationModule);
     return VCLNavigationModule;
 }());
-VCLNavigationModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLLinkModule],
-        exports: [NavigationComponent, NavigationItemDirective],
-        declarations: [NavigationComponent, NavigationItemDirective],
-        providers: [],
-    })
-], VCLNavigationModule);
 export { VCLNavigationModule };

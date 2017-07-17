@@ -52,20 +52,20 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
 var TokenInputLabelPre = (function () {
     function TokenInputLabelPre() {
     }
+    TokenInputLabelPre = __decorate([
+        Directive({ selector: '[vcl-token-input-pre]' })
+    ], TokenInputLabelPre);
     return TokenInputLabelPre;
 }());
-TokenInputLabelPre = __decorate([
-    Directive({ selector: '[vcl-token-input-pre]' })
-], TokenInputLabelPre);
 export { TokenInputLabelPre };
 var TokenInputLabelPost = (function () {
     function TokenInputLabelPost() {
     }
+    TokenInputLabelPost = __decorate([
+        Directive({ selector: '[vcl-token-input-post]' })
+    ], TokenInputLabelPost);
     return TokenInputLabelPost;
 }());
-TokenInputLabelPost = __decorate([
-    Directive({ selector: '[vcl-token-input-post]' })
-], TokenInputLabelPost);
 export { TokenInputLabelPost };
 var TokenInputComponent = (function () {
     function TokenInputComponent(cdRef) {
@@ -175,94 +175,94 @@ var TokenInputComponent = (function () {
     TokenInputComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        ViewChild('input'),
+        __metadata("design:type", ElementRef)
+    ], TokenInputComponent.prototype, "input", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TokenInputComponent.prototype, "selectable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TokenInputComponent.prototype, "selectedAfterAdd", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "placeholder", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "inputClass", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TokenInputComponent.prototype, "icon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], TokenInputComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "tokenClass", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "change", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "add", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "remove", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "confirm", void 0);
+    __decorate([
+        ContentChild(TokenInputLabelPre, { read: TemplateRef }),
+        __metadata("design:type", TokenInputLabelPre)
+    ], TokenInputComponent.prototype, "labelPre", void 0);
+    __decorate([
+        ContentChild(TokenInputLabelPost, { read: TemplateRef }),
+        __metadata("design:type", TokenInputLabelPost)
+    ], TokenInputComponent.prototype, "labelPost", void 0);
+    __decorate([
+        HostListener('focus', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", Promise)
+    ], TokenInputComponent.prototype, "onFocus", null);
+    __decorate([
+        HostBinding('class.vclFocused'),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "focused", void 0);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], TokenInputComponent.prototype, "onKeydown", null);
+    TokenInputComponent = __decorate([
+        Component({
+            selector: 'vcl-token-input',
+            template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (tap)=\"select(token)\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
+            host: {
+                '[class.vclInput]': 'true',
+                '[class.vclTokenInput]': 'true',
+                '[class.vclLayoutHorizontal]': 'true',
+                '[class.vclLayoutWrap]': 'true',
+                '[attr.tabindex]': '-1',
+            },
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], TokenInputComponent);
     return TokenInputComponent;
 }());
-__decorate([
-    ViewChild('input'),
-    __metadata("design:type", ElementRef)
-], TokenInputComponent.prototype, "input", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], TokenInputComponent.prototype, "selectable", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], TokenInputComponent.prototype, "selectedAfterAdd", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TokenInputComponent.prototype, "placeholder", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TokenInputComponent.prototype, "inputClass", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TokenInputComponent.prototype, "icon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], TokenInputComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TokenInputComponent.prototype, "tokenClass", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], TokenInputComponent.prototype, "change", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], TokenInputComponent.prototype, "add", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], TokenInputComponent.prototype, "remove", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], TokenInputComponent.prototype, "confirm", void 0);
-__decorate([
-    ContentChild(TokenInputLabelPre, { read: TemplateRef }),
-    __metadata("design:type", TokenInputLabelPre)
-], TokenInputComponent.prototype, "labelPre", void 0);
-__decorate([
-    ContentChild(TokenInputLabelPost, { read: TemplateRef }),
-    __metadata("design:type", TokenInputLabelPost)
-], TokenInputComponent.prototype, "labelPost", void 0);
-__decorate([
-    HostListener('focus', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], TokenInputComponent.prototype, "onFocus", null);
-__decorate([
-    HostBinding('class.vclFocused'),
-    __metadata("design:type", Object)
-], TokenInputComponent.prototype, "focused", void 0);
-__decorate([
-    HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [KeyboardEvent]),
-    __metadata("design:returntype", void 0)
-], TokenInputComponent.prototype, "onKeydown", null);
-TokenInputComponent = __decorate([
-    Component({
-        selector: 'vcl-token-input',
-        template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (tap)=\"select(token)\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
-        host: {
-            '[class.vclInput]': 'true',
-            '[class.vclTokenInput]': 'true',
-            '[class.vclLayoutHorizontal]': 'true',
-            '[class.vclLayoutWrap]': 'true',
-            '[attr.tabindex]': '-1',
-        },
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        changeDetection: ChangeDetectionStrategy.OnPush
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], TokenInputComponent);
 export { TokenInputComponent };

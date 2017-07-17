@@ -45,35 +45,35 @@ var TooltipDirective = (function () {
             this.tooltip.destroy();
         }
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TooltipDirective.prototype, "content", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TooltipDirective.prototype, "position", void 0);
+    __decorate([
+        HostListener('mouseenter'),
+        HostListener('focusin'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], TooltipDirective.prototype, "onMouseEnter", null);
+    __decorate([
+        HostListener('focusout'),
+        HostListener('mouseleave'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], TooltipDirective.prototype, "ngOnDestroy", null);
+    TooltipDirective = __decorate([
+        Directive({ selector: '[vcl-tooltip]' }),
+        __param(3, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [ElementRef,
+            ComponentFactoryResolver,
+            ViewContainerRef, Object])
+    ], TooltipDirective);
     return TooltipDirective;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TooltipDirective.prototype, "content", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TooltipDirective.prototype, "position", void 0);
-__decorate([
-    HostListener('mouseenter'),
-    HostListener('focusin'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], TooltipDirective.prototype, "onMouseEnter", null);
-__decorate([
-    HostListener('focusout'),
-    HostListener('mouseleave'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], TooltipDirective.prototype, "ngOnDestroy", null);
-TooltipDirective = __decorate([
-    Directive({ selector: '[vcl-tooltip]' }),
-    __param(3, Inject(DOCUMENT)),
-    __metadata("design:paramtypes", [ElementRef,
-        ComponentFactoryResolver,
-        ViewContainerRef, Object])
-], TooltipDirective);
 export { TooltipDirective };

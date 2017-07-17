@@ -25,16 +25,16 @@ var DisableDirective = (function () {
             this.disabled = this.tableService.ClassToggle('vclDisabled', this.disabled, 'tr');
         }
     };
+    __decorate([
+        Input('disabled'),
+        __metadata("design:type", Object)
+    ], DisableDirective.prototype, "disabled", void 0);
+    DisableDirective = __decorate([
+        Directive({
+            selector: '[disabled]'
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], DisableDirective);
     return DisableDirective;
 }());
-__decorate([
-    Input('disabled'),
-    __metadata("design:type", Object)
-], DisableDirective.prototype, "disabled", void 0);
-DisableDirective = __decorate([
-    Directive({
-        selector: '[disabled]'
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], DisableDirective);
 export { DisableDirective };

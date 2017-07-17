@@ -80,70 +80,70 @@ var CheckboxComponent = (function () {
     CheckboxComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        HostBinding(),
+        __metadata("design:type", Object)
+    ], CheckboxComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], CheckboxComponent.prototype, "checkedIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], CheckboxComponent.prototype, "uncheckedIcon", void 0);
+    __decorate([
+        HostBinding('attr.aria-disabled'),
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], CheckboxComponent.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], CheckboxComponent.prototype, "labelPosition", void 0);
+    __decorate([
+        HostBinding('attr.checked'),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], CheckboxComponent.prototype, "checked", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], CheckboxComponent.prototype, "checkedChange", void 0);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], CheckboxComponent.prototype, "onKeyup", null);
+    __decorate([
+        HostListener('tap', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], CheckboxComponent.prototype, "onTap", null);
+    __decorate([
+        HostListener('blur'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], CheckboxComponent.prototype, "onBlur", null);
+    CheckboxComponent = __decorate([
+        Component({
+            selector: 'vcl-checkbox',
+            template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
+            animations: [trigger('checkState', [])],
+            host: {
+                '[attr.role]': '"checkbox"',
+                '[class.vclCheckbox]': 'true',
+                '[style.userSelect]': '"none"'
+            },
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
+    ], CheckboxComponent);
     return CheckboxComponent;
 }());
-__decorate([
-    HostBinding(),
-    __metadata("design:type", Object)
-], CheckboxComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], CheckboxComponent.prototype, "checkedIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], CheckboxComponent.prototype, "uncheckedIcon", void 0);
-__decorate([
-    HostBinding('attr.aria-disabled'),
-    HostBinding('class.vclDisabled'),
-    Input(),
-    __metadata("design:type", Boolean)
-], CheckboxComponent.prototype, "disabled", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], CheckboxComponent.prototype, "labelPosition", void 0);
-__decorate([
-    HostBinding('attr.checked'),
-    Input(),
-    __metadata("design:type", Boolean)
-], CheckboxComponent.prototype, "checked", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], CheckboxComponent.prototype, "checkedChange", void 0);
-__decorate([
-    HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], CheckboxComponent.prototype, "onKeyup", null);
-__decorate([
-    HostListener('tap', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], CheckboxComponent.prototype, "onTap", null);
-__decorate([
-    HostListener('blur'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], CheckboxComponent.prototype, "onBlur", null);
-CheckboxComponent = __decorate([
-    Component({
-        selector: 'vcl-checkbox',
-        template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
-        animations: [trigger('checkState', [])],
-        host: {
-            '[attr.role]': '"checkbox"',
-            '[class.vclCheckbox]': 'true',
-            '[style.userSelect]': '"none"'
-        },
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        changeDetection: ChangeDetectionStrategy.OnPush
-    }),
-    __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
-], CheckboxComponent);
 export { CheckboxComponent };

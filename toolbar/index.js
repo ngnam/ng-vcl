@@ -11,14 +11,14 @@ import { L10nModule } from '../l10n/index';
 var VCLToolbarModule = (function () {
     function VCLToolbarModule() {
     }
+    VCLToolbarModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule],
+            exports: [ToolbarComponent],
+            declarations: [ToolbarComponent],
+            providers: [],
+        })
+    ], VCLToolbarModule);
     return VCLToolbarModule;
 }());
-VCLToolbarModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule],
-        exports: [ToolbarComponent],
-        declarations: [ToolbarComponent],
-        providers: [],
-    })
-], VCLToolbarModule);
 export { VCLToolbarModule };

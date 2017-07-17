@@ -19,22 +19,22 @@ export { AlertService, AlertType, AlertInput, AlertError, AlertAlignment };
 var VCLAlertModule = (function () {
     function VCLAlertModule() {
     }
+    VCLAlertModule = __decorate([
+        NgModule({
+            imports: [
+                FormsModule,
+                CommonModule,
+                VCLButtonModule,
+                VCLInputModule,
+                VCLIcogramModule,
+                VCLLayerModule.forChild({ layers: [] })
+            ],
+            exports: [],
+            declarations: [AlertComponent, AlertInputComponent],
+            entryComponents: [AlertComponent],
+            providers: [AlertService],
+        })
+    ], VCLAlertModule);
     return VCLAlertModule;
 }());
-VCLAlertModule = __decorate([
-    NgModule({
-        imports: [
-            FormsModule,
-            CommonModule,
-            VCLButtonModule,
-            VCLInputModule,
-            VCLIcogramModule,
-            VCLLayerModule.forChild({ layers: [] })
-        ],
-        exports: [],
-        declarations: [AlertComponent, AlertInputComponent],
-        entryComponents: [AlertComponent],
-        providers: [AlertService],
-    })
-], VCLAlertModule);
 export { VCLAlertModule };

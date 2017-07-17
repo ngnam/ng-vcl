@@ -34,18 +34,18 @@ var SortIconComponent = (function () {
             }
         }
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SortIconComponent.prototype, "sort", void 0);
+    SortIconComponent = __decorate([
+        Component({
+            selector: 'sort-icon',
+            template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
+        }),
+        __param(0, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [Object, ElementRef])
+    ], SortIconComponent);
     return SortIconComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], SortIconComponent.prototype, "sort", void 0);
-SortIconComponent = __decorate([
-    Component({
-        selector: 'sort-icon',
-        template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
-    }),
-    __param(0, Inject(DOCUMENT)),
-    __metadata("design:paramtypes", [Object, ElementRef])
-], SortIconComponent);
 export { SortIconComponent };

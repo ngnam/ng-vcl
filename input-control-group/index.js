@@ -10,14 +10,14 @@ import { CommonModule } from '@angular/common';
 var VCLInputControlGroupModule = (function () {
     function VCLInputControlGroupModule() {
     }
+    VCLInputControlGroupModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            exports: [InputControlGroup],
+            declarations: [InputControlGroup],
+            providers: [],
+        })
+    ], VCLInputControlGroupModule);
     return VCLInputControlGroupModule;
 }());
-VCLInputControlGroupModule = __decorate([
-    NgModule({
-        imports: [CommonModule],
-        exports: [InputControlGroup],
-        declarations: [InputControlGroup],
-        providers: [],
-    })
-], VCLInputControlGroupModule);
 export { VCLInputControlGroupModule };

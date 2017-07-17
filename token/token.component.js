@@ -23,48 +23,48 @@ var TokenComponent = (function () {
         event.stopPropagation();
         this.remove.emit(event);
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TokenComponent.prototype, "label", void 0);
+    __decorate([
+        HostListener('tap', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Event]),
+        __metadata("design:returntype", void 0)
+    ], TokenComponent.prototype, "onTap", null);
+    __decorate([
+        HostBinding('class.vclSelected'),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TokenComponent.prototype, "selected", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TokenComponent.prototype, "removable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TokenComponent.prototype, "icon", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TokenComponent.prototype, "remove", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TokenComponent.prototype, "select", void 0);
+    TokenComponent = __decorate([
+        Component({
+            selector: 'vcl-token',
+            template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" [appIcon]=\"icon\" (click)=\"onRemoveClick($event)\"> </button> ",
+            animations: [trigger('checkState', [])],
+            host: {
+                '[class.vclToken]': 'true',
+                '[@checkState]': 'selected'
+            }
+        })
+    ], TokenComponent);
     return TokenComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TokenComponent.prototype, "label", void 0);
-__decorate([
-    HostListener('tap', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Event]),
-    __metadata("design:returntype", void 0)
-], TokenComponent.prototype, "onTap", null);
-__decorate([
-    HostBinding('class.vclSelected'),
-    Input(),
-    __metadata("design:type", Boolean)
-], TokenComponent.prototype, "selected", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], TokenComponent.prototype, "removable", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TokenComponent.prototype, "icon", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], TokenComponent.prototype, "remove", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], TokenComponent.prototype, "select", void 0);
-TokenComponent = __decorate([
-    Component({
-        selector: 'vcl-token',
-        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" [appIcon]=\"icon\" (click)=\"onRemoveClick($event)\"> </button> ",
-        animations: [trigger('checkState', [])],
-        host: {
-            '[class.vclToken]': 'true',
-            '[@checkState]': 'selected'
-        }
-    })
-], TokenComponent);
 export { TokenComponent };

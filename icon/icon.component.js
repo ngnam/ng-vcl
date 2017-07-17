@@ -29,53 +29,53 @@ var IconComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], IconComponent.prototype, "src", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], IconComponent.prototype, "svguse", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], IconComponent.prototype, "iconClass", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], IconComponent.prototype, "icon", void 0);
+    __decorate([
+        HostBinding('attr.aria-label'),
+        Input(),
+        __metadata("design:type", Object)
+    ], IconComponent.prototype, "label", void 0);
+    __decorate([
+        HostBinding('attr.role'),
+        Input(),
+        __metadata("design:type", Object)
+    ], IconComponent.prototype, "ariaRole", void 0);
+    __decorate([
+        HostBinding('class'),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [])
+    ], IconComponent.prototype, "mergedIconClass", null);
+    __decorate([
+        HostBinding('attr.aria-hidden'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], IconComponent.prototype, "isAriaHidden", null);
+    IconComponent = __decorate([
+        Component({
+            selector: 'vcl-icon, [vcl-icon]',
+            template: "<img *ngIf=\"src\" [attr.src]=\"src\"> <svg *ngIf=\"svguse\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"xMidYMid meet\"> <use [attr.xmlns:xlink]=\"'http://www.w3.org/1999/xlink'\"></use> </svg> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            host: {
+                '[class.vclIcon]': 'true',
+            },
+        }),
+        __metadata("design:paramtypes", [IconService])
+    ], IconComponent);
     return IconComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IconComponent.prototype, "src", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IconComponent.prototype, "svguse", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IconComponent.prototype, "iconClass", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IconComponent.prototype, "icon", void 0);
-__decorate([
-    HostBinding('attr.aria-label'),
-    Input(),
-    __metadata("design:type", String)
-], IconComponent.prototype, "label", void 0);
-__decorate([
-    HostBinding('attr.role'),
-    Input(),
-    __metadata("design:type", String)
-], IconComponent.prototype, "ariaRole", void 0);
-__decorate([
-    HostBinding('class'),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [])
-], IconComponent.prototype, "mergedIconClass", null);
-__decorate([
-    HostBinding('attr.aria-hidden'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], IconComponent.prototype, "isAriaHidden", null);
-IconComponent = __decorate([
-    Component({
-        selector: 'vcl-icon, [vcl-icon]',
-        template: "<img *ngIf=\"src\" [attr.src]=\"src\"> <svg *ngIf=\"svguse\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"xMidYMid meet\"> <use [attr.xmlns:xlink]=\"'http://www.w3.org/1999/xlink'\"></use> </svg> ",
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        host: {
-            '[class.vclIcon]': 'true',
-        },
-    }),
-    __metadata("design:paramtypes", [IconService])
-], IconComponent);
 export { IconComponent };

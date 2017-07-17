@@ -26,16 +26,16 @@ var HighlightDirective = (function () {
             this.hightlight = this.tableService.ClassToggle('vclCellHighlight', this.hightlight, 'td');
         }
     };
+    __decorate([
+        Input('hightlight'),
+        __metadata("design:type", Object)
+    ], HighlightDirective.prototype, "hightlight", void 0);
+    HighlightDirective = __decorate([
+        Directive({
+            selector: '[hightlight]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], HighlightDirective);
     return HighlightDirective;
 }());
-__decorate([
-    Input('hightlight'),
-    __metadata("design:type", Object)
-], HighlightDirective.prototype, "hightlight", void 0);
-HighlightDirective = __decorate([
-    Directive({
-        selector: '[hightlight]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], HighlightDirective);
 export { HighlightDirective };

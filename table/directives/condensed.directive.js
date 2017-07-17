@@ -25,16 +25,16 @@ var CondensedDirective = (function () {
             this.condensed = this.tableService.ClassToggle('vclCondensed', this.condensed, 'table');
         }
     };
+    __decorate([
+        Input('condensed'),
+        __metadata("design:type", Object)
+    ], CondensedDirective.prototype, "condensed", void 0);
+    CondensedDirective = __decorate([
+        Directive({
+            selector: '[condensed]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], CondensedDirective);
     return CondensedDirective;
 }());
-__decorate([
-    Input('condensed'),
-    __metadata("design:type", Object)
-], CondensedDirective.prototype, "condensed", void 0);
-CondensedDirective = __decorate([
-    Directive({
-        selector: '[condensed]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], CondensedDirective);
 export { CondensedDirective };

@@ -125,56 +125,56 @@ var LayerContainerComponent = (function () {
             }
         }
     };
+    __decorate([
+        ViewChild('container'),
+        __metadata("design:type", ElementRef)
+    ], LayerContainerComponent.prototype, "container", void 0);
+    __decorate([
+        ViewChild('cover'),
+        __metadata("design:type", ElementRef)
+    ], LayerContainerComponent.prototype, "cover", void 0);
+    __decorate([
+        ViewChild('box'),
+        __metadata("design:type", ElementRef)
+    ], LayerContainerComponent.prototype, "box", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", LayerRef)
+    ], LayerContainerComponent.prototype, "layerRef", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LayerContainerComponent.prototype, "layerOpts", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LayerContainerComponent.prototype, "layerTarget", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LayerContainerComponent.prototype, "layerInjector", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LayerContainerComponent.prototype, "layerAttrs", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LayerContainerComponent.prototype, "zIndex", void 0);
+    __decorate([
+        ViewChild('layerContent', { read: ViewContainerRef }),
+        __metadata("design:type", ViewContainerRef)
+    ], LayerContainerComponent.prototype, "layerContentContainer", void 0);
+    LayerContainerComponent = __decorate([
+        Component({
+            template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layerOpts.customClass\" [class.vclTransparent]=\"layerOpts.transparent\" [class.vclLayerFill]=\"layerOpts.fill\" [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (tap)='triggerOffClick($event)' > <div #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div> ",
+        }),
+        __param(3, Optional()), __param(3, Inject(LAYER_ANIMATIONS)),
+        __metadata("design:paramtypes", [ChangeDetectorRef,
+            AnimationBuilder,
+            ElementRef, Object])
+    ], LayerContainerComponent);
     return LayerContainerComponent;
 }());
-__decorate([
-    ViewChild('container'),
-    __metadata("design:type", ElementRef)
-], LayerContainerComponent.prototype, "container", void 0);
-__decorate([
-    ViewChild('cover'),
-    __metadata("design:type", ElementRef)
-], LayerContainerComponent.prototype, "cover", void 0);
-__decorate([
-    ViewChild('box'),
-    __metadata("design:type", ElementRef)
-], LayerContainerComponent.prototype, "box", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", LayerRef)
-], LayerContainerComponent.prototype, "layerRef", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], LayerContainerComponent.prototype, "layerOpts", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], LayerContainerComponent.prototype, "layerTarget", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], LayerContainerComponent.prototype, "layerInjector", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
-], LayerContainerComponent.prototype, "layerAttrs", null);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], LayerContainerComponent.prototype, "zIndex", void 0);
-__decorate([
-    ViewChild('layerContent', { read: ViewContainerRef }),
-    __metadata("design:type", ViewContainerRef)
-], LayerContainerComponent.prototype, "layerContentContainer", void 0);
-LayerContainerComponent = __decorate([
-    Component({
-        template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layerOpts.customClass\" [class.vclTransparent]=\"layerOpts.transparent\" [class.vclLayerFill]=\"layerOpts.fill\" [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (tap)='triggerOffClick($event)' > <div #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div> ",
-    }),
-    __param(3, Optional()), __param(3, Inject(LAYER_ANIMATIONS)),
-    __metadata("design:paramtypes", [ChangeDetectorRef,
-        AnimationBuilder,
-        ElementRef, Object])
-], LayerContainerComponent);
 export { LayerContainerComponent };

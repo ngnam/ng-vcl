@@ -25,16 +25,16 @@ var DottedBorderDirective = (function () {
             this.dottedborder = this.tableService.ClassToggle('vclDottedBorder', this.dottedborder, 'table');
         }
     };
+    __decorate([
+        Input('dottedborder'),
+        __metadata("design:type", Object)
+    ], DottedBorderDirective.prototype, "dottedborder", void 0);
+    DottedBorderDirective = __decorate([
+        Directive({
+            selector: '[dottedborder]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], DottedBorderDirective);
     return DottedBorderDirective;
 }());
-__decorate([
-    Input('dottedborder'),
-    __metadata("design:type", Object)
-], DottedBorderDirective.prototype, "dottedborder", void 0);
-DottedBorderDirective = __decorate([
-    Directive({
-        selector: '[dottedborder]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], DottedBorderDirective);
 export { DottedBorderDirective };

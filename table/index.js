@@ -12,15 +12,15 @@ import { SortIconComponent } from './components/sorticon.component';
 var VCLTableModule = (function () {
     function VCLTableModule() {
     }
+    VCLTableModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule],
+            exports: [SortIconComponent].concat(directives),
+            declarations: [SortIconComponent].concat(directives),
+            entryComponents: [SortIconComponent],
+            providers: [],
+        })
+    ], VCLTableModule);
     return VCLTableModule;
 }());
-VCLTableModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule],
-        exports: [SortIconComponent].concat(directives),
-        declarations: [SortIconComponent].concat(directives),
-        entryComponents: [SortIconComponent],
-        providers: [],
-    })
-], VCLTableModule);
 export { VCLTableModule };

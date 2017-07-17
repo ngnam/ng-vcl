@@ -16,25 +16,25 @@ var InputControlGroup = (function () {
     InputControlGroup.prototype.ucfirst = function (str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
+    __decorate([
+        Input('type'),
+        __metadata("design:type", Object)
+    ], InputControlGroup.prototype, "type", void 0);
+    __decorate([
+        Input('label'),
+        __metadata("design:type", String)
+    ], InputControlGroup.prototype, "label", void 0);
+    InputControlGroup = __decorate([
+        Component({
+            selector: 'vcl-input-control-group',
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            host: {
+                '[class.vclInputControlGroup]': 'true',
+            },
+            template: "<ng-content></ng-content> <div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\" [class.vclError]=\"type=='error'\" [class.vclWarning]=\"type=='warning'\" [class.vclSuccess]=\"type=='success'\"> {{label}} </div> "
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], InputControlGroup);
     return InputControlGroup;
 }());
-__decorate([
-    Input('type'),
-    __metadata("design:type", String)
-], InputControlGroup.prototype, "type", void 0);
-__decorate([
-    Input('label'),
-    __metadata("design:type", String)
-], InputControlGroup.prototype, "label", void 0);
-InputControlGroup = __decorate([
-    Component({
-        selector: 'vcl-input-control-group',
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        host: {
-            '[class.vclInputControlGroup]': 'true',
-        },
-        template: "<ng-content></ng-content> <div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\" [class.vclError]=\"type=='error'\" [class.vclWarning]=\"type=='warning'\" [class.vclSuccess]=\"type=='success'\"> {{label}} </div> "
-    }),
-    __metadata("design:paramtypes", [ElementRef])
-], InputControlGroup);
 export { InputControlGroup };

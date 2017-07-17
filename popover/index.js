@@ -12,17 +12,17 @@ export { PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS };
 var VCLPopoverModule = (function () {
     function VCLPopoverModule() {
     }
+    VCLPopoverModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                VCLOffClickModule
+            ],
+            providers: [],
+            exports: [PopoverComponent],
+            declarations: [PopoverComponent]
+        })
+    ], VCLPopoverModule);
     return VCLPopoverModule;
 }());
-VCLPopoverModule = __decorate([
-    NgModule({
-        imports: [
-            CommonModule,
-            VCLOffClickModule
-        ],
-        providers: [],
-        exports: [PopoverComponent],
-        declarations: [PopoverComponent]
-    })
-], VCLPopoverModule);
 export { VCLPopoverModule };

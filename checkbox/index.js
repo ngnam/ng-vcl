@@ -12,13 +12,13 @@ export { CheckboxComponent };
 var VCLCheckboxModule = (function () {
     function VCLCheckboxModule() {
     }
+    VCLCheckboxModule = __decorate([
+        NgModule({
+            imports: [CommonModule, VCLIconModule],
+            exports: [CheckboxComponent],
+            declarations: [CheckboxComponent]
+        })
+    ], VCLCheckboxModule);
     return VCLCheckboxModule;
 }());
-VCLCheckboxModule = __decorate([
-    NgModule({
-        imports: [CommonModule, VCLIconModule],
-        exports: [CheckboxComponent],
-        declarations: [CheckboxComponent]
-    })
-], VCLCheckboxModule);
 export { VCLCheckboxModule };

@@ -26,16 +26,16 @@ var AlignmentMiddleDirective = (function () {
             this.align = this.tableService.ClassToggle('vclVAlignMiddle', this.align, '');
         }
     };
+    __decorate([
+        Input('align-middle'),
+        __metadata("design:type", Object)
+    ], AlignmentMiddleDirective.prototype, "align", void 0);
+    AlignmentMiddleDirective = __decorate([
+        Directive({
+            selector: '[align-middle]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], AlignmentMiddleDirective);
     return AlignmentMiddleDirective;
 }());
-__decorate([
-    Input('align-middle'),
-    __metadata("design:type", Object)
-], AlignmentMiddleDirective.prototype, "align", void 0);
-AlignmentMiddleDirective = __decorate([
-    Directive({
-        selector: '[align-middle]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], AlignmentMiddleDirective);
 export { AlignmentMiddleDirective };

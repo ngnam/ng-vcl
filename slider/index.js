@@ -12,14 +12,14 @@ export { SliderComponent };
 var VCLSliderModule = (function () {
     function VCLSliderModule() {
     }
+    VCLSliderModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule],
+            exports: [SliderComponent],
+            declarations: [SliderComponent],
+            providers: [],
+        })
+    ], VCLSliderModule);
     return VCLSliderModule;
 }());
-VCLSliderModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule],
-        exports: [SliderComponent],
-        declarations: [SliderComponent],
-        providers: [],
-    })
-], VCLSliderModule);
 export { VCLSliderModule };

@@ -25,16 +25,16 @@ var VerticalBorderDirective = (function () {
             this.border = this.tableService.ClassToggle('vclVerticalBorder', this.border, 'table');
         }
     };
+    __decorate([
+        Input('vertical-border'),
+        __metadata("design:type", Object)
+    ], VerticalBorderDirective.prototype, "border", void 0);
+    VerticalBorderDirective = __decorate([
+        Directive({
+            selector: '[vertical-border]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], VerticalBorderDirective);
     return VerticalBorderDirective;
 }());
-__decorate([
-    Input('vertical-border'),
-    __metadata("design:type", Object)
-], VerticalBorderDirective.prototype, "border", void 0);
-VerticalBorderDirective = __decorate([
-    Directive({
-        selector: '[vertical-border]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], VerticalBorderDirective);
 export { VerticalBorderDirective };

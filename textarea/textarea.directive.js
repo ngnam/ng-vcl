@@ -36,48 +36,48 @@ var TextareaDirective = (function () {
             }
         }
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TextareaDirective.prototype, "selectAllOnFocus", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TextareaDirective.prototype, "autogrow", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TextareaDirective.prototype, "maxRows", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TextareaDirective.prototype, "minRows", void 0);
+    __decorate([
+        HostBinding('attr.rows'),
+        Input(),
+        __metadata("design:type", Number)
+    ], TextareaDirective.prototype, "rows", void 0);
+    __decorate([
+        HostListener('ngModelChange', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], TextareaDirective.prototype, "onModelChange", null);
+    __decorate([
+        HostListener('focus', ['$event.target.value']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], TextareaDirective.prototype, "onFocus", null);
+    TextareaDirective = __decorate([
+        Directive({
+            selector: 'textarea[vcl-textarea]',
+            host: {
+                '[class.vclInput]': 'true',
+            }
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], TextareaDirective);
     return TextareaDirective;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], TextareaDirective.prototype, "selectAllOnFocus", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], TextareaDirective.prototype, "autogrow", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], TextareaDirective.prototype, "maxRows", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], TextareaDirective.prototype, "minRows", void 0);
-__decorate([
-    HostBinding('attr.rows'),
-    Input(),
-    __metadata("design:type", Number)
-], TextareaDirective.prototype, "rows", void 0);
-__decorate([
-    HostListener('ngModelChange', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], TextareaDirective.prototype, "onModelChange", null);
-__decorate([
-    HostListener('focus', ['$event.target.value']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], TextareaDirective.prototype, "onFocus", null);
-TextareaDirective = __decorate([
-    Directive({
-        selector: 'textarea[vcl-textarea]',
-        host: {
-            '[class.vclInput]': 'true',
-        }
-    }),
-    __metadata("design:paramtypes", [ElementRef])
-], TextareaDirective);
 export { TextareaDirective };

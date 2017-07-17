@@ -25,16 +25,16 @@ var NoBorderDirective = (function () {
             this.noborder = this.tableService.ClassToggle('vclNoBorder', this.noborder, 'table');
         }
     };
+    __decorate([
+        Input('noborder'),
+        __metadata("design:type", Object)
+    ], NoBorderDirective.prototype, "noborder", void 0);
+    NoBorderDirective = __decorate([
+        Directive({
+            selector: '[noborder]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], NoBorderDirective);
     return NoBorderDirective;
 }());
-__decorate([
-    Input('noborder'),
-    __metadata("design:type", Object)
-], NoBorderDirective.prototype, "noborder", void 0);
-NoBorderDirective = __decorate([
-    Directive({
-        selector: '[noborder]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], NoBorderDirective);
 export { NoBorderDirective };

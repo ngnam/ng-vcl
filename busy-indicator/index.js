@@ -8,16 +8,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BusyIndicatorComponent } from './busy-indicator.component';
 import { BusyComponent } from './busy.component';
+export { BusyComponent, BusyIndicatorComponent };
 var VCLBusyIndicatorModule = (function () {
     function VCLBusyIndicatorModule() {
     }
+    VCLBusyIndicatorModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            exports: [BusyComponent, BusyIndicatorComponent],
+            declarations: [BusyComponent, BusyIndicatorComponent]
+        })
+    ], VCLBusyIndicatorModule);
     return VCLBusyIndicatorModule;
 }());
-VCLBusyIndicatorModule = __decorate([
-    NgModule({
-        imports: [CommonModule],
-        exports: [BusyComponent, BusyIndicatorComponent],
-        declarations: [BusyComponent, BusyIndicatorComponent]
-    })
-], VCLBusyIndicatorModule);
 export { VCLBusyIndicatorModule };

@@ -67,40 +67,40 @@ var ProgressBarComponent = (function () {
             value >= this.minValue &&
             value <= this.maxValue;
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], ProgressBarComponent.prototype, "value", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], ProgressBarComponent.prototype, "secondaryValue", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], ProgressBarComponent.prototype, "minValue", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], ProgressBarComponent.prototype, "maxValue", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], ProgressBarComponent.prototype, "indeterminate", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], ProgressBarComponent.prototype, "label", void 0);
+    ProgressBarComponent = __decorate([
+        Component({
+            selector: 'vcl-progress-bar',
+            template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\"></div> </div> ",
+            host: {
+                '[attr.role]': '"progressbar"',
+            },
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        })
+    ], ProgressBarComponent);
     return ProgressBarComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], ProgressBarComponent.prototype, "value", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], ProgressBarComponent.prototype, "secondaryValue", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], ProgressBarComponent.prototype, "minValue", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], ProgressBarComponent.prototype, "maxValue", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], ProgressBarComponent.prototype, "indeterminate", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], ProgressBarComponent.prototype, "label", void 0);
-ProgressBarComponent = __decorate([
-    Component({
-        selector: 'vcl-progress-bar',
-        template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\"></div> </div> ",
-        host: {
-            '[attr.role]': '"progressbar"',
-        },
-        changeDetection: ChangeDetectionStrategy.OnPush,
-    })
-], ProgressBarComponent);
 export { ProgressBarComponent };

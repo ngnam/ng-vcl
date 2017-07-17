@@ -13,7 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { Directive, ContentChildren, Input, QueryList, SkipSelf, Inject, forwardRef, Optional } from "@angular/core";
 import { NavigationComponent } from './navigation.component';
 import { Router, NavigationEnd } from "@angular/router";
-var NavigationItemDirective = NavigationItemDirective_1 = (function () {
+var NavigationItemDirective = (function () {
     function NavigationItemDirective(router, nav, parent) {
         var _this = this;
         this.router = router;
@@ -31,6 +31,7 @@ var NavigationItemDirective = NavigationItemDirective_1 = (function () {
             });
         }
     }
+    NavigationItemDirective_1 = NavigationItemDirective;
     Object.defineProperty(NavigationItemDirective.prototype, "items", {
         get: function () {
             var _this = this;
@@ -82,54 +83,54 @@ var NavigationItemDirective = NavigationItemDirective_1 = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationItemDirective.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], NavigationItemDirective.prototype, "opened", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], NavigationItemDirective.prototype, "heading", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], NavigationItemDirective.prototype, "prepIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], NavigationItemDirective.prototype, "appIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], NavigationItemDirective.prototype, "class", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], NavigationItemDirective.prototype, "href", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], NavigationItemDirective.prototype, "route", null);
+    __decorate([
+        ContentChildren(NavigationItemDirective_1),
+        __metadata("design:type", QueryList)
+    ], NavigationItemDirective.prototype, "contentItems", void 0);
+    NavigationItemDirective = NavigationItemDirective_1 = __decorate([
+        Directive({
+            selector: 'vcl-navitem'
+        }),
+        __param(1, Inject(forwardRef(function () { return NavigationComponent; }))),
+        __param(2, Optional()), __param(2, SkipSelf()), __param(2, Inject(NavigationItemDirective_1)),
+        __metadata("design:paramtypes", [Router,
+            NavigationComponent,
+            NavigationItemDirective])
+    ], NavigationItemDirective);
     return NavigationItemDirective;
+    var NavigationItemDirective_1;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationItemDirective.prototype, "label", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], NavigationItemDirective.prototype, "opened", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], NavigationItemDirective.prototype, "heading", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationItemDirective.prototype, "prepIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationItemDirective.prototype, "appIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationItemDirective.prototype, "class", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationItemDirective.prototype, "href", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Array),
-    __metadata("design:paramtypes", [Array])
-], NavigationItemDirective.prototype, "route", null);
-__decorate([
-    ContentChildren(NavigationItemDirective_1),
-    __metadata("design:type", QueryList)
-], NavigationItemDirective.prototype, "contentItems", void 0);
-NavigationItemDirective = NavigationItemDirective_1 = __decorate([
-    Directive({
-        selector: 'vcl-navitem'
-    }),
-    __param(1, Inject(forwardRef(function () { return NavigationComponent; }))),
-    __param(2, Optional()), __param(2, SkipSelf()), __param(2, Inject(NavigationItemDirective_1)),
-    __metadata("design:paramtypes", [Router,
-        NavigationComponent,
-        NavigationItemDirective])
-], NavigationItemDirective);
 export { NavigationItemDirective };
-var NavigationItemDirective_1;

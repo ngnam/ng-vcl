@@ -21,7 +21,7 @@ export declare class ComponentWormhole<T> extends ComponentWormholeBase<T> {
     private viewContainerRef;
     private injector;
     private compFactory;
-    constructor(componentClass: Type<T>, viewContainerRef: ViewContainerRef, injector?: Injector);
+    constructor(componentClass: Type<T>, viewContainerRef: ViewContainerRef, injector?: Injector | undefined);
     attach(componentClass: Type<T>, index?: number): ComponentRef<T>;
     detach(): void;
     readonly currentIndex: number;

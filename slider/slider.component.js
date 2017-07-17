@@ -268,93 +268,93 @@ var SliderComponent = (function () {
     SliderComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        HostBinding(),
+        __metadata("design:type", Object)
+    ], SliderComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SliderComponent.prototype, "value", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], SliderComponent.prototype, "valueChange", void 0);
+    __decorate([
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SliderComponent.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SliderComponent.prototype, "min", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SliderComponent.prototype, "max", void 0);
+    __decorate([
+        Input('mousewheel'),
+        __metadata("design:type", Boolean)
+    ], SliderComponent.prototype, "wheel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SliderComponent.prototype, "lock", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SliderComponent.prototype, "scale", void 0);
+    __decorate([
+        HostBinding('class.vclFocused'),
+        __metadata("design:type", Boolean)
+    ], SliderComponent.prototype, "focused", void 0);
+    __decorate([
+        ViewChild('scale'),
+        __metadata("design:type", ElementRef)
+    ], SliderComponent.prototype, "scaleElement", void 0);
+    __decorate([
+        HostListener('focus'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SliderComponent.prototype, "onFocus", null);
+    __decorate([
+        HostListener('blur'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SliderComponent.prototype, "onBlur", null);
+    __decorate([
+        HostListener('tap', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SliderComponent.prototype, "onTap", null);
+    __decorate([
+        HostListener('wheel', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SliderComponent.prototype, "onWheel", null);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SliderComponent.prototype, "keydown", null);
+    SliderComponent = __decorate([
+        Component({
+            selector: 'vcl-slider',
+            template: "<div class=\"vclSliderRail\"> <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div> </div> <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\"> <div  class=\"vclSliderKnob\"></div> </div> </div> <div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\"> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (tap)=\"selectPoint(point)\">{{point.label}}</div> </div> ",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: {
+                '[class.vclSlider]': 'true'
+            },
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], SliderComponent);
     return SliderComponent;
 }());
-__decorate([
-    HostBinding(),
-    __metadata("design:type", Object)
-], SliderComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], SliderComponent.prototype, "value", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], SliderComponent.prototype, "valueChange", void 0);
-__decorate([
-    HostBinding('class.vclDisabled'),
-    Input(),
-    __metadata("design:type", Boolean)
-], SliderComponent.prototype, "disabled", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], SliderComponent.prototype, "min", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], SliderComponent.prototype, "max", void 0);
-__decorate([
-    Input('mousewheel'),
-    __metadata("design:type", Boolean)
-], SliderComponent.prototype, "wheel", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], SliderComponent.prototype, "lock", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], SliderComponent.prototype, "scale", void 0);
-__decorate([
-    HostBinding('class.vclFocused'),
-    __metadata("design:type", Boolean)
-], SliderComponent.prototype, "focused", void 0);
-__decorate([
-    ViewChild('scale'),
-    __metadata("design:type", ElementRef)
-], SliderComponent.prototype, "scaleElement", void 0);
-__decorate([
-    HostListener('focus'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], SliderComponent.prototype, "onFocus", null);
-__decorate([
-    HostListener('blur'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], SliderComponent.prototype, "onBlur", null);
-__decorate([
-    HostListener('tap', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], SliderComponent.prototype, "onTap", null);
-__decorate([
-    HostListener('wheel', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], SliderComponent.prototype, "onWheel", null);
-__decorate([
-    HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], SliderComponent.prototype, "keydown", null);
-SliderComponent = __decorate([
-    Component({
-        selector: 'vcl-slider',
-        template: "<div class=\"vclSliderRail\"> <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div> </div> <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\"> <div  class=\"vclSliderKnob\"></div> </div> </div> <div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\"> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (tap)=\"selectPoint(point)\">{{point.label}}</div> </div> ",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        host: {
-            '[class.vclSlider]': 'true'
-        },
-        changeDetection: ChangeDetectionStrategy.OnPush
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], SliderComponent);
 export { SliderComponent };

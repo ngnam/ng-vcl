@@ -9,12 +9,12 @@ import { OffClickDirective } from './off-click.directive';
 var VCLOffClickModule = (function () {
     function VCLOffClickModule() {
     }
+    VCLOffClickModule = __decorate([
+        NgModule({
+            declarations: [OffClickDirective],
+            exports: [OffClickDirective]
+        })
+    ], VCLOffClickModule);
     return VCLOffClickModule;
 }());
-VCLOffClickModule = __decorate([
-    NgModule({
-        declarations: [OffClickDirective],
-        exports: [OffClickDirective]
-    })
-], VCLOffClickModule);
 export { VCLOffClickModule };

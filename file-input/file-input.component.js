@@ -125,99 +125,99 @@ var FileInputComponent = (function () {
     FileInputComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], FileInputComponent.prototype, "accept", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], FileInputComponent.prototype, "multiple", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], FileInputComponent.prototype, "files", void 0);
+    __decorate([
+        Input(),
+        HostBinding('attr.tabindex'),
+        __metadata("design:type", Number)
+    ], FileInputComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        HostBinding('class.vclDisabled'),
+        __metadata("design:type", Boolean)
+    ], FileInputComponent.prototype, "disabled", void 0);
+    __decorate([
+        HostBinding('class.vclError'),
+        __metadata("design:type", Object)
+    ], FileInputComponent.prototype, "invalidFiles", void 0);
+    __decorate([
+        HostBinding('class.vclDragndrop'),
+        __metadata("design:type", Boolean)
+    ], FileInputComponent.prototype, "isDragging", void 0);
+    __decorate([
+        HostBinding('class.isFocused'),
+        __metadata("design:type", Boolean)
+    ], FileInputComponent.prototype, "isFocused", void 0);
+    __decorate([
+        ViewChild('input'),
+        __metadata("design:type", ElementRef)
+    ], FileInputComponent.prototype, "input", void 0);
+    __decorate([
+        HostListener('focus'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onFocus", null);
+    __decorate([
+        HostListener('blur'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onBlur", null);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], FileInputComponent.prototype, "keydown", null);
+    __decorate([
+        HostListener('click', ['$event.target.value']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onClick", null);
+    __decorate([
+        HostListener('dragover', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onDragOver", null);
+    __decorate([
+        HostListener('dragleave', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onDragLeave", null);
+    __decorate([
+        HostListener('drop', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onDrop", null);
+    FileInputComponent = __decorate([
+        Component({
+            selector: 'vcl-file-input',
+            template: "<input #input type=\"file\" style=\"display: none;\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" /> <div class=\"vclFileInputIcon vclIcon fa fa-upload\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div> <div class=\"vclFileInputPlaceholder\"> <ng-container *ngIf=\"filename\">{{filename}}</ng-container> <div *ngIf=\"!filename\"> <ng-content></ng-content> </div> </div> ",
+            host: {
+                '[class.vclFileInput]': 'true',
+                role: 'button'
+            },
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], FileInputComponent);
     return FileInputComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], FileInputComponent.prototype, "accept", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], FileInputComponent.prototype, "multiple", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], FileInputComponent.prototype, "files", void 0);
-__decorate([
-    Input(),
-    HostBinding('attr.tabindex'),
-    __metadata("design:type", Number)
-], FileInputComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    HostBinding('class.vclDisabled'),
-    __metadata("design:type", Boolean)
-], FileInputComponent.prototype, "disabled", void 0);
-__decorate([
-    HostBinding('class.vclError'),
-    __metadata("design:type", Object)
-], FileInputComponent.prototype, "invalidFiles", void 0);
-__decorate([
-    HostBinding('class.vclDragndrop'),
-    __metadata("design:type", Boolean)
-], FileInputComponent.prototype, "isDragging", void 0);
-__decorate([
-    HostBinding('class.isFocused'),
-    __metadata("design:type", Boolean)
-], FileInputComponent.prototype, "isFocused", void 0);
-__decorate([
-    ViewChild('input'),
-    __metadata("design:type", ElementRef)
-], FileInputComponent.prototype, "input", void 0);
-__decorate([
-    HostListener('focus'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], FileInputComponent.prototype, "onFocus", null);
-__decorate([
-    HostListener('blur'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], FileInputComponent.prototype, "onBlur", null);
-__decorate([
-    HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], FileInputComponent.prototype, "keydown", null);
-__decorate([
-    HostListener('click', ['$event.target.value']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], FileInputComponent.prototype, "onClick", null);
-__decorate([
-    HostListener('dragover', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], FileInputComponent.prototype, "onDragOver", null);
-__decorate([
-    HostListener('dragleave', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], FileInputComponent.prototype, "onDragLeave", null);
-__decorate([
-    HostListener('drop', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], FileInputComponent.prototype, "onDrop", null);
-FileInputComponent = __decorate([
-    Component({
-        selector: 'vcl-file-input',
-        template: "<input #input type=\"file\" style=\"display: none;\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" /> <div class=\"vclFileInputIcon vclIcon fa fa-upload\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div> <div class=\"vclFileInputPlaceholder\"> <ng-container *ngIf=\"filename\">{{filename}}</ng-container> <div *ngIf=\"!filename\"> <ng-content></ng-content> </div> </div> ",
-        host: {
-            '[class.vclFileInput]': 'true',
-            role: 'button'
-        },
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], FileInputComponent);
 export { FileInputComponent };

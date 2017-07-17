@@ -55,29 +55,29 @@ var InputDirective = (function () {
             this.elRef.nativeElement.select();
         }
     };
+    __decorate([
+        Input('type'),
+        __metadata("design:type", String)
+    ], InputDirective.prototype, "type", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], InputDirective.prototype, "selectOnFocus", void 0);
+    __decorate([
+        HostListener('focus'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], InputDirective.prototype, "onFocus", null);
+    InputDirective = __decorate([
+        Directive({
+            selector: '[vcl-input]',
+            host: {
+                '[class.vclInput]': 'true',
+            }
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], InputDirective);
     return InputDirective;
 }());
-__decorate([
-    Input('type'),
-    __metadata("design:type", String)
-], InputDirective.prototype, "type", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], InputDirective.prototype, "selectOnFocus", void 0);
-__decorate([
-    HostListener('focus'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], InputDirective.prototype, "onFocus", null);
-InputDirective = __decorate([
-    Directive({
-        selector: '[vcl-input]',
-        host: {
-            '[class.vclInput]': 'true',
-        }
-    }),
-    __metadata("design:paramtypes", [ElementRef])
-], InputDirective);
 export { InputDirective };

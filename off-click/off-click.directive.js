@@ -37,16 +37,16 @@ var OffClickDirective = (function () {
     OffClickDirective.prototype.ngOnDestroy = function () {
         this.sub && this.sub.unsubscribe();
     };
+    __decorate([
+        Output('offClick'),
+        __metadata("design:type", Object)
+    ], OffClickDirective.prototype, "offClick", void 0);
+    OffClickDirective = __decorate([
+        Directive({
+            selector: '[offClick]',
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], OffClickDirective);
     return OffClickDirective;
 }());
-__decorate([
-    Output('offClick'),
-    __metadata("design:type", Object)
-], OffClickDirective.prototype, "offClick", void 0);
-OffClickDirective = __decorate([
-    Directive({
-        selector: '[offClick]',
-    }),
-    __metadata("design:paramtypes", [ElementRef])
-], OffClickDirective);
 export { OffClickDirective };

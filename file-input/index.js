@@ -10,14 +10,14 @@ import { CommonModule } from '@angular/common';
 var VCLFileInputModule = (function () {
     function VCLFileInputModule() {
     }
+    VCLFileInputModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            exports: [FileInputComponent],
+            declarations: [FileInputComponent],
+            providers: [],
+        })
+    ], VCLFileInputModule);
     return VCLFileInputModule;
 }());
-VCLFileInputModule = __decorate([
-    NgModule({
-        imports: [CommonModule],
-        exports: [FileInputComponent],
-        declarations: [FileInputComponent],
-        providers: [],
-    })
-], VCLFileInputModule);
 export { VCLFileInputModule };

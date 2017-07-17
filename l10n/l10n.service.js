@@ -150,12 +150,12 @@ var L10nService = (function () {
         }
         return lang || 'en-US';
     };
+    L10nService = __decorate([
+        Injectable(),
+        __param(0, Inject(L10N_CONFIG)),
+        __metadata("design:paramtypes", [Object, L10nLoaderService,
+            L10nParserService])
+    ], L10nService);
     return L10nService;
 }());
-L10nService = __decorate([
-    Injectable(),
-    __param(0, Inject(L10N_CONFIG)),
-    __metadata("design:paramtypes", [Object, L10nLoaderService,
-        L10nParserService])
-], L10nService);
 export { L10nService };

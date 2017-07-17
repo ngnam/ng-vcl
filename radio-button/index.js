@@ -14,13 +14,13 @@ export { RadioButtonComponent, RadioGroupComponent };
 var VCLRadioButtonModule = (function () {
     function VCLRadioButtonModule() {
     }
+    VCLRadioButtonModule = __decorate([
+        NgModule({
+            imports: [CommonModule, VCLIconModule, VCLFormControlLabelModule],
+            exports: [RadioButtonComponent, RadioGroupComponent],
+            declarations: [RadioButtonComponent, RadioGroupComponent]
+        })
+    ], VCLRadioButtonModule);
     return VCLRadioButtonModule;
 }());
-VCLRadioButtonModule = __decorate([
-    NgModule({
-        imports: [CommonModule, VCLIconModule, VCLFormControlLabelModule],
-        exports: [RadioButtonComponent, RadioGroupComponent],
-        declarations: [RadioButtonComponent, RadioGroupComponent]
-    })
-], VCLRadioButtonModule);
 export { VCLRadioButtonModule };

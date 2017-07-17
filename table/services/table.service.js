@@ -39,10 +39,10 @@ var TableService = (function () {
         this.renderer.removeClass(this.el.nativeElement, className);
         return false;
     };
+    TableService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], TableService);
     return TableService;
 }());
-TableService = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], TableService);
 export { TableService };

@@ -176,36 +176,36 @@ var MetalistComponent = (function () {
     MetalistComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MetalistComponent.prototype, "selectionMode", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], MetalistComponent.prototype, "mode", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MetalistComponent.prototype, "maxSelectableItems", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], MetalistComponent.prototype, "change", void 0);
+    __decorate([
+        ContentChildren(MetalistItem),
+        __metadata("design:type", QueryList)
+    ], MetalistComponent.prototype, "items", void 0);
+    MetalistComponent = __decorate([
+        Component({
+            selector: 'vcl-metalist, [vcl-metalist]',
+            template: "<wormhole *ngFor=\"let item of items\" [connect]=\"item._content\"></wormhole>",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], MetalistComponent);
     return MetalistComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MetalistComponent.prototype, "selectionMode", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
-], MetalistComponent.prototype, "mode", null);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MetalistComponent.prototype, "maxSelectableItems", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], MetalistComponent.prototype, "change", void 0);
-__decorate([
-    ContentChildren(MetalistItem),
-    __metadata("design:type", QueryList)
-], MetalistComponent.prototype, "items", void 0);
-MetalistComponent = __decorate([
-    Component({
-        selector: 'vcl-metalist, [vcl-metalist]',
-        template: "<wormhole *ngFor=\"let item of items\" [connect]=\"item._content\"></wormhole>",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        changeDetection: ChangeDetectionStrategy.OnPush
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], MetalistComponent);
 export { MetalistComponent };

@@ -22,50 +22,50 @@ var FormControlLabelComponent = (function () {
         // Whether an indicator that an input in to the labelled control is required
         this.required = false;
     }
+    __decorate([
+        ViewChild('content'),
+        __metadata("design:type", ElementRef)
+    ], FormControlLabelComponent.prototype, "content", void 0);
+    __decorate([
+        Input(),
+        HostBinding('class.vclDisabled'),
+        __metadata("design:type", Object)
+    ], FormControlLabelComponent.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], FormControlLabelComponent.prototype, "requiredIndicatorCharacter", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], FormControlLabelComponent.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], FormControlLabelComponent.prototype, "subLabel", void 0);
+    __decorate([
+        HostBinding('class.vclFormControlLabelWrapping'),
+        Input(),
+        __metadata("design:type", Object)
+    ], FormControlLabelComponent.prototype, "wrapping", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], FormControlLabelComponent.prototype, "required", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], FormControlLabelComponent.prototype, "requiredIndLabel", void 0);
+    FormControlLabelComponent = __decorate([
+        Component({
+            selector: 'label[vcl-form-control-label]',
+            template: "{{label | loc}} <em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel | loc\"> {{requiredIndicatorCharacter}} </em> <span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel | loc}}</span> <!--<span #content><ng-content></ng-content></span> --> <ng-content></ng-content> ",
+            host: {
+                '[class.vclFormControlLabel]': 'true',
+            },
+            changeDetection: ChangeDetectionStrategy.OnPush
+        })
+    ], FormControlLabelComponent);
     return FormControlLabelComponent;
 }());
-__decorate([
-    ViewChild('content'),
-    __metadata("design:type", ElementRef)
-], FormControlLabelComponent.prototype, "content", void 0);
-__decorate([
-    Input(),
-    HostBinding('class.vclDisabled'),
-    __metadata("design:type", Object)
-], FormControlLabelComponent.prototype, "disabled", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], FormControlLabelComponent.prototype, "requiredIndicatorCharacter", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], FormControlLabelComponent.prototype, "label", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], FormControlLabelComponent.prototype, "subLabel", void 0);
-__decorate([
-    HostBinding('class.vclFormControlLabelWrapping'),
-    Input(),
-    __metadata("design:type", Object)
-], FormControlLabelComponent.prototype, "wrapping", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], FormControlLabelComponent.prototype, "required", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], FormControlLabelComponent.prototype, "requiredIndLabel", void 0);
-FormControlLabelComponent = __decorate([
-    Component({
-        selector: 'label[vcl-form-control-label]',
-        template: "{{label | loc}} <em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel | loc\"> {{requiredIndicatorCharacter}} </em> <span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel | loc}}</span> <!--<span #content><ng-content></ng-content></span> --> <ng-content></ng-content> ",
-        host: {
-            '[class.vclFormControlLabel]': 'true',
-        },
-        changeDetection: ChangeDetectionStrategy.OnPush
-    })
-], FormControlLabelComponent);
 export { FormControlLabelComponent };

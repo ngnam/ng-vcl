@@ -12,13 +12,13 @@ import { FormControlLabelComponent } from './form-control-label.component';
 var VCLFormControlLabelModule = (function () {
     function VCLFormControlLabelModule() {
     }
+    VCLFormControlLabelModule = __decorate([
+        NgModule({
+            imports: [CommonModule, VCLIconModule, L10nModule],
+            exports: [FormControlLabelComponent],
+            declarations: [FormControlLabelComponent]
+        })
+    ], VCLFormControlLabelModule);
     return VCLFormControlLabelModule;
 }());
-VCLFormControlLabelModule = __decorate([
-    NgModule({
-        imports: [CommonModule, VCLIconModule, L10nModule],
-        exports: [FormControlLabelComponent],
-        declarations: [FormControlLabelComponent]
-    })
-], VCLFormControlLabelModule);
 export { VCLFormControlLabelModule };

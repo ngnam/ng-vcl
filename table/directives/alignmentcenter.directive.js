@@ -25,16 +25,16 @@ var AlignmentCenterDirective = (function () {
             this.align = this.tableService.ClassToggle('vclAlignCentered', this.align, 'td');
         }
     };
+    __decorate([
+        Input('align-center'),
+        __metadata("design:type", Object)
+    ], AlignmentCenterDirective.prototype, "align", void 0);
+    AlignmentCenterDirective = __decorate([
+        Directive({
+            selector: '[align-center]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], AlignmentCenterDirective);
     return AlignmentCenterDirective;
 }());
-__decorate([
-    Input('align-center'),
-    __metadata("design:type", Object)
-], AlignmentCenterDirective.prototype, "align", void 0);
-AlignmentCenterDirective = __decorate([
-    Directive({
-        selector: '[align-center]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], AlignmentCenterDirective);
 export { AlignmentCenterDirective };

@@ -278,88 +278,88 @@ var SelectComponent = (function () {
     SelectComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        ViewChild('dropdown'),
+        __metadata("design:type", DropdownComponent)
+    ], SelectComponent.prototype, "dropdown", void 0);
+    __decorate([
+        ContentChildren(SelectOption),
+        __metadata("design:type", QueryList)
+    ], SelectComponent.prototype, "items", void 0);
+    __decorate([
+        ViewChild('select'),
+        __metadata("design:type", ElementRef)
+    ], SelectComponent.prototype, "select", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SelectComponent.prototype, "selectionMode", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], SelectComponent.prototype, "mode", null);
+    __decorate([
+        HostBinding('attr.tabindex'),
+        Input(),
+        __metadata("design:type", Object)
+    ], SelectComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SelectComponent.prototype, "expanded", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SelectComponent.prototype, "listenKeys", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], SelectComponent.prototype, "maxSelectableItems", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SelectComponent.prototype, "expandedIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SelectComponent.prototype, "collapsedIcon", void 0);
+    __decorate([
+        Output('change'),
+        __metadata("design:type", Object)
+    ], SelectComponent.prototype, "change", void 0);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SelectComponent.prototype, "keydown", null);
+    __decorate([
+        HostListener('focus', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", Promise)
+    ], SelectComponent.prototype, "onFocus", null);
+    __decorate([
+        HostListener('blur', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], SelectComponent.prototype, "onBlur", null);
+    SelectComponent = __decorate([
+        Component({
+            selector: 'vcl-select',
+            template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (tap)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (tap)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown [style.display]=\"expanded ? null : 'none'\" (change)=\"onDropdownChange($event)\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" tabindex=\"-1\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"999999\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: {
+                '[style.position]': '"relative"',
+                '[style.display]': '"block"'
+            }
+        }),
+        __metadata("design:paramtypes", [ElementRef,
+            ChangeDetectorRef])
+    ], SelectComponent);
     return SelectComponent;
 }());
-__decorate([
-    ViewChild('dropdown'),
-    __metadata("design:type", DropdownComponent)
-], SelectComponent.prototype, "dropdown", void 0);
-__decorate([
-    ContentChildren(SelectOption),
-    __metadata("design:type", QueryList)
-], SelectComponent.prototype, "items", void 0);
-__decorate([
-    ViewChild('select'),
-    __metadata("design:type", ElementRef)
-], SelectComponent.prototype, "select", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], SelectComponent.prototype, "selectionMode", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
-], SelectComponent.prototype, "mode", null);
-__decorate([
-    HostBinding('attr.tabindex'),
-    Input(),
-    __metadata("design:type", Object)
-], SelectComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], SelectComponent.prototype, "expanded", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], SelectComponent.prototype, "listenKeys", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], SelectComponent.prototype, "maxSelectableItems", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], SelectComponent.prototype, "expandedIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], SelectComponent.prototype, "collapsedIcon", void 0);
-__decorate([
-    Output('change'),
-    __metadata("design:type", Object)
-], SelectComponent.prototype, "change", void 0);
-__decorate([
-    HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], SelectComponent.prototype, "keydown", null);
-__decorate([
-    HostListener('focus', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], SelectComponent.prototype, "onFocus", null);
-__decorate([
-    HostListener('blur', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], SelectComponent.prototype, "onBlur", null);
-SelectComponent = __decorate([
-    Component({
-        selector: 'vcl-select',
-        template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (tap)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (tap)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown [style.display]=\"expanded ? null : 'none'\" (change)=\"onDropdownChange($event)\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" tabindex=\"-1\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"999999\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        host: {
-            '[style.position]': '"relative"',
-            '[style.display]': '"block"'
-        }
-    }),
-    __metadata("design:paramtypes", [ElementRef,
-        ChangeDetectorRef])
-], SelectComponent);
 export { SelectComponent };

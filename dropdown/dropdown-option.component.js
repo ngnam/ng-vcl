@@ -13,40 +13,40 @@ var DropdownOption = (function () {
         this.disabled = false;
         this.selected = false;
     }
+    __decorate([
+        ViewChild(TemplateRef),
+        __metadata("design:type", TemplateRef)
+    ], DropdownOption.prototype, "content", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], DropdownOption.prototype, "value", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], DropdownOption.prototype, "metadata", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], DropdownOption.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], DropdownOption.prototype, "sublabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], DropdownOption.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], DropdownOption.prototype, "selected", void 0);
+    DropdownOption = __decorate([
+        Component({
+            selector: 'vcl-dropdown-option',
+            template: '<ng-template><ng-content></ng-content></ng-template>'
+        })
+    ], DropdownOption);
     return DropdownOption;
 }());
-__decorate([
-    ViewChild(TemplateRef),
-    __metadata("design:type", TemplateRef)
-], DropdownOption.prototype, "content", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], DropdownOption.prototype, "value", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], DropdownOption.prototype, "metadata", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], DropdownOption.prototype, "label", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], DropdownOption.prototype, "sublabel", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], DropdownOption.prototype, "disabled", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], DropdownOption.prototype, "selected", void 0);
-DropdownOption = __decorate([
-    Component({
-        selector: 'vcl-dropdown-option',
-        template: '<ng-template><ng-content></ng-content></ng-template>'
-    })
-], DropdownOption);
 export { DropdownOption };

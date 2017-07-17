@@ -27,16 +27,16 @@ var OverflowEllipsisDirective = (function () {
             this.ellipsis = this.tableService.ClassToggle('vclOverflowEllipsis', this.ellipsis, 'td');
         }
     };
+    __decorate([
+        Input('overflow-ellipsis'),
+        __metadata("design:type", Object)
+    ], OverflowEllipsisDirective.prototype, "ellipsis", void 0);
+    OverflowEllipsisDirective = __decorate([
+        Directive({
+            selector: '[overflow-ellipsis]'
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], OverflowEllipsisDirective);
     return OverflowEllipsisDirective;
 }());
-__decorate([
-    Input('overflow-ellipsis'),
-    __metadata("design:type", Object)
-], OverflowEllipsisDirective.prototype, "ellipsis", void 0);
-OverflowEllipsisDirective = __decorate([
-    Directive({
-        selector: '[overflow-ellipsis]'
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], OverflowEllipsisDirective);
 export { OverflowEllipsisDirective };

@@ -11,39 +11,39 @@ import { Component, ContentChild, ViewChild, Input, Directive, TemplateRef } fro
 var TabLabelDirective = (function () {
     function TabLabelDirective() {
     }
+    TabLabelDirective = __decorate([
+        Directive({ selector: '[vcl-tab-label]' })
+    ], TabLabelDirective);
     return TabLabelDirective;
 }());
-TabLabelDirective = __decorate([
-    Directive({ selector: '[vcl-tab-label]' })
-], TabLabelDirective);
 export { TabLabelDirective };
 var TabComponent = (function () {
     function TabComponent() {
         this.disabled = false;
         this.tabClass = '';
     }
+    __decorate([
+        ContentChild(TabLabelDirective, { read: TemplateRef }),
+        __metadata("design:type", TabLabelDirective)
+    ], TabComponent.prototype, "label", void 0);
+    __decorate([
+        ViewChild(TemplateRef),
+        __metadata("design:type", TemplateRef)
+    ], TabComponent.prototype, "content", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], TabComponent.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TabComponent.prototype, "tabClass", void 0);
+    TabComponent = __decorate([
+        Component({
+            selector: 'vcl-tab',
+            template: '<ng-template><ng-content></ng-content></ng-template>'
+        })
+    ], TabComponent);
     return TabComponent;
 }());
-__decorate([
-    ContentChild(TabLabelDirective, { read: TemplateRef }),
-    __metadata("design:type", TabLabelDirective)
-], TabComponent.prototype, "label", void 0);
-__decorate([
-    ViewChild(TemplateRef),
-    __metadata("design:type", TemplateRef)
-], TabComponent.prototype, "content", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], TabComponent.prototype, "disabled", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TabComponent.prototype, "tabClass", void 0);
-TabComponent = __decorate([
-    Component({
-        selector: 'vcl-tab',
-        template: '<ng-template><ng-content></ng-content></ng-template>'
-    })
-], TabComponent);
 export { TabComponent };

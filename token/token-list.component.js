@@ -79,30 +79,30 @@ var TokenListComponent = (function () {
     TokenListComponent.prototype.registerOnTouched = function (fn) {
         this.onTouchedCallback = fn;
     };
+    __decorate([
+        ContentChildren(TokenComponent),
+        __metadata("design:type", QueryList)
+    ], TokenListComponent.prototype, "tokens", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TokenListComponent.prototype, "selectable", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], TokenListComponent.prototype, "change", void 0);
+    TokenListComponent = __decorate([
+        Component({
+            selector: 'vcl-token-list',
+            template: '<ng-content></ng-content>',
+            host: {
+                '[class.vclTokenList]': 'true',
+                '[class.vclTokenContainer]': 'true'
+            },
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], TokenListComponent);
     return TokenListComponent;
 }());
-__decorate([
-    ContentChildren(TokenComponent),
-    __metadata("design:type", QueryList)
-], TokenListComponent.prototype, "tokens", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], TokenListComponent.prototype, "selectable", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], TokenListComponent.prototype, "change", void 0);
-TokenListComponent = __decorate([
-    Component({
-        selector: 'vcl-token-list',
-        template: '<ng-content></ng-content>',
-        host: {
-            '[class.vclTokenList]': 'true',
-            '[class.vclTokenContainer]': 'true'
-        },
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], TokenListComponent);
 export { TokenListComponent };

@@ -43,17 +43,17 @@ var ButtonStateContentDirective = (function (_super) {
             this.wormhole.disconnect();
         }
     };
+    __decorate([
+        Input('vclButtonStateContent'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], ButtonStateContentDirective.prototype, "state", null);
+    ButtonStateContentDirective = __decorate([
+        Directive({
+            selector: '[vclButtonStateContent]'
+        }),
+        __metadata("design:paramtypes", [ViewContainerRef, TemplateRef])
+    ], ButtonStateContentDirective);
     return ButtonStateContentDirective;
 }(WormholeHost));
-__decorate([
-    Input('vclButtonStateContent'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
-], ButtonStateContentDirective.prototype, "state", null);
-ButtonStateContentDirective = __decorate([
-    Directive({
-        selector: '[vclButtonStateContent]'
-    }),
-    __metadata("design:paramtypes", [ViewContainerRef, TemplateRef])
-], ButtonStateContentDirective);
 export { ButtonStateContentDirective };

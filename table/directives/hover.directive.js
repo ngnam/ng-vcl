@@ -26,12 +26,12 @@ var HoverDirective = (function () {
             console.error('[hover] should be used for table tag only!');
         }
     }
+    HoverDirective = __decorate([
+        Directive({
+            selector: '[hover]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], HoverDirective);
     return HoverDirective;
 }());
-HoverDirective = __decorate([
-    Directive({
-        selector: '[hover]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], HoverDirective);
 export { HoverDirective };

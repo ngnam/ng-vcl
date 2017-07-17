@@ -25,16 +25,16 @@ var LayoutDirective = (function () {
             this.fixed = this.tableService.ClassToggle('vclFixed', this.fixed, 'table');
         }
     };
+    __decorate([
+        Input('fixed'),
+        __metadata("design:type", Object)
+    ], LayoutDirective.prototype, "fixed", void 0);
+    LayoutDirective = __decorate([
+        Directive({
+            selector: '[fixed]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], LayoutDirective);
     return LayoutDirective;
 }());
-__decorate([
-    Input('fixed'),
-    __metadata("design:type", Object)
-], LayoutDirective.prototype, "fixed", void 0);
-LayoutDirective = __decorate([
-    Directive({
-        selector: '[fixed]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], LayoutDirective);
 export { LayoutDirective };

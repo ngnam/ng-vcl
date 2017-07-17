@@ -25,16 +25,16 @@ var SelectDirective = (function () {
             this.selected = this.tableService.ClassToggle('vclSelected', this.selected, 'tr');
         }
     };
+    __decorate([
+        Input('selected'),
+        __metadata("design:type", Object)
+    ], SelectDirective.prototype, "selected", void 0);
+    SelectDirective = __decorate([
+        Directive({
+            selector: '[selected]'
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], SelectDirective);
     return SelectDirective;
 }());
-__decorate([
-    Input('selected'),
-    __metadata("design:type", Object)
-], SelectDirective.prototype, "selected", void 0);
-SelectDirective = __decorate([
-    Directive({
-        selector: '[selected]'
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], SelectDirective);
 export { SelectDirective };

@@ -25,16 +25,16 @@ var AlignmentRightDirective = (function () {
             this.align = this.tableService.ClassToggle('vclAlignRight', this.align, 'td');
         }
     };
+    __decorate([
+        Input('align-right'),
+        __metadata("design:type", Object)
+    ], AlignmentRightDirective.prototype, "align", void 0);
+    AlignmentRightDirective = __decorate([
+        Directive({
+            selector: '[align-right]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], AlignmentRightDirective);
     return AlignmentRightDirective;
 }());
-__decorate([
-    Input('align-right'),
-    __metadata("design:type", Object)
-], AlignmentRightDirective.prototype, "align", void 0);
-AlignmentRightDirective = __decorate([
-    Directive({
-        selector: '[align-right]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], AlignmentRightDirective);
 export { AlignmentRightDirective };

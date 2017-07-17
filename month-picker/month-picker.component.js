@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef, } from '@angular/core';
-var MonthPickerComponent = MonthPickerComponent_1 = (function () {
+var MonthPickerComponent = (function () {
     //
     function MonthPickerComponent(ref) {
         this.ref = ref;
@@ -40,6 +40,7 @@ var MonthPickerComponent = MonthPickerComponent_1 = (function () {
         this.minYear = Number.MIN_SAFE_INTEGER;
         this.maxYear = Number.MAX_SAFE_INTEGER;
     }
+    MonthPickerComponent_1 = MonthPickerComponent;
     MonthPickerComponent.prototype.ngOnInit = function () {
         var _this = this;
         // Create month labels.
@@ -270,117 +271,117 @@ var MonthPickerComponent = MonthPickerComponent_1 = (function () {
             }, this.getYearMeta(year)[month]);
         }
     };
+    MonthPickerComponent.Tag = 'MonthPickerComponent';
+    MonthPickerComponent.MonthCount = 12;
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "debug", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "expanded", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], MonthPickerComponent.prototype, "expandedChange", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MonthPickerComponent.prototype, "currentYear", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], MonthPickerComponent.prototype, "currentYearChange", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], MonthPickerComponent.prototype, "prevYearBtnTap", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], MonthPickerComponent.prototype, "nextYearBtnTap", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], MonthPickerComponent.prototype, "select", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], MonthPickerComponent.prototype, "deselect", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MonthPickerComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MonthPickerComponent.prototype, "monthsPerRow", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], MonthPickerComponent.prototype, "colors", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], MonthPickerComponent.prototype, "locales", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], MonthPickerComponent.prototype, "dateOptions", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "expandable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "prevYearAvailable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "nextYearAvailable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "useAvailableMonths", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], MonthPickerComponent.prototype, "closeBtnIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], MonthPickerComponent.prototype, "prevYearBtnIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], MonthPickerComponent.prototype, "nextYearBtnIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MonthPickerComponent.prototype, "maxSelectableMonths", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MonthPickerComponent.prototype, "minSelectableMonths", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MonthPickerComponent.prototype, "minYear", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], MonthPickerComponent.prototype, "maxYear", void 0);
+    MonthPickerComponent = MonthPickerComponent_1 = __decorate([
+        Component({
+            selector: 'vcl-month-picker',
+            template: "<div class=\"vclDatePicker\" [class.vclLayoutHidden]=\"!expanded\"> <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" [attr.role]=\"'grid'\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"maxSelectableMonths > 1\" [attr.aria-expanded]=\"expanded\"> <div class=\"vclLayoutFlex vclDGRow vclLayoutAuto\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button vcl-button class=\"vclButton vclTransparent vclSquare\" type=\"button\" [class.vclDisabled]=\"!prevYearAvailable\" [appIcon]=\"prevYearBtnIcon\" (click)=\"onPrevYearTap()\"> </button> <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span> <button vcl-button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [class.vclDisabled]=\"!nextYearAvailable\" [appIcon]=\"nextYearBtnIcon\" (click)=\"onNextYearTap()\"> </button> <button vcl-button *ngIf=\"expandable\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" [appIcon]=\"closeBtnIcon\" (click)=\"onCloseBtnTap()\"> </button> </div> </div> <div class=\"vclSeparator\"></div> <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\"> <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclLayoutFlex vclDGRow vclLayoutAuto\" role=\"row\"> <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\" (click)=\"selectMonth(currentYear, i+j)\" class=\"vclDGCell vclCalItem\" [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\" [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclToday]=\"isCurrentMonth(i+j)\" [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\" [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" [style.background-color]=\"currentMeta[i+j].color\" [style.order]=\"i+j\" [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" role=\"gridcell\" tabindex=\"0\"> <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\"> {{months[i + j]}} </div> </div> </div> </ng-template> </div> </div> ",
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], MonthPickerComponent);
     return MonthPickerComponent;
+    var MonthPickerComponent_1;
 }());
-MonthPickerComponent.Tag = 'MonthPickerComponent';
-MonthPickerComponent.MonthCount = 12;
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], MonthPickerComponent.prototype, "debug", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], MonthPickerComponent.prototype, "expanded", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", EventEmitter)
-], MonthPickerComponent.prototype, "expandedChange", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MonthPickerComponent.prototype, "currentYear", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", EventEmitter)
-], MonthPickerComponent.prototype, "currentYearChange", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], MonthPickerComponent.prototype, "prevYearBtnTap", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], MonthPickerComponent.prototype, "nextYearBtnTap", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], MonthPickerComponent.prototype, "select", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], MonthPickerComponent.prototype, "deselect", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MonthPickerComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MonthPickerComponent.prototype, "monthsPerRow", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Array)
-], MonthPickerComponent.prototype, "colors", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], MonthPickerComponent.prototype, "locales", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], MonthPickerComponent.prototype, "dateOptions", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], MonthPickerComponent.prototype, "expandable", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], MonthPickerComponent.prototype, "prevYearAvailable", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], MonthPickerComponent.prototype, "nextYearAvailable", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], MonthPickerComponent.prototype, "useAvailableMonths", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], MonthPickerComponent.prototype, "closeBtnIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], MonthPickerComponent.prototype, "prevYearBtnIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], MonthPickerComponent.prototype, "nextYearBtnIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MonthPickerComponent.prototype, "maxSelectableMonths", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MonthPickerComponent.prototype, "minSelectableMonths", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MonthPickerComponent.prototype, "minYear", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], MonthPickerComponent.prototype, "maxYear", void 0);
-MonthPickerComponent = MonthPickerComponent_1 = __decorate([
-    Component({
-        selector: 'vcl-month-picker',
-        template: "<div class=\"vclDatePicker\" [class.vclLayoutHidden]=\"!expanded\"> <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" [attr.role]=\"'grid'\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"maxSelectableMonths > 1\" [attr.aria-expanded]=\"expanded\"> <div class=\"vclLayoutFlex vclDGRow vclLayoutAuto\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button vcl-button class=\"vclButton vclTransparent vclSquare\" type=\"button\" [class.vclDisabled]=\"!prevYearAvailable\" [appIcon]=\"prevYearBtnIcon\" (click)=\"onPrevYearTap()\"> </button> <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span> <button vcl-button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [class.vclDisabled]=\"!nextYearAvailable\" [appIcon]=\"nextYearBtnIcon\" (click)=\"onNextYearTap()\"> </button> <button vcl-button *ngIf=\"expandable\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" [appIcon]=\"closeBtnIcon\" (click)=\"onCloseBtnTap()\"> </button> </div> </div> <div class=\"vclSeparator\"></div> <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\"> <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclLayoutFlex vclDGRow vclLayoutAuto\" role=\"row\"> <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\" (click)=\"selectMonth(currentYear, i+j)\" class=\"vclDGCell vclCalItem\" [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\" [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclToday]=\"isCurrentMonth(i+j)\" [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\" [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" [style.background-color]=\"currentMeta[i+j].color\" [style.order]=\"i+j\" [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" role=\"gridcell\" tabindex=\"0\"> <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\"> {{months[i + j]}} </div> </div> </div> </ng-template> </div> </div> ",
-        changeDetection: ChangeDetectionStrategy.OnPush
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], MonthPickerComponent);
 export { MonthPickerComponent };
-var MonthPickerComponent_1;
