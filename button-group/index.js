@@ -9,17 +9,18 @@ import { CommonModule } from '@angular/common';
 import { ButtonGroupComponent } from './button-group.component';
 import { VCLButtonModule } from '../button/index';
 import { L10nModule } from '../l10n/index';
+export { ButtonGroupComponent };
 var VCLButtonGroupModule = (function () {
     function VCLButtonGroupModule() {
     }
+    VCLButtonGroupModule = __decorate([
+        NgModule({
+            imports: [CommonModule, VCLButtonModule, L10nModule],
+            exports: [ButtonGroupComponent],
+            declarations: [ButtonGroupComponent],
+            providers: [],
+        })
+    ], VCLButtonGroupModule);
     return VCLButtonGroupModule;
 }());
-VCLButtonGroupModule = __decorate([
-    NgModule({
-        imports: [CommonModule, VCLButtonModule, L10nModule],
-        exports: [ButtonGroupComponent],
-        declarations: [ButtonGroupComponent],
-        providers: [],
-    })
-], VCLButtonGroupModule);
 export { VCLButtonGroupModule };

@@ -11,9 +11,10 @@ import { L10nService, L10N_CONFIG } from './l10n.service';
 import { L10nPipe } from './l10n.pipe';
 // export {L10nNoopLoaderService, L10nStaticLoaderService, L10nFormatParserService, L10nService };
 export { L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService };
-var L10nModule = L10nModule_1 = (function () {
+var L10nModule = (function () {
     function L10nModule() {
     }
+    L10nModule_1 = L10nModule;
     L10nModule.forRoot = function (config) {
         return {
             ngModule: L10nModule_1,
@@ -36,14 +37,14 @@ var L10nModule = L10nModule_1 = (function () {
             ]
         };
     };
+    L10nModule = L10nModule_1 = __decorate([
+        NgModule({
+            imports: [],
+            declarations: [L10nPipe],
+            exports: [L10nPipe]
+        })
+    ], L10nModule);
     return L10nModule;
+    var L10nModule_1;
 }());
-L10nModule = L10nModule_1 = __decorate([
-    NgModule({
-        imports: [],
-        declarations: [L10nPipe],
-        exports: [L10nPipe]
-    })
-], L10nModule);
 export { L10nModule };
-var L10nModule_1;

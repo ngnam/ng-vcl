@@ -12,14 +12,14 @@ import { L10nModule } from '../l10n/index';
 var VCLLinkModule = (function () {
     function VCLLinkModule() {
     }
+    VCLLinkModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLIcogramModule],
+            exports: [LinkComponent],
+            declarations: [LinkComponent],
+            providers: [],
+        })
+    ], VCLLinkModule);
     return VCLLinkModule;
 }());
-VCLLinkModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLIcogramModule],
-        exports: [LinkComponent],
-        declarations: [LinkComponent],
-        providers: [],
-    })
-], VCLLinkModule);
 export { VCLLinkModule };

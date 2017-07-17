@@ -10,14 +10,14 @@ import { TextareaDirective } from './textarea.directive';
 var VCLTextareaModule = (function () {
     function VCLTextareaModule() {
     }
+    VCLTextareaModule = __decorate([
+        NgModule({
+            imports: [FormsModule],
+            exports: [TextareaDirective],
+            declarations: [TextareaDirective],
+            providers: [],
+        })
+    ], VCLTextareaModule);
     return VCLTextareaModule;
 }());
-VCLTextareaModule = __decorate([
-    NgModule({
-        imports: [FormsModule],
-        exports: [TextareaDirective],
-        declarations: [TextareaDirective],
-        providers: [],
-    })
-], VCLTextareaModule);
 export { VCLTextareaModule };

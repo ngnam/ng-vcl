@@ -10,13 +10,13 @@ import { ProgressBarComponent } from './progress-bar.component';
 var VCLProgressBarModule = (function () {
     function VCLProgressBarModule() {
     }
+    VCLProgressBarModule = __decorate([
+        NgModule({
+            imports: [CommonModule],
+            exports: [ProgressBarComponent],
+            declarations: [ProgressBarComponent]
+        })
+    ], VCLProgressBarModule);
     return VCLProgressBarModule;
 }());
-VCLProgressBarModule = __decorate([
-    NgModule({
-        imports: [CommonModule],
-        exports: [ProgressBarComponent],
-        declarations: [ProgressBarComponent]
-    })
-], VCLProgressBarModule);
 export { VCLProgressBarModule };

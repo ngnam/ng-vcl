@@ -64,15 +64,15 @@ var L10nPipe = (function () {
     L10nPipe.prototype.ngOnDestroy = function () {
         this.dispose();
     };
+    L10nPipe = __decorate([
+        Pipe({
+            name: 'loc',
+            pure: false
+        }),
+        __param(0, Inject(L10nService)),
+        __param(0, Optional()),
+        __metadata("design:paramtypes", [Object])
+    ], L10nPipe);
     return L10nPipe;
 }());
-L10nPipe = __decorate([
-    Pipe({
-        name: 'loc',
-        pure: false
-    }),
-    __param(0, Inject(L10nService)),
-    __param(0, Optional()),
-    __metadata("design:paramtypes", [Object])
-], L10nPipe);
 export { L10nPipe };

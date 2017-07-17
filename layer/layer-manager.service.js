@@ -74,10 +74,10 @@ var LayerManagerService = (function () {
         this.layerMetaMap.forEach(function (meta, layer) { return _this._unregister(layer); });
         this.host.clearWormholes();
     };
+    LayerManagerService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [ApplicationRef, Injector])
+    ], LayerManagerService);
     return LayerManagerService;
 }());
-LayerManagerService = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [ApplicationRef, Injector])
-], LayerManagerService);
 export { LayerManagerService };

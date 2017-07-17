@@ -25,16 +25,16 @@ var AltRowColorDirective = (function () {
             this.alt = this.tableService.ClassToggle('vclAltRowColor', this.alt, 'table');
         }
     };
+    __decorate([
+        Input('altrow'),
+        __metadata("design:type", Object)
+    ], AltRowColorDirective.prototype, "alt", void 0);
+    AltRowColorDirective = __decorate([
+        Directive({
+            selector: '[altrow]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], AltRowColorDirective);
     return AltRowColorDirective;
 }());
-__decorate([
-    Input('altrow'),
-    __metadata("design:type", Object)
-], AltRowColorDirective.prototype, "alt", void 0);
-AltRowColorDirective = __decorate([
-    Directive({
-        selector: '[altrow]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], AltRowColorDirective);
 export { AltRowColorDirective };

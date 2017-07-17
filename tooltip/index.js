@@ -13,15 +13,15 @@ import { TooltipService } from './tooltip.service';
 var VCLTooltipModule = (function () {
     function VCLTooltipModule() {
     }
+    VCLTooltipModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule],
+            exports: [TooltipComponent, TooltipDirective],
+            declarations: [TooltipComponent, TooltipDirective],
+            providers: [TooltipService],
+            entryComponents: [TooltipComponent]
+        })
+    ], VCLTooltipModule);
     return VCLTooltipModule;
 }());
-VCLTooltipModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule],
-        exports: [TooltipComponent, TooltipDirective],
-        declarations: [TooltipComponent, TooltipDirective],
-        providers: [TooltipService],
-        entryComponents: [TooltipComponent]
-    })
-], VCLTooltipModule);
 export { VCLTooltipModule };

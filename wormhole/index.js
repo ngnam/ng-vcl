@@ -14,13 +14,13 @@ export { TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomCo
 var VCLWormholeModule = (function () {
     function VCLWormholeModule() {
     }
+    VCLWormholeModule = __decorate([
+        NgModule({
+            exports: [WormholeDirective],
+            declarations: [WormholeDirective],
+            providers: []
+        })
+    ], VCLWormholeModule);
     return VCLWormholeModule;
 }());
-VCLWormholeModule = __decorate([
-    NgModule({
-        exports: [WormholeDirective],
-        declarations: [WormholeDirective],
-        providers: []
-    })
-], VCLWormholeModule);
 export { VCLWormholeModule };

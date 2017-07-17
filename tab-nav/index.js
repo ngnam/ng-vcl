@@ -13,14 +13,14 @@ import { VCLWormholeModule } from '../wormhole/index';
 var VCLTabNavModule = (function () {
     function VCLTabNavModule() {
     }
+    VCLTabNavModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLWormholeModule],
+            exports: [TabComponent, TabLabelDirective, TabNavComponent],
+            declarations: [TabComponent, TabLabelDirective, TabNavComponent],
+            providers: [],
+        })
+    ], VCLTabNavModule);
     return VCLTabNavModule;
 }());
-VCLTabNavModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLWormholeModule],
-        exports: [TabComponent, TabLabelDirective, TabNavComponent],
-        declarations: [TabComponent, TabLabelDirective, TabNavComponent],
-        providers: [],
-    })
-], VCLTabNavModule);
 export { VCLTabNavModule };

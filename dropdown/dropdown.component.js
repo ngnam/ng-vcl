@@ -158,55 +158,55 @@ var DropdownComponent = (function () {
     DropdownComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        ViewChild('metalist'),
+        __metadata("design:type", MetalistComponent)
+    ], DropdownComponent.prototype, "metalist", void 0);
+    __decorate([
+        ViewChild('metalist', { read: ElementRef }),
+        __metadata("design:type", ElementRef)
+    ], DropdownComponent.prototype, "listbox", void 0);
+    __decorate([
+        ContentChildren(DropdownOption),
+        __metadata("design:type", QueryList)
+    ], DropdownComponent.prototype, "items", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], DropdownComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], DropdownComponent.prototype, "selectionMode", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], DropdownComponent.prototype, "mode", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], DropdownComponent.prototype, "maxSelectableItems", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], DropdownComponent.prototype, "listenKeys", void 0);
+    __decorate([
+        Output('change'),
+        __metadata("design:type", Object)
+    ], DropdownComponent.prototype, "change", void 0);
+    DropdownComponent = __decorate([
+        Component({
+            selector: 'vcl-dropdown',
+            template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <!--  (mousedown) is used because tap will break scrolling on mobiles --> <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"metaItem.disabled\" [class.vclHighlighted]=\"metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (click)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: {
+                '[attr.tabindex]': '-1',
+            }
+        }),
+        __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
+    ], DropdownComponent);
     return DropdownComponent;
 }());
-__decorate([
-    ViewChild('metalist'),
-    __metadata("design:type", MetalistComponent)
-], DropdownComponent.prototype, "metalist", void 0);
-__decorate([
-    ViewChild('metalist', { read: ElementRef }),
-    __metadata("design:type", ElementRef)
-], DropdownComponent.prototype, "listbox", void 0);
-__decorate([
-    ContentChildren(DropdownOption),
-    __metadata("design:type", QueryList)
-], DropdownComponent.prototype, "items", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], DropdownComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], DropdownComponent.prototype, "selectionMode", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
-], DropdownComponent.prototype, "mode", null);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], DropdownComponent.prototype, "maxSelectableItems", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], DropdownComponent.prototype, "listenKeys", void 0);
-__decorate([
-    Output('change'),
-    __metadata("design:type", Object)
-], DropdownComponent.prototype, "change", void 0);
-DropdownComponent = __decorate([
-    Component({
-        selector: 'vcl-dropdown',
-        template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <!--  (mousedown) is used because tap will break scrolling on mobiles --> <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"metaItem.disabled\" [class.vclHighlighted]=\"metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (click)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        host: {
-            '[attr.tabindex]': '-1',
-        }
-    }),
-    __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
-], DropdownComponent);
 export { DropdownComponent };

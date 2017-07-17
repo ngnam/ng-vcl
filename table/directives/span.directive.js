@@ -34,16 +34,16 @@ var SpanDirective = (function () {
             console.error('Column width can be set only for header tag!');
         }
     };
+    __decorate([
+        Input('span'),
+        __metadata("design:type", Number)
+    ], SpanDirective.prototype, "width", void 0);
+    SpanDirective = __decorate([
+        Directive({
+            selector: '[span]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], SpanDirective);
     return SpanDirective;
 }());
-__decorate([
-    Input('span'),
-    __metadata("design:type", Number)
-], SpanDirective.prototype, "width", void 0);
-SpanDirective = __decorate([
-    Directive({
-        selector: '[span]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], SpanDirective);
 export { SpanDirective };

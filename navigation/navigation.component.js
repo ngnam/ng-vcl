@@ -92,69 +92,69 @@ var NavigationComponent = (function () {
     NavigationComponent.prototype.onSubItemSelect = function (item) {
         this.selectItem(item);
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationComponent.prototype, "ident", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationComponent.prototype, "ariaRole", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], NavigationComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationComponent.prototype, "type", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], NavigationComponent.prototype, "useRouter", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationComponent.prototype, "subLevelHintIconClosed", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationComponent.prototype, "subLevelHintIconOpened", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationComponent.prototype, "subLevelHintIconSide", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], NavigationComponent.prototype, "inputItems", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], NavigationComponent.prototype, "select", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], NavigationComponent.prototype, "navigate", void 0);
+    __decorate([
+        ContentChildren(NavigationItemDirective),
+        __metadata("design:type", QueryList)
+    ], NavigationComponent.prototype, "contentItems", void 0);
+    __decorate([
+        HostBinding('class.vclVertical'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], NavigationComponent.prototype, "isVertical", null);
+    NavigationComponent = __decorate([
+        Component({
+            selector: 'vcl-navigation',
+            host: {
+                '[class.vclNavigation]': 'true'
+            },
+            template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (click)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
+        }),
+        __metadata("design:paramtypes", [Router])
+    ], NavigationComponent);
     return NavigationComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationComponent.prototype, "ident", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationComponent.prototype, "ariaRole", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], NavigationComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationComponent.prototype, "type", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], NavigationComponent.prototype, "useRouter", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationComponent.prototype, "subLevelHintIconClosed", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationComponent.prototype, "subLevelHintIconOpened", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], NavigationComponent.prototype, "subLevelHintIconSide", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", QueryList)
-], NavigationComponent.prototype, "inputItems", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], NavigationComponent.prototype, "select", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], NavigationComponent.prototype, "navigate", void 0);
-__decorate([
-    ContentChildren(NavigationItemDirective),
-    __metadata("design:type", QueryList)
-], NavigationComponent.prototype, "contentItems", void 0);
-__decorate([
-    HostBinding('class.vclVertical'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], NavigationComponent.prototype, "isVertical", null);
-NavigationComponent = __decorate([
-    Component({
-        selector: 'vcl-navigation',
-        host: {
-            '[class.vclNavigation]': 'true'
-        },
-        template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (click)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
-    }),
-    __metadata("design:paramtypes", [Router])
-], NavigationComponent);
 export { NavigationComponent };

@@ -54,48 +54,48 @@ var LabelComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate([
+        Input('label'),
+        __metadata("design:type", Object)
+    ], LabelComponent.prototype, "label", void 0);
+    __decorate([
+        Input('type'),
+        __metadata("design:type", Object)
+    ], LabelComponent.prototype, "type", void 0);
+    __decorate([
+        HostBinding('class.vclPrimary'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclPrimary", null);
+    __decorate([
+        HostBinding('class.vclSuccess'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclSuccess", null);
+    __decorate([
+        HostBinding('class.vclInfo'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclInfo", null);
+    __decorate([
+        HostBinding('class.vclWarning'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclWarning", null);
+    __decorate([
+        HostBinding('class.vclError'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclError", null);
+    LabelComponent = __decorate([
+        Component({
+            selector: '[vcl-label], vcl-label',
+            template: "{{ label | loc }} <ng-content></ng-content>",
+            host: {
+                '[class.vclLabel]': 'true'
+            }
+        })
+    ], LabelComponent);
     return LabelComponent;
 }());
-__decorate([
-    Input('label'),
-    __metadata("design:type", String)
-], LabelComponent.prototype, "label", void 0);
-__decorate([
-    Input('type'),
-    __metadata("design:type", String)
-], LabelComponent.prototype, "type", void 0);
-__decorate([
-    HostBinding('class.vclPrimary'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], LabelComponent.prototype, "vclPrimary", null);
-__decorate([
-    HostBinding('class.vclSuccess'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], LabelComponent.prototype, "vclSuccess", null);
-__decorate([
-    HostBinding('class.vclInfo'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], LabelComponent.prototype, "vclInfo", null);
-__decorate([
-    HostBinding('class.vclWarning'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], LabelComponent.prototype, "vclWarning", null);
-__decorate([
-    HostBinding('class.vclError'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], LabelComponent.prototype, "vclError", null);
-LabelComponent = __decorate([
-    Component({
-        selector: '[vcl-label], vcl-label',
-        template: "{{ label | loc }} <ng-content></ng-content>",
-        host: {
-            '[class.vclLabel]': 'true'
-        }
-    })
-], LabelComponent);
 export { LabelComponent };

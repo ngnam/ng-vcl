@@ -12,25 +12,25 @@ var ToolbarComponent = (function () {
     function ToolbarComponent() {
         this.ariaLevel = 1;
     }
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], ToolbarComponent.prototype, "ariaLevel", void 0);
+    ToolbarComponent = __decorate([
+        Component({
+            selector: 'vcl-toolbar',
+            template: '<ng-content></ng-content>',
+            host: {
+                '[class.vclToolbar]': 'true',
+                '[class.vclLayoutHorizontal]': 'true',
+                '[class.vclLayoutJustified]': 'true',
+                '[class.vclSecondary]': 'ariaLevel == 2',
+                '[attr.aria-level]': 'ariaLevel',
+                '[attr.role]': '"menubar"',
+            }
+        }),
+        __metadata("design:paramtypes", [])
+    ], ToolbarComponent);
     return ToolbarComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], ToolbarComponent.prototype, "ariaLevel", void 0);
-ToolbarComponent = __decorate([
-    Component({
-        selector: 'vcl-toolbar',
-        template: '<ng-content></ng-content>',
-        host: {
-            '[class.vclToolbar]': 'true',
-            '[class.vclLayoutHorizontal]': 'true',
-            '[class.vclLayoutJustified]': 'true',
-            '[class.vclSecondary]': 'ariaLevel == 2',
-            '[attr.aria-level]': 'ariaLevel',
-            '[attr.role]': '"menubar"',
-        }
-    }),
-    __metadata("design:paramtypes", [])
-], ToolbarComponent);
 export { ToolbarComponent };

@@ -18,14 +18,14 @@ export { SelectComponent, SelectOption };
 var VCLSelectModule = (function () {
     function VCLSelectModule() {
     }
+    VCLSelectModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLDropdownModule, VCLButtonModule, VCLOffClickModule, VCLPopoverModule, VCLTokenModule],
+            exports: [SelectComponent, SelectOption],
+            declarations: [SelectComponent, SelectOption],
+            providers: []
+        })
+    ], VCLSelectModule);
     return VCLSelectModule;
 }());
-VCLSelectModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLDropdownModule, VCLButtonModule, VCLOffClickModule, VCLPopoverModule, VCLTokenModule],
-        exports: [SelectComponent, SelectOption],
-        declarations: [SelectComponent, SelectOption],
-        providers: []
-    })
-], VCLSelectModule);
 export { VCLSelectModule };

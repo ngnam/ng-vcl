@@ -61,54 +61,54 @@ var FlipSwitchComponent = (function () {
     FlipSwitchComponent.prototype.registerOnTouched = function (fn) {
         this.onTouchedCallback = fn;
     };
+    __decorate([
+        HostBinding(),
+        __metadata("design:type", Object)
+    ], FlipSwitchComponent.prototype, "tabindex", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], FlipSwitchComponent.prototype, "onLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], FlipSwitchComponent.prototype, "offLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], FlipSwitchComponent.prototype, "value", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], FlipSwitchComponent.prototype, "valueChange", void 0);
+    __decorate([
+        HostListener('click', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], FlipSwitchComponent.prototype, "onTap", null);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], FlipSwitchComponent.prototype, "keydown", null);
+    FlipSwitchComponent = __decorate([
+        Component({
+            selector: 'vcl-flip-switch',
+            template: "<label class=\"vclFlipSwitchLabel\"> <div class=\"vclFlipSwitchTrack\"> <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div> <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div> </div> <div class=\"vclFlipSwitchKnob\"></div> </label> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: {
+                '[class.vclFlipSwitch]': 'true',
+                '[class.vclFlipSwitchPressed]': 'value',
+                '[attr.role]': '"button"',
+                '[attr.aria-pressed]': 'value',
+                '[attr.touch-action]': '"pan-y"'
+            }
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], FlipSwitchComponent);
     return FlipSwitchComponent;
 }());
-__decorate([
-    HostBinding(),
-    __metadata("design:type", Object)
-], FlipSwitchComponent.prototype, "tabindex", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], FlipSwitchComponent.prototype, "onLabel", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], FlipSwitchComponent.prototype, "offLabel", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], FlipSwitchComponent.prototype, "value", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], FlipSwitchComponent.prototype, "valueChange", void 0);
-__decorate([
-    HostListener('click', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], FlipSwitchComponent.prototype, "onTap", null);
-__decorate([
-    HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], FlipSwitchComponent.prototype, "keydown", null);
-FlipSwitchComponent = __decorate([
-    Component({
-        selector: 'vcl-flip-switch',
-        template: "<label class=\"vclFlipSwitchLabel\"> <div class=\"vclFlipSwitchTrack\"> <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div> <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div> </div> <div class=\"vclFlipSwitchKnob\"></div> </label> ",
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        host: {
-            '[class.vclFlipSwitch]': 'true',
-            '[class.vclFlipSwitchPressed]': 'value',
-            '[attr.role]': '"button"',
-            '[attr.aria-pressed]': 'value',
-            '[attr.touch-action]': '"pan-y"'
-        }
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], FlipSwitchComponent);
 export { FlipSwitchComponent };

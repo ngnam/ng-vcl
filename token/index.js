@@ -19,14 +19,14 @@ export { TokenComponent, TokenInputComponent, TokenListComponent };
 var VCLTokenModule = (function () {
     function VCLTokenModule() {
     }
+    VCLTokenModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLInputModule, VCLButtonModule, FormsModule, VCLIconModule, VCLWormholeModule],
+            exports: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
+            declarations: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
+            providers: [],
+        })
+    ], VCLTokenModule);
     return VCLTokenModule;
 }());
-VCLTokenModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLInputModule, VCLButtonModule, FormsModule, VCLIconModule, VCLWormholeModule],
-        exports: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
-        declarations: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
-        providers: [],
-    })
-], VCLTokenModule);
 export { VCLTokenModule };

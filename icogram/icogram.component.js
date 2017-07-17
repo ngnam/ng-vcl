@@ -12,42 +12,42 @@ var IcogramComponent = (function () {
     function IcogramComponent(elRef) {
         this.elRef = elRef;
     }
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], IcogramComponent.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], IcogramComponent.prototype, "flexLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], IcogramComponent.prototype, "prepIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], IcogramComponent.prototype, "appIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], IcogramComponent.prototype, "prepIconSrc", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], IcogramComponent.prototype, "appIconSrc", void 0);
+    IcogramComponent = __decorate([
+        Component({
+            selector: 'vcl-icogram, [vcl-icogram]',
+            host: {
+                '[class.vclIcogram]': 'true',
+                '[attr.role]': 'img'
+            },
+            template: "<div vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\" [src]=\"prepIconSrc\"></div> <ng-content></ng-content> <span *ngIf=\"!!label\" [class.vclLayoutFlex]=\"!!flexLabel\" class=\"vclText\"> {{label | loc}} </span> <div vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\" [src]=\"appIconSrc\"></div> ",
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], IcogramComponent);
     return IcogramComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IcogramComponent.prototype, "label", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], IcogramComponent.prototype, "flexLabel", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IcogramComponent.prototype, "prepIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IcogramComponent.prototype, "appIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IcogramComponent.prototype, "prepIconSrc", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], IcogramComponent.prototype, "appIconSrc", void 0);
-IcogramComponent = __decorate([
-    Component({
-        selector: 'vcl-icogram, [vcl-icogram]',
-        host: {
-            '[class.vclIcogram]': 'true',
-            '[attr.role]': 'img'
-        },
-        template: "<div vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\" [src]=\"prepIconSrc\"></div> <ng-content></ng-content> <span *ngIf=\"!!label\" [class.vclLayoutFlex]=\"!!flexLabel\" class=\"vclText\"> {{label | loc}} </span> <div vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\" [src]=\"appIconSrc\"></div> ",
-        changeDetection: ChangeDetectionStrategy.OnPush
-    }),
-    __metadata("design:paramtypes", [ElementRef])
-], IcogramComponent);
 export { IcogramComponent };

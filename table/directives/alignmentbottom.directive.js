@@ -26,16 +26,16 @@ var AlignmentbottomDirective = (function () {
             this.align = this.tableService.ClassToggle('vclVAlignBottom', this.align, '');
         }
     };
+    __decorate([
+        Input('align-bottom'),
+        __metadata("design:type", Object)
+    ], AlignmentbottomDirective.prototype, "align", void 0);
+    AlignmentbottomDirective = __decorate([
+        Directive({
+            selector: '[align-bottom]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], AlignmentbottomDirective);
     return AlignmentbottomDirective;
 }());
-__decorate([
-    Input('align-bottom'),
-    __metadata("design:type", Object)
-], AlignmentbottomDirective.prototype, "align", void 0);
-AlignmentbottomDirective = __decorate([
-    Directive({
-        selector: '[align-bottom]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], AlignmentbottomDirective);
 export { AlignmentbottomDirective };

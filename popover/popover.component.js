@@ -45,7 +45,7 @@ export var PopoverState;
     PopoverState[PopoverState["closing"] = 3] = "closing";
 })(PopoverState || (PopoverState = {}));
 export var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
-var PopoverComponent = PopoverComponent_1 = (function (_super) {
+var PopoverComponent = (function (_super) {
     __extends(PopoverComponent, _super);
     function PopoverComponent(me, builder, animations) {
         var _this = _super.call(this) || this;
@@ -75,6 +75,7 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
         });
         return _this;
     }
+    PopoverComponent_1 = PopoverComponent;
     Object.defineProperty(PopoverComponent.prototype, "visible", {
         get: function () {
             return (this.state === PopoverState.opening || this.state === PopoverState.visible);
@@ -247,80 +248,80 @@ var PopoverComponent = PopoverComponent_1 = (function (_super) {
             });
         this.translateY = this.translateY + diffY;
     };
+    PopoverComponent.Tag = 'PopoverComponent';
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], PopoverComponent.prototype, "debug", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], PopoverComponent.prototype, "target", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], PopoverComponent.prototype, "targetX", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], PopoverComponent.prototype, "targetY", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], PopoverComponent.prototype, "attachmentX", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], PopoverComponent.prototype, "attachmentY", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], PopoverComponent.prototype, "visible", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], PopoverComponent.prototype, "willClose", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], PopoverComponent.prototype, "willOpen", void 0);
+    __decorate([
+        HostBinding('class.vclLayoutHidden'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], PopoverComponent.prototype, "classHidden", null);
+    __decorate([
+        HostBinding('style.visibility'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], PopoverComponent.prototype, "styleVisibility", null);
+    __decorate([
+        HostBinding('style.transform'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], PopoverComponent.prototype, "transform", null);
+    __decorate([
+        HostListener('window:resize', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], PopoverComponent.prototype, "onWindowResize", null);
+    PopoverComponent = PopoverComponent_1 = __decorate([
+        Component({
+            selector: 'vcl-popover',
+            template: '<ng-content></ng-content>',
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            animations: [trigger('popoverState', [])],
+            host: {
+                '[class.vclPopOver]': 'true',
+                '[style.position]': '"absolute"'
+            }
+        }),
+        __param(2, Optional()), __param(2, Inject(POPOVER_ANIMATIONS)),
+        __metadata("design:paramtypes", [ElementRef, AnimationBuilder, Object])
+    ], PopoverComponent);
     return PopoverComponent;
+    var PopoverComponent_1;
 }(ObservableComponent));
-PopoverComponent.Tag = 'PopoverComponent';
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], PopoverComponent.prototype, "debug", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], PopoverComponent.prototype, "target", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], PopoverComponent.prototype, "targetX", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], PopoverComponent.prototype, "targetY", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], PopoverComponent.prototype, "attachmentX", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], PopoverComponent.prototype, "attachmentY", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
-], PopoverComponent.prototype, "visible", null);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], PopoverComponent.prototype, "willClose", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], PopoverComponent.prototype, "willOpen", void 0);
-__decorate([
-    HostBinding('class.vclLayoutHidden'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], PopoverComponent.prototype, "classHidden", null);
-__decorate([
-    HostBinding('style.visibility'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], PopoverComponent.prototype, "styleVisibility", null);
-__decorate([
-    HostBinding('style.transform'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], PopoverComponent.prototype, "transform", null);
-__decorate([
-    HostListener('window:resize', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], PopoverComponent.prototype, "onWindowResize", null);
-PopoverComponent = PopoverComponent_1 = __decorate([
-    Component({
-        selector: 'vcl-popover',
-        template: '<ng-content></ng-content>',
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        animations: [trigger('popoverState', [])],
-        host: {
-            '[class.vclPopOver]': 'true',
-            '[style.position]': '"absolute"'
-        }
-    }),
-    __param(2, Optional()), __param(2, Inject(POPOVER_ANIMATIONS)),
-    __metadata("design:paramtypes", [ElementRef, AnimationBuilder, Object])
-], PopoverComponent);
 export { PopoverComponent };
-var PopoverComponent_1;

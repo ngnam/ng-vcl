@@ -66,50 +66,50 @@ var TabNavComponent = (function () {
     TabNavComponent.prototype.ngOnDestroy = function () {
         this.wormholeHost.clearWormholes();
     };
+    __decorate([
+        ViewChild('tabContent', { read: ViewContainerRef }),
+        __metadata("design:type", ViewContainerRef),
+        __metadata("design:paramtypes", [ViewContainerRef])
+    ], TabNavComponent.prototype, "tabContent", null);
+    __decorate([
+        ContentChildren(TabComponent),
+        __metadata("design:type", QueryList)
+    ], TabNavComponent.prototype, "tabs", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TabNavComponent.prototype, "layout", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TabNavComponent.prototype, "tabbableClass", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TabNavComponent.prototype, "tabsClass", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TabNavComponent.prototype, "tabContentClass", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TabNavComponent.prototype, "borders", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], TabNavComponent.prototype, "selectedTabIndex", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Observable),
+        __metadata("design:paramtypes", [])
+    ], TabNavComponent.prototype, "selectedTabIndexChange", null);
+    TabNavComponent = __decorate([
+        Component({
+            selector: 'vcl-tab-nav',
+            template: "<div class=\"vclTabbable {{tabbableClass}}\" [class.vclTabsLeft]=\"layout==='left'\" [class.vclTabsRight]=\"layout==='right'\"> <div class=\"vclTabs {{tabsClass}}\" [class.vclTabStyleUni]=\"!!borders\" role=\"tablist\"> <div *ngFor=\"let tab of tabs; let i = index\" class=\"vclTab {{tab.tabClass}}\" role=\"tab\" [class.vclDisabled]=\"tab.disabled\" [class.vclSelected]=\"selectedTabIndex===i\" [class.aria-selected]=\"selectedTabIndex===i\" (click)=\"selectTab(tab)\"> <span class=\"vclTabLabel\">  <wormhole [connect]=\"tab.label\"></wormhole> </span> </div> </div> <div class=\"vclTabContent {{tabContentClass}}\" [class.vclNoBorder]=\"!borders\"> <div role=\"tabpanel\" class=\"vclTabPanel\"> <div #tabContent></div> </div> <div role=\"tabpanel\" class=\"vclTabPanel\"> <ng-content></ng-content> </div> </div> </div> "
+        })
+    ], TabNavComponent);
     return TabNavComponent;
 }());
-__decorate([
-    ViewChild('tabContent', { read: ViewContainerRef }),
-    __metadata("design:type", ViewContainerRef),
-    __metadata("design:paramtypes", [ViewContainerRef])
-], TabNavComponent.prototype, "tabContent", null);
-__decorate([
-    ContentChildren(TabComponent),
-    __metadata("design:type", QueryList)
-], TabNavComponent.prototype, "tabs", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TabNavComponent.prototype, "layout", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TabNavComponent.prototype, "tabbableClass", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TabNavComponent.prototype, "tabsClass", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TabNavComponent.prototype, "tabContentClass", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], TabNavComponent.prototype, "borders", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], TabNavComponent.prototype, "selectedTabIndex", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Observable),
-    __metadata("design:paramtypes", [])
-], TabNavComponent.prototype, "selectedTabIndexChange", null);
-TabNavComponent = __decorate([
-    Component({
-        selector: 'vcl-tab-nav',
-        template: "<div class=\"vclTabbable {{tabbableClass}}\" [class.vclTabsLeft]=\"layout==='left'\" [class.vclTabsRight]=\"layout==='right'\"> <div class=\"vclTabs {{tabsClass}}\" [class.vclTabStyleUni]=\"!!borders\" role=\"tablist\"> <div *ngFor=\"let tab of tabs; let i = index\" class=\"vclTab {{tab.tabClass}}\" role=\"tab\" [class.vclDisabled]=\"tab.disabled\" [class.vclSelected]=\"selectedTabIndex===i\" [class.aria-selected]=\"selectedTabIndex===i\" (click)=\"selectTab(tab)\"> <span class=\"vclTabLabel\">  <wormhole [connect]=\"tab.label\"></wormhole> </span> </div> </div> <div class=\"vclTabContent {{tabContentClass}}\" [class.vclNoBorder]=\"!borders\"> <div role=\"tabpanel\" class=\"vclTabPanel\"> <div #tabContent></div> </div> <div role=\"tabpanel\" class=\"vclTabPanel\"> <ng-content></ng-content> </div> </div> </div> "
-    })
-], TabNavComponent);
 export { TabNavComponent };

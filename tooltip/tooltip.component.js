@@ -93,39 +93,39 @@ var TooltipComponent = (function () {
             this.element.nativeElement.parentNode.removeChild(this.element.nativeElement);
         }
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TooltipComponent.prototype, "content", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], TooltipComponent.prototype, "placement", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", HTMLElement)
+    ], TooltipComponent.prototype, "hostElement", void 0);
+    TooltipComponent = __decorate([
+        Component({
+            selector: 'vcl-tooltip',
+            template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} <ng-content></ng-content> </div> <div class=\"vclArrowPointer\"></div> </div> ",
+            host: {
+                '[class.vclTooltip]': 'true',
+            },
+            styles: [":host{ top: 0; left: 0 }"],
+            animations: [
+                trigger('enterAnimation', [
+                    state('shown', style({ opacity: 1, 'z-index': 'initial' })),
+                    state('hidden', style({ opacity: 0, 'z-index': '-1' })),
+                    state('none', style({ opacity: 0 })),
+                    transition('hidden => shown', animate('0.2s')),
+                ])
+            ]
+        }),
+        __param(1, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [ElementRef, Object, Renderer,
+            TooltipService])
+    ], TooltipComponent);
     return TooltipComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TooltipComponent.prototype, "content", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], TooltipComponent.prototype, "placement", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", HTMLElement)
-], TooltipComponent.prototype, "hostElement", void 0);
-TooltipComponent = __decorate([
-    Component({
-        selector: 'vcl-tooltip',
-        template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} <ng-content></ng-content> </div> <div class=\"vclArrowPointer\"></div> </div> ",
-        host: {
-            '[class.vclTooltip]': 'true',
-        },
-        styles: [":host{ top: 0; left: 0 }"],
-        animations: [
-            trigger('enterAnimation', [
-                state('shown', style({ opacity: 1, 'z-index': 'initial' })),
-                state('hidden', style({ opacity: 0, 'z-index': '-1' })),
-                state('none', style({ opacity: 0 })),
-                transition('hidden => shown', animate('0.2s')),
-            ])
-        ]
-    }),
-    __param(1, Inject(DOCUMENT)),
-    __metadata("design:paramtypes", [ElementRef, Object, Renderer,
-        TooltipService])
-], TooltipComponent);
 export { TooltipComponent };

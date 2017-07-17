@@ -18,29 +18,29 @@ export { Notification, NotificationService, NotificationType, NotificationPositi
 var VCLNotificationModule = (function () {
     function VCLNotificationModule() {
     }
+    VCLNotificationModule = __decorate([
+        NgModule({
+            imports: [
+                FormsModule,
+                CommonModule,
+                VCLButtonModule,
+                VCLLayerModule.forChild({ layers: [
+                        NotificationLayerTopRight,
+                        NotificationLayerBottomRight,
+                        NotificationLayerBottom,
+                        NotificationLayerBottomLeft,
+                        NotificationLayerTopLeft,
+                        NotificationLayerTop
+                    ] })
+            ],
+            exports: [],
+            declarations: [NotificationComponent],
+            entryComponents: [NotificationComponent],
+            providers: [
+                NotificationService,
+            ],
+        })
+    ], VCLNotificationModule);
     return VCLNotificationModule;
 }());
-VCLNotificationModule = __decorate([
-    NgModule({
-        imports: [
-            FormsModule,
-            CommonModule,
-            VCLButtonModule,
-            VCLLayerModule.forChild({ layers: [
-                    NotificationLayerTopRight,
-                    NotificationLayerBottomRight,
-                    NotificationLayerBottom,
-                    NotificationLayerBottomLeft,
-                    NotificationLayerTopLeft,
-                    NotificationLayerTop
-                ] })
-        ],
-        exports: [],
-        declarations: [NotificationComponent],
-        entryComponents: [NotificationComponent],
-        providers: [
-            NotificationService,
-        ],
-    })
-], VCLNotificationModule);
 export { VCLNotificationModule };

@@ -25,16 +25,16 @@ var BreakingWordsDirective = (function () {
             this.breakWords = this.tableService.ClassToggle('vclBreakWords', this.breakWords, '');
         }
     };
+    __decorate([
+        Input('break-words'),
+        __metadata("design:type", Object)
+    ], BreakingWordsDirective.prototype, "breakWords", void 0);
+    BreakingWordsDirective = __decorate([
+        Directive({
+            selector: '[break-words]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], BreakingWordsDirective);
     return BreakingWordsDirective;
 }());
-__decorate([
-    Input('break-words'),
-    __metadata("design:type", Object)
-], BreakingWordsDirective.prototype, "breakWords", void 0);
-BreakingWordsDirective = __decorate([
-    Directive({
-        selector: '[break-words]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], BreakingWordsDirective);
 export { BreakingWordsDirective };

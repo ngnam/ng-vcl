@@ -70,15 +70,15 @@ var NotificationService = (function () {
         }
         return notification;
     };
+    NotificationService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [NotificationLayerTopRight,
+            NotificationLayerBottomRight,
+            NotificationLayerBottom,
+            NotificationLayerBottomLeft,
+            NotificationLayerTopLeft,
+            NotificationLayerTop])
+    ], NotificationService);
     return NotificationService;
 }());
-NotificationService = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [NotificationLayerTopRight,
-        NotificationLayerBottomRight,
-        NotificationLayerBottom,
-        NotificationLayerBottomLeft,
-        NotificationLayerTopLeft,
-        NotificationLayerTop])
-], NotificationService);
 export { NotificationService };

@@ -62,10 +62,10 @@ var AlertService = (function () {
             attrs: { alert: alert }
         });
     };
+    AlertService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [LayerService])
+    ], AlertService);
     return AlertService;
 }());
-AlertService = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [LayerService])
-], AlertService);
 export { AlertService };

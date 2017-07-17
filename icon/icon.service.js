@@ -43,9 +43,9 @@ var IconService = (function () {
         }
         return icon;
     };
+    IconService = __decorate([
+        Injectable()
+    ], IconService);
     return IconService;
 }());
-IconService = __decorate([
-    Injectable()
-], IconService);
 export { IconService };

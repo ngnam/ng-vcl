@@ -112,9 +112,9 @@ var TooltipService = (function () {
         }
         return offsetParent || window.document;
     };
+    TooltipService = __decorate([
+        Injectable()
+    ], TooltipService);
     return TooltipService;
 }());
-TooltipService = __decorate([
-    Injectable()
-], TooltipService);
 export { TooltipService };

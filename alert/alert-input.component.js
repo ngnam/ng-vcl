@@ -47,25 +47,25 @@ var AlertInputComponent = (function () {
     AlertInputComponent.prototype.inputValueChange = function (value) {
         this.valueChange.emit(value);
     };
+    __decorate([
+        ViewChild('input'),
+        __metadata("design:type", ElementRef)
+    ], AlertInputComponent.prototype, "input", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], AlertInputComponent.prototype, "alert", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], AlertInputComponent.prototype, "valueChange", void 0);
+    AlertInputComponent = __decorate([
+        Component({
+            template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            selector: 'alert-input'
+        })
+    ], AlertInputComponent);
     return AlertInputComponent;
 }());
-__decorate([
-    ViewChild('input'),
-    __metadata("design:type", ElementRef)
-], AlertInputComponent.prototype, "input", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], AlertInputComponent.prototype, "alert", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], AlertInputComponent.prototype, "valueChange", void 0);
-AlertInputComponent = __decorate([
-    Component({
-        template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus> ",
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        selector: 'alert-input'
-    })
-], AlertInputComponent);
 export { AlertInputComponent };

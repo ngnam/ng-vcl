@@ -23,16 +23,16 @@ var VclTableDirective = (function () {
             this.selectable = this.tableService.ClassToggle('vclTable', this.selectable, 'table');
         }
     };
+    __decorate([
+        Input('selectable'),
+        __metadata("design:type", Object)
+    ], VclTableDirective.prototype, "selectable", void 0);
+    VclTableDirective = __decorate([
+        Directive({
+            selector: '[vcl-table]',
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], VclTableDirective);
     return VclTableDirective;
 }());
-__decorate([
-    Input('selectable'),
-    __metadata("design:type", Object)
-], VclTableDirective.prototype, "selectable", void 0);
-VclTableDirective = __decorate([
-    Directive({
-        selector: '[vcl-table]',
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], VclTableDirective);
 export { VclTableDirective };

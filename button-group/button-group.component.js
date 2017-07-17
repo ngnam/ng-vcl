@@ -112,34 +112,34 @@ var ButtonGroupComponent = (function () {
     ButtonGroupComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        ContentChildren(ButtonComponent),
+        __metadata("design:type", QueryList)
+    ], ButtonGroupComponent.prototype, "buttons", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], ButtonGroupComponent.prototype, "selectionMode", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], ButtonGroupComponent.prototype, "mode", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], ButtonGroupComponent.prototype, "change", void 0);
+    ButtonGroupComponent = __decorate([
+        Component({
+            selector: 'vcl-button-group',
+            host: {
+                '[class.vclButtonGroup]': 'true',
+            },
+            template: "<ng-content></ng-content>",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        })
+    ], ButtonGroupComponent);
     return ButtonGroupComponent;
 }());
-__decorate([
-    ContentChildren(ButtonComponent),
-    __metadata("design:type", QueryList)
-], ButtonGroupComponent.prototype, "buttons", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Number)
-], ButtonGroupComponent.prototype, "selectionMode", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
-], ButtonGroupComponent.prototype, "mode", null);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], ButtonGroupComponent.prototype, "change", void 0);
-ButtonGroupComponent = __decorate([
-    Component({
-        selector: 'vcl-button-group',
-        host: {
-            '[class.vclButtonGroup]': 'true',
-        },
-        template: "<ng-content></ng-content>",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        changeDetection: ChangeDetectionStrategy.OnPush,
-    })
-], ButtonGroupComponent);
 export { ButtonGroupComponent };

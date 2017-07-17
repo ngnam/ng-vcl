@@ -35,37 +35,37 @@ var LayerRefDirective = (function (_super) {
     LayerRefDirective.prototype.ngOnDestroy = function () {
         this.layerManager._unregister(this);
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], LayerRefDirective.prototype, "modal", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], LayerRefDirective.prototype, "transparent", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], LayerRefDirective.prototype, "fill", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], LayerRefDirective.prototype, "stickToBottom", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], LayerRefDirective.prototype, "gutterPadding", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], LayerRefDirective.prototype, "customClass", void 0);
+    LayerRefDirective = __decorate([
+        Directive({
+            selector: '[vcl-layer]',
+            exportAs: 'layer',
+        }),
+        __metadata("design:paramtypes", [TemplateRef, LayerManagerService, Injector])
+    ], LayerRefDirective);
     return LayerRefDirective;
 }(LayerRef));
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], LayerRefDirective.prototype, "modal", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], LayerRefDirective.prototype, "transparent", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], LayerRefDirective.prototype, "fill", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], LayerRefDirective.prototype, "stickToBottom", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], LayerRefDirective.prototype, "gutterPadding", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LayerRefDirective.prototype, "customClass", void 0);
-LayerRefDirective = __decorate([
-    Directive({
-        selector: '[vcl-layer]',
-        exportAs: 'layer',
-    }),
-    __metadata("design:paramtypes", [TemplateRef, LayerManagerService, Injector])
-], LayerRefDirective);
 export { LayerRefDirective };

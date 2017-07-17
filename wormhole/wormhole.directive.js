@@ -49,20 +49,20 @@ var WormholeDirective = (function (_super) {
             this.wormhole.disconnect();
         }
     };
+    __decorate([
+        Input('connect'),
+        __metadata("design:type", Object)
+    ], WormholeDirective.prototype, "target", void 0);
+    __decorate([
+        Input('attrs'),
+        __metadata("design:type", Object)
+    ], WormholeDirective.prototype, "attrs", void 0);
+    WormholeDirective = __decorate([
+        Directive({
+            selector: 'wormhole'
+        }),
+        __metadata("design:paramtypes", [ViewContainerRef])
+    ], WormholeDirective);
     return WormholeDirective;
 }(WormholeHost));
-__decorate([
-    Input('connect'),
-    __metadata("design:type", Object)
-], WormholeDirective.prototype, "target", void 0);
-__decorate([
-    Input('attrs'),
-    __metadata("design:type", Object)
-], WormholeDirective.prototype, "attrs", void 0);
-WormholeDirective = __decorate([
-    Directive({
-        selector: 'wormhole'
-    }),
-    __metadata("design:paramtypes", [ViewContainerRef])
-], WormholeDirective);
 export { WormholeDirective };

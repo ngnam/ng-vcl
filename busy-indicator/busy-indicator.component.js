@@ -19,17 +19,17 @@ var BusyIndicatorComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], BusyIndicatorComponent.prototype, "type", void 0);
+    BusyIndicatorComponent = __decorate([
+        Component({
+            selector: 'vcl-busy-indicator',
+            template: "<div class=\"vclLayoutVertical vclLayoutCenterJustified\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i [ngClass]=\"indicatorClass\"></i> <ng-content></ng-content> </div> </div> ",
+            changeDetection: ChangeDetectionStrategy.OnPush
+        })
+    ], BusyIndicatorComponent);
     return BusyIndicatorComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], BusyIndicatorComponent.prototype, "type", void 0);
-BusyIndicatorComponent = __decorate([
-    Component({
-        selector: 'vcl-busy-indicator',
-        template: "<div class=\"vclLayoutVertical vclLayoutCenterJustified\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i [ngClass]=\"indicatorClass\"></i> <ng-content></ng-content> </div> </div> ",
-        changeDetection: ChangeDetectionStrategy.OnPush
-    })
-], BusyIndicatorComponent);
 export { BusyIndicatorComponent };

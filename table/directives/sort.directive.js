@@ -56,28 +56,28 @@ var SortDirective = (function () {
             }
         }
     };
+    __decorate([
+        ContentChild(SortIconComponent),
+        __metadata("design:type", SortIconComponent)
+    ], SortDirective.prototype, "sortIconComponent", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], SortDirective.prototype, "change", void 0);
+    __decorate([
+        HostListener('click'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], SortDirective.prototype, "OnChangeOrder", null);
+    SortDirective = __decorate([
+        Directive({
+            selector: '[sort]',
+            exportAs: 'sort-directive'
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef])
+    ], SortDirective);
     return SortDirective;
 }());
-__decorate([
-    ContentChild(SortIconComponent),
-    __metadata("design:type", SortIconComponent)
-], SortDirective.prototype, "sortIconComponent", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", EventEmitter)
-], SortDirective.prototype, "change", void 0);
-__decorate([
-    HostListener('click'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], SortDirective.prototype, "OnChangeOrder", null);
-SortDirective = __decorate([
-    Directive({
-        selector: '[sort]',
-        exportAs: 'sort-directive'
-    }),
-    __metadata("design:paramtypes", [Renderer2,
-        ElementRef])
-], SortDirective);
 export { SortDirective };

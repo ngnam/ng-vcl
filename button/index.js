@@ -14,14 +14,14 @@ export { ButtonComponent, ButtonStateContentDirective };
 var VCLButtonModule = (function () {
     function VCLButtonModule() {
     }
+    VCLButtonModule = __decorate([
+        NgModule({
+            imports: [CommonModule, VCLIcogramModule, L10nModule],
+            exports: [ButtonComponent, ButtonStateContentDirective],
+            declarations: [ButtonComponent, ButtonStateContentDirective],
+            providers: [],
+        })
+    ], VCLButtonModule);
     return VCLButtonModule;
 }());
-VCLButtonModule = __decorate([
-    NgModule({
-        imports: [CommonModule, VCLIcogramModule, L10nModule],
-        exports: [ButtonComponent, ButtonStateContentDirective],
-        declarations: [ButtonComponent, ButtonStateContentDirective],
-        providers: [],
-    })
-], VCLButtonModule);
 export { VCLButtonModule };

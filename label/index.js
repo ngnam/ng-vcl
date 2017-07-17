@@ -12,14 +12,14 @@ import { L10nModule } from '../l10n/index';
 var VCLLabelModule = (function () {
     function VCLLabelModule() {
     }
+    VCLLabelModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLMetalistModule],
+            exports: [LabelComponent],
+            declarations: [LabelComponent],
+            providers: [],
+        })
+    ], VCLLabelModule);
     return VCLLabelModule;
 }());
-VCLLabelModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLMetalistModule],
-        exports: [LabelComponent],
-        declarations: [LabelComponent],
-        providers: [],
-    })
-], VCLLabelModule);
 export { VCLLabelModule };

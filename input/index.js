@@ -10,14 +10,14 @@ export { InputDirective };
 var VCLInputModule = (function () {
     function VCLInputModule() {
     }
+    VCLInputModule = __decorate([
+        NgModule({
+            imports: [],
+            exports: [InputDirective],
+            declarations: [InputDirective],
+            providers: [],
+        })
+    ], VCLInputModule);
     return VCLInputModule;
 }());
-VCLInputModule = __decorate([
-    NgModule({
-        imports: [],
-        exports: [InputDirective],
-        declarations: [InputDirective],
-        providers: [],
-    })
-], VCLInputModule);
 export { VCLInputModule };

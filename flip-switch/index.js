@@ -12,14 +12,14 @@ import { L10nModule } from '../l10n/index';
 var VCLFlipSwitchModule = (function () {
     function VCLFlipSwitchModule() {
     }
+    VCLFlipSwitchModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLMetalistModule],
+            exports: [FlipSwitchComponent],
+            declarations: [FlipSwitchComponent],
+            providers: [],
+        })
+    ], VCLFlipSwitchModule);
     return VCLFlipSwitchModule;
 }());
-VCLFlipSwitchModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLMetalistModule],
-        exports: [FlipSwitchComponent],
-        declarations: [FlipSwitchComponent],
-        providers: [],
-    })
-], VCLFlipSwitchModule);
 export { VCLFlipSwitchModule };

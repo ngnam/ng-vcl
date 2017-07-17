@@ -60,63 +60,63 @@ var LinkComponent = (function (_super) {
         _super.prototype.ngOnDestroy.call(this);
         this.locTitleSub && this.locTitleSub.unsubscribe();
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LinkComponent.prototype, "href", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LinkComponent.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LinkComponent.prototype, "title", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LinkComponent.prototype, "prepIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LinkComponent.prototype, "appIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], LinkComponent.prototype, "scheme", void 0);
+    __decorate([
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata("design:type", Object)
+    ], LinkComponent.prototype, "disabled", void 0);
+    __decorate([
+        HostBinding('attr.title'),
+        HostBinding('attr.aria-label'),
+        __metadata("design:type", String)
+    ], LinkComponent.prototype, "locTitle", void 0);
+    __decorate([
+        HostBinding('style.cursor'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LinkComponent.prototype, "styleCursor", null);
+    __decorate([
+        HostBinding('attr.href'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LinkComponent.prototype, "attrHref", null);
+    __decorate([
+        HostBinding('class.vclContentLink'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], LinkComponent.prototype, "useIcogram", null);
+    LinkComponent = __decorate([
+        Component({
+            selector: '[vcl-link]',
+            template: "<vcl-icogram *ngIf=\"useIcogram\" [label]=\"(locLabel$ | async) || href\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> <ng-container *ngIf=\"!useIcogram\"> {{(locLabel$ | async) || href}} <ng-content></ng-content> </ng-container> "
+        }),
+        __param(0, Optional()),
+        __metadata("design:paramtypes", [L10nService])
+    ], LinkComponent);
     return LinkComponent;
 }(ObservableComponent));
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LinkComponent.prototype, "href", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LinkComponent.prototype, "label", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LinkComponent.prototype, "title", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LinkComponent.prototype, "prepIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LinkComponent.prototype, "appIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], LinkComponent.prototype, "scheme", void 0);
-__decorate([
-    HostBinding('class.vclDisabled'),
-    Input(),
-    __metadata("design:type", Boolean)
-], LinkComponent.prototype, "disabled", void 0);
-__decorate([
-    HostBinding('attr.title'),
-    HostBinding('attr.aria-label'),
-    __metadata("design:type", String)
-], LinkComponent.prototype, "locTitle", void 0);
-__decorate([
-    HostBinding('style.cursor'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], LinkComponent.prototype, "styleCursor", null);
-__decorate([
-    HostBinding('attr.href'),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [])
-], LinkComponent.prototype, "attrHref", null);
-__decorate([
-    HostBinding('class.vclContentLink'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [])
-], LinkComponent.prototype, "useIcogram", null);
-LinkComponent = __decorate([
-    Component({
-        selector: '[vcl-link]',
-        template: "<vcl-icogram *ngIf=\"useIcogram\" [label]=\"(locLabel$ | async) || href\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> <ng-container *ngIf=\"!useIcogram\"> {{(locLabel$ | async) || href}} <ng-content></ng-content> </ng-container> "
-    }),
-    __param(0, Optional()),
-    __metadata("design:paramtypes", [L10nService])
-], LinkComponent);
 export { LinkComponent };

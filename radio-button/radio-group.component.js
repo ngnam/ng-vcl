@@ -91,23 +91,23 @@ var RadioGroupComponent = (function () {
     RadioGroupComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], RadioGroupComponent.prototype, "change", void 0);
+    __decorate([
+        ContentChildren(RadioButtonComponent),
+        __metadata("design:type", QueryList)
+    ], RadioGroupComponent.prototype, "radioButtons", void 0);
+    RadioGroupComponent = __decorate([
+        Component({
+            selector: 'vcl-radio-group',
+            template: "<ng-content></ng-content>",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        }),
+        __metadata("design:paramtypes", [ChangeDetectorRef])
+    ], RadioGroupComponent);
     return RadioGroupComponent;
 }());
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], RadioGroupComponent.prototype, "change", void 0);
-__decorate([
-    ContentChildren(RadioButtonComponent),
-    __metadata("design:type", QueryList)
-], RadioGroupComponent.prototype, "radioButtons", void 0);
-RadioGroupComponent = __decorate([
-    Component({
-        selector: 'vcl-radio-group',
-        template: "<ng-content></ng-content>",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
-        changeDetection: ChangeDetectionStrategy.OnPush,
-    }),
-    __metadata("design:paramtypes", [ChangeDetectorRef])
-], RadioGroupComponent);
 export { RadioGroupComponent };

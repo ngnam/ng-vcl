@@ -10,9 +10,10 @@ import { L10nModule } from '../l10n/index';
 import { IconComponent } from './icon.component';
 import { IconService } from './icon.service';
 export { IconComponent, IconService };
-var VCLIconModule = VCLIconModule_1 = (function () {
+var VCLIconModule = (function () {
     function VCLIconModule() {
     }
+    VCLIconModule_1 = VCLIconModule;
     VCLIconModule.forRoot = function (config) {
         return {
             ngModule: VCLIconModule_1,
@@ -24,15 +25,15 @@ var VCLIconModule = VCLIconModule_1 = (function () {
             ]
         };
     };
+    VCLIconModule = VCLIconModule_1 = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule],
+            exports: [IconComponent],
+            declarations: [IconComponent],
+            providers: [IconService],
+        })
+    ], VCLIconModule);
     return VCLIconModule;
+    var VCLIconModule_1;
 }());
-VCLIconModule = VCLIconModule_1 = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule],
-        exports: [IconComponent],
-        declarations: [IconComponent],
-        providers: [IconService],
-    })
-], VCLIconModule);
 export { VCLIconModule };
-var VCLIconModule_1;

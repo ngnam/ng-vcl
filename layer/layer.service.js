@@ -47,10 +47,10 @@ var LayerService = (function () {
         layerRef.open(attrs);
         return layerRef;
     };
+    LayerService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [LayerManagerService, Injector])
+    ], LayerService);
     return LayerService;
 }());
-LayerService = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [LayerManagerService, Injector])
-], LayerService);
 export { LayerService };

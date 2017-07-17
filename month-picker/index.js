@@ -13,14 +13,14 @@ export { MonthPickerComponent };
 var VCLMonthPickerModule = (function () {
     function VCLMonthPickerModule() {
     }
+    VCLMonthPickerModule = __decorate([
+        NgModule({
+            imports: [CommonModule, VCLButtonModule, L10nModule],
+            exports: [MonthPickerComponent],
+            declarations: [MonthPickerComponent],
+            providers: [],
+        })
+    ], VCLMonthPickerModule);
     return VCLMonthPickerModule;
 }());
-VCLMonthPickerModule = __decorate([
-    NgModule({
-        imports: [CommonModule, VCLButtonModule, L10nModule],
-        exports: [MonthPickerComponent],
-        declarations: [MonthPickerComponent],
-        providers: [],
-    })
-], VCLMonthPickerModule);
 export { VCLMonthPickerModule };

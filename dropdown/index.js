@@ -15,14 +15,14 @@ export { DropdownOption, DropdownComponent };
 var VCLDropdownModule = (function () {
     function VCLDropdownModule() {
     }
+    VCLDropdownModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLMetalistModule, VCLWormholeModule],
+            exports: [DropdownComponent, DropdownOption],
+            declarations: [DropdownComponent, DropdownOption],
+            providers: [],
+        })
+    ], VCLDropdownModule);
     return VCLDropdownModule;
 }());
-VCLDropdownModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLMetalistModule, VCLWormholeModule],
-        exports: [DropdownComponent, DropdownOption],
-        declarations: [DropdownComponent, DropdownOption],
-        providers: [],
-    })
-], VCLDropdownModule);
 export { VCLDropdownModule };

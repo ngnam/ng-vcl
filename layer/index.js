@@ -28,7 +28,7 @@ export function Layer(component, opts) {
         defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, { component: component, opts: opts }, target);
     };
 }
-var VCLLayerModule = VCLLayerModule_1 = (function () {
+var VCLLayerModule = (function () {
     function VCLLayerModule(layers, layerManager, injector) {
         this.layers = layers;
         this.layerManager = layerManager;
@@ -41,6 +41,7 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
             });
         }
     }
+    VCLLayerModule_1 = VCLLayerModule;
     VCLLayerModule.forRoot = function (config) {
         if (config === void 0) { config = {}; }
         return { ngModule: VCLLayerModule_1, providers: [
@@ -71,22 +72,22 @@ var VCLLayerModule = VCLLayerModule_1 = (function () {
             ])
         };
     };
+    VCLLayerModule = VCLLayerModule_1 = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                VCLWormholeModule
+            ],
+            exports: [LayerRefDirective, LayerContainerComponent],
+            declarations: [LayerRefDirective, LayerContainerComponent],
+            entryComponents: [LayerContainerComponent],
+            providers: []
+        }),
+        __param(0, Inject(LAYERS)),
+        __metadata("design:paramtypes", [Array, LayerManagerService,
+            Injector])
+    ], VCLLayerModule);
     return VCLLayerModule;
+    var VCLLayerModule_1;
 }());
-VCLLayerModule = VCLLayerModule_1 = __decorate([
-    NgModule({
-        imports: [
-            CommonModule,
-            VCLWormholeModule
-        ],
-        exports: [LayerRefDirective, LayerContainerComponent],
-        declarations: [LayerRefDirective, LayerContainerComponent],
-        entryComponents: [LayerContainerComponent],
-        providers: []
-    }),
-    __param(0, Inject(LAYERS)),
-    __metadata("design:paramtypes", [Array, LayerManagerService,
-        Injector])
-], VCLLayerModule);
 export { VCLLayerModule };
-var VCLLayerModule_1;

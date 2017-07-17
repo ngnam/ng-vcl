@@ -35,9 +35,9 @@ var L10nFormatParserService = (function (_super) {
             return typeof args[idx] === 'string' ? args[idx] : match;
         });
     };
+    L10nFormatParserService = __decorate([
+        Injectable()
+    ], L10nFormatParserService);
     return L10nFormatParserService;
 }(L10nParserService));
-L10nFormatParserService = __decorate([
-    Injectable()
-], L10nFormatParserService);
 export { L10nFormatParserService };

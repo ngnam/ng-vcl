@@ -69,7 +69,7 @@ var INPUT_INVALID_TYPES = [
     'reset',
     'submit'
 ];
-exports.InputDirective = (function () {
+var InputDirective = (function () {
     function InputDirective(elRef) {
         this.elRef = elRef;
         this.type = 'text';
@@ -103,31 +103,31 @@ exports.InputDirective = (function () {
             this.elRef.nativeElement.select();
         }
     };
+    __decorate$1([
+        _angular_core.Input('type'),
+        __metadata("design:type", String)
+    ], InputDirective.prototype, "type", void 0);
+    __decorate$1([
+        _angular_core.Input(),
+        __metadata("design:type", Boolean)
+    ], InputDirective.prototype, "selectOnFocus", void 0);
+    __decorate$1([
+        _angular_core.HostListener('focus'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], InputDirective.prototype, "onFocus", null);
+    InputDirective = __decorate$1([
+        _angular_core.Directive({
+            selector: '[vcl-input]',
+            host: {
+                '[class.vclInput]': 'true',
+            }
+        }),
+        __metadata("design:paramtypes", [_angular_core.ElementRef])
+    ], InputDirective);
     return InputDirective;
 }());
-__decorate$1([
-    _angular_core.Input('type'),
-    __metadata("design:type", String)
-], exports.InputDirective.prototype, "type", void 0);
-__decorate$1([
-    _angular_core.Input(),
-    __metadata("design:type", Boolean)
-], exports.InputDirective.prototype, "selectOnFocus", void 0);
-__decorate$1([
-    _angular_core.HostListener('focus'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], exports.InputDirective.prototype, "onFocus", null);
-exports.InputDirective = __decorate$1([
-    _angular_core.Directive({
-        selector: '[vcl-input]',
-        host: {
-            '[class.vclInput]': 'true',
-        }
-    }),
-    __metadata("design:paramtypes", [_angular_core.ElementRef])
-], exports.InputDirective);
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -135,19 +135,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLInputModule = (function () {
+var VCLInputModule = (function () {
     function VCLInputModule() {
     }
+    VCLInputModule = __decorate([
+        _angular_core.NgModule({
+            imports: [],
+            exports: [InputDirective],
+            declarations: [InputDirective],
+            providers: [],
+        })
+    ], VCLInputModule);
     return VCLInputModule;
 }());
-exports.VCLInputModule = __decorate([
-    _angular_core.NgModule({
-        imports: [],
-        exports: [exports.InputDirective],
-        declarations: [exports.InputDirective],
-        providers: [],
-    })
-], exports.VCLInputModule);
 
 /**
  * Check if the provided file type should be accepted by the input with accept attribute.
@@ -159,16 +159,7 @@ exports.VCLInputModule = __decorate([
  * @param acceptedFiles {string}
  * @returns {boolean}
  */
-/**
- * Check if the provided file type should be accepted by the input with accept attribute.
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#attr-accept
- *
- * Inspired by https://github.com/enyo/dropzone
- *
- * @param file {File} https://developer.mozilla.org/en-US/docs/Web/API/File
- * @param acceptedFiles {string}
- * @returns {boolean}
- */ function accept(file, acceptedFiles) {
+function accept(file, acceptedFiles) {
     if (file && acceptedFiles) {
         var acceptedFilesArray = (Array.isArray(acceptedFiles) ?
             acceptedFiles :
@@ -312,101 +303,101 @@ var FileInputComponent = (function () {
     FileInputComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$3([
+        _angular_core.Input(),
+        __metadata$1("design:type", String)
+    ], FileInputComponent.prototype, "accept", void 0);
+    __decorate$3([
+        _angular_core.Input(),
+        __metadata$1("design:type", Boolean)
+    ], FileInputComponent.prototype, "multiple", void 0);
+    __decorate$3([
+        _angular_core.Output(),
+        __metadata$1("design:type", Object)
+    ], FileInputComponent.prototype, "files", void 0);
+    __decorate$3([
+        _angular_core.Input(),
+        _angular_core.HostBinding('attr.tabindex'),
+        __metadata$1("design:type", Number)
+    ], FileInputComponent.prototype, "tabindex", void 0);
+    __decorate$3([
+        _angular_core.Input(),
+        _angular_core.HostBinding('class.vclDisabled'),
+        __metadata$1("design:type", Boolean)
+    ], FileInputComponent.prototype, "disabled", void 0);
+    __decorate$3([
+        _angular_core.HostBinding('class.vclError'),
+        __metadata$1("design:type", Object)
+    ], FileInputComponent.prototype, "invalidFiles", void 0);
+    __decorate$3([
+        _angular_core.HostBinding('class.vclDragndrop'),
+        __metadata$1("design:type", Boolean)
+    ], FileInputComponent.prototype, "isDragging", void 0);
+    __decorate$3([
+        _angular_core.HostBinding('class.isFocused'),
+        __metadata$1("design:type", Boolean)
+    ], FileInputComponent.prototype, "isFocused", void 0);
+    __decorate$3([
+        _angular_core.ViewChild('input'),
+        __metadata$1("design:type", _angular_core.ElementRef)
+    ], FileInputComponent.prototype, "input", void 0);
+    __decorate$3([
+        _angular_core.HostListener('focus'),
+        __metadata$1("design:type", Function),
+        __metadata$1("design:paramtypes", []),
+        __metadata$1("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onFocus", null);
+    __decorate$3([
+        _angular_core.HostListener('blur'),
+        __metadata$1("design:type", Function),
+        __metadata$1("design:paramtypes", []),
+        __metadata$1("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onBlur", null);
+    __decorate$3([
+        _angular_core.HostListener('keydown', ['$event']),
+        __metadata$1("design:type", Function),
+        __metadata$1("design:paramtypes", [Object]),
+        __metadata$1("design:returntype", void 0)
+    ], FileInputComponent.prototype, "keydown", null);
+    __decorate$3([
+        _angular_core.HostListener('click', ['$event.target.value']),
+        __metadata$1("design:type", Function),
+        __metadata$1("design:paramtypes", [Object]),
+        __metadata$1("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onClick", null);
+    __decorate$3([
+        _angular_core.HostListener('dragover', ['$event']),
+        __metadata$1("design:type", Function),
+        __metadata$1("design:paramtypes", [Object]),
+        __metadata$1("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onDragOver", null);
+    __decorate$3([
+        _angular_core.HostListener('dragleave', ['$event']),
+        __metadata$1("design:type", Function),
+        __metadata$1("design:paramtypes", [Object]),
+        __metadata$1("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onDragLeave", null);
+    __decorate$3([
+        _angular_core.HostListener('drop', ['$event']),
+        __metadata$1("design:type", Function),
+        __metadata$1("design:paramtypes", [Object]),
+        __metadata$1("design:returntype", void 0)
+    ], FileInputComponent.prototype, "onDrop", null);
+    FileInputComponent = __decorate$3([
+        _angular_core.Component({
+            selector: 'vcl-file-input',
+            template: "<input #input type=\"file\" style=\"display: none;\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" /> <div class=\"vclFileInputIcon vclIcon fa fa-upload\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div> <div class=\"vclFileInputPlaceholder\"> <ng-container *ngIf=\"filename\">{{filename}}</ng-container> <div *ngIf=\"!filename\"> <ng-content></ng-content> </div> </div> ",
+            host: {
+                '[class.vclFileInput]': 'true',
+                role: 'button'
+            },
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+        }),
+        __metadata$1("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], FileInputComponent);
     return FileInputComponent;
 }());
-__decorate$3([
-    _angular_core.Input(),
-    __metadata$1("design:type", String)
-], FileInputComponent.prototype, "accept", void 0);
-__decorate$3([
-    _angular_core.Input(),
-    __metadata$1("design:type", Boolean)
-], FileInputComponent.prototype, "multiple", void 0);
-__decorate$3([
-    _angular_core.Output(),
-    __metadata$1("design:type", Object)
-], FileInputComponent.prototype, "files", void 0);
-__decorate$3([
-    _angular_core.Input(),
-    _angular_core.HostBinding('attr.tabindex'),
-    __metadata$1("design:type", Number)
-], FileInputComponent.prototype, "tabindex", void 0);
-__decorate$3([
-    _angular_core.Input(),
-    _angular_core.HostBinding('class.vclDisabled'),
-    __metadata$1("design:type", Boolean)
-], FileInputComponent.prototype, "disabled", void 0);
-__decorate$3([
-    _angular_core.HostBinding('class.vclError'),
-    __metadata$1("design:type", Object)
-], FileInputComponent.prototype, "invalidFiles", void 0);
-__decorate$3([
-    _angular_core.HostBinding('class.vclDragndrop'),
-    __metadata$1("design:type", Boolean)
-], FileInputComponent.prototype, "isDragging", void 0);
-__decorate$3([
-    _angular_core.HostBinding('class.isFocused'),
-    __metadata$1("design:type", Boolean)
-], FileInputComponent.prototype, "isFocused", void 0);
-__decorate$3([
-    _angular_core.ViewChild('input'),
-    __metadata$1("design:type", _angular_core.ElementRef)
-], FileInputComponent.prototype, "input", void 0);
-__decorate$3([
-    _angular_core.HostListener('focus'),
-    __metadata$1("design:type", Function),
-    __metadata$1("design:paramtypes", []),
-    __metadata$1("design:returntype", void 0)
-], FileInputComponent.prototype, "onFocus", null);
-__decorate$3([
-    _angular_core.HostListener('blur'),
-    __metadata$1("design:type", Function),
-    __metadata$1("design:paramtypes", []),
-    __metadata$1("design:returntype", void 0)
-], FileInputComponent.prototype, "onBlur", null);
-__decorate$3([
-    _angular_core.HostListener('keydown', ['$event']),
-    __metadata$1("design:type", Function),
-    __metadata$1("design:paramtypes", [Object]),
-    __metadata$1("design:returntype", void 0)
-], FileInputComponent.prototype, "keydown", null);
-__decorate$3([
-    _angular_core.HostListener('click', ['$event.target.value']),
-    __metadata$1("design:type", Function),
-    __metadata$1("design:paramtypes", [Object]),
-    __metadata$1("design:returntype", void 0)
-], FileInputComponent.prototype, "onClick", null);
-__decorate$3([
-    _angular_core.HostListener('dragover', ['$event']),
-    __metadata$1("design:type", Function),
-    __metadata$1("design:paramtypes", [Object]),
-    __metadata$1("design:returntype", void 0)
-], FileInputComponent.prototype, "onDragOver", null);
-__decorate$3([
-    _angular_core.HostListener('dragleave', ['$event']),
-    __metadata$1("design:type", Function),
-    __metadata$1("design:paramtypes", [Object]),
-    __metadata$1("design:returntype", void 0)
-], FileInputComponent.prototype, "onDragLeave", null);
-__decorate$3([
-    _angular_core.HostListener('drop', ['$event']),
-    __metadata$1("design:type", Function),
-    __metadata$1("design:paramtypes", [Object]),
-    __metadata$1("design:returntype", void 0)
-], FileInputComponent.prototype, "onDrop", null);
-FileInputComponent = __decorate$3([
-    _angular_core.Component({
-        selector: 'vcl-file-input',
-        template: "<input #input type=\"file\" style=\"display: none;\" (change)=\"onInputChange()\" [accept]=\"accept\" [multiple]=\"multiple\" [disabled]=\"disabled\" /> <div class=\"vclFileInputIcon vclIcon fa fa-upload\" aria-hidden=\"true\" aria-label=\"account\" role=\"img\"></div> <div class=\"vclFileInputPlaceholder\"> <ng-container *ngIf=\"filename\">{{filename}}</ng-container> <div *ngIf=\"!filename\"> <ng-content></ng-content> </div> </div> ",
-        host: {
-            '[class.vclFileInput]': 'true',
-            role: 'button'
-        },
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
-    }),
-    __metadata$1("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], FileInputComponent);
 
 var __decorate$2 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -414,19 +405,19 @@ var __decorate$2 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLFileInputModule = (function () {
+var VCLFileInputModule = (function () {
     function VCLFileInputModule() {
     }
+    VCLFileInputModule = __decorate$2([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule],
+            exports: [FileInputComponent],
+            declarations: [FileInputComponent],
+            providers: [],
+        })
+    ], VCLFileInputModule);
     return VCLFileInputModule;
 }());
-exports.VCLFileInputModule = __decorate$2([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule],
-        exports: [FileInputComponent],
-        declarations: [FileInputComponent],
-        providers: [],
-    })
-], exports.VCLFileInputModule);
 
 var __decorate$5 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -465,50 +456,50 @@ var TextareaDirective = (function () {
             }
         }
     };
+    __decorate$5([
+        _angular_core.Input(),
+        __metadata$2("design:type", Object)
+    ], TextareaDirective.prototype, "selectAllOnFocus", void 0);
+    __decorate$5([
+        _angular_core.Input(),
+        __metadata$2("design:type", Object)
+    ], TextareaDirective.prototype, "autogrow", void 0);
+    __decorate$5([
+        _angular_core.Input(),
+        __metadata$2("design:type", Object)
+    ], TextareaDirective.prototype, "maxRows", void 0);
+    __decorate$5([
+        _angular_core.Input(),
+        __metadata$2("design:type", Object)
+    ], TextareaDirective.prototype, "minRows", void 0);
+    __decorate$5([
+        _angular_core.HostBinding('attr.rows'),
+        _angular_core.Input(),
+        __metadata$2("design:type", Number)
+    ], TextareaDirective.prototype, "rows", void 0);
+    __decorate$5([
+        _angular_core.HostListener('ngModelChange', ['$event']),
+        __metadata$2("design:type", Function),
+        __metadata$2("design:paramtypes", [Object]),
+        __metadata$2("design:returntype", void 0)
+    ], TextareaDirective.prototype, "onModelChange", null);
+    __decorate$5([
+        _angular_core.HostListener('focus', ['$event.target.value']),
+        __metadata$2("design:type", Function),
+        __metadata$2("design:paramtypes", [Object]),
+        __metadata$2("design:returntype", void 0)
+    ], TextareaDirective.prototype, "onFocus", null);
+    TextareaDirective = __decorate$5([
+        _angular_core.Directive({
+            selector: 'textarea[vcl-textarea]',
+            host: {
+                '[class.vclInput]': 'true',
+            }
+        }),
+        __metadata$2("design:paramtypes", [_angular_core.ElementRef])
+    ], TextareaDirective);
     return TextareaDirective;
 }());
-__decorate$5([
-    _angular_core.Input(),
-    __metadata$2("design:type", Object)
-], TextareaDirective.prototype, "selectAllOnFocus", void 0);
-__decorate$5([
-    _angular_core.Input(),
-    __metadata$2("design:type", Object)
-], TextareaDirective.prototype, "autogrow", void 0);
-__decorate$5([
-    _angular_core.Input(),
-    __metadata$2("design:type", Number)
-], TextareaDirective.prototype, "maxRows", void 0);
-__decorate$5([
-    _angular_core.Input(),
-    __metadata$2("design:type", Number)
-], TextareaDirective.prototype, "minRows", void 0);
-__decorate$5([
-    _angular_core.HostBinding('attr.rows'),
-    _angular_core.Input(),
-    __metadata$2("design:type", Number)
-], TextareaDirective.prototype, "rows", void 0);
-__decorate$5([
-    _angular_core.HostListener('ngModelChange', ['$event']),
-    __metadata$2("design:type", Function),
-    __metadata$2("design:paramtypes", [Object]),
-    __metadata$2("design:returntype", void 0)
-], TextareaDirective.prototype, "onModelChange", null);
-__decorate$5([
-    _angular_core.HostListener('focus', ['$event.target.value']),
-    __metadata$2("design:type", Function),
-    __metadata$2("design:paramtypes", [Object]),
-    __metadata$2("design:returntype", void 0)
-], TextareaDirective.prototype, "onFocus", null);
-TextareaDirective = __decorate$5([
-    _angular_core.Directive({
-        selector: 'textarea[vcl-textarea]',
-        host: {
-            '[class.vclInput]': 'true',
-        }
-    }),
-    __metadata$2("design:paramtypes", [_angular_core.ElementRef])
-], TextareaDirective);
 
 var __decorate$4 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -516,19 +507,19 @@ var __decorate$4 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLTextareaModule = (function () {
+var VCLTextareaModule = (function () {
     function VCLTextareaModule() {
     }
+    VCLTextareaModule = __decorate$4([
+        _angular_core.NgModule({
+            imports: [_angular_forms.FormsModule],
+            exports: [TextareaDirective],
+            declarations: [TextareaDirective],
+            providers: [],
+        })
+    ], VCLTextareaModule);
     return VCLTextareaModule;
 }());
-exports.VCLTextareaModule = __decorate$4([
-    _angular_core.NgModule({
-        imports: [_angular_forms.FormsModule],
-        exports: [TextareaDirective],
-        declarations: [TextareaDirective],
-        providers: [],
-    })
-], exports.VCLTextareaModule);
 
 var __decorate$7 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -591,56 +582,56 @@ var FlipSwitchComponent = (function () {
     FlipSwitchComponent.prototype.registerOnTouched = function (fn) {
         this.onTouchedCallback = fn;
     };
+    __decorate$7([
+        _angular_core.HostBinding(),
+        __metadata$3("design:type", Object)
+    ], FlipSwitchComponent.prototype, "tabindex", void 0);
+    __decorate$7([
+        _angular_core.Input(),
+        __metadata$3("design:type", String)
+    ], FlipSwitchComponent.prototype, "onLabel", void 0);
+    __decorate$7([
+        _angular_core.Input(),
+        __metadata$3("design:type", String)
+    ], FlipSwitchComponent.prototype, "offLabel", void 0);
+    __decorate$7([
+        _angular_core.Input(),
+        __metadata$3("design:type", Boolean)
+    ], FlipSwitchComponent.prototype, "value", void 0);
+    __decorate$7([
+        _angular_core.Output(),
+        __metadata$3("design:type", Object)
+    ], FlipSwitchComponent.prototype, "valueChange", void 0);
+    __decorate$7([
+        _angular_core.HostListener('click', ['$event']),
+        __metadata$3("design:type", Function),
+        __metadata$3("design:paramtypes", []),
+        __metadata$3("design:returntype", void 0)
+    ], FlipSwitchComponent.prototype, "onTap", null);
+    __decorate$7([
+        _angular_core.HostListener('keydown', ['$event']),
+        __metadata$3("design:type", Function),
+        __metadata$3("design:paramtypes", [Object]),
+        __metadata$3("design:returntype", void 0)
+    ], FlipSwitchComponent.prototype, "keydown", null);
+    FlipSwitchComponent = __decorate$7([
+        _angular_core.Component({
+            selector: 'vcl-flip-switch',
+            template: "<label class=\"vclFlipSwitchLabel\"> <div class=\"vclFlipSwitchTrack\"> <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div> <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div> </div> <div class=\"vclFlipSwitchKnob\"></div> </label> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$1],
+            host: {
+                '[class.vclFlipSwitch]': 'true',
+                '[class.vclFlipSwitchPressed]': 'value',
+                '[attr.role]': '"button"',
+                '[attr.aria-pressed]': 'value',
+                '[attr.touch-action]': '"pan-y"'
+            }
+        }),
+        __metadata$3("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], FlipSwitchComponent);
     return FlipSwitchComponent;
 }());
-__decorate$7([
-    _angular_core.HostBinding(),
-    __metadata$3("design:type", Object)
-], FlipSwitchComponent.prototype, "tabindex", void 0);
-__decorate$7([
-    _angular_core.Input(),
-    __metadata$3("design:type", String)
-], FlipSwitchComponent.prototype, "onLabel", void 0);
-__decorate$7([
-    _angular_core.Input(),
-    __metadata$3("design:type", String)
-], FlipSwitchComponent.prototype, "offLabel", void 0);
-__decorate$7([
-    _angular_core.Input(),
-    __metadata$3("design:type", Boolean)
-], FlipSwitchComponent.prototype, "value", void 0);
-__decorate$7([
-    _angular_core.Output(),
-    __metadata$3("design:type", Object)
-], FlipSwitchComponent.prototype, "valueChange", void 0);
-__decorate$7([
-    _angular_core.HostListener('click', ['$event']),
-    __metadata$3("design:type", Function),
-    __metadata$3("design:paramtypes", []),
-    __metadata$3("design:returntype", void 0)
-], FlipSwitchComponent.prototype, "onTap", null);
-__decorate$7([
-    _angular_core.HostListener('keydown', ['$event']),
-    __metadata$3("design:type", Function),
-    __metadata$3("design:paramtypes", [Object]),
-    __metadata$3("design:returntype", void 0)
-], FlipSwitchComponent.prototype, "keydown", null);
-FlipSwitchComponent = __decorate$7([
-    _angular_core.Component({
-        selector: 'vcl-flip-switch',
-        template: "<label class=\"vclFlipSwitchLabel\"> <div class=\"vclFlipSwitchTrack\"> <div class=\"vclFlipSwitchActive\" [attr.aria-hidden]=\"!value\">{{onLabel}}</div> <div class=\"vclFlipSwitchInactive\" [attr.aria-hidden]=\"value\">{{offLabel}}</div> </div> <div class=\"vclFlipSwitchKnob\"></div> </label> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$1],
-        host: {
-            '[class.vclFlipSwitch]': 'true',
-            '[class.vclFlipSwitchPressed]': 'value',
-            '[attr.role]': '"button"',
-            '[attr.aria-pressed]': 'value',
-            '[attr.touch-action]': '"pan-y"'
-        }
-    }),
-    __metadata$3("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], FlipSwitchComponent);
 
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -691,7 +682,7 @@ function flatten(locale, group) {
     });
     return pkg;
 }
-exports.L10nStaticLoaderService = (function (_super) {
+var L10nStaticLoaderService = (function (_super) {
     __extends(L10nStaticLoaderService, _super);
     function L10nStaticLoaderService(config) {
         var _this = _super.call(this) || this;
@@ -704,14 +695,14 @@ exports.L10nStaticLoaderService = (function (_super) {
     L10nStaticLoaderService.prototype.getSupportedLocales = function () {
         return rxjs_Observable.Observable.of(extractLocales(this.config));
     };
+    L10nStaticLoaderService = __decorate$10([
+        _angular_core.Injectable(),
+        __param(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
+        __metadata$4("design:paramtypes", [Object])
+    ], L10nStaticLoaderService);
     return L10nStaticLoaderService;
 }(L10nLoaderService));
-exports.L10nStaticLoaderService = __decorate$10([
-    _angular_core.Injectable(),
-    __param(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
-    __metadata$4("design:paramtypes", [Object])
-], exports.L10nStaticLoaderService);
-exports.L10nAsyncLoaderService = (function (_super) {
+var L10nAsyncLoaderService = (function (_super) {
     __extends(L10nAsyncLoaderService, _super);
     function L10nAsyncLoaderService(config) {
         var _this = _super.call(this) || this;
@@ -733,14 +724,14 @@ exports.L10nAsyncLoaderService = (function (_super) {
     L10nAsyncLoaderService.prototype.getSupportedLocales = function () {
         return this.data$.map(function (data) { return extractLocales(data); });
     };
+    L10nAsyncLoaderService = __decorate$10([
+        _angular_core.Injectable(),
+        __param(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
+        __metadata$4("design:paramtypes", [Object])
+    ], L10nAsyncLoaderService);
     return L10nAsyncLoaderService;
 }(L10nLoaderService));
-exports.L10nAsyncLoaderService = __decorate$10([
-    _angular_core.Injectable(),
-    __param(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
-    __metadata$4("design:paramtypes", [Object])
-], exports.L10nAsyncLoaderService);
-exports.L10nNoopLoaderService = (function (_super) {
+var L10nNoopLoaderService = (function (_super) {
     __extends(L10nNoopLoaderService, _super);
     function L10nNoopLoaderService() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -751,11 +742,11 @@ exports.L10nNoopLoaderService = (function (_super) {
     L10nNoopLoaderService.prototype.getSupportedLocales = function () {
         return rxjs_Observable.Observable.of([]);
     };
+    L10nNoopLoaderService = __decorate$10([
+        _angular_core.Injectable()
+    ], L10nNoopLoaderService);
     return L10nNoopLoaderService;
 }(L10nLoaderService));
-exports.L10nNoopLoaderService = __decorate$10([
-    _angular_core.Injectable()
-], exports.L10nNoopLoaderService);
 
 var __extends$1 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -778,7 +769,7 @@ var L10nParserService = (function () {
     }
     return L10nParserService;
 }());
-exports.L10nFormatParserService = (function (_super) {
+var L10nFormatParserService = (function (_super) {
     __extends$1(L10nFormatParserService, _super);
     function L10nFormatParserService() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -792,11 +783,11 @@ exports.L10nFormatParserService = (function (_super) {
             return typeof args[idx] === 'string' ? args[idx] : match;
         });
     };
+    L10nFormatParserService = __decorate$11([
+        _angular_core.Injectable()
+    ], L10nFormatParserService);
     return L10nFormatParserService;
 }(L10nParserService));
-exports.L10nFormatParserService = __decorate$11([
-    _angular_core.Injectable()
-], exports.L10nFormatParserService);
 
 var __decorate$12 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -811,7 +802,7 @@ var __param$1 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var L10N_CONFIG = new _angular_core.OpaqueToken('l10n.config');
-exports.L10nService = (function () {
+var L10nService = (function () {
     function L10nService(config, // TODO: L10nConfig - problem with ngc
         loader, parser) {
         var _this = this;
@@ -940,14 +931,14 @@ exports.L10nService = (function () {
         }
         return lang || 'en-US';
     };
+    L10nService = __decorate$12([
+        _angular_core.Injectable(),
+        __param$1(0, _angular_core.Inject(L10N_CONFIG)),
+        __metadata$5("design:paramtypes", [Object, L10nLoaderService,
+            L10nParserService])
+    ], L10nService);
     return L10nService;
 }());
-exports.L10nService = __decorate$12([
-    _angular_core.Injectable(),
-    __param$1(0, _angular_core.Inject(L10N_CONFIG)),
-    __metadata$5("design:paramtypes", [Object, L10nLoaderService,
-        L10nParserService])
-], exports.L10nService);
 
 var __decorate$13 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1013,17 +1004,17 @@ var L10nPipe = (function () {
     L10nPipe.prototype.ngOnDestroy = function () {
         this.dispose();
     };
+    L10nPipe = __decorate$13([
+        _angular_core.Pipe({
+            name: 'loc',
+            pure: false
+        }),
+        __param$2(0, _angular_core.Inject(L10nService)),
+        __param$2(0, _angular_core.Optional()),
+        __metadata$6("design:paramtypes", [Object])
+    ], L10nPipe);
     return L10nPipe;
 }());
-L10nPipe = __decorate$13([
-    _angular_core.Pipe({
-        name: 'loc',
-        pure: false
-    }),
-    __param$2(0, _angular_core.Inject(exports.L10nService)),
-    __param$2(0, _angular_core.Optional()),
-    __metadata$6("design:paramtypes", [Object])
-], L10nPipe);
 
 var __decorate$9 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1031,14 +1022,15 @@ var __decorate$9 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.L10nModule = L10nModule_1 = (function () {
+var L10nModule = (function () {
     function L10nModule() {
     }
+    L10nModule_1 = L10nModule;
     L10nModule.forRoot = function (config) {
         return {
             ngModule: L10nModule_1,
             providers: [
-                exports.L10nService,
+                L10nService,
                 {
                     provide: L10N_CONFIG,
                     useValue: config.config || {}
@@ -1051,21 +1043,21 @@ exports.L10nModule = L10nModule_1 = (function () {
                     useValue: config.loaderConfig
                 }, {
                     provide: L10nParserService,
-                    useClass: config.parser || exports.L10nFormatParserService
+                    useClass: config.parser || L10nFormatParserService
                 }
             ]
         };
     };
+    L10nModule = L10nModule_1 = __decorate$9([
+        _angular_core.NgModule({
+            imports: [],
+            declarations: [L10nPipe],
+            exports: [L10nPipe]
+        })
+    ], L10nModule);
     return L10nModule;
+    var L10nModule_1;
 }());
-exports.L10nModule = L10nModule_1 = __decorate$9([
-    _angular_core.NgModule({
-        imports: [],
-        declarations: [L10nPipe],
-        exports: [L10nPipe]
-    })
-], exports.L10nModule);
-var L10nModule_1;
 
 var __extends$2 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -1522,7 +1514,7 @@ var __decorate$15 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$7 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.WormholeDirective = (function (_super) {
+var WormholeDirective = (function (_super) {
     __extends$5(WormholeDirective, _super);
     function WormholeDirective(viewContainerRef) {
         return _super.call(this, viewContainerRef) || this;
@@ -1552,22 +1544,22 @@ exports.WormholeDirective = (function (_super) {
             this.wormhole.disconnect();
         }
     };
+    __decorate$15([
+        _angular_core.Input('connect'),
+        __metadata$7("design:type", Object)
+    ], WormholeDirective.prototype, "target", void 0);
+    __decorate$15([
+        _angular_core.Input('attrs'),
+        __metadata$7("design:type", Object)
+    ], WormholeDirective.prototype, "attrs", void 0);
+    WormholeDirective = __decorate$15([
+        _angular_core.Directive({
+            selector: 'wormhole'
+        }),
+        __metadata$7("design:paramtypes", [_angular_core.ViewContainerRef])
+    ], WormholeDirective);
     return WormholeDirective;
 }(WormholeHost));
-__decorate$15([
-    _angular_core.Input('connect'),
-    __metadata$7("design:type", Object)
-], exports.WormholeDirective.prototype, "target", void 0);
-__decorate$15([
-    _angular_core.Input('attrs'),
-    __metadata$7("design:type", Object)
-], exports.WormholeDirective.prototype, "attrs", void 0);
-exports.WormholeDirective = __decorate$15([
-    _angular_core.Directive({
-        selector: 'wormhole'
-    }),
-    __metadata$7("design:paramtypes", [_angular_core.ViewContainerRef])
-], exports.WormholeDirective);
 
 var __decorate$14 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1575,18 +1567,18 @@ var __decorate$14 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLWormholeModule = (function () {
+var VCLWormholeModule = (function () {
     function VCLWormholeModule() {
     }
+    VCLWormholeModule = __decorate$14([
+        _angular_core.NgModule({
+            exports: [WormholeDirective],
+            declarations: [WormholeDirective],
+            providers: []
+        })
+    ], VCLWormholeModule);
     return VCLWormholeModule;
 }());
-exports.VCLWormholeModule = __decorate$14([
-    _angular_core.NgModule({
-        exports: [exports.WormholeDirective],
-        declarations: [exports.WormholeDirective],
-        providers: []
-    })
-], exports.VCLWormholeModule);
 
 var __decorate$16 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1597,44 +1589,44 @@ var __decorate$16 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$8 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.MetalistItem = (function () {
+var MetalistItem = (function () {
     function MetalistItem() {
         this.disabled = false;
         this.marked = false;
         this.selected = false;
     }
+    __decorate$16([
+        _angular_core.ViewChild(_angular_core.TemplateRef),
+        __metadata$8("design:type", _angular_core.TemplateRef)
+    ], MetalistItem.prototype, "_content", void 0);
+    __decorate$16([
+        _angular_core.Input(),
+        __metadata$8("design:type", Object)
+    ], MetalistItem.prototype, "value", void 0);
+    __decorate$16([
+        _angular_core.Input(),
+        __metadata$8("design:type", Object)
+    ], MetalistItem.prototype, "metadata", void 0);
+    __decorate$16([
+        _angular_core.Input(),
+        __metadata$8("design:type", Boolean)
+    ], MetalistItem.prototype, "disabled", void 0);
+    __decorate$16([
+        _angular_core.Input(),
+        __metadata$8("design:type", Boolean)
+    ], MetalistItem.prototype, "marked", void 0);
+    __decorate$16([
+        _angular_core.Input(),
+        __metadata$8("design:type", Boolean)
+    ], MetalistItem.prototype, "selected", void 0);
+    MetalistItem = __decorate$16([
+        _angular_core.Component({
+            selector: 'vcl-metalist-item',
+            template: '<ng-template><ng-content></ng-content></ng-template>'
+        })
+    ], MetalistItem);
     return MetalistItem;
 }());
-__decorate$16([
-    _angular_core.ViewChild(_angular_core.TemplateRef),
-    __metadata$8("design:type", _angular_core.TemplateRef)
-], exports.MetalistItem.prototype, "_content", void 0);
-__decorate$16([
-    _angular_core.Input(),
-    __metadata$8("design:type", Object)
-], exports.MetalistItem.prototype, "value", void 0);
-__decorate$16([
-    _angular_core.Input(),
-    __metadata$8("design:type", Object)
-], exports.MetalistItem.prototype, "metadata", void 0);
-__decorate$16([
-    _angular_core.Input(),
-    __metadata$8("design:type", Boolean)
-], exports.MetalistItem.prototype, "disabled", void 0);
-__decorate$16([
-    _angular_core.Input(),
-    __metadata$8("design:type", Boolean)
-], exports.MetalistItem.prototype, "marked", void 0);
-__decorate$16([
-    _angular_core.Input(),
-    __metadata$8("design:type", Boolean)
-], exports.MetalistItem.prototype, "selected", void 0);
-exports.MetalistItem = __decorate$16([
-    _angular_core.Component({
-        selector: 'vcl-metalist-item',
-        template: '<ng-template><ng-content></ng-content></ng-template>'
-    })
-], exports.MetalistItem);
 
 var __decorate$17 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1652,10 +1644,10 @@ var __metadata$9 = (this && this.__metadata) || function (k, v) {
 })(exports.SelectionMode || (exports.SelectionMode = {}));
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$2 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.MetalistComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return MetalistComponent; }),
     multi: true
 };
-exports.MetalistComponent = (function () {
+var MetalistComponent = (function () {
     function MetalistComponent(cdRef) {
         this.cdRef = cdRef;
         // If `Single`, a single item can be selected
@@ -1729,7 +1721,7 @@ exports.MetalistComponent = (function () {
         if (typeof item === 'number') {
             item = this.items.toArray()[item];
         }
-        if (item instanceof exports.MetalistItem) {
+        if (item instanceof MetalistItem) {
             if (item.disabled) {
                 return;
             }
@@ -1753,7 +1745,7 @@ exports.MetalistComponent = (function () {
         if (typeof item === 'number') {
             item = this.items.toArray()[item];
         }
-        if (item instanceof exports.MetalistItem) {
+        if (item instanceof MetalistItem) {
             item.selected = false;
             this.syncValue();
             this.triggerChange();
@@ -1811,38 +1803,38 @@ exports.MetalistComponent = (function () {
     MetalistComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$17([
+        _angular_core.Input(),
+        __metadata$9("design:type", Number)
+    ], MetalistComponent.prototype, "selectionMode", void 0);
+    __decorate$17([
+        _angular_core.Input(),
+        __metadata$9("design:type", String),
+        __metadata$9("design:paramtypes", [String])
+    ], MetalistComponent.prototype, "mode", null);
+    __decorate$17([
+        _angular_core.Input(),
+        __metadata$9("design:type", Number)
+    ], MetalistComponent.prototype, "maxSelectableItems", void 0);
+    __decorate$17([
+        _angular_core.Output(),
+        __metadata$9("design:type", Object)
+    ], MetalistComponent.prototype, "change", void 0);
+    __decorate$17([
+        _angular_core.ContentChildren(MetalistItem),
+        __metadata$9("design:type", _angular_core.QueryList)
+    ], MetalistComponent.prototype, "items", void 0);
+    MetalistComponent = __decorate$17([
+        _angular_core.Component({
+            selector: 'vcl-metalist, [vcl-metalist]',
+            template: "<wormhole *ngFor=\"let item of items\" [connect]=\"item._content\"></wormhole>",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$2],
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata$9("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], MetalistComponent);
     return MetalistComponent;
 }());
-__decorate$17([
-    _angular_core.Input(),
-    __metadata$9("design:type", Number)
-], exports.MetalistComponent.prototype, "selectionMode", void 0);
-__decorate$17([
-    _angular_core.Input(),
-    __metadata$9("design:type", String),
-    __metadata$9("design:paramtypes", [String])
-], exports.MetalistComponent.prototype, "mode", null);
-__decorate$17([
-    _angular_core.Input(),
-    __metadata$9("design:type", Number)
-], exports.MetalistComponent.prototype, "maxSelectableItems", void 0);
-__decorate$17([
-    _angular_core.Output(),
-    __metadata$9("design:type", Object)
-], exports.MetalistComponent.prototype, "change", void 0);
-__decorate$17([
-    _angular_core.ContentChildren(exports.MetalistItem),
-    __metadata$9("design:type", _angular_core.QueryList)
-], exports.MetalistComponent.prototype, "items", void 0);
-exports.MetalistComponent = __decorate$17([
-    _angular_core.Component({
-        selector: 'vcl-metalist, [vcl-metalist]',
-        template: "<wormhole *ngFor=\"let item of items\" [connect]=\"item._content\"></wormhole>",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$2],
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    }),
-    __metadata$9("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], exports.MetalistComponent);
 
 var __decorate$8 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1850,19 +1842,19 @@ var __decorate$8 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLMetalistModule = (function () {
+var VCLMetalistModule = (function () {
     function VCLMetalistModule() {
     }
+    VCLMetalistModule = __decorate$8([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLWormholeModule],
+            exports: [MetalistComponent, MetalistItem],
+            declarations: [MetalistComponent, MetalistItem],
+            providers: [],
+        })
+    ], VCLMetalistModule);
     return VCLMetalistModule;
 }());
-exports.VCLMetalistModule = __decorate$8([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLWormholeModule],
-        exports: [exports.MetalistComponent, exports.MetalistItem],
-        declarations: [exports.MetalistComponent, exports.MetalistItem],
-        providers: [],
-    })
-], exports.VCLMetalistModule);
 
 var __decorate$6 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1870,19 +1862,19 @@ var __decorate$6 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLFlipSwitchModule = (function () {
+var VCLFlipSwitchModule = (function () {
     function VCLFlipSwitchModule() {
     }
+    VCLFlipSwitchModule = __decorate$6([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLMetalistModule],
+            exports: [FlipSwitchComponent],
+            declarations: [FlipSwitchComponent],
+            providers: [],
+        })
+    ], VCLFlipSwitchModule);
     return VCLFlipSwitchModule;
 }());
-exports.VCLFlipSwitchModule = __decorate$6([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLMetalistModule],
-        exports: [FlipSwitchComponent],
-        declarations: [FlipSwitchComponent],
-        providers: [],
-    })
-], exports.VCLFlipSwitchModule);
 
 var __decorate$20 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1890,7 +1882,7 @@ var __decorate$20 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.IconService = (function () {
+var IconService = (function () {
     function IconService() {
     }
     // A default name resolver following the CSS class name conventions of
@@ -1928,11 +1920,11 @@ exports.IconService = (function () {
         }
         return icon;
     };
+    IconService = __decorate$20([
+        _angular_core.Injectable()
+    ], IconService);
     return IconService;
 }());
-exports.IconService = __decorate$20([
-    _angular_core.Injectable()
-], exports.IconService);
 
 var __decorate$19 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1943,7 +1935,7 @@ var __decorate$19 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$10 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.IconComponent = (function () {
+var IconComponent = (function () {
     function IconComponent(_iconService) {
         this._iconService = _iconService;
     }
@@ -1963,55 +1955,55 @@ exports.IconComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate$19([
+        _angular_core.Input(),
+        __metadata$10("design:type", Object)
+    ], IconComponent.prototype, "src", void 0);
+    __decorate$19([
+        _angular_core.Input(),
+        __metadata$10("design:type", Object)
+    ], IconComponent.prototype, "svguse", void 0);
+    __decorate$19([
+        _angular_core.Input(),
+        __metadata$10("design:type", Object)
+    ], IconComponent.prototype, "iconClass", void 0);
+    __decorate$19([
+        _angular_core.Input(),
+        __metadata$10("design:type", Object)
+    ], IconComponent.prototype, "icon", void 0);
+    __decorate$19([
+        _angular_core.HostBinding('attr.aria-label'),
+        _angular_core.Input(),
+        __metadata$10("design:type", Object)
+    ], IconComponent.prototype, "label", void 0);
+    __decorate$19([
+        _angular_core.HostBinding('attr.role'),
+        _angular_core.Input(),
+        __metadata$10("design:type", Object)
+    ], IconComponent.prototype, "ariaRole", void 0);
+    __decorate$19([
+        _angular_core.HostBinding('class'),
+        __metadata$10("design:type", String),
+        __metadata$10("design:paramtypes", [])
+    ], IconComponent.prototype, "mergedIconClass", null);
+    __decorate$19([
+        _angular_core.HostBinding('attr.aria-hidden'),
+        __metadata$10("design:type", Object),
+        __metadata$10("design:paramtypes", [])
+    ], IconComponent.prototype, "isAriaHidden", null);
+    IconComponent = __decorate$19([
+        _angular_core.Component({
+            selector: 'vcl-icon, [vcl-icon]',
+            template: "<img *ngIf=\"src\" [attr.src]=\"src\"> <svg *ngIf=\"svguse\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"xMidYMid meet\"> <use [attr.xmlns:xlink]=\"'http://www.w3.org/1999/xlink'\"></use> </svg> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            host: {
+                '[class.vclIcon]': 'true',
+            },
+        }),
+        __metadata$10("design:paramtypes", [IconService])
+    ], IconComponent);
     return IconComponent;
 }());
-__decorate$19([
-    _angular_core.Input(),
-    __metadata$10("design:type", String)
-], exports.IconComponent.prototype, "src", void 0);
-__decorate$19([
-    _angular_core.Input(),
-    __metadata$10("design:type", String)
-], exports.IconComponent.prototype, "svguse", void 0);
-__decorate$19([
-    _angular_core.Input(),
-    __metadata$10("design:type", String)
-], exports.IconComponent.prototype, "iconClass", void 0);
-__decorate$19([
-    _angular_core.Input(),
-    __metadata$10("design:type", String)
-], exports.IconComponent.prototype, "icon", void 0);
-__decorate$19([
-    _angular_core.HostBinding('attr.aria-label'),
-    _angular_core.Input(),
-    __metadata$10("design:type", String)
-], exports.IconComponent.prototype, "label", void 0);
-__decorate$19([
-    _angular_core.HostBinding('attr.role'),
-    _angular_core.Input(),
-    __metadata$10("design:type", String)
-], exports.IconComponent.prototype, "ariaRole", void 0);
-__decorate$19([
-    _angular_core.HostBinding('class'),
-    __metadata$10("design:type", String),
-    __metadata$10("design:paramtypes", [])
-], exports.IconComponent.prototype, "mergedIconClass", null);
-__decorate$19([
-    _angular_core.HostBinding('attr.aria-hidden'),
-    __metadata$10("design:type", Object),
-    __metadata$10("design:paramtypes", [])
-], exports.IconComponent.prototype, "isAriaHidden", null);
-exports.IconComponent = __decorate$19([
-    _angular_core.Component({
-        selector: 'vcl-icon, [vcl-icon]',
-        template: "<img *ngIf=\"src\" [attr.src]=\"src\"> <svg *ngIf=\"svguse\" viewBox=\"0 0 100 100\" preserveAspectRatio=\"xMidYMid meet\"> <use [attr.xmlns:xlink]=\"'http://www.w3.org/1999/xlink'\"></use> </svg> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        host: {
-            '[class.vclIcon]': 'true',
-        },
-    }),
-    __metadata$10("design:paramtypes", [exports.IconService])
-], exports.IconComponent);
 
 var __decorate$18 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2019,31 +2011,32 @@ var __decorate$18 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLIconModule = VCLIconModule_1 = (function () {
+var VCLIconModule = (function () {
     function VCLIconModule() {
     }
+    VCLIconModule_1 = VCLIconModule;
     VCLIconModule.forRoot = function (config) {
         return {
             ngModule: VCLIconModule_1,
             providers: [
                 {
-                    provide: exports.IconService,
-                    useClass: config.service || exports.IconService
+                    provide: IconService,
+                    useClass: config.service || IconService
                 }
             ]
         };
     };
+    VCLIconModule = VCLIconModule_1 = __decorate$18([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule],
+            exports: [IconComponent],
+            declarations: [IconComponent],
+            providers: [IconService],
+        })
+    ], VCLIconModule);
     return VCLIconModule;
+    var VCLIconModule_1;
 }());
-exports.VCLIconModule = VCLIconModule_1 = __decorate$18([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule],
-        exports: [exports.IconComponent],
-        declarations: [exports.IconComponent],
-        providers: [exports.IconService],
-    })
-], exports.VCLIconModule);
-var VCLIconModule_1;
 
 var __decorate$23 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2054,47 +2047,47 @@ var __decorate$23 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$12 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.DropdownOption = (function () {
+var DropdownOption = (function () {
     function DropdownOption() {
         this.disabled = false;
         this.selected = false;
     }
+    __decorate$23([
+        _angular_core.ViewChild(_angular_core.TemplateRef),
+        __metadata$12("design:type", _angular_core.TemplateRef)
+    ], DropdownOption.prototype, "content", void 0);
+    __decorate$23([
+        _angular_core.Input(),
+        __metadata$12("design:type", Object)
+    ], DropdownOption.prototype, "value", void 0);
+    __decorate$23([
+        _angular_core.Input(),
+        __metadata$12("design:type", Object)
+    ], DropdownOption.prototype, "metadata", void 0);
+    __decorate$23([
+        _angular_core.Input(),
+        __metadata$12("design:type", String)
+    ], DropdownOption.prototype, "label", void 0);
+    __decorate$23([
+        _angular_core.Input(),
+        __metadata$12("design:type", String)
+    ], DropdownOption.prototype, "sublabel", void 0);
+    __decorate$23([
+        _angular_core.Input(),
+        __metadata$12("design:type", Boolean)
+    ], DropdownOption.prototype, "disabled", void 0);
+    __decorate$23([
+        _angular_core.Input(),
+        __metadata$12("design:type", Boolean)
+    ], DropdownOption.prototype, "selected", void 0);
+    DropdownOption = __decorate$23([
+        _angular_core.Component({
+            selector: 'vcl-dropdown-option',
+            template: '<ng-template><ng-content></ng-content></ng-template>'
+        })
+    ], DropdownOption);
     return DropdownOption;
 }());
-__decorate$23([
-    _angular_core.ViewChild(_angular_core.TemplateRef),
-    __metadata$12("design:type", _angular_core.TemplateRef)
-], exports.DropdownOption.prototype, "content", void 0);
-__decorate$23([
-    _angular_core.Input(),
-    __metadata$12("design:type", Object)
-], exports.DropdownOption.prototype, "value", void 0);
-__decorate$23([
-    _angular_core.Input(),
-    __metadata$12("design:type", Object)
-], exports.DropdownOption.prototype, "metadata", void 0);
-__decorate$23([
-    _angular_core.Input(),
-    __metadata$12("design:type", String)
-], exports.DropdownOption.prototype, "label", void 0);
-__decorate$23([
-    _angular_core.Input(),
-    __metadata$12("design:type", String)
-], exports.DropdownOption.prototype, "sublabel", void 0);
-__decorate$23([
-    _angular_core.Input(),
-    __metadata$12("design:type", Boolean)
-], exports.DropdownOption.prototype, "disabled", void 0);
-__decorate$23([
-    _angular_core.Input(),
-    __metadata$12("design:type", Boolean)
-], exports.DropdownOption.prototype, "selected", void 0);
-exports.DropdownOption = __decorate$23([
-    _angular_core.Component({
-        selector: 'vcl-dropdown-option',
-        template: '<ng-template><ng-content></ng-content></ng-template>'
-    })
-], exports.DropdownOption);
 
 var __decorate$22 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2142,10 +2135,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.DropdownComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return DropdownComponent; }),
     multi: true
 };
-exports.DropdownComponent = (function () {
+var DropdownComponent = (function () {
     function DropdownComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -2252,57 +2245,57 @@ exports.DropdownComponent = (function () {
     DropdownComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$22([
+        _angular_core.ViewChild('metalist'),
+        __metadata$11("design:type", MetalistComponent)
+    ], DropdownComponent.prototype, "metalist", void 0);
+    __decorate$22([
+        _angular_core.ViewChild('metalist', { read: _angular_core.ElementRef }),
+        __metadata$11("design:type", _angular_core.ElementRef)
+    ], DropdownComponent.prototype, "listbox", void 0);
+    __decorate$22([
+        _angular_core.ContentChildren(DropdownOption),
+        __metadata$11("design:type", _angular_core.QueryList)
+    ], DropdownComponent.prototype, "items", void 0);
+    __decorate$22([
+        _angular_core.Input(),
+        __metadata$11("design:type", Number)
+    ], DropdownComponent.prototype, "tabindex", void 0);
+    __decorate$22([
+        _angular_core.Input(),
+        __metadata$11("design:type", Number)
+    ], DropdownComponent.prototype, "selectionMode", void 0);
+    __decorate$22([
+        _angular_core.Input(),
+        __metadata$11("design:type", String),
+        __metadata$11("design:paramtypes", [String])
+    ], DropdownComponent.prototype, "mode", null);
+    __decorate$22([
+        _angular_core.Input(),
+        __metadata$11("design:type", Object)
+    ], DropdownComponent.prototype, "maxSelectableItems", void 0);
+    __decorate$22([
+        _angular_core.Input(),
+        __metadata$11("design:type", Boolean)
+    ], DropdownComponent.prototype, "listenKeys", void 0);
+    __decorate$22([
+        _angular_core.Output('change'),
+        __metadata$11("design:type", Object)
+    ], DropdownComponent.prototype, "change", void 0);
+    DropdownComponent = __decorate$22([
+        _angular_core.Component({
+            selector: 'vcl-dropdown',
+            template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <!--  (mousedown) is used because tap will break scrolling on mobiles --> <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"metaItem.disabled\" [class.vclHighlighted]=\"metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (click)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3],
+            host: {
+                '[attr.tabindex]': '-1',
+            }
+        }),
+        __metadata$11("design:paramtypes", [_angular_core.ElementRef, _angular_core.ChangeDetectorRef])
+    ], DropdownComponent);
     return DropdownComponent;
 }());
-__decorate$22([
-    _angular_core.ViewChild('metalist'),
-    __metadata$11("design:type", exports.MetalistComponent)
-], exports.DropdownComponent.prototype, "metalist", void 0);
-__decorate$22([
-    _angular_core.ViewChild('metalist', { read: _angular_core.ElementRef }),
-    __metadata$11("design:type", _angular_core.ElementRef)
-], exports.DropdownComponent.prototype, "listbox", void 0);
-__decorate$22([
-    _angular_core.ContentChildren(exports.DropdownOption),
-    __metadata$11("design:type", _angular_core.QueryList)
-], exports.DropdownComponent.prototype, "items", void 0);
-__decorate$22([
-    _angular_core.Input(),
-    __metadata$11("design:type", Number)
-], exports.DropdownComponent.prototype, "tabindex", void 0);
-__decorate$22([
-    _angular_core.Input(),
-    __metadata$11("design:type", Number)
-], exports.DropdownComponent.prototype, "selectionMode", void 0);
-__decorate$22([
-    _angular_core.Input(),
-    __metadata$11("design:type", String),
-    __metadata$11("design:paramtypes", [String])
-], exports.DropdownComponent.prototype, "mode", null);
-__decorate$22([
-    _angular_core.Input(),
-    __metadata$11("design:type", Number)
-], exports.DropdownComponent.prototype, "maxSelectableItems", void 0);
-__decorate$22([
-    _angular_core.Input(),
-    __metadata$11("design:type", Boolean)
-], exports.DropdownComponent.prototype, "listenKeys", void 0);
-__decorate$22([
-    _angular_core.Output('change'),
-    __metadata$11("design:type", Object)
-], exports.DropdownComponent.prototype, "change", void 0);
-exports.DropdownComponent = __decorate$22([
-    _angular_core.Component({
-        selector: 'vcl-dropdown',
-        template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <!--  (mousedown) is used because tap will break scrolling on mobiles --> <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"metaItem.disabled\" [class.vclHighlighted]=\"metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (click)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3],
-        host: {
-            '[attr.tabindex]': '-1',
-        }
-    }),
-    __metadata$11("design:paramtypes", [_angular_core.ElementRef, _angular_core.ChangeDetectorRef])
-], exports.DropdownComponent);
 
 var __decorate$21 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2310,19 +2303,19 @@ var __decorate$21 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLDropdownModule = (function () {
+var VCLDropdownModule = (function () {
     function VCLDropdownModule() {
     }
+    VCLDropdownModule = __decorate$21([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLMetalistModule, VCLWormholeModule],
+            exports: [DropdownComponent, DropdownOption],
+            declarations: [DropdownComponent, DropdownOption],
+            providers: [],
+        })
+    ], VCLDropdownModule);
     return VCLDropdownModule;
 }());
-exports.VCLDropdownModule = __decorate$21([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLMetalistModule, exports.VCLWormholeModule],
-        exports: [exports.DropdownComponent, exports.DropdownOption],
-        declarations: [exports.DropdownComponent, exports.DropdownOption],
-        providers: [],
-    })
-], exports.VCLDropdownModule);
 
 var __extends$7 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2343,7 +2336,7 @@ var __decorate$26 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$13 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.ButtonStateContentDirective = (function (_super) {
+var ButtonStateContentDirective = (function (_super) {
     __extends$7(ButtonStateContentDirective, _super);
     function ButtonStateContentDirective(viewContainerRef, tempRef) {
         var _this = _super.call(this, viewContainerRef) || this;
@@ -2367,19 +2360,19 @@ exports.ButtonStateContentDirective = (function (_super) {
             this.wormhole.disconnect();
         }
     };
+    __decorate$26([
+        _angular_core.Input('vclButtonStateContent'),
+        __metadata$13("design:type", Object),
+        __metadata$13("design:paramtypes", [Object])
+    ], ButtonStateContentDirective.prototype, "state", null);
+    ButtonStateContentDirective = __decorate$26([
+        _angular_core.Directive({
+            selector: '[vclButtonStateContent]'
+        }),
+        __metadata$13("design:paramtypes", [_angular_core.ViewContainerRef, _angular_core.TemplateRef])
+    ], ButtonStateContentDirective);
     return ButtonStateContentDirective;
 }(WormholeHost));
-__decorate$26([
-    _angular_core.Input('vclButtonStateContent'),
-    __metadata$13("design:type", Object),
-    __metadata$13("design:paramtypes", [Object])
-], exports.ButtonStateContentDirective.prototype, "state", null);
-exports.ButtonStateContentDirective = __decorate$26([
-    _angular_core.Directive({
-        selector: '[vclButtonStateContent]'
-    }),
-    __metadata$13("design:paramtypes", [_angular_core.ViewContainerRef, _angular_core.TemplateRef])
-], exports.ButtonStateContentDirective);
 
 var __decorate$28 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2394,44 +2387,44 @@ var IcogramComponent = (function () {
     function IcogramComponent(elRef) {
         this.elRef = elRef;
     }
+    __decorate$28([
+        _angular_core.Input(),
+        __metadata$14("design:type", String)
+    ], IcogramComponent.prototype, "label", void 0);
+    __decorate$28([
+        _angular_core.Input(),
+        __metadata$14("design:type", Boolean)
+    ], IcogramComponent.prototype, "flexLabel", void 0);
+    __decorate$28([
+        _angular_core.Input(),
+        __metadata$14("design:type", String)
+    ], IcogramComponent.prototype, "prepIcon", void 0);
+    __decorate$28([
+        _angular_core.Input(),
+        __metadata$14("design:type", String)
+    ], IcogramComponent.prototype, "appIcon", void 0);
+    __decorate$28([
+        _angular_core.Input(),
+        __metadata$14("design:type", String)
+    ], IcogramComponent.prototype, "prepIconSrc", void 0);
+    __decorate$28([
+        _angular_core.Input(),
+        __metadata$14("design:type", String)
+    ], IcogramComponent.prototype, "appIconSrc", void 0);
+    IcogramComponent = __decorate$28([
+        _angular_core.Component({
+            selector: 'vcl-icogram, [vcl-icogram]',
+            host: {
+                '[class.vclIcogram]': 'true',
+                '[attr.role]': 'img'
+            },
+            template: "<div vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\" [src]=\"prepIconSrc\"></div> <ng-content></ng-content> <span *ngIf=\"!!label\" [class.vclLayoutFlex]=\"!!flexLabel\" class=\"vclText\"> {{label | loc}} </span> <div vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\" [src]=\"appIconSrc\"></div> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata$14("design:paramtypes", [_angular_core.ElementRef])
+    ], IcogramComponent);
     return IcogramComponent;
 }());
-__decorate$28([
-    _angular_core.Input(),
-    __metadata$14("design:type", String)
-], IcogramComponent.prototype, "label", void 0);
-__decorate$28([
-    _angular_core.Input(),
-    __metadata$14("design:type", Boolean)
-], IcogramComponent.prototype, "flexLabel", void 0);
-__decorate$28([
-    _angular_core.Input(),
-    __metadata$14("design:type", String)
-], IcogramComponent.prototype, "prepIcon", void 0);
-__decorate$28([
-    _angular_core.Input(),
-    __metadata$14("design:type", String)
-], IcogramComponent.prototype, "appIcon", void 0);
-__decorate$28([
-    _angular_core.Input(),
-    __metadata$14("design:type", String)
-], IcogramComponent.prototype, "prepIconSrc", void 0);
-__decorate$28([
-    _angular_core.Input(),
-    __metadata$14("design:type", String)
-], IcogramComponent.prototype, "appIconSrc", void 0);
-IcogramComponent = __decorate$28([
-    _angular_core.Component({
-        selector: 'vcl-icogram, [vcl-icogram]',
-        host: {
-            '[class.vclIcogram]': 'true',
-            '[attr.role]': 'img'
-        },
-        template: "<div vcl-icon *ngIf=\"prepIcon || prepIconSrc\" [icon]=\"prepIcon\" [src]=\"prepIconSrc\"></div> <ng-content></ng-content> <span *ngIf=\"!!label\" [class.vclLayoutFlex]=\"!!flexLabel\" class=\"vclText\"> {{label | loc}} </span> <div vcl-icon *ngIf=\"appIcon || appIconSrc\" [icon]=\"appIcon\" [src]=\"appIconSrc\"></div> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    }),
-    __metadata$14("design:paramtypes", [_angular_core.ElementRef])
-], IcogramComponent);
 
 var __decorate$27 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2439,19 +2432,19 @@ var __decorate$27 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLIcogramModule = (function () {
+var VCLIcogramModule = (function () {
     function VCLIcogramModule() {
     }
+    VCLIcogramModule = __decorate$27([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLIconModule, L10nModule],
+            exports: [IcogramComponent],
+            declarations: [IcogramComponent],
+            providers: [],
+        })
+    ], VCLIcogramModule);
     return VCLIcogramModule;
 }());
-exports.VCLIcogramModule = __decorate$27([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLIconModule, exports.L10nModule],
-        exports: [IcogramComponent],
-        declarations: [IcogramComponent],
-        providers: [],
-    })
-], exports.VCLIcogramModule);
 
 function dispatchTap(el) {
     el.click();
@@ -2481,7 +2474,7 @@ var InteractionType;
     InteractionType[InteractionType["Click"] = 0] = "Click";
     InteractionType[InteractionType["Tap"] = 1] = "Tap";
 })(InteractionType || (InteractionType = {}));
-exports.ButtonComponent = (function (_super) {
+var ButtonComponent = (function (_super) {
     __extends$8(ButtonComponent, _super);
     function ButtonComponent(elementRef) {
         var _this = _super.call(this) || this;
@@ -2568,117 +2561,117 @@ exports.ButtonComponent = (function (_super) {
     ButtonComponent.prototype.ngOnDestroy = function () {
         _super.prototype.ngOnDestroy.call(this);
     };
+    __decorate$29([
+        _angular_core.HostBinding('class.vclHovered'),
+        __metadata$15("design:type", Boolean)
+    ], ButtonComponent.prototype, "hovered", void 0);
+    __decorate$29([
+        _angular_core.HostBinding('attr.disabled'),
+        __metadata$15("design:type", Object),
+        __metadata$15("design:paramtypes", [])
+    ], ButtonComponent.prototype, "isDisabled", null);
+    __decorate$29([
+        _angular_core.Input(),
+        _angular_core.HostBinding('class.vclSelected'),
+        __metadata$15("design:type", Boolean)
+    ], ButtonComponent.prototype, "selected", void 0);
+    __decorate$29([
+        _angular_core.HostBinding('attr.aria-label'),
+        _angular_core.Input(),
+        __metadata$15("design:type", String)
+    ], ButtonComponent.prototype, "title", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", Boolean)
+    ], ButtonComponent.prototype, "disabled", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", Boolean)
+    ], ButtonComponent.prototype, "disableA11yClick", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", Boolean)
+    ], ButtonComponent.prototype, "busy", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", Boolean)
+    ], ButtonComponent.prototype, "flexLabel", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", String)
+    ], ButtonComponent.prototype, "label", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", String)
+    ], ButtonComponent.prototype, "prepIcon", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", String)
+    ], ButtonComponent.prototype, "appIcon", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", String)
+    ], ButtonComponent.prototype, "appIconSrc", void 0);
+    __decorate$29([
+        _angular_core.Input(),
+        __metadata$15("design:type", String)
+    ], ButtonComponent.prototype, "prepIconSrc", void 0);
+    __decorate$29([
+        _angular_core.Output(),
+        __metadata$15("design:type", rxjs_Observable.Observable),
+        __metadata$15("design:paramtypes", [])
+    ], ButtonComponent.prototype, "press", null);
+    __decorate$29([
+        _angular_core.Output(),
+        __metadata$15("design:type", Object)
+    ], ButtonComponent.prototype, "stateChange", void 0);
+    __decorate$29([
+        _angular_core.ContentChildren(ButtonStateContentDirective),
+        __metadata$15("design:type", _angular_core.QueryList)
+    ], ButtonComponent.prototype, "buttonContent", void 0);
+    __decorate$29([
+        _angular_core.HostListener('keypress', ['$event']),
+        __metadata$15("design:type", Function),
+        __metadata$15("design:paramtypes", [KeyboardEvent]),
+        __metadata$15("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onKeypress", null);
+    __decorate$29([
+        _angular_core.HostListener('mouseenter', ['$event']),
+        __metadata$15("design:type", Function),
+        __metadata$15("design:paramtypes", [Object]),
+        __metadata$15("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onMouseEnter", null);
+    __decorate$29([
+        _angular_core.HostListener('mouseleave', ['$event']),
+        __metadata$15("design:type", Function),
+        __metadata$15("design:paramtypes", [Object]),
+        __metadata$15("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onMouseLeave", null);
+    __decorate$29([
+        _angular_core.HostListener('click', ['$event']),
+        __metadata$15("design:type", Function),
+        __metadata$15("design:paramtypes", [Event]),
+        __metadata$15("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onTap", null);
+    __decorate$29([
+        _angular_core.HostListener('click', ['$event']),
+        __metadata$15("design:type", Function),
+        __metadata$15("design:paramtypes", [Event]),
+        __metadata$15("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onClick", null);
+    ButtonComponent = __decorate$29([
+        _angular_core.Component({
+            selector: 'button[vcl-button]',
+            host: {
+                '[class.vclButton]': 'true',
+            },
+            template: "<vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\" [appIconSrc]=\"appIconSrc\" [prepIconSrc]=\"prepIconSrc\"> <ng-content></ng-content> </vcl-icogram> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+        }),
+        __metadata$15("design:paramtypes", [_angular_core.ElementRef])
+    ], ButtonComponent);
     return ButtonComponent;
 }(ObservableComponent));
-__decorate$29([
-    _angular_core.HostBinding('class.vclHovered'),
-    __metadata$15("design:type", Boolean)
-], exports.ButtonComponent.prototype, "hovered", void 0);
-__decorate$29([
-    _angular_core.HostBinding('attr.disabled'),
-    __metadata$15("design:type", Boolean),
-    __metadata$15("design:paramtypes", [])
-], exports.ButtonComponent.prototype, "isDisabled", null);
-__decorate$29([
-    _angular_core.Input(),
-    _angular_core.HostBinding('class.vclSelected'),
-    __metadata$15("design:type", Boolean)
-], exports.ButtonComponent.prototype, "selected", void 0);
-__decorate$29([
-    _angular_core.HostBinding('attr.aria-label'),
-    _angular_core.Input(),
-    __metadata$15("design:type", String)
-], exports.ButtonComponent.prototype, "title", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", Boolean)
-], exports.ButtonComponent.prototype, "disabled", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", Boolean)
-], exports.ButtonComponent.prototype, "disableA11yClick", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", Boolean)
-], exports.ButtonComponent.prototype, "busy", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", Boolean)
-], exports.ButtonComponent.prototype, "flexLabel", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", String)
-], exports.ButtonComponent.prototype, "label", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", String)
-], exports.ButtonComponent.prototype, "prepIcon", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", String)
-], exports.ButtonComponent.prototype, "appIcon", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", String)
-], exports.ButtonComponent.prototype, "appIconSrc", void 0);
-__decorate$29([
-    _angular_core.Input(),
-    __metadata$15("design:type", String)
-], exports.ButtonComponent.prototype, "prepIconSrc", void 0);
-__decorate$29([
-    _angular_core.Output(),
-    __metadata$15("design:type", rxjs_Observable.Observable),
-    __metadata$15("design:paramtypes", [])
-], exports.ButtonComponent.prototype, "press", null);
-__decorate$29([
-    _angular_core.Output(),
-    __metadata$15("design:type", Object)
-], exports.ButtonComponent.prototype, "stateChange", void 0);
-__decorate$29([
-    _angular_core.ContentChildren(exports.ButtonStateContentDirective),
-    __metadata$15("design:type", _angular_core.QueryList)
-], exports.ButtonComponent.prototype, "buttonContent", void 0);
-__decorate$29([
-    _angular_core.HostListener('keypress', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [KeyboardEvent]),
-    __metadata$15("design:returntype", void 0)
-], exports.ButtonComponent.prototype, "onKeypress", null);
-__decorate$29([
-    _angular_core.HostListener('mouseenter', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Object]),
-    __metadata$15("design:returntype", void 0)
-], exports.ButtonComponent.prototype, "onMouseEnter", null);
-__decorate$29([
-    _angular_core.HostListener('mouseleave', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Object]),
-    __metadata$15("design:returntype", void 0)
-], exports.ButtonComponent.prototype, "onMouseLeave", null);
-__decorate$29([
-    _angular_core.HostListener('click', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Event]),
-    __metadata$15("design:returntype", void 0)
-], exports.ButtonComponent.prototype, "onTap", null);
-__decorate$29([
-    _angular_core.HostListener('click', ['$event']),
-    __metadata$15("design:type", Function),
-    __metadata$15("design:paramtypes", [Event]),
-    __metadata$15("design:returntype", void 0)
-], exports.ButtonComponent.prototype, "onClick", null);
-exports.ButtonComponent = __decorate$29([
-    _angular_core.Component({
-        selector: 'button[vcl-button]',
-        host: {
-            '[class.vclButton]': 'true',
-        },
-        template: "<vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\" [appIconSrc]=\"appIconSrc\" [prepIconSrc]=\"prepIconSrc\"> <ng-content></ng-content> </vcl-icogram> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-    }),
-    __metadata$15("design:paramtypes", [_angular_core.ElementRef])
-], exports.ButtonComponent);
 
 var __decorate$25 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2686,19 +2679,19 @@ var __decorate$25 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLButtonModule = (function () {
+var VCLButtonModule = (function () {
     function VCLButtonModule() {
     }
+    VCLButtonModule = __decorate$25([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLIcogramModule, L10nModule],
+            exports: [ButtonComponent, ButtonStateContentDirective],
+            declarations: [ButtonComponent, ButtonStateContentDirective],
+            providers: [],
+        })
+    ], VCLButtonModule);
     return VCLButtonModule;
 }());
-exports.VCLButtonModule = __decorate$25([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLIcogramModule, exports.L10nModule],
-        exports: [exports.ButtonComponent, exports.ButtonStateContentDirective],
-        declarations: [exports.ButtonComponent, exports.ButtonStateContentDirective],
-        providers: [],
-    })
-], exports.VCLButtonModule);
 
 var __decorate$31 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2733,18 +2726,18 @@ var OffClickDirective = (function () {
     OffClickDirective.prototype.ngOnDestroy = function () {
         this.sub && this.sub.unsubscribe();
     };
+    __decorate$31([
+        _angular_core.Output('offClick'),
+        __metadata$16("design:type", Object)
+    ], OffClickDirective.prototype, "offClick", void 0);
+    OffClickDirective = __decorate$31([
+        _angular_core.Directive({
+            selector: '[offClick]',
+        }),
+        __metadata$16("design:paramtypes", [_angular_core.ElementRef])
+    ], OffClickDirective);
     return OffClickDirective;
 }());
-__decorate$31([
-    _angular_core.Output('offClick'),
-    __metadata$16("design:type", Object)
-], OffClickDirective.prototype, "offClick", void 0);
-OffClickDirective = __decorate$31([
-    _angular_core.Directive({
-        selector: '[offClick]',
-    }),
-    __metadata$16("design:paramtypes", [_angular_core.ElementRef])
-], OffClickDirective);
 
 var __decorate$30 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2752,17 +2745,17 @@ var __decorate$30 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLOffClickModule = (function () {
+var VCLOffClickModule = (function () {
     function VCLOffClickModule() {
     }
+    VCLOffClickModule = __decorate$30([
+        _angular_core.NgModule({
+            declarations: [OffClickDirective],
+            exports: [OffClickDirective]
+        })
+    ], VCLOffClickModule);
     return VCLOffClickModule;
 }());
-exports.VCLOffClickModule = __decorate$30([
-    _angular_core.NgModule({
-        declarations: [OffClickDirective],
-        exports: [OffClickDirective]
-    })
-], exports.VCLOffClickModule);
 
 var __extends$9 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2808,7 +2801,7 @@ var PopoverState;
     PopoverState[PopoverState["closing"] = 3] = "closing";
 })(PopoverState || (PopoverState = {}));
 var POPOVER_ANIMATIONS = new _angular_core.OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
-exports.PopoverComponent = PopoverComponent_1 = (function (_super) {
+var PopoverComponent = (function (_super) {
     __extends$9(PopoverComponent, _super);
     function PopoverComponent(me, builder, animations) {
         var _this = _super.call(this) || this;
@@ -2838,6 +2831,7 @@ exports.PopoverComponent = PopoverComponent_1 = (function (_super) {
         });
         return _this;
     }
+    PopoverComponent_1 = PopoverComponent;
     Object.defineProperty(PopoverComponent.prototype, "visible", {
         get: function () {
             return (this.state === PopoverState.opening || this.state === PopoverState.visible);
@@ -3010,82 +3004,82 @@ exports.PopoverComponent = PopoverComponent_1 = (function (_super) {
             });
         this.translateY = this.translateY + diffY;
     };
+    PopoverComponent.Tag = 'PopoverComponent';
+    __decorate$33([
+        _angular_core.Input(),
+        __metadata$17("design:type", Boolean)
+    ], PopoverComponent.prototype, "debug", void 0);
+    __decorate$33([
+        _angular_core.Input(),
+        __metadata$17("design:type", Object)
+    ], PopoverComponent.prototype, "target", void 0);
+    __decorate$33([
+        _angular_core.Input(),
+        __metadata$17("design:type", String)
+    ], PopoverComponent.prototype, "targetX", void 0);
+    __decorate$33([
+        _angular_core.Input(),
+        __metadata$17("design:type", String)
+    ], PopoverComponent.prototype, "targetY", void 0);
+    __decorate$33([
+        _angular_core.Input(),
+        __metadata$17("design:type", String)
+    ], PopoverComponent.prototype, "attachmentX", void 0);
+    __decorate$33([
+        _angular_core.Input(),
+        __metadata$17("design:type", String)
+    ], PopoverComponent.prototype, "attachmentY", void 0);
+    __decorate$33([
+        _angular_core.Input(),
+        __metadata$17("design:type", Object),
+        __metadata$17("design:paramtypes", [Object])
+    ], PopoverComponent.prototype, "visible", null);
+    __decorate$33([
+        _angular_core.Output(),
+        __metadata$17("design:type", Object)
+    ], PopoverComponent.prototype, "willClose", void 0);
+    __decorate$33([
+        _angular_core.Output(),
+        __metadata$17("design:type", Object)
+    ], PopoverComponent.prototype, "willOpen", void 0);
+    __decorate$33([
+        _angular_core.HostBinding('class.vclLayoutHidden'),
+        __metadata$17("design:type", Object),
+        __metadata$17("design:paramtypes", [])
+    ], PopoverComponent.prototype, "classHidden", null);
+    __decorate$33([
+        _angular_core.HostBinding('style.visibility'),
+        __metadata$17("design:type", Object),
+        __metadata$17("design:paramtypes", [])
+    ], PopoverComponent.prototype, "styleVisibility", null);
+    __decorate$33([
+        _angular_core.HostBinding('style.transform'),
+        __metadata$17("design:type", Object),
+        __metadata$17("design:paramtypes", [])
+    ], PopoverComponent.prototype, "transform", null);
+    __decorate$33([
+        _angular_core.HostListener('window:resize', ['$event']),
+        __metadata$17("design:type", Function),
+        __metadata$17("design:paramtypes", [Object]),
+        __metadata$17("design:returntype", void 0)
+    ], PopoverComponent.prototype, "onWindowResize", null);
+    PopoverComponent = PopoverComponent_1 = __decorate$33([
+        _angular_core.Component({
+            selector: 'vcl-popover',
+            template: '<ng-content></ng-content>',
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            animations: [_angular_core.trigger('popoverState', [])],
+            host: {
+                '[class.vclPopOver]': 'true',
+                '[style.position]': '"absolute"'
+            }
+        }),
+        __param$3(2, _angular_core.Optional()), __param$3(2, _angular_core.Inject(POPOVER_ANIMATIONS)),
+        __metadata$17("design:paramtypes", [_angular_core.ElementRef, _angular_animations.AnimationBuilder, Object])
+    ], PopoverComponent);
     return PopoverComponent;
+    var PopoverComponent_1;
 }(ObservableComponent));
-exports.PopoverComponent.Tag = 'PopoverComponent';
-__decorate$33([
-    _angular_core.Input(),
-    __metadata$17("design:type", Boolean)
-], exports.PopoverComponent.prototype, "debug", void 0);
-__decorate$33([
-    _angular_core.Input(),
-    __metadata$17("design:type", Object)
-], exports.PopoverComponent.prototype, "target", void 0);
-__decorate$33([
-    _angular_core.Input(),
-    __metadata$17("design:type", String)
-], exports.PopoverComponent.prototype, "targetX", void 0);
-__decorate$33([
-    _angular_core.Input(),
-    __metadata$17("design:type", String)
-], exports.PopoverComponent.prototype, "targetY", void 0);
-__decorate$33([
-    _angular_core.Input(),
-    __metadata$17("design:type", String)
-], exports.PopoverComponent.prototype, "attachmentX", void 0);
-__decorate$33([
-    _angular_core.Input(),
-    __metadata$17("design:type", String)
-], exports.PopoverComponent.prototype, "attachmentY", void 0);
-__decorate$33([
-    _angular_core.Input(),
-    __metadata$17("design:type", Object),
-    __metadata$17("design:paramtypes", [Object])
-], exports.PopoverComponent.prototype, "visible", null);
-__decorate$33([
-    _angular_core.Output(),
-    __metadata$17("design:type", Object)
-], exports.PopoverComponent.prototype, "willClose", void 0);
-__decorate$33([
-    _angular_core.Output(),
-    __metadata$17("design:type", Object)
-], exports.PopoverComponent.prototype, "willOpen", void 0);
-__decorate$33([
-    _angular_core.HostBinding('class.vclLayoutHidden'),
-    __metadata$17("design:type", Object),
-    __metadata$17("design:paramtypes", [])
-], exports.PopoverComponent.prototype, "classHidden", null);
-__decorate$33([
-    _angular_core.HostBinding('style.visibility'),
-    __metadata$17("design:type", Object),
-    __metadata$17("design:paramtypes", [])
-], exports.PopoverComponent.prototype, "styleVisibility", null);
-__decorate$33([
-    _angular_core.HostBinding('style.transform'),
-    __metadata$17("design:type", Object),
-    __metadata$17("design:paramtypes", [])
-], exports.PopoverComponent.prototype, "transform", null);
-__decorate$33([
-    _angular_core.HostListener('window:resize', ['$event']),
-    __metadata$17("design:type", Function),
-    __metadata$17("design:paramtypes", [Object]),
-    __metadata$17("design:returntype", void 0)
-], exports.PopoverComponent.prototype, "onWindowResize", null);
-exports.PopoverComponent = PopoverComponent_1 = __decorate$33([
-    _angular_core.Component({
-        selector: 'vcl-popover',
-        template: '<ng-content></ng-content>',
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        animations: [_angular_core.trigger('popoverState', [])],
-        host: {
-            '[class.vclPopOver]': 'true',
-            '[style.position]': '"absolute"'
-        }
-    }),
-    __param$3(2, _angular_core.Optional()), __param$3(2, _angular_core.Inject(POPOVER_ANIMATIONS)),
-    __metadata$17("design:paramtypes", [_angular_core.ElementRef, _angular_animations.AnimationBuilder, Object])
-], exports.PopoverComponent);
-var PopoverComponent_1;
 
 var __decorate$32 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3093,22 +3087,22 @@ var __decorate$32 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLPopoverModule = (function () {
+var VCLPopoverModule = (function () {
     function VCLPopoverModule() {
     }
+    VCLPopoverModule = __decorate$32([
+        _angular_core.NgModule({
+            imports: [
+                _angular_common.CommonModule,
+                VCLOffClickModule
+            ],
+            providers: [],
+            exports: [PopoverComponent],
+            declarations: [PopoverComponent]
+        })
+    ], VCLPopoverModule);
     return VCLPopoverModule;
 }());
-exports.VCLPopoverModule = __decorate$32([
-    _angular_core.NgModule({
-        imports: [
-            _angular_common.CommonModule,
-            exports.VCLOffClickModule
-        ],
-        providers: [],
-        exports: [exports.PopoverComponent],
-        declarations: [exports.PopoverComponent]
-    })
-], exports.VCLPopoverModule);
 
 var __decorate$35 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3119,7 +3113,7 @@ var __decorate$35 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$18 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.TokenComponent = (function () {
+var TokenComponent = (function () {
     function TokenComponent() {
         this.selected = false;
         this.removable = false;
@@ -3134,50 +3128,50 @@ exports.TokenComponent = (function () {
         event.stopPropagation();
         this.remove.emit(event);
     };
+    __decorate$35([
+        _angular_core.Input(),
+        __metadata$18("design:type", String)
+    ], TokenComponent.prototype, "label", void 0);
+    __decorate$35([
+        _angular_core.HostListener('click', ['$event']),
+        __metadata$18("design:type", Function),
+        __metadata$18("design:paramtypes", [Event]),
+        __metadata$18("design:returntype", void 0)
+    ], TokenComponent.prototype, "onTap", null);
+    __decorate$35([
+        _angular_core.HostBinding('class.vclSelected'),
+        _angular_core.Input(),
+        __metadata$18("design:type", Boolean)
+    ], TokenComponent.prototype, "selected", void 0);
+    __decorate$35([
+        _angular_core.Input(),
+        __metadata$18("design:type", Boolean)
+    ], TokenComponent.prototype, "removable", void 0);
+    __decorate$35([
+        _angular_core.Input(),
+        __metadata$18("design:type", String)
+    ], TokenComponent.prototype, "icon", void 0);
+    __decorate$35([
+        _angular_core.Output(),
+        __metadata$18("design:type", Object)
+    ], TokenComponent.prototype, "remove", void 0);
+    __decorate$35([
+        _angular_core.Output(),
+        __metadata$18("design:type", Object)
+    ], TokenComponent.prototype, "select", void 0);
+    TokenComponent = __decorate$35([
+        _angular_core.Component({
+            selector: 'vcl-token',
+            template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" [appIcon]=\"icon\" (click)=\"onRemoveClick($event)\"> </button> ",
+            animations: [_angular_core.trigger('checkState', [])],
+            host: {
+                '[class.vclToken]': 'true',
+                '[@checkState]': 'selected'
+            }
+        })
+    ], TokenComponent);
     return TokenComponent;
 }());
-__decorate$35([
-    _angular_core.Input(),
-    __metadata$18("design:type", String)
-], exports.TokenComponent.prototype, "label", void 0);
-__decorate$35([
-    _angular_core.HostListener('click', ['$event']),
-    __metadata$18("design:type", Function),
-    __metadata$18("design:paramtypes", [Event]),
-    __metadata$18("design:returntype", void 0)
-], exports.TokenComponent.prototype, "onTap", null);
-__decorate$35([
-    _angular_core.HostBinding('class.vclSelected'),
-    _angular_core.Input(),
-    __metadata$18("design:type", Boolean)
-], exports.TokenComponent.prototype, "selected", void 0);
-__decorate$35([
-    _angular_core.Input(),
-    __metadata$18("design:type", Boolean)
-], exports.TokenComponent.prototype, "removable", void 0);
-__decorate$35([
-    _angular_core.Input(),
-    __metadata$18("design:type", String)
-], exports.TokenComponent.prototype, "icon", void 0);
-__decorate$35([
-    _angular_core.Output(),
-    __metadata$18("design:type", Object)
-], exports.TokenComponent.prototype, "remove", void 0);
-__decorate$35([
-    _angular_core.Output(),
-    __metadata$18("design:type", Object)
-], exports.TokenComponent.prototype, "select", void 0);
-exports.TokenComponent = __decorate$35([
-    _angular_core.Component({
-        selector: 'vcl-token',
-        template: "<span class=\"vclTokenLabel\">{{label}}</span> <button vcl-button *ngIf=\"removable\"  class=\"vclTransparent\" type=\"button\"  title=\"Remove\" [appIcon]=\"icon\" (click)=\"onRemoveClick($event)\"> </button> ",
-        animations: [_angular_core.trigger('checkState', [])],
-        host: {
-            '[class.vclToken]': 'true',
-            '[@checkState]': 'selected'
-        }
-    })
-], exports.TokenComponent);
 
 var __decorate$36 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3190,10 +3184,10 @@ var __metadata$19 = (this && this.__metadata) || function (k, v) {
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$4 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.TokenListComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return TokenListComponent; }),
     multi: true
 };
-exports.TokenListComponent = (function () {
+var TokenListComponent = (function () {
     function TokenListComponent(cdRef) {
         this.cdRef = cdRef;
         this.selectable = false;
@@ -3256,32 +3250,32 @@ exports.TokenListComponent = (function () {
     TokenListComponent.prototype.registerOnTouched = function (fn) {
         this.onTouchedCallback = fn;
     };
+    __decorate$36([
+        _angular_core.ContentChildren(TokenComponent),
+        __metadata$19("design:type", _angular_core.QueryList)
+    ], TokenListComponent.prototype, "tokens", void 0);
+    __decorate$36([
+        _angular_core.Input(),
+        __metadata$19("design:type", Boolean)
+    ], TokenListComponent.prototype, "selectable", void 0);
+    __decorate$36([
+        _angular_core.Output(),
+        __metadata$19("design:type", Object)
+    ], TokenListComponent.prototype, "change", void 0);
+    TokenListComponent = __decorate$36([
+        _angular_core.Component({
+            selector: 'vcl-token-list',
+            template: '<ng-content></ng-content>',
+            host: {
+                '[class.vclTokenList]': 'true',
+                '[class.vclTokenContainer]': 'true'
+            },
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$4]
+        }),
+        __metadata$19("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], TokenListComponent);
     return TokenListComponent;
 }());
-__decorate$36([
-    _angular_core.ContentChildren(exports.TokenComponent),
-    __metadata$19("design:type", _angular_core.QueryList)
-], exports.TokenListComponent.prototype, "tokens", void 0);
-__decorate$36([
-    _angular_core.Input(),
-    __metadata$19("design:type", Boolean)
-], exports.TokenListComponent.prototype, "selectable", void 0);
-__decorate$36([
-    _angular_core.Output(),
-    __metadata$19("design:type", Object)
-], exports.TokenListComponent.prototype, "change", void 0);
-exports.TokenListComponent = __decorate$36([
-    _angular_core.Component({
-        selector: 'vcl-token-list',
-        template: '<ng-content></ng-content>',
-        host: {
-            '[class.vclTokenList]': 'true',
-            '[class.vclTokenContainer]': 'true'
-        },
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$4]
-    }),
-    __metadata$19("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], exports.TokenListComponent);
 
 var __decorate$37 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3329,26 +3323,26 @@ var __generator$1 = (this && this.__generator) || function (thisArg, body) {
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$5 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.TokenInputComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return TokenInputComponent; }),
     multi: true
 };
 var TokenInputLabelPre = (function () {
     function TokenInputLabelPre() {
     }
+    TokenInputLabelPre = __decorate$37([
+        _angular_core.Directive({ selector: '[vcl-token-input-pre]' })
+    ], TokenInputLabelPre);
     return TokenInputLabelPre;
 }());
-TokenInputLabelPre = __decorate$37([
-    _angular_core.Directive({ selector: '[vcl-token-input-pre]' })
-], TokenInputLabelPre);
 var TokenInputLabelPost = (function () {
     function TokenInputLabelPost() {
     }
+    TokenInputLabelPost = __decorate$37([
+        _angular_core.Directive({ selector: '[vcl-token-input-post]' })
+    ], TokenInputLabelPost);
     return TokenInputLabelPost;
 }());
-TokenInputLabelPost = __decorate$37([
-    _angular_core.Directive({ selector: '[vcl-token-input-post]' })
-], TokenInputLabelPost);
-exports.TokenInputComponent = (function () {
+var TokenInputComponent = (function () {
     function TokenInputComponent(cdRef) {
         this.cdRef = cdRef;
         this.tokens = [];
@@ -3456,96 +3450,96 @@ exports.TokenInputComponent = (function () {
     TokenInputComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$37([
+        _angular_core.ViewChild('input'),
+        __metadata$20("design:type", _angular_core.ElementRef)
+    ], TokenInputComponent.prototype, "input", void 0);
+    __decorate$37([
+        _angular_core.Input(),
+        __metadata$20("design:type", Boolean)
+    ], TokenInputComponent.prototype, "selectable", void 0);
+    __decorate$37([
+        _angular_core.Input(),
+        __metadata$20("design:type", Boolean)
+    ], TokenInputComponent.prototype, "selectedAfterAdd", void 0);
+    __decorate$37([
+        _angular_core.Input(),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "placeholder", void 0);
+    __decorate$37([
+        _angular_core.Input(),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "inputClass", void 0);
+    __decorate$37([
+        _angular_core.Input(),
+        __metadata$20("design:type", String)
+    ], TokenInputComponent.prototype, "icon", void 0);
+    __decorate$37([
+        _angular_core.Input(),
+        __metadata$20("design:type", Number)
+    ], TokenInputComponent.prototype, "tabindex", void 0);
+    __decorate$37([
+        _angular_core.Input(),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "tokenClass", void 0);
+    __decorate$37([
+        _angular_core.Output(),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "change", void 0);
+    __decorate$37([
+        _angular_core.Output(),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "add", void 0);
+    __decorate$37([
+        _angular_core.Output(),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "remove", void 0);
+    __decorate$37([
+        _angular_core.Output(),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "confirm", void 0);
+    __decorate$37([
+        _angular_core.ContentChild(TokenInputLabelPre, { read: _angular_core.TemplateRef }),
+        __metadata$20("design:type", TokenInputLabelPre)
+    ], TokenInputComponent.prototype, "labelPre", void 0);
+    __decorate$37([
+        _angular_core.ContentChild(TokenInputLabelPost, { read: _angular_core.TemplateRef }),
+        __metadata$20("design:type", TokenInputLabelPost)
+    ], TokenInputComponent.prototype, "labelPost", void 0);
+    __decorate$37([
+        _angular_core.HostListener('focus', ['$event']),
+        __metadata$20("design:type", Function),
+        __metadata$20("design:paramtypes", [Object]),
+        __metadata$20("design:returntype", Promise)
+    ], TokenInputComponent.prototype, "onFocus", null);
+    __decorate$37([
+        _angular_core.HostBinding('class.vclFocused'),
+        __metadata$20("design:type", Object)
+    ], TokenInputComponent.prototype, "focused", void 0);
+    __decorate$37([
+        _angular_core.HostListener('keydown', ['$event']),
+        __metadata$20("design:type", Function),
+        __metadata$20("design:paramtypes", [KeyboardEvent]),
+        __metadata$20("design:returntype", void 0)
+    ], TokenInputComponent.prototype, "onKeydown", null);
+    TokenInputComponent = __decorate$37([
+        _angular_core.Component({
+            selector: 'vcl-token-input',
+            template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (click)=\"select(token)\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
+            host: {
+                '[class.vclInput]': 'true',
+                '[class.vclTokenInput]': 'true',
+                '[class.vclLayoutHorizontal]': 'true',
+                '[class.vclLayoutWrap]': 'true',
+                '[attr.tabindex]': '-1',
+            },
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$5],
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata$20("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], TokenInputComponent);
     return TokenInputComponent;
 }());
-__decorate$37([
-    _angular_core.ViewChild('input'),
-    __metadata$20("design:type", _angular_core.ElementRef)
-], exports.TokenInputComponent.prototype, "input", void 0);
-__decorate$37([
-    _angular_core.Input(),
-    __metadata$20("design:type", Boolean)
-], exports.TokenInputComponent.prototype, "selectable", void 0);
-__decorate$37([
-    _angular_core.Input(),
-    __metadata$20("design:type", Boolean)
-], exports.TokenInputComponent.prototype, "selectedAfterAdd", void 0);
-__decorate$37([
-    _angular_core.Input(),
-    __metadata$20("design:type", String)
-], exports.TokenInputComponent.prototype, "placeholder", void 0);
-__decorate$37([
-    _angular_core.Input(),
-    __metadata$20("design:type", String)
-], exports.TokenInputComponent.prototype, "inputClass", void 0);
-__decorate$37([
-    _angular_core.Input(),
-    __metadata$20("design:type", String)
-], exports.TokenInputComponent.prototype, "icon", void 0);
-__decorate$37([
-    _angular_core.Input(),
-    __metadata$20("design:type", Number)
-], exports.TokenInputComponent.prototype, "tabindex", void 0);
-__decorate$37([
-    _angular_core.Input(),
-    __metadata$20("design:type", String)
-], exports.TokenInputComponent.prototype, "tokenClass", void 0);
-__decorate$37([
-    _angular_core.Output(),
-    __metadata$20("design:type", Object)
-], exports.TokenInputComponent.prototype, "change", void 0);
-__decorate$37([
-    _angular_core.Output(),
-    __metadata$20("design:type", Object)
-], exports.TokenInputComponent.prototype, "add", void 0);
-__decorate$37([
-    _angular_core.Output(),
-    __metadata$20("design:type", Object)
-], exports.TokenInputComponent.prototype, "remove", void 0);
-__decorate$37([
-    _angular_core.Output(),
-    __metadata$20("design:type", Object)
-], exports.TokenInputComponent.prototype, "confirm", void 0);
-__decorate$37([
-    _angular_core.ContentChild(TokenInputLabelPre, { read: _angular_core.TemplateRef }),
-    __metadata$20("design:type", TokenInputLabelPre)
-], exports.TokenInputComponent.prototype, "labelPre", void 0);
-__decorate$37([
-    _angular_core.ContentChild(TokenInputLabelPost, { read: _angular_core.TemplateRef }),
-    __metadata$20("design:type", TokenInputLabelPost)
-], exports.TokenInputComponent.prototype, "labelPost", void 0);
-__decorate$37([
-    _angular_core.HostListener('focus', ['$event']),
-    __metadata$20("design:type", Function),
-    __metadata$20("design:paramtypes", [Object]),
-    __metadata$20("design:returntype", Promise)
-], exports.TokenInputComponent.prototype, "onFocus", null);
-__decorate$37([
-    _angular_core.HostBinding('class.vclFocused'),
-    __metadata$20("design:type", Object)
-], exports.TokenInputComponent.prototype, "focused", void 0);
-__decorate$37([
-    _angular_core.HostListener('keydown', ['$event']),
-    __metadata$20("design:type", Function),
-    __metadata$20("design:paramtypes", [KeyboardEvent]),
-    __metadata$20("design:returntype", void 0)
-], exports.TokenInputComponent.prototype, "onKeydown", null);
-exports.TokenInputComponent = __decorate$37([
-    _angular_core.Component({
-        selector: 'vcl-token-input',
-        template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (click)=\"select(token)\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
-        host: {
-            '[class.vclInput]': 'true',
-            '[class.vclTokenInput]': 'true',
-            '[class.vclLayoutHorizontal]': 'true',
-            '[class.vclLayoutWrap]': 'true',
-            '[attr.tabindex]': '-1',
-        },
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$5],
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    }),
-    __metadata$20("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], exports.TokenInputComponent);
 
 var __decorate$34 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3553,19 +3547,19 @@ var __decorate$34 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLTokenModule = (function () {
+var VCLTokenModule = (function () {
     function VCLTokenModule() {
     }
+    VCLTokenModule = __decorate$34([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLInputModule, VCLButtonModule, _angular_forms.FormsModule, VCLIconModule, VCLWormholeModule],
+            exports: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
+            declarations: [TokenComponent, TokenListComponent, TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
+            providers: [],
+        })
+    ], VCLTokenModule);
     return VCLTokenModule;
 }());
-exports.VCLTokenModule = __decorate$34([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLInputModule, exports.VCLButtonModule, _angular_forms.FormsModule, exports.VCLIconModule, exports.VCLWormholeModule],
-        exports: [exports.TokenComponent, exports.TokenListComponent, exports.TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
-        declarations: [exports.TokenComponent, exports.TokenListComponent, exports.TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre],
-        providers: [],
-    })
-], exports.VCLTokenModule);
 
 var __decorate$38 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3576,42 +3570,42 @@ var __decorate$38 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$21 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.SelectOption = (function () {
+var SelectOption = (function () {
     function SelectOption() {
         this.disabled = false;
         this.selected = false;
     }
+    __decorate$38([
+        _angular_core.ViewChild(_angular_core.TemplateRef),
+        __metadata$21("design:type", _angular_core.TemplateRef)
+    ], SelectOption.prototype, "content", void 0);
+    __decorate$38([
+        _angular_core.Input(),
+        __metadata$21("design:type", Object)
+    ], SelectOption.prototype, "value", void 0);
+    __decorate$38([
+        _angular_core.Input(),
+        __metadata$21("design:type", String)
+    ], SelectOption.prototype, "sublabel", void 0);
+    __decorate$38([
+        _angular_core.Input(),
+        __metadata$21("design:type", String)
+    ], SelectOption.prototype, "label", void 0);
+    __decorate$38([
+        _angular_core.Input(),
+        __metadata$21("design:type", Boolean)
+    ], SelectOption.prototype, "disabled", void 0);
+    __decorate$38([
+        _angular_core.Input(),
+        __metadata$21("design:type", Boolean)
+    ], SelectOption.prototype, "selected", void 0);
+    SelectOption = __decorate$38([
+        _angular_core.Directive({
+            selector: 'vcl-select-option'
+        })
+    ], SelectOption);
     return SelectOption;
 }());
-__decorate$38([
-    _angular_core.ViewChild(_angular_core.TemplateRef),
-    __metadata$21("design:type", _angular_core.TemplateRef)
-], exports.SelectOption.prototype, "content", void 0);
-__decorate$38([
-    _angular_core.Input(),
-    __metadata$21("design:type", Object)
-], exports.SelectOption.prototype, "value", void 0);
-__decorate$38([
-    _angular_core.Input(),
-    __metadata$21("design:type", String)
-], exports.SelectOption.prototype, "sublabel", void 0);
-__decorate$38([
-    _angular_core.Input(),
-    __metadata$21("design:type", String)
-], exports.SelectOption.prototype, "label", void 0);
-__decorate$38([
-    _angular_core.Input(),
-    __metadata$21("design:type", Boolean)
-], exports.SelectOption.prototype, "disabled", void 0);
-__decorate$38([
-    _angular_core.Input(),
-    __metadata$21("design:type", Boolean)
-], exports.SelectOption.prototype, "selected", void 0);
-exports.SelectOption = __decorate$38([
-    _angular_core.Directive({
-        selector: 'vcl-select-option'
-    })
-], exports.SelectOption);
 
 var __decorate$39 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3664,10 +3658,10 @@ var DropDirection;
 })(DropDirection || (DropDirection = {}));
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$6 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.SelectComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return SelectComponent; }),
     multi: true
 };
-exports.SelectComponent = (function () {
+var SelectComponent = (function () {
     function SelectComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -3887,90 +3881,90 @@ exports.SelectComponent = (function () {
     SelectComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$39([
+        _angular_core.ViewChild('dropdown'),
+        __metadata$22("design:type", DropdownComponent)
+    ], SelectComponent.prototype, "dropdown", void 0);
+    __decorate$39([
+        _angular_core.ContentChildren(SelectOption),
+        __metadata$22("design:type", _angular_core.QueryList)
+    ], SelectComponent.prototype, "items", void 0);
+    __decorate$39([
+        _angular_core.ViewChild('select'),
+        __metadata$22("design:type", _angular_core.ElementRef)
+    ], SelectComponent.prototype, "select", void 0);
+    __decorate$39([
+        _angular_core.Input(),
+        __metadata$22("design:type", Number)
+    ], SelectComponent.prototype, "selectionMode", void 0);
+    __decorate$39([
+        _angular_core.Input(),
+        __metadata$22("design:type", String),
+        __metadata$22("design:paramtypes", [String])
+    ], SelectComponent.prototype, "mode", null);
+    __decorate$39([
+        _angular_core.HostBinding('attr.tabindex'),
+        _angular_core.Input(),
+        __metadata$22("design:type", Object)
+    ], SelectComponent.prototype, "tabindex", void 0);
+    __decorate$39([
+        _angular_core.Input(),
+        __metadata$22("design:type", Boolean)
+    ], SelectComponent.prototype, "expanded", void 0);
+    __decorate$39([
+        _angular_core.Input(),
+        __metadata$22("design:type", Boolean)
+    ], SelectComponent.prototype, "listenKeys", void 0);
+    __decorate$39([
+        _angular_core.Input(),
+        __metadata$22("design:type", Number)
+    ], SelectComponent.prototype, "maxSelectableItems", void 0);
+    __decorate$39([
+        _angular_core.Input(),
+        __metadata$22("design:type", String)
+    ], SelectComponent.prototype, "expandedIcon", void 0);
+    __decorate$39([
+        _angular_core.Input(),
+        __metadata$22("design:type", String)
+    ], SelectComponent.prototype, "collapsedIcon", void 0);
+    __decorate$39([
+        _angular_core.Output('change'),
+        __metadata$22("design:type", Object)
+    ], SelectComponent.prototype, "change", void 0);
+    __decorate$39([
+        _angular_core.HostListener('keydown', ['$event']),
+        __metadata$22("design:type", Function),
+        __metadata$22("design:paramtypes", [Object]),
+        __metadata$22("design:returntype", void 0)
+    ], SelectComponent.prototype, "keydown", null);
+    __decorate$39([
+        _angular_core.HostListener('focus', ['$event']),
+        __metadata$22("design:type", Function),
+        __metadata$22("design:paramtypes", [Object]),
+        __metadata$22("design:returntype", Promise)
+    ], SelectComponent.prototype, "onFocus", null);
+    __decorate$39([
+        _angular_core.HostListener('blur', ['$event']),
+        __metadata$22("design:type", Function),
+        __metadata$22("design:paramtypes", [Object]),
+        __metadata$22("design:returntype", void 0)
+    ], SelectComponent.prototype, "onBlur", null);
+    SelectComponent = __decorate$39([
+        _angular_core.Component({
+            selector: 'vcl-select',
+            template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (click)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown [style.display]=\"expanded ? null : 'none'\" (change)=\"onDropdownChange($event)\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" tabindex=\"-1\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"999999\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$6],
+            host: {
+                '[style.position]': '"relative"',
+                '[style.display]': '"block"'
+            }
+        }),
+        __metadata$22("design:paramtypes", [_angular_core.ElementRef,
+            _angular_core.ChangeDetectorRef])
+    ], SelectComponent);
     return SelectComponent;
 }());
-__decorate$39([
-    _angular_core.ViewChild('dropdown'),
-    __metadata$22("design:type", exports.DropdownComponent)
-], exports.SelectComponent.prototype, "dropdown", void 0);
-__decorate$39([
-    _angular_core.ContentChildren(exports.SelectOption),
-    __metadata$22("design:type", _angular_core.QueryList)
-], exports.SelectComponent.prototype, "items", void 0);
-__decorate$39([
-    _angular_core.ViewChild('select'),
-    __metadata$22("design:type", _angular_core.ElementRef)
-], exports.SelectComponent.prototype, "select", void 0);
-__decorate$39([
-    _angular_core.Input(),
-    __metadata$22("design:type", Number)
-], exports.SelectComponent.prototype, "selectionMode", void 0);
-__decorate$39([
-    _angular_core.Input(),
-    __metadata$22("design:type", String),
-    __metadata$22("design:paramtypes", [String])
-], exports.SelectComponent.prototype, "mode", null);
-__decorate$39([
-    _angular_core.HostBinding('attr.tabindex'),
-    _angular_core.Input(),
-    __metadata$22("design:type", Object)
-], exports.SelectComponent.prototype, "tabindex", void 0);
-__decorate$39([
-    _angular_core.Input(),
-    __metadata$22("design:type", Boolean)
-], exports.SelectComponent.prototype, "expanded", void 0);
-__decorate$39([
-    _angular_core.Input(),
-    __metadata$22("design:type", Boolean)
-], exports.SelectComponent.prototype, "listenKeys", void 0);
-__decorate$39([
-    _angular_core.Input(),
-    __metadata$22("design:type", Number)
-], exports.SelectComponent.prototype, "maxSelectableItems", void 0);
-__decorate$39([
-    _angular_core.Input(),
-    __metadata$22("design:type", String)
-], exports.SelectComponent.prototype, "expandedIcon", void 0);
-__decorate$39([
-    _angular_core.Input(),
-    __metadata$22("design:type", String)
-], exports.SelectComponent.prototype, "collapsedIcon", void 0);
-__decorate$39([
-    _angular_core.Output('change'),
-    __metadata$22("design:type", Object)
-], exports.SelectComponent.prototype, "change", void 0);
-__decorate$39([
-    _angular_core.HostListener('keydown', ['$event']),
-    __metadata$22("design:type", Function),
-    __metadata$22("design:paramtypes", [Object]),
-    __metadata$22("design:returntype", void 0)
-], exports.SelectComponent.prototype, "keydown", null);
-__decorate$39([
-    _angular_core.HostListener('focus', ['$event']),
-    __metadata$22("design:type", Function),
-    __metadata$22("design:paramtypes", [Object]),
-    __metadata$22("design:returntype", Promise)
-], exports.SelectComponent.prototype, "onFocus", null);
-__decorate$39([
-    _angular_core.HostListener('blur', ['$event']),
-    __metadata$22("design:type", Function),
-    __metadata$22("design:paramtypes", [Object]),
-    __metadata$22("design:returntype", void 0)
-], exports.SelectComponent.prototype, "onBlur", null);
-exports.SelectComponent = __decorate$39([
-    _angular_core.Component({
-        selector: 'vcl-select',
-        template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (click)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown [style.display]=\"expanded ? null : 'none'\" (change)=\"onDropdownChange($event)\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" tabindex=\"-1\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"999999\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$6],
-        host: {
-            '[style.position]': '"relative"',
-            '[style.display]': '"block"'
-        }
-    }),
-    __metadata$22("design:paramtypes", [_angular_core.ElementRef,
-        _angular_core.ChangeDetectorRef])
-], exports.SelectComponent);
 
 var __decorate$24 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3978,19 +3972,19 @@ var __decorate$24 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLSelectModule = (function () {
+var VCLSelectModule = (function () {
     function VCLSelectModule() {
     }
+    VCLSelectModule = __decorate$24([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLDropdownModule, VCLButtonModule, VCLOffClickModule, VCLPopoverModule, VCLTokenModule],
+            exports: [SelectComponent, SelectOption],
+            declarations: [SelectComponent, SelectOption],
+            providers: []
+        })
+    ], VCLSelectModule);
     return VCLSelectModule;
 }());
-exports.VCLSelectModule = __decorate$24([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLDropdownModule, exports.VCLButtonModule, exports.VCLOffClickModule, exports.VCLPopoverModule, exports.VCLTokenModule],
-        exports: [exports.SelectComponent, exports.SelectOption],
-        declarations: [exports.SelectComponent, exports.SelectOption],
-        providers: []
-    })
-], exports.VCLSelectModule);
 
 var __decorate$41 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4102,36 +4096,36 @@ var ButtonGroupComponent = (function () {
     ButtonGroupComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$41([
+        _angular_core.ContentChildren(ButtonComponent),
+        __metadata$23("design:type", _angular_core.QueryList)
+    ], ButtonGroupComponent.prototype, "buttons", void 0);
+    __decorate$41([
+        _angular_core.Input(),
+        __metadata$23("design:type", Number)
+    ], ButtonGroupComponent.prototype, "selectionMode", void 0);
+    __decorate$41([
+        _angular_core.Input(),
+        __metadata$23("design:type", String),
+        __metadata$23("design:paramtypes", [String])
+    ], ButtonGroupComponent.prototype, "mode", null);
+    __decorate$41([
+        _angular_core.Output(),
+        __metadata$23("design:type", Object)
+    ], ButtonGroupComponent.prototype, "change", void 0);
+    ButtonGroupComponent = __decorate$41([
+        _angular_core.Component({
+            selector: 'vcl-button-group',
+            host: {
+                '[class.vclButtonGroup]': 'true',
+            },
+            template: "<ng-content></ng-content>",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$7],
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+        })
+    ], ButtonGroupComponent);
     return ButtonGroupComponent;
 }());
-__decorate$41([
-    _angular_core.ContentChildren(exports.ButtonComponent),
-    __metadata$23("design:type", _angular_core.QueryList)
-], ButtonGroupComponent.prototype, "buttons", void 0);
-__decorate$41([
-    _angular_core.Input(),
-    __metadata$23("design:type", Number)
-], ButtonGroupComponent.prototype, "selectionMode", void 0);
-__decorate$41([
-    _angular_core.Input(),
-    __metadata$23("design:type", String),
-    __metadata$23("design:paramtypes", [String])
-], ButtonGroupComponent.prototype, "mode", null);
-__decorate$41([
-    _angular_core.Output(),
-    __metadata$23("design:type", Object)
-], ButtonGroupComponent.prototype, "change", void 0);
-ButtonGroupComponent = __decorate$41([
-    _angular_core.Component({
-        selector: 'vcl-button-group',
-        host: {
-            '[class.vclButtonGroup]': 'true',
-        },
-        template: "<ng-content></ng-content>",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$7],
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-    })
-], ButtonGroupComponent);
 
 var __decorate$40 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4139,19 +4133,19 @@ var __decorate$40 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLButtonGroupModule = (function () {
+var VCLButtonGroupModule = (function () {
     function VCLButtonGroupModule() {
     }
+    VCLButtonGroupModule = __decorate$40([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLButtonModule, L10nModule],
+            exports: [ButtonGroupComponent],
+            declarations: [ButtonGroupComponent],
+            providers: [],
+        })
+    ], VCLButtonGroupModule);
     return VCLButtonGroupModule;
 }());
-exports.VCLButtonGroupModule = __decorate$40([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLButtonModule, exports.L10nModule],
-        exports: [ButtonGroupComponent],
-        declarations: [ButtonGroupComponent],
-        providers: [],
-    })
-], exports.VCLButtonGroupModule);
 
 var __extends$10 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -4257,7 +4251,7 @@ var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
 };
 var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
 var LAYER_ANIMATIONS = new _angular_core.OpaqueToken('@ng-vcl/ng-vcl#layer_animations');
-exports.LayerContainerComponent = (function () {
+var LayerContainerComponent = (function () {
     function LayerContainerComponent(cdRef, builder, elementRef, animations) {
         this.cdRef = cdRef;
         this.zIndex = 1000;
@@ -4366,58 +4360,58 @@ exports.LayerContainerComponent = (function () {
             }
         }
     };
+    __decorate$44([
+        _angular_core.ViewChild('container'),
+        __metadata$26("design:type", _angular_core.ElementRef)
+    ], LayerContainerComponent.prototype, "container", void 0);
+    __decorate$44([
+        _angular_core.ViewChild('cover'),
+        __metadata$26("design:type", _angular_core.ElementRef)
+    ], LayerContainerComponent.prototype, "cover", void 0);
+    __decorate$44([
+        _angular_core.ViewChild('box'),
+        __metadata$26("design:type", _angular_core.ElementRef)
+    ], LayerContainerComponent.prototype, "box", void 0);
+    __decorate$44([
+        _angular_core.Input(),
+        __metadata$26("design:type", LayerRef)
+    ], LayerContainerComponent.prototype, "layerRef", void 0);
+    __decorate$44([
+        _angular_core.Input(),
+        __metadata$26("design:type", Object)
+    ], LayerContainerComponent.prototype, "layerOpts", void 0);
+    __decorate$44([
+        _angular_core.Input(),
+        __metadata$26("design:type", Object)
+    ], LayerContainerComponent.prototype, "layerTarget", void 0);
+    __decorate$44([
+        _angular_core.Input(),
+        __metadata$26("design:type", Object)
+    ], LayerContainerComponent.prototype, "layerInjector", void 0);
+    __decorate$44([
+        _angular_core.Input(),
+        __metadata$26("design:type", Object),
+        __metadata$26("design:paramtypes", [Object])
+    ], LayerContainerComponent.prototype, "layerAttrs", null);
+    __decorate$44([
+        _angular_core.Input(),
+        __metadata$26("design:type", Object)
+    ], LayerContainerComponent.prototype, "zIndex", void 0);
+    __decorate$44([
+        _angular_core.ViewChild('layerContent', { read: _angular_core.ViewContainerRef }),
+        __metadata$26("design:type", _angular_core.ViewContainerRef)
+    ], LayerContainerComponent.prototype, "layerContentContainer", void 0);
+    LayerContainerComponent = __decorate$44([
+        _angular_core.Component({
+            template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layerOpts.customClass\" [class.vclTransparent]=\"layerOpts.transparent\" [class.vclLayerFill]=\"layerOpts.fill\" [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (click)='triggerOffClick($event)' > <div #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div> ",
+        }),
+        __param$5(3, _angular_core.Optional()), __param$5(3, _angular_core.Inject(LAYER_ANIMATIONS)),
+        __metadata$26("design:paramtypes", [_angular_core.ChangeDetectorRef,
+            _angular_animations.AnimationBuilder,
+            _angular_core.ElementRef, Object])
+    ], LayerContainerComponent);
     return LayerContainerComponent;
 }());
-__decorate$44([
-    _angular_core.ViewChild('container'),
-    __metadata$26("design:type", _angular_core.ElementRef)
-], exports.LayerContainerComponent.prototype, "container", void 0);
-__decorate$44([
-    _angular_core.ViewChild('cover'),
-    __metadata$26("design:type", _angular_core.ElementRef)
-], exports.LayerContainerComponent.prototype, "cover", void 0);
-__decorate$44([
-    _angular_core.ViewChild('box'),
-    __metadata$26("design:type", _angular_core.ElementRef)
-], exports.LayerContainerComponent.prototype, "box", void 0);
-__decorate$44([
-    _angular_core.Input(),
-    __metadata$26("design:type", LayerRef)
-], exports.LayerContainerComponent.prototype, "layerRef", void 0);
-__decorate$44([
-    _angular_core.Input(),
-    __metadata$26("design:type", Object)
-], exports.LayerContainerComponent.prototype, "layerOpts", void 0);
-__decorate$44([
-    _angular_core.Input(),
-    __metadata$26("design:type", Object)
-], exports.LayerContainerComponent.prototype, "layerTarget", void 0);
-__decorate$44([
-    _angular_core.Input(),
-    __metadata$26("design:type", Object)
-], exports.LayerContainerComponent.prototype, "layerInjector", void 0);
-__decorate$44([
-    _angular_core.Input(),
-    __metadata$26("design:type", Object),
-    __metadata$26("design:paramtypes", [Object])
-], exports.LayerContainerComponent.prototype, "layerAttrs", null);
-__decorate$44([
-    _angular_core.Input(),
-    __metadata$26("design:type", Object)
-], exports.LayerContainerComponent.prototype, "zIndex", void 0);
-__decorate$44([
-    _angular_core.ViewChild('layerContent', { read: _angular_core.ViewContainerRef }),
-    __metadata$26("design:type", _angular_core.ViewContainerRef)
-], exports.LayerContainerComponent.prototype, "layerContentContainer", void 0);
-exports.LayerContainerComponent = __decorate$44([
-    _angular_core.Component({
-        template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layerOpts.customClass\" [class.vclTransparent]=\"layerOpts.transparent\" [class.vclLayerFill]=\"layerOpts.fill\" [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (click)='triggerOffClick($event)' > <div #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div> ",
-    }),
-    __param$5(3, _angular_core.Optional()), __param$5(3, _angular_core.Inject(LAYER_ANIMATIONS)),
-    __metadata$26("design:paramtypes", [_angular_core.ChangeDetectorRef,
-        _angular_animations.AnimationBuilder,
-        _angular_core.ElementRef, Object])
-], exports.LayerContainerComponent);
 
 var __decorate$43 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4451,7 +4445,7 @@ var LayerManagerService = (function () {
     };
     LayerManagerService.prototype._register = function (layerRef, target, injector, opts) {
         var _this = this;
-        var containerWormholeRef = this.host.createWormhole(exports.LayerContainerComponent);
+        var containerWormholeRef = this.host.createWormhole(LayerContainerComponent);
         var layerSub = layerRef.state$.subscribe(function (state$$1) {
             if (state$$1.visible && !containerWormholeRef.isConnected) {
                 containerWormholeRef.connect({
@@ -4492,12 +4486,12 @@ var LayerManagerService = (function () {
         this.layerMetaMap.forEach(function (meta, layer) { return _this._unregister(layer); });
         this.host.clearWormholes();
     };
+    LayerManagerService = __decorate$43([
+        _angular_core.Injectable(),
+        __metadata$25("design:paramtypes", [_angular_core.ApplicationRef, _angular_core.Injector])
+    ], LayerManagerService);
     return LayerManagerService;
 }());
-LayerManagerService = __decorate$43([
-    _angular_core.Injectable(),
-    __metadata$25("design:paramtypes", [_angular_core.ApplicationRef, _angular_core.Injector])
-], LayerManagerService);
 
 var __decorate$45 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4508,7 +4502,7 @@ var __decorate$45 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$27 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.LayerService = (function () {
+var LayerService = (function () {
     function LayerService(layerManager, injector) {
         this.layerManager = layerManager;
         this.injector = injector;
@@ -4545,12 +4539,12 @@ exports.LayerService = (function () {
         layerRef.open(attrs);
         return layerRef;
     };
+    LayerService = __decorate$45([
+        _angular_core.Injectable(),
+        __metadata$27("design:paramtypes", [LayerManagerService, _angular_core.Injector])
+    ], LayerService);
     return LayerService;
 }());
-exports.LayerService = __decorate$45([
-    _angular_core.Injectable(),
-    __metadata$27("design:paramtypes", [LayerManagerService, _angular_core.Injector])
-], exports.LayerService);
 
 var __extends$11 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -4571,7 +4565,7 @@ var __decorate$46 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$28 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.LayerRefDirective = (function (_super) {
+var LayerRefDirective = (function (_super) {
     __extends$11(LayerRefDirective, _super);
     function LayerRefDirective(templateRef, layerManager, injector) {
         var _this = _super.call(this) || this;
@@ -4586,39 +4580,39 @@ exports.LayerRefDirective = (function (_super) {
     LayerRefDirective.prototype.ngOnDestroy = function () {
         this.layerManager._unregister(this);
     };
+    __decorate$46([
+        _angular_core.Input(),
+        __metadata$28("design:type", Boolean)
+    ], LayerRefDirective.prototype, "modal", void 0);
+    __decorate$46([
+        _angular_core.Input(),
+        __metadata$28("design:type", Boolean)
+    ], LayerRefDirective.prototype, "transparent", void 0);
+    __decorate$46([
+        _angular_core.Input(),
+        __metadata$28("design:type", Boolean)
+    ], LayerRefDirective.prototype, "fill", void 0);
+    __decorate$46([
+        _angular_core.Input(),
+        __metadata$28("design:type", Boolean)
+    ], LayerRefDirective.prototype, "stickToBottom", void 0);
+    __decorate$46([
+        _angular_core.Input(),
+        __metadata$28("design:type", Boolean)
+    ], LayerRefDirective.prototype, "gutterPadding", void 0);
+    __decorate$46([
+        _angular_core.Input(),
+        __metadata$28("design:type", String)
+    ], LayerRefDirective.prototype, "customClass", void 0);
+    LayerRefDirective = __decorate$46([
+        _angular_core.Directive({
+            selector: '[vcl-layer]',
+            exportAs: 'layer',
+        }),
+        __metadata$28("design:paramtypes", [_angular_core.TemplateRef, LayerManagerService, _angular_core.Injector])
+    ], LayerRefDirective);
     return LayerRefDirective;
 }(LayerRef));
-__decorate$46([
-    _angular_core.Input(),
-    __metadata$28("design:type", Boolean)
-], exports.LayerRefDirective.prototype, "modal", void 0);
-__decorate$46([
-    _angular_core.Input(),
-    __metadata$28("design:type", Boolean)
-], exports.LayerRefDirective.prototype, "transparent", void 0);
-__decorate$46([
-    _angular_core.Input(),
-    __metadata$28("design:type", Boolean)
-], exports.LayerRefDirective.prototype, "fill", void 0);
-__decorate$46([
-    _angular_core.Input(),
-    __metadata$28("design:type", Boolean)
-], exports.LayerRefDirective.prototype, "stickToBottom", void 0);
-__decorate$46([
-    _angular_core.Input(),
-    __metadata$28("design:type", Boolean)
-], exports.LayerRefDirective.prototype, "gutterPadding", void 0);
-__decorate$46([
-    _angular_core.Input(),
-    __metadata$28("design:type", String)
-], exports.LayerRefDirective.prototype, "customClass", void 0);
-exports.LayerRefDirective = __decorate$46([
-    _angular_core.Directive({
-        selector: '[vcl-layer]',
-        exportAs: 'layer',
-    }),
-    __metadata$28("design:paramtypes", [_angular_core.TemplateRef, LayerManagerService, _angular_core.Injector])
-], exports.LayerRefDirective);
 
 var __decorate$42 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4640,7 +4634,7 @@ function Layer(component, opts) {
         defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, { component: component, opts: opts }, target);
     };
 }
-exports.VCLLayerModule = VCLLayerModule_1 = (function () {
+var VCLLayerModule = (function () {
     function VCLLayerModule(layers, layerManager, injector) {
         this.layers = layers;
         this.layerManager = layerManager;
@@ -4653,10 +4647,11 @@ exports.VCLLayerModule = VCLLayerModule_1 = (function () {
             });
         }
     }
+    VCLLayerModule_1 = VCLLayerModule;
     VCLLayerModule.forRoot = function (config) {
         if (config === void 0) { config = {}; }
         return { ngModule: VCLLayerModule_1, providers: [
-                exports.LayerService,
+                LayerService,
                 LayerManagerService
             ].concat((config.layers || []), [
                 {
@@ -4674,7 +4669,7 @@ exports.VCLLayerModule = VCLLayerModule_1 = (function () {
         return {
             ngModule: VCLLayerModule_1,
             providers: [
-                exports.LayerService
+                LayerService
             ].concat((config.layers || []), [
                 {
                     provide: LAYERS,
@@ -4683,24 +4678,24 @@ exports.VCLLayerModule = VCLLayerModule_1 = (function () {
             ])
         };
     };
+    VCLLayerModule = VCLLayerModule_1 = __decorate$42([
+        _angular_core.NgModule({
+            imports: [
+                _angular_common.CommonModule,
+                VCLWormholeModule
+            ],
+            exports: [LayerRefDirective, LayerContainerComponent],
+            declarations: [LayerRefDirective, LayerContainerComponent],
+            entryComponents: [LayerContainerComponent],
+            providers: []
+        }),
+        __param$4(0, _angular_core.Inject(LAYERS)),
+        __metadata$24("design:paramtypes", [Array, LayerManagerService,
+            _angular_core.Injector])
+    ], VCLLayerModule);
     return VCLLayerModule;
+    var VCLLayerModule_1;
 }());
-exports.VCLLayerModule = VCLLayerModule_1 = __decorate$42([
-    _angular_core.NgModule({
-        imports: [
-            _angular_common.CommonModule,
-            exports.VCLWormholeModule
-        ],
-        exports: [exports.LayerRefDirective, exports.LayerContainerComponent],
-        declarations: [exports.LayerRefDirective, exports.LayerContainerComponent],
-        entryComponents: [exports.LayerContainerComponent],
-        providers: []
-    }),
-    __param$4(0, _angular_core.Inject(LAYERS)),
-    __metadata$24("design:paramtypes", [Array, LayerManagerService,
-        _angular_core.Injector])
-], exports.VCLLayerModule);
-var VCLLayerModule_1;
 
 var __decorate$49 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4714,40 +4709,40 @@ var __metadata$30 = (this && this.__metadata) || function (k, v) {
 var TabLabelDirective = (function () {
     function TabLabelDirective() {
     }
+    TabLabelDirective = __decorate$49([
+        _angular_core.Directive({ selector: '[vcl-tab-label]' })
+    ], TabLabelDirective);
     return TabLabelDirective;
 }());
-TabLabelDirective = __decorate$49([
-    _angular_core.Directive({ selector: '[vcl-tab-label]' })
-], TabLabelDirective);
 var TabComponent = (function () {
     function TabComponent() {
         this.disabled = false;
         this.tabClass = '';
     }
+    __decorate$49([
+        _angular_core.ContentChild(TabLabelDirective, { read: _angular_core.TemplateRef }),
+        __metadata$30("design:type", TabLabelDirective)
+    ], TabComponent.prototype, "label", void 0);
+    __decorate$49([
+        _angular_core.ViewChild(_angular_core.TemplateRef),
+        __metadata$30("design:type", _angular_core.TemplateRef)
+    ], TabComponent.prototype, "content", void 0);
+    __decorate$49([
+        _angular_core.Input(),
+        __metadata$30("design:type", Object)
+    ], TabComponent.prototype, "disabled", void 0);
+    __decorate$49([
+        _angular_core.Input(),
+        __metadata$30("design:type", String)
+    ], TabComponent.prototype, "tabClass", void 0);
+    TabComponent = __decorate$49([
+        _angular_core.Component({
+            selector: 'vcl-tab',
+            template: '<ng-template><ng-content></ng-content></ng-template>'
+        })
+    ], TabComponent);
     return TabComponent;
 }());
-__decorate$49([
-    _angular_core.ContentChild(TabLabelDirective, { read: _angular_core.TemplateRef }),
-    __metadata$30("design:type", TabLabelDirective)
-], TabComponent.prototype, "label", void 0);
-__decorate$49([
-    _angular_core.ViewChild(_angular_core.TemplateRef),
-    __metadata$30("design:type", _angular_core.TemplateRef)
-], TabComponent.prototype, "content", void 0);
-__decorate$49([
-    _angular_core.Input(),
-    __metadata$30("design:type", Object)
-], TabComponent.prototype, "disabled", void 0);
-__decorate$49([
-    _angular_core.Input(),
-    __metadata$30("design:type", String)
-], TabComponent.prototype, "tabClass", void 0);
-TabComponent = __decorate$49([
-    _angular_core.Component({
-        selector: 'vcl-tab',
-        template: '<ng-template><ng-content></ng-content></ng-template>'
-    })
-], TabComponent);
 
 var __decorate$48 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4813,52 +4808,52 @@ var TabNavComponent = (function () {
     TabNavComponent.prototype.ngOnDestroy = function () {
         this.wormholeHost.clearWormholes();
     };
+    __decorate$48([
+        _angular_core.ViewChild('tabContent', { read: _angular_core.ViewContainerRef }),
+        __metadata$29("design:type", _angular_core.ViewContainerRef),
+        __metadata$29("design:paramtypes", [_angular_core.ViewContainerRef])
+    ], TabNavComponent.prototype, "tabContent", null);
+    __decorate$48([
+        _angular_core.ContentChildren(TabComponent),
+        __metadata$29("design:type", _angular_core.QueryList)
+    ], TabNavComponent.prototype, "tabs", void 0);
+    __decorate$48([
+        _angular_core.Input(),
+        __metadata$29("design:type", String)
+    ], TabNavComponent.prototype, "layout", void 0);
+    __decorate$48([
+        _angular_core.Input(),
+        __metadata$29("design:type", String)
+    ], TabNavComponent.prototype, "tabbableClass", void 0);
+    __decorate$48([
+        _angular_core.Input(),
+        __metadata$29("design:type", String)
+    ], TabNavComponent.prototype, "tabsClass", void 0);
+    __decorate$48([
+        _angular_core.Input(),
+        __metadata$29("design:type", String)
+    ], TabNavComponent.prototype, "tabContentClass", void 0);
+    __decorate$48([
+        _angular_core.Input(),
+        __metadata$29("design:type", Boolean)
+    ], TabNavComponent.prototype, "borders", void 0);
+    __decorate$48([
+        _angular_core.Input(),
+        __metadata$29("design:type", Number)
+    ], TabNavComponent.prototype, "selectedTabIndex", void 0);
+    __decorate$48([
+        _angular_core.Output(),
+        __metadata$29("design:type", rxjs_Observable.Observable),
+        __metadata$29("design:paramtypes", [])
+    ], TabNavComponent.prototype, "selectedTabIndexChange", null);
+    TabNavComponent = __decorate$48([
+        _angular_core.Component({
+            selector: 'vcl-tab-nav',
+            template: "<div class=\"vclTabbable {{tabbableClass}}\" [class.vclTabsLeft]=\"layout==='left'\" [class.vclTabsRight]=\"layout==='right'\"> <div class=\"vclTabs {{tabsClass}}\" [class.vclTabStyleUni]=\"!!borders\" role=\"tablist\"> <div *ngFor=\"let tab of tabs; let i = index\" class=\"vclTab {{tab.tabClass}}\" role=\"tab\" [class.vclDisabled]=\"tab.disabled\" [class.vclSelected]=\"selectedTabIndex===i\" [class.aria-selected]=\"selectedTabIndex===i\" (click)=\"selectTab(tab)\"> <span class=\"vclTabLabel\">  <wormhole [connect]=\"tab.label\"></wormhole> </span> </div> </div> <div class=\"vclTabContent {{tabContentClass}}\" [class.vclNoBorder]=\"!borders\"> <div role=\"tabpanel\" class=\"vclTabPanel\"> <div #tabContent></div> </div> <div role=\"tabpanel\" class=\"vclTabPanel\"> <ng-content></ng-content> </div> </div> </div> "
+        })
+    ], TabNavComponent);
     return TabNavComponent;
 }());
-__decorate$48([
-    _angular_core.ViewChild('tabContent', { read: _angular_core.ViewContainerRef }),
-    __metadata$29("design:type", _angular_core.ViewContainerRef),
-    __metadata$29("design:paramtypes", [_angular_core.ViewContainerRef])
-], TabNavComponent.prototype, "tabContent", null);
-__decorate$48([
-    _angular_core.ContentChildren(TabComponent),
-    __metadata$29("design:type", _angular_core.QueryList)
-], TabNavComponent.prototype, "tabs", void 0);
-__decorate$48([
-    _angular_core.Input(),
-    __metadata$29("design:type", String)
-], TabNavComponent.prototype, "layout", void 0);
-__decorate$48([
-    _angular_core.Input(),
-    __metadata$29("design:type", String)
-], TabNavComponent.prototype, "tabbableClass", void 0);
-__decorate$48([
-    _angular_core.Input(),
-    __metadata$29("design:type", String)
-], TabNavComponent.prototype, "tabsClass", void 0);
-__decorate$48([
-    _angular_core.Input(),
-    __metadata$29("design:type", String)
-], TabNavComponent.prototype, "tabContentClass", void 0);
-__decorate$48([
-    _angular_core.Input(),
-    __metadata$29("design:type", Boolean)
-], TabNavComponent.prototype, "borders", void 0);
-__decorate$48([
-    _angular_core.Input(),
-    __metadata$29("design:type", Number)
-], TabNavComponent.prototype, "selectedTabIndex", void 0);
-__decorate$48([
-    _angular_core.Output(),
-    __metadata$29("design:type", rxjs_Observable.Observable),
-    __metadata$29("design:paramtypes", [])
-], TabNavComponent.prototype, "selectedTabIndexChange", null);
-TabNavComponent = __decorate$48([
-    _angular_core.Component({
-        selector: 'vcl-tab-nav',
-        template: "<div class=\"vclTabbable {{tabbableClass}}\" [class.vclTabsLeft]=\"layout==='left'\" [class.vclTabsRight]=\"layout==='right'\"> <div class=\"vclTabs {{tabsClass}}\" [class.vclTabStyleUni]=\"!!borders\" role=\"tablist\"> <div *ngFor=\"let tab of tabs; let i = index\" class=\"vclTab {{tab.tabClass}}\" role=\"tab\" [class.vclDisabled]=\"tab.disabled\" [class.vclSelected]=\"selectedTabIndex===i\" [class.aria-selected]=\"selectedTabIndex===i\" (click)=\"selectTab(tab)\"> <span class=\"vclTabLabel\">  <wormhole [connect]=\"tab.label\"></wormhole> </span> </div> </div> <div class=\"vclTabContent {{tabContentClass}}\" [class.vclNoBorder]=\"!borders\"> <div role=\"tabpanel\" class=\"vclTabPanel\"> <div #tabContent></div> </div> <div role=\"tabpanel\" class=\"vclTabPanel\"> <ng-content></ng-content> </div> </div> </div> "
-    })
-], TabNavComponent);
 
 var __decorate$47 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4866,19 +4861,19 @@ var __decorate$47 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLTabNavModule = (function () {
+var VCLTabNavModule = (function () {
     function VCLTabNavModule() {
     }
+    VCLTabNavModule = __decorate$47([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLWormholeModule],
+            exports: [TabComponent, TabLabelDirective, TabNavComponent],
+            declarations: [TabComponent, TabLabelDirective, TabNavComponent],
+            providers: [],
+        })
+    ], VCLTabNavModule);
     return VCLTabNavModule;
 }());
-exports.VCLTabNavModule = __decorate$47([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLWormholeModule],
-        exports: [TabComponent, TabLabelDirective, TabNavComponent],
-        declarations: [TabComponent, TabLabelDirective, TabNavComponent],
-        providers: [],
-    })
-], exports.VCLTabNavModule);
 
 var __extends$12 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -4938,65 +4933,65 @@ var LinkComponent = (function (_super) {
         _super.prototype.ngOnDestroy.call(this);
         this.locTitleSub && this.locTitleSub.unsubscribe();
     };
+    __decorate$52([
+        _angular_core.Input(),
+        __metadata$31("design:type", Object)
+    ], LinkComponent.prototype, "href", void 0);
+    __decorate$52([
+        _angular_core.Input(),
+        __metadata$31("design:type", Object)
+    ], LinkComponent.prototype, "label", void 0);
+    __decorate$52([
+        _angular_core.Input(),
+        __metadata$31("design:type", Object)
+    ], LinkComponent.prototype, "title", void 0);
+    __decorate$52([
+        _angular_core.Input(),
+        __metadata$31("design:type", Object)
+    ], LinkComponent.prototype, "prepIcon", void 0);
+    __decorate$52([
+        _angular_core.Input(),
+        __metadata$31("design:type", Object)
+    ], LinkComponent.prototype, "appIcon", void 0);
+    __decorate$52([
+        _angular_core.Input(),
+        __metadata$31("design:type", Object)
+    ], LinkComponent.prototype, "scheme", void 0);
+    __decorate$52([
+        _angular_core.HostBinding('class.vclDisabled'),
+        _angular_core.Input(),
+        __metadata$31("design:type", Object)
+    ], LinkComponent.prototype, "disabled", void 0);
+    __decorate$52([
+        _angular_core.HostBinding('attr.title'),
+        _angular_core.HostBinding('attr.aria-label'),
+        __metadata$31("design:type", String)
+    ], LinkComponent.prototype, "locTitle", void 0);
+    __decorate$52([
+        _angular_core.HostBinding('style.cursor'),
+        __metadata$31("design:type", Object),
+        __metadata$31("design:paramtypes", [])
+    ], LinkComponent.prototype, "styleCursor", null);
+    __decorate$52([
+        _angular_core.HostBinding('attr.href'),
+        __metadata$31("design:type", Object),
+        __metadata$31("design:paramtypes", [])
+    ], LinkComponent.prototype, "attrHref", null);
+    __decorate$52([
+        _angular_core.HostBinding('class.vclContentLink'),
+        __metadata$31("design:type", Object),
+        __metadata$31("design:paramtypes", [])
+    ], LinkComponent.prototype, "useIcogram", null);
+    LinkComponent = __decorate$52([
+        _angular_core.Component({
+            selector: '[vcl-link]',
+            template: "<vcl-icogram *ngIf=\"useIcogram\" [label]=\"(locLabel$ | async) || href\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> <ng-container *ngIf=\"!useIcogram\"> {{(locLabel$ | async) || href}} <ng-content></ng-content> </ng-container> "
+        }),
+        __param$6(0, _angular_core.Optional()),
+        __metadata$31("design:paramtypes", [L10nService])
+    ], LinkComponent);
     return LinkComponent;
 }(ObservableComponent));
-__decorate$52([
-    _angular_core.Input(),
-    __metadata$31("design:type", String)
-], LinkComponent.prototype, "href", void 0);
-__decorate$52([
-    _angular_core.Input(),
-    __metadata$31("design:type", String)
-], LinkComponent.prototype, "label", void 0);
-__decorate$52([
-    _angular_core.Input(),
-    __metadata$31("design:type", String)
-], LinkComponent.prototype, "title", void 0);
-__decorate$52([
-    _angular_core.Input(),
-    __metadata$31("design:type", String)
-], LinkComponent.prototype, "prepIcon", void 0);
-__decorate$52([
-    _angular_core.Input(),
-    __metadata$31("design:type", String)
-], LinkComponent.prototype, "appIcon", void 0);
-__decorate$52([
-    _angular_core.Input(),
-    __metadata$31("design:type", String)
-], LinkComponent.prototype, "scheme", void 0);
-__decorate$52([
-    _angular_core.HostBinding('class.vclDisabled'),
-    _angular_core.Input(),
-    __metadata$31("design:type", Boolean)
-], LinkComponent.prototype, "disabled", void 0);
-__decorate$52([
-    _angular_core.HostBinding('attr.title'),
-    _angular_core.HostBinding('attr.aria-label'),
-    __metadata$31("design:type", String)
-], LinkComponent.prototype, "locTitle", void 0);
-__decorate$52([
-    _angular_core.HostBinding('style.cursor'),
-    __metadata$31("design:type", Object),
-    __metadata$31("design:paramtypes", [])
-], LinkComponent.prototype, "styleCursor", null);
-__decorate$52([
-    _angular_core.HostBinding('attr.href'),
-    __metadata$31("design:type", String),
-    __metadata$31("design:paramtypes", [])
-], LinkComponent.prototype, "attrHref", null);
-__decorate$52([
-    _angular_core.HostBinding('class.vclContentLink'),
-    __metadata$31("design:type", Object),
-    __metadata$31("design:paramtypes", [])
-], LinkComponent.prototype, "useIcogram", null);
-LinkComponent = __decorate$52([
-    _angular_core.Component({
-        selector: '[vcl-link]',
-        template: "<vcl-icogram *ngIf=\"useIcogram\" [label]=\"(locLabel$ | async) || href\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> <ng-container *ngIf=\"!useIcogram\"> {{(locLabel$ | async) || href}} <ng-content></ng-content> </ng-container> "
-    }),
-    __param$6(0, _angular_core.Optional()),
-    __metadata$31("design:paramtypes", [exports.L10nService])
-], LinkComponent);
 
 var __decorate$51 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5004,19 +4999,19 @@ var __decorate$51 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLLinkModule = (function () {
+var VCLLinkModule = (function () {
     function VCLLinkModule() {
     }
+    VCLLinkModule = __decorate$51([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLIcogramModule],
+            exports: [LinkComponent],
+            declarations: [LinkComponent],
+            providers: [],
+        })
+    ], VCLLinkModule);
     return VCLLinkModule;
 }());
-exports.VCLLinkModule = __decorate$51([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLIcogramModule],
-        exports: [LinkComponent],
-        declarations: [LinkComponent],
-        providers: [],
-    })
-], exports.VCLLinkModule);
 
 var __decorate$54 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5030,7 +5025,7 @@ var __metadata$33 = (this && this.__metadata) || function (k, v) {
 var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-exports.NavigationItemDirective = NavigationItemDirective_1 = (function () {
+var NavigationItemDirective = (function () {
     function NavigationItemDirective(router, nav, parent) {
         var _this = this;
         this.router = router;
@@ -5048,6 +5043,7 @@ exports.NavigationItemDirective = NavigationItemDirective_1 = (function () {
             });
         }
     }
+    NavigationItemDirective_1 = NavigationItemDirective;
     Object.defineProperty(NavigationItemDirective.prototype, "items", {
         get: function () {
             var _this = this;
@@ -5099,56 +5095,56 @@ exports.NavigationItemDirective = NavigationItemDirective_1 = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", String)
+    ], NavigationItemDirective.prototype, "label", void 0);
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", Boolean)
+    ], NavigationItemDirective.prototype, "opened", void 0);
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", Object)
+    ], NavigationItemDirective.prototype, "heading", void 0);
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", Object)
+    ], NavigationItemDirective.prototype, "prepIcon", void 0);
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", Object)
+    ], NavigationItemDirective.prototype, "appIcon", void 0);
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", Object)
+    ], NavigationItemDirective.prototype, "class", void 0);
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", Object)
+    ], NavigationItemDirective.prototype, "href", void 0);
+    __decorate$54([
+        _angular_core.Input(),
+        __metadata$33("design:type", Object),
+        __metadata$33("design:paramtypes", [Object])
+    ], NavigationItemDirective.prototype, "route", null);
+    __decorate$54([
+        _angular_core.ContentChildren(NavigationItemDirective_1),
+        __metadata$33("design:type", _angular_core.QueryList)
+    ], NavigationItemDirective.prototype, "contentItems", void 0);
+    NavigationItemDirective = NavigationItemDirective_1 = __decorate$54([
+        _angular_core.Directive({
+            selector: 'vcl-navitem'
+        }),
+        __param$7(1, _angular_core.Inject(_angular_core.forwardRef(function () { return NavigationComponent; }))),
+        __param$7(2, _angular_core.Optional()), __param$7(2, _angular_core.SkipSelf()), __param$7(2, _angular_core.Inject(NavigationItemDirective_1)),
+        __metadata$33("design:paramtypes", [_angular_router.Router,
+            NavigationComponent,
+            NavigationItemDirective])
+    ], NavigationItemDirective);
     return NavigationItemDirective;
+    var NavigationItemDirective_1;
 }());
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", String)
-], exports.NavigationItemDirective.prototype, "label", void 0);
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", Boolean)
-], exports.NavigationItemDirective.prototype, "opened", void 0);
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", Object)
-], exports.NavigationItemDirective.prototype, "heading", void 0);
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", String)
-], exports.NavigationItemDirective.prototype, "prepIcon", void 0);
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", String)
-], exports.NavigationItemDirective.prototype, "appIcon", void 0);
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", String)
-], exports.NavigationItemDirective.prototype, "class", void 0);
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", String)
-], exports.NavigationItemDirective.prototype, "href", void 0);
-__decorate$54([
-    _angular_core.Input(),
-    __metadata$33("design:type", Array),
-    __metadata$33("design:paramtypes", [Array])
-], exports.NavigationItemDirective.prototype, "route", null);
-__decorate$54([
-    _angular_core.ContentChildren(NavigationItemDirective_1),
-    __metadata$33("design:type", _angular_core.QueryList)
-], exports.NavigationItemDirective.prototype, "contentItems", void 0);
-exports.NavigationItemDirective = NavigationItemDirective_1 = __decorate$54([
-    _angular_core.Directive({
-        selector: 'vcl-navitem'
-    }),
-    __param$7(1, _angular_core.Inject(_angular_core.forwardRef(function () { return exports.NavigationComponent; }))),
-    __param$7(2, _angular_core.Optional()), __param$7(2, _angular_core.SkipSelf()), __param$7(2, _angular_core.Inject(NavigationItemDirective_1)),
-    __metadata$33("design:paramtypes", [_angular_router.Router,
-        exports.NavigationComponent,
-        exports.NavigationItemDirective])
-], exports.NavigationItemDirective);
-var NavigationItemDirective_1;
 
 var __decorate$53 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5160,7 +5156,7 @@ var __metadata$32 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 // import { containsTree } from "@angular/router/url_tree";
-exports.NavigationComponent = (function () {
+var NavigationComponent = (function () {
     function NavigationComponent(router) {
         this.router = router;
         this.ariaRole = 'presentation';
@@ -5241,71 +5237,71 @@ exports.NavigationComponent = (function () {
     NavigationComponent.prototype.onSubItemSelect = function (item) {
         this.selectItem(item);
     };
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", String)
+    ], NavigationComponent.prototype, "ident", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", String)
+    ], NavigationComponent.prototype, "ariaRole", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", Number)
+    ], NavigationComponent.prototype, "tabindex", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", String)
+    ], NavigationComponent.prototype, "type", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", Object)
+    ], NavigationComponent.prototype, "useRouter", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", String)
+    ], NavigationComponent.prototype, "subLevelHintIconClosed", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", String)
+    ], NavigationComponent.prototype, "subLevelHintIconOpened", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", String)
+    ], NavigationComponent.prototype, "subLevelHintIconSide", void 0);
+    __decorate$53([
+        _angular_core.Input(),
+        __metadata$32("design:type", Object)
+    ], NavigationComponent.prototype, "inputItems", void 0);
+    __decorate$53([
+        _angular_core.Output(),
+        __metadata$32("design:type", Object)
+    ], NavigationComponent.prototype, "select", void 0);
+    __decorate$53([
+        _angular_core.Output(),
+        __metadata$32("design:type", Object)
+    ], NavigationComponent.prototype, "navigate", void 0);
+    __decorate$53([
+        _angular_core.ContentChildren(NavigationItemDirective),
+        __metadata$32("design:type", _angular_core.QueryList)
+    ], NavigationComponent.prototype, "contentItems", void 0);
+    __decorate$53([
+        _angular_core.HostBinding('class.vclVertical'),
+        __metadata$32("design:type", Object),
+        __metadata$32("design:paramtypes", [])
+    ], NavigationComponent.prototype, "isVertical", null);
+    NavigationComponent = __decorate$53([
+        _angular_core.Component({
+            selector: 'vcl-navigation',
+            host: {
+                '[class.vclNavigation]': 'true'
+            },
+            template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (click)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
+        }),
+        __metadata$32("design:paramtypes", [_angular_router.Router])
+    ], NavigationComponent);
     return NavigationComponent;
 }());
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", String)
-], exports.NavigationComponent.prototype, "ident", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", String)
-], exports.NavigationComponent.prototype, "ariaRole", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", Number)
-], exports.NavigationComponent.prototype, "tabindex", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", String)
-], exports.NavigationComponent.prototype, "type", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", Object)
-], exports.NavigationComponent.prototype, "useRouter", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", String)
-], exports.NavigationComponent.prototype, "subLevelHintIconClosed", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", String)
-], exports.NavigationComponent.prototype, "subLevelHintIconOpened", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", String)
-], exports.NavigationComponent.prototype, "subLevelHintIconSide", void 0);
-__decorate$53([
-    _angular_core.Input(),
-    __metadata$32("design:type", _angular_core.QueryList)
-], exports.NavigationComponent.prototype, "inputItems", void 0);
-__decorate$53([
-    _angular_core.Output(),
-    __metadata$32("design:type", Object)
-], exports.NavigationComponent.prototype, "select", void 0);
-__decorate$53([
-    _angular_core.Output(),
-    __metadata$32("design:type", Object)
-], exports.NavigationComponent.prototype, "navigate", void 0);
-__decorate$53([
-    _angular_core.ContentChildren(exports.NavigationItemDirective),
-    __metadata$32("design:type", _angular_core.QueryList)
-], exports.NavigationComponent.prototype, "contentItems", void 0);
-__decorate$53([
-    _angular_core.HostBinding('class.vclVertical'),
-    __metadata$32("design:type", Object),
-    __metadata$32("design:paramtypes", [])
-], exports.NavigationComponent.prototype, "isVertical", null);
-exports.NavigationComponent = __decorate$53([
-    _angular_core.Component({
-        selector: 'vcl-navigation',
-        host: {
-            '[class.vclNavigation]': 'true'
-        },
-        template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (click)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
-    }),
-    __metadata$32("design:paramtypes", [_angular_router.Router])
-], exports.NavigationComponent);
 
 var __decorate$50 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5313,19 +5309,19 @@ var __decorate$50 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLNavigationModule = (function () {
+var VCLNavigationModule = (function () {
     function VCLNavigationModule() {
     }
+    VCLNavigationModule = __decorate$50([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLLinkModule],
+            exports: [NavigationComponent, NavigationItemDirective],
+            declarations: [NavigationComponent, NavigationItemDirective],
+            providers: [],
+        })
+    ], VCLNavigationModule);
     return VCLNavigationModule;
 }());
-exports.VCLNavigationModule = __decorate$50([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLLinkModule],
-        exports: [exports.NavigationComponent, exports.NavigationItemDirective],
-        declarations: [exports.NavigationComponent, exports.NavigationItemDirective],
-        providers: [],
-    })
-], exports.VCLNavigationModule);
 
 var __decorate$56 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5340,27 +5336,27 @@ var ToolbarComponent = (function () {
     function ToolbarComponent() {
         this.ariaLevel = 1;
     }
+    __decorate$56([
+        _angular_core.Input(),
+        __metadata$34("design:type", Number)
+    ], ToolbarComponent.prototype, "ariaLevel", void 0);
+    ToolbarComponent = __decorate$56([
+        _angular_core.Component({
+            selector: 'vcl-toolbar',
+            template: '<ng-content></ng-content>',
+            host: {
+                '[class.vclToolbar]': 'true',
+                '[class.vclLayoutHorizontal]': 'true',
+                '[class.vclLayoutJustified]': 'true',
+                '[class.vclSecondary]': 'ariaLevel == 2',
+                '[attr.aria-level]': 'ariaLevel',
+                '[attr.role]': '"menubar"',
+            }
+        }),
+        __metadata$34("design:paramtypes", [])
+    ], ToolbarComponent);
     return ToolbarComponent;
 }());
-__decorate$56([
-    _angular_core.Input(),
-    __metadata$34("design:type", Number)
-], ToolbarComponent.prototype, "ariaLevel", void 0);
-ToolbarComponent = __decorate$56([
-    _angular_core.Component({
-        selector: 'vcl-toolbar',
-        template: '<ng-content></ng-content>',
-        host: {
-            '[class.vclToolbar]': 'true',
-            '[class.vclLayoutHorizontal]': 'true',
-            '[class.vclLayoutJustified]': 'true',
-            '[class.vclSecondary]': 'ariaLevel == 2',
-            '[attr.aria-level]': 'ariaLevel',
-            '[attr.role]': '"menubar"',
-        }
-    }),
-    __metadata$34("design:paramtypes", [])
-], ToolbarComponent);
 
 var __decorate$55 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5368,19 +5364,19 @@ var __decorate$55 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLToolbarModule = (function () {
+var VCLToolbarModule = (function () {
     function VCLToolbarModule() {
     }
+    VCLToolbarModule = __decorate$55([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule],
+            exports: [ToolbarComponent],
+            declarations: [ToolbarComponent],
+            providers: [],
+        })
+    ], VCLToolbarModule);
     return VCLToolbarModule;
 }());
-exports.VCLToolbarModule = __decorate$55([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule],
-        exports: [ToolbarComponent],
-        declarations: [ToolbarComponent],
-        providers: [],
-    })
-], exports.VCLToolbarModule);
 
 var __decorate$58 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5450,42 +5446,42 @@ var ProgressBarComponent = (function () {
             value >= this.minValue &&
             value <= this.maxValue;
     };
+    __decorate$58([
+        _angular_core.Input(),
+        __metadata$35("design:type", Number)
+    ], ProgressBarComponent.prototype, "value", void 0);
+    __decorate$58([
+        _angular_core.Input(),
+        __metadata$35("design:type", Number)
+    ], ProgressBarComponent.prototype, "secondaryValue", void 0);
+    __decorate$58([
+        _angular_core.Input(),
+        __metadata$35("design:type", Number)
+    ], ProgressBarComponent.prototype, "minValue", void 0);
+    __decorate$58([
+        _angular_core.Input(),
+        __metadata$35("design:type", Number)
+    ], ProgressBarComponent.prototype, "maxValue", void 0);
+    __decorate$58([
+        _angular_core.Input(),
+        __metadata$35("design:type", Boolean)
+    ], ProgressBarComponent.prototype, "indeterminate", void 0);
+    __decorate$58([
+        _angular_core.Input(),
+        __metadata$35("design:type", String)
+    ], ProgressBarComponent.prototype, "label", void 0);
+    ProgressBarComponent = __decorate$58([
+        _angular_core.Component({
+            selector: 'vcl-progress-bar',
+            template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\"></div> </div> ",
+            host: {
+                '[attr.role]': '"progressbar"',
+            },
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+        })
+    ], ProgressBarComponent);
     return ProgressBarComponent;
 }());
-__decorate$58([
-    _angular_core.Input(),
-    __metadata$35("design:type", Number)
-], ProgressBarComponent.prototype, "value", void 0);
-__decorate$58([
-    _angular_core.Input(),
-    __metadata$35("design:type", Number)
-], ProgressBarComponent.prototype, "secondaryValue", void 0);
-__decorate$58([
-    _angular_core.Input(),
-    __metadata$35("design:type", Number)
-], ProgressBarComponent.prototype, "minValue", void 0);
-__decorate$58([
-    _angular_core.Input(),
-    __metadata$35("design:type", Number)
-], ProgressBarComponent.prototype, "maxValue", void 0);
-__decorate$58([
-    _angular_core.Input(),
-    __metadata$35("design:type", Boolean)
-], ProgressBarComponent.prototype, "indeterminate", void 0);
-__decorate$58([
-    _angular_core.Input(),
-    __metadata$35("design:type", String)
-], ProgressBarComponent.prototype, "label", void 0);
-ProgressBarComponent = __decorate$58([
-    _angular_core.Component({
-        selector: 'vcl-progress-bar',
-        template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\"></div> </div> ",
-        host: {
-            '[attr.role]': '"progressbar"',
-        },
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-    })
-], ProgressBarComponent);
 
 var __decorate$57 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5493,18 +5489,18 @@ var __decorate$57 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLProgressBarModule = (function () {
+var VCLProgressBarModule = (function () {
     function VCLProgressBarModule() {
     }
+    VCLProgressBarModule = __decorate$57([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule],
+            exports: [ProgressBarComponent],
+            declarations: [ProgressBarComponent]
+        })
+    ], VCLProgressBarModule);
     return VCLProgressBarModule;
 }());
-exports.VCLProgressBarModule = __decorate$57([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule],
-        exports: [ProgressBarComponent],
-        declarations: [ProgressBarComponent]
-    })
-], exports.VCLProgressBarModule);
 
 var __decorate$60 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5517,10 +5513,10 @@ var __metadata$36 = (this && this.__metadata) || function (k, v) {
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$8 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.RadioButtonComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return RadioButtonComponent; }),
     multi: true
 };
-exports.RadioButtonComponent = (function () {
+var RadioButtonComponent = (function () {
     function RadioButtonComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -5572,73 +5568,73 @@ exports.RadioButtonComponent = (function () {
     RadioButtonComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$60([
+        _angular_core.Input(),
+        __metadata$36("design:type", Object)
+    ], RadioButtonComponent.prototype, "checkedIcon", void 0);
+    __decorate$60([
+        _angular_core.Input(),
+        __metadata$36("design:type", Object)
+    ], RadioButtonComponent.prototype, "uncheckedIcon", void 0);
+    __decorate$60([
+        _angular_core.HostBinding('attr.aria-disabled'),
+        _angular_core.HostBinding('class.vclDisabled'),
+        _angular_core.Input(),
+        __metadata$36("design:type", Object)
+    ], RadioButtonComponent.prototype, "disabled", void 0);
+    __decorate$60([
+        _angular_core.Input('value'),
+        __metadata$36("design:type", Object)
+    ], RadioButtonComponent.prototype, "value", void 0);
+    __decorate$60([
+        _angular_core.Input(),
+        __metadata$36("design:type", String)
+    ], RadioButtonComponent.prototype, "labelPosition", void 0);
+    __decorate$60([
+        _angular_core.Input(),
+        __metadata$36("design:type", String)
+    ], RadioButtonComponent.prototype, "label", void 0);
+    __decorate$60([
+        _angular_core.HostBinding(),
+        __metadata$36("design:type", Object)
+    ], RadioButtonComponent.prototype, "tabindex", void 0);
+    __decorate$60([
+        _angular_core.HostBinding('attr.checked'),
+        _angular_core.Input(),
+        __metadata$36("design:type", Boolean)
+    ], RadioButtonComponent.prototype, "checked", void 0);
+    __decorate$60([
+        _angular_core.Output(),
+        __metadata$36("design:type", Object)
+    ], RadioButtonComponent.prototype, "checkedChange", void 0);
+    __decorate$60([
+        _angular_core.HostListener('keydown', ['$event']),
+        __metadata$36("design:type", Function),
+        __metadata$36("design:paramtypes", [KeyboardEvent]),
+        __metadata$36("design:returntype", void 0)
+    ], RadioButtonComponent.prototype, "onKeydown", null);
+    __decorate$60([
+        _angular_core.HostListener('click', ['$event']),
+        __metadata$36("design:type", Function),
+        __metadata$36("design:paramtypes", [Event]),
+        __metadata$36("design:returntype", void 0)
+    ], RadioButtonComponent.prototype, "onTap", null);
+    RadioButtonComponent = __decorate$60([
+        _angular_core.Component({
+            selector: 'vcl-radio-button',
+            template: "<vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='right'\"></vcl-icon> <label vcl-form-control-label *ngIf=\"label\" [label]=\"label\"></label> <ng-content></ng-content> <vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
+            host: {
+                '[attr.role]': '"radio"',
+                '[class.vclRadioButton]': 'true',
+                '[style.userSelect]': '"none"'
+            },
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$8]
+        }),
+        __metadata$36("design:paramtypes", [_angular_core.ElementRef, _angular_core.ChangeDetectorRef])
+    ], RadioButtonComponent);
     return RadioButtonComponent;
 }());
-__decorate$60([
-    _angular_core.Input(),
-    __metadata$36("design:type", Object)
-], exports.RadioButtonComponent.prototype, "checkedIcon", void 0);
-__decorate$60([
-    _angular_core.Input(),
-    __metadata$36("design:type", Object)
-], exports.RadioButtonComponent.prototype, "uncheckedIcon", void 0);
-__decorate$60([
-    _angular_core.HostBinding('attr.aria-disabled'),
-    _angular_core.HostBinding('class.vclDisabled'),
-    _angular_core.Input(),
-    __metadata$36("design:type", Object)
-], exports.RadioButtonComponent.prototype, "disabled", void 0);
-__decorate$60([
-    _angular_core.Input('value'),
-    __metadata$36("design:type", Object)
-], exports.RadioButtonComponent.prototype, "value", void 0);
-__decorate$60([
-    _angular_core.Input(),
-    __metadata$36("design:type", String)
-], exports.RadioButtonComponent.prototype, "labelPosition", void 0);
-__decorate$60([
-    _angular_core.Input(),
-    __metadata$36("design:type", String)
-], exports.RadioButtonComponent.prototype, "label", void 0);
-__decorate$60([
-    _angular_core.HostBinding(),
-    __metadata$36("design:type", Object)
-], exports.RadioButtonComponent.prototype, "tabindex", void 0);
-__decorate$60([
-    _angular_core.HostBinding('attr.checked'),
-    _angular_core.Input(),
-    __metadata$36("design:type", Boolean)
-], exports.RadioButtonComponent.prototype, "checked", void 0);
-__decorate$60([
-    _angular_core.Output(),
-    __metadata$36("design:type", Object)
-], exports.RadioButtonComponent.prototype, "checkedChange", void 0);
-__decorate$60([
-    _angular_core.HostListener('keydown', ['$event']),
-    __metadata$36("design:type", Function),
-    __metadata$36("design:paramtypes", [KeyboardEvent]),
-    __metadata$36("design:returntype", void 0)
-], exports.RadioButtonComponent.prototype, "onKeydown", null);
-__decorate$60([
-    _angular_core.HostListener('click', ['$event']),
-    __metadata$36("design:type", Function),
-    __metadata$36("design:paramtypes", [Event]),
-    __metadata$36("design:returntype", void 0)
-], exports.RadioButtonComponent.prototype, "onTap", null);
-exports.RadioButtonComponent = __decorate$60([
-    _angular_core.Component({
-        selector: 'vcl-radio-button',
-        template: "<vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='right'\"></vcl-icon> <label vcl-form-control-label *ngIf=\"label\" [label]=\"label\"></label> <ng-content></ng-content> <vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
-        host: {
-            '[attr.role]': '"radio"',
-            '[class.vclRadioButton]': 'true',
-            '[style.userSelect]': '"none"'
-        },
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$8]
-    }),
-    __metadata$36("design:paramtypes", [_angular_core.ElementRef, _angular_core.ChangeDetectorRef])
-], exports.RadioButtonComponent);
 
 var __decorate$61 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5656,10 +5652,10 @@ var SelectionMode$2;
 })(SelectionMode$2 || (SelectionMode$2 = {}));
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$9 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.RadioGroupComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return RadioGroupComponent; }),
     multi: true
 };
-exports.RadioGroupComponent = (function () {
+var RadioGroupComponent = (function () {
     function RadioGroupComponent(cdRef) {
         this.cdRef = cdRef;
         this.change = new _angular_core.EventEmitter();
@@ -5729,25 +5725,25 @@ exports.RadioGroupComponent = (function () {
     RadioGroupComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$61([
+        _angular_core.Output(),
+        __metadata$37("design:type", Object)
+    ], RadioGroupComponent.prototype, "change", void 0);
+    __decorate$61([
+        _angular_core.ContentChildren(RadioButtonComponent),
+        __metadata$37("design:type", _angular_core.QueryList)
+    ], RadioGroupComponent.prototype, "radioButtons", void 0);
+    RadioGroupComponent = __decorate$61([
+        _angular_core.Component({
+            selector: 'vcl-radio-group',
+            template: "<ng-content></ng-content>",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$9],
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+        }),
+        __metadata$37("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], RadioGroupComponent);
     return RadioGroupComponent;
 }());
-__decorate$61([
-    _angular_core.Output(),
-    __metadata$37("design:type", Object)
-], exports.RadioGroupComponent.prototype, "change", void 0);
-__decorate$61([
-    _angular_core.ContentChildren(exports.RadioButtonComponent),
-    __metadata$37("design:type", _angular_core.QueryList)
-], exports.RadioGroupComponent.prototype, "radioButtons", void 0);
-exports.RadioGroupComponent = __decorate$61([
-    _angular_core.Component({
-        selector: 'vcl-radio-group',
-        template: "<ng-content></ng-content>",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$9],
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-    }),
-    __metadata$37("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], exports.RadioGroupComponent);
 
 var __decorate$63 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5772,52 +5768,52 @@ var FormControlLabelComponent = (function () {
         // Whether an indicator that an input in to the labelled control is required
         this.required = false;
     }
+    __decorate$63([
+        _angular_core.ViewChild('content'),
+        __metadata$38("design:type", _angular_core.ElementRef)
+    ], FormControlLabelComponent.prototype, "content", void 0);
+    __decorate$63([
+        _angular_core.Input(),
+        _angular_core.HostBinding('class.vclDisabled'),
+        __metadata$38("design:type", Object)
+    ], FormControlLabelComponent.prototype, "disabled", void 0);
+    __decorate$63([
+        _angular_core.Input(),
+        __metadata$38("design:type", String)
+    ], FormControlLabelComponent.prototype, "requiredIndicatorCharacter", void 0);
+    __decorate$63([
+        _angular_core.Input(),
+        __metadata$38("design:type", Object)
+    ], FormControlLabelComponent.prototype, "label", void 0);
+    __decorate$63([
+        _angular_core.Input(),
+        __metadata$38("design:type", Object)
+    ], FormControlLabelComponent.prototype, "subLabel", void 0);
+    __decorate$63([
+        _angular_core.HostBinding('class.vclFormControlLabelWrapping'),
+        _angular_core.Input(),
+        __metadata$38("design:type", Object)
+    ], FormControlLabelComponent.prototype, "wrapping", void 0);
+    __decorate$63([
+        _angular_core.Input(),
+        __metadata$38("design:type", Boolean)
+    ], FormControlLabelComponent.prototype, "required", void 0);
+    __decorate$63([
+        _angular_core.Input(),
+        __metadata$38("design:type", String)
+    ], FormControlLabelComponent.prototype, "requiredIndLabel", void 0);
+    FormControlLabelComponent = __decorate$63([
+        _angular_core.Component({
+            selector: 'label[vcl-form-control-label]',
+            template: "{{label | loc}} <em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel | loc\"> {{requiredIndicatorCharacter}} </em> <span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel | loc}}</span> <!--<span #content><ng-content></ng-content></span> --> <ng-content></ng-content> ",
+            host: {
+                '[class.vclFormControlLabel]': 'true',
+            },
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        })
+    ], FormControlLabelComponent);
     return FormControlLabelComponent;
 }());
-__decorate$63([
-    _angular_core.ViewChild('content'),
-    __metadata$38("design:type", _angular_core.ElementRef)
-], FormControlLabelComponent.prototype, "content", void 0);
-__decorate$63([
-    _angular_core.Input(),
-    _angular_core.HostBinding('class.vclDisabled'),
-    __metadata$38("design:type", Object)
-], FormControlLabelComponent.prototype, "disabled", void 0);
-__decorate$63([
-    _angular_core.Input(),
-    __metadata$38("design:type", String)
-], FormControlLabelComponent.prototype, "requiredIndicatorCharacter", void 0);
-__decorate$63([
-    _angular_core.Input(),
-    __metadata$38("design:type", String)
-], FormControlLabelComponent.prototype, "label", void 0);
-__decorate$63([
-    _angular_core.Input(),
-    __metadata$38("design:type", String)
-], FormControlLabelComponent.prototype, "subLabel", void 0);
-__decorate$63([
-    _angular_core.HostBinding('class.vclFormControlLabelWrapping'),
-    _angular_core.Input(),
-    __metadata$38("design:type", Object)
-], FormControlLabelComponent.prototype, "wrapping", void 0);
-__decorate$63([
-    _angular_core.Input(),
-    __metadata$38("design:type", Boolean)
-], FormControlLabelComponent.prototype, "required", void 0);
-__decorate$63([
-    _angular_core.Input(),
-    __metadata$38("design:type", String)
-], FormControlLabelComponent.prototype, "requiredIndLabel", void 0);
-FormControlLabelComponent = __decorate$63([
-    _angular_core.Component({
-        selector: 'label[vcl-form-control-label]',
-        template: "{{label | loc}} <em *ngIf=\"required\" class=\"vclRequiredIndicator\" aria-hidden=\"true\" [attr.aria-label]=\"requiredIndLabel | loc\"> {{requiredIndicatorCharacter}} </em> <span *ngIf=\"subLabel\" class=\"vclFormControlSubLabel\">{{subLabel | loc}}</span> <!--<span #content><ng-content></ng-content></span> --> <ng-content></ng-content> ",
-        host: {
-            '[class.vclFormControlLabel]': 'true',
-        },
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    })
-], FormControlLabelComponent);
 
 var __decorate$62 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5825,18 +5821,18 @@ var __decorate$62 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLFormControlLabelModule = (function () {
+var VCLFormControlLabelModule = (function () {
     function VCLFormControlLabelModule() {
     }
+    VCLFormControlLabelModule = __decorate$62([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLIconModule, L10nModule],
+            exports: [FormControlLabelComponent],
+            declarations: [FormControlLabelComponent]
+        })
+    ], VCLFormControlLabelModule);
     return VCLFormControlLabelModule;
 }());
-exports.VCLFormControlLabelModule = __decorate$62([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLIconModule, exports.L10nModule],
-        exports: [FormControlLabelComponent],
-        declarations: [FormControlLabelComponent]
-    })
-], exports.VCLFormControlLabelModule);
 
 var __decorate$59 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5844,18 +5840,18 @@ var __decorate$59 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLRadioButtonModule = (function () {
+var VCLRadioButtonModule = (function () {
     function VCLRadioButtonModule() {
     }
+    VCLRadioButtonModule = __decorate$59([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLIconModule, VCLFormControlLabelModule],
+            exports: [RadioButtonComponent, RadioGroupComponent],
+            declarations: [RadioButtonComponent, RadioGroupComponent]
+        })
+    ], VCLRadioButtonModule);
     return VCLRadioButtonModule;
 }());
-exports.VCLRadioButtonModule = __decorate$59([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLIconModule, exports.VCLFormControlLabelModule],
-        exports: [exports.RadioButtonComponent, exports.RadioGroupComponent],
-        declarations: [exports.RadioButtonComponent, exports.RadioGroupComponent]
-    })
-], exports.VCLRadioButtonModule);
 
 var __decorate$65 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5868,10 +5864,10 @@ var __metadata$39 = (this && this.__metadata) || function (k, v) {
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.CheckboxComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return CheckboxComponent; }),
     multi: true
 };
-exports.CheckboxComponent = (function () {
+var CheckboxComponent = (function () {
     function CheckboxComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -5936,72 +5932,72 @@ exports.CheckboxComponent = (function () {
     CheckboxComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$65([
+        _angular_core.HostBinding(),
+        __metadata$39("design:type", Object)
+    ], CheckboxComponent.prototype, "tabindex", void 0);
+    __decorate$65([
+        _angular_core.Input(),
+        __metadata$39("design:type", String)
+    ], CheckboxComponent.prototype, "checkedIcon", void 0);
+    __decorate$65([
+        _angular_core.Input(),
+        __metadata$39("design:type", String)
+    ], CheckboxComponent.prototype, "uncheckedIcon", void 0);
+    __decorate$65([
+        _angular_core.HostBinding('attr.aria-disabled'),
+        _angular_core.HostBinding('class.vclDisabled'),
+        _angular_core.Input(),
+        __metadata$39("design:type", Boolean)
+    ], CheckboxComponent.prototype, "disabled", void 0);
+    __decorate$65([
+        _angular_core.Input(),
+        __metadata$39("design:type", String)
+    ], CheckboxComponent.prototype, "labelPosition", void 0);
+    __decorate$65([
+        _angular_core.HostBinding('attr.checked'),
+        _angular_core.Input(),
+        __metadata$39("design:type", Boolean)
+    ], CheckboxComponent.prototype, "checked", void 0);
+    __decorate$65([
+        _angular_core.Output(),
+        __metadata$39("design:type", Object)
+    ], CheckboxComponent.prototype, "checkedChange", void 0);
+    __decorate$65([
+        _angular_core.HostListener('keydown', ['$event']),
+        __metadata$39("design:type", Function),
+        __metadata$39("design:paramtypes", [Object]),
+        __metadata$39("design:returntype", void 0)
+    ], CheckboxComponent.prototype, "onKeyup", null);
+    __decorate$65([
+        _angular_core.HostListener('click', ['$event']),
+        __metadata$39("design:type", Function),
+        __metadata$39("design:paramtypes", [Object]),
+        __metadata$39("design:returntype", void 0)
+    ], CheckboxComponent.prototype, "onTap", null);
+    __decorate$65([
+        _angular_core.HostListener('blur'),
+        __metadata$39("design:type", Function),
+        __metadata$39("design:paramtypes", [Object]),
+        __metadata$39("design:returntype", void 0)
+    ], CheckboxComponent.prototype, "onBlur", null);
+    CheckboxComponent = __decorate$65([
+        _angular_core.Component({
+            selector: 'vcl-checkbox',
+            template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
+            animations: [_angular_animations.trigger('checkState', [])],
+            host: {
+                '[attr.role]': '"checkbox"',
+                '[class.vclCheckbox]': 'true',
+                '[style.userSelect]': '"none"'
+            },
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10],
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata$39("design:paramtypes", [_angular_core.ElementRef, _angular_core.ChangeDetectorRef])
+    ], CheckboxComponent);
     return CheckboxComponent;
 }());
-__decorate$65([
-    _angular_core.HostBinding(),
-    __metadata$39("design:type", Object)
-], exports.CheckboxComponent.prototype, "tabindex", void 0);
-__decorate$65([
-    _angular_core.Input(),
-    __metadata$39("design:type", String)
-], exports.CheckboxComponent.prototype, "checkedIcon", void 0);
-__decorate$65([
-    _angular_core.Input(),
-    __metadata$39("design:type", String)
-], exports.CheckboxComponent.prototype, "uncheckedIcon", void 0);
-__decorate$65([
-    _angular_core.HostBinding('attr.aria-disabled'),
-    _angular_core.HostBinding('class.vclDisabled'),
-    _angular_core.Input(),
-    __metadata$39("design:type", Boolean)
-], exports.CheckboxComponent.prototype, "disabled", void 0);
-__decorate$65([
-    _angular_core.Input(),
-    __metadata$39("design:type", String)
-], exports.CheckboxComponent.prototype, "labelPosition", void 0);
-__decorate$65([
-    _angular_core.HostBinding('attr.checked'),
-    _angular_core.Input(),
-    __metadata$39("design:type", Boolean)
-], exports.CheckboxComponent.prototype, "checked", void 0);
-__decorate$65([
-    _angular_core.Output(),
-    __metadata$39("design:type", Object)
-], exports.CheckboxComponent.prototype, "checkedChange", void 0);
-__decorate$65([
-    _angular_core.HostListener('keydown', ['$event']),
-    __metadata$39("design:type", Function),
-    __metadata$39("design:paramtypes", [Object]),
-    __metadata$39("design:returntype", void 0)
-], exports.CheckboxComponent.prototype, "onKeyup", null);
-__decorate$65([
-    _angular_core.HostListener('click', ['$event']),
-    __metadata$39("design:type", Function),
-    __metadata$39("design:paramtypes", [Object]),
-    __metadata$39("design:returntype", void 0)
-], exports.CheckboxComponent.prototype, "onTap", null);
-__decorate$65([
-    _angular_core.HostListener('blur'),
-    __metadata$39("design:type", Function),
-    __metadata$39("design:paramtypes", [Object]),
-    __metadata$39("design:returntype", void 0)
-], exports.CheckboxComponent.prototype, "onBlur", null);
-exports.CheckboxComponent = __decorate$65([
-    _angular_core.Component({
-        selector: 'vcl-checkbox',
-        template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
-        animations: [_angular_animations.trigger('checkState', [])],
-        host: {
-            '[attr.role]': '"checkbox"',
-            '[class.vclCheckbox]': 'true',
-            '[style.userSelect]': '"none"'
-        },
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10],
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    }),
-    __metadata$39("design:paramtypes", [_angular_core.ElementRef, _angular_core.ChangeDetectorRef])
-], exports.CheckboxComponent);
 
 var __decorate$64 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6009,18 +6005,18 @@ var __decorate$64 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLCheckboxModule = (function () {
+var VCLCheckboxModule = (function () {
     function VCLCheckboxModule() {
     }
+    VCLCheckboxModule = __decorate$64([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLIconModule],
+            exports: [CheckboxComponent],
+            declarations: [CheckboxComponent]
+        })
+    ], VCLCheckboxModule);
     return VCLCheckboxModule;
 }());
-exports.VCLCheckboxModule = __decorate$64([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLIconModule],
-        exports: [exports.CheckboxComponent],
-        declarations: [exports.CheckboxComponent]
-    })
-], exports.VCLCheckboxModule);
 
 /**
  * this is a helper-class so that the Date-logic
@@ -6244,10 +6240,10 @@ var __metadata$40 = (this && this.__metadata) || function (k, v) {
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$11 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.DatePickerComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return DatePickerComponent; }),
     multi: true
 };
-exports.DatePickerComponent = (function () {
+var DatePickerComponent = (function () {
     function DatePickerComponent(cdRef) {
         this.cdRef = cdRef;
         // behavior
@@ -6372,86 +6368,86 @@ exports.DatePickerComponent = (function () {
     DatePickerComponent.prototype.registerOnTouched = function (fn) {
         this.onTouchedCallback = fn;
     };
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "closeOnSelect", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "highlightToday", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "highlightSelected", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "displayWeekNumbers", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "displayWeekdays", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", String)
+    ], DatePickerComponent.prototype, "prevYearBtnIcon", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", String)
+    ], DatePickerComponent.prototype, "nextYearBtnIcon", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "displayJumpToday", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "displayJumpSelected", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Date)
+    ], DatePickerComponent.prototype, "selectedDate", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Boolean)
+    ], DatePickerComponent.prototype, "selectRange", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Object)
+    ], DatePickerComponent.prototype, "selectedRangeEnd", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Number)
+    ], DatePickerComponent.prototype, "maxRangeLength", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Object)
+    ], DatePickerComponent.prototype, "minDate", void 0);
+    __decorate$67([
+        _angular_core.Input(),
+        __metadata$40("design:type", Object)
+    ], DatePickerComponent.prototype, "maxDate", void 0);
+    DatePickerComponent = __decorate$67([
+        _angular_core.Component({
+            selector: 'vcl-date-picker',
+            template: "<div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\"> <div class=\"vclDGRow\"> <div class=\"vclDGCell vclToolbar\"> <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"prevMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div> </div> </button> <span class=\"vclCalHeaderLabel\" (click)=\"showYearPick=true\" [class.date-picker-pointer]=\"!showYearPick\"> {{viewDate.getMonthString() | loc}}&nbsp;&nbsp;{{viewDate.getYearString()}} </span> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"nextMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div> </div> </button> </div> </div> </div> <ng-container *ngIf=\"!showYearPick\"> <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\"> <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\"> {{'week' | loc}} </div> <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\"> <ng-container *ngIf=\"displayWeekdays\"> {{day | loc}} </ng-container> </div> </div> <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\"> <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\"> {{week[5].getWeekNumber()}} </div> <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"isDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (click)=\"select(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\"> {{day.date.getDate()}} </div> </div> <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\"> <div class=\"vclDGCell\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\"> <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" (click)=\"gotoToday()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to today</span> </div> </button> <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" (click)=\"gotoSelected()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to selected</span> </div> </button> </div> </div> </div> </ng-container> <ng-container *ngIf=\"showYearPick\"> <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\"> <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\"> {{year}} </div> </div> </ng-container> </div> ",
+            styles: [
+                ".hidden{display:none;}\n     .date-picker-pointer{cursor: pointer;}\n    "
+            ],
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$11],
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            host: {
+                '[class.vclDatePicker]': 'true',
+                '[attr.role]': '"listbox"',
+                '[attr.aria-multiselectable]': 'false',
+                '[style.height]': '"284px"' // TODO this fixes for IE11
+            }
+        }),
+        __metadata$40("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], DatePickerComponent);
     return DatePickerComponent;
 }());
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "closeOnSelect", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "highlightToday", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "highlightSelected", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "displayWeekNumbers", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "displayWeekdays", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", String)
-], exports.DatePickerComponent.prototype, "prevYearBtnIcon", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", String)
-], exports.DatePickerComponent.prototype, "nextYearBtnIcon", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "displayJumpToday", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "displayJumpSelected", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Date)
-], exports.DatePickerComponent.prototype, "selectedDate", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Boolean)
-], exports.DatePickerComponent.prototype, "selectRange", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Date)
-], exports.DatePickerComponent.prototype, "selectedRangeEnd", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Number)
-], exports.DatePickerComponent.prototype, "maxRangeLength", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Date)
-], exports.DatePickerComponent.prototype, "minDate", void 0);
-__decorate$67([
-    _angular_core.Input(),
-    __metadata$40("design:type", Date)
-], exports.DatePickerComponent.prototype, "maxDate", void 0);
-exports.DatePickerComponent = __decorate$67([
-    _angular_core.Component({
-        selector: 'vcl-date-picker',
-        template: "<div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\"> <div class=\"vclDGRow\"> <div class=\"vclDGCell vclToolbar\"> <div class=\" vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"prevMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-left\" aria-hidden=\"false\" aria-label=\"previous\" role=\"img\"></div> </div> </button> <span class=\"vclCalHeaderLabel\" (click)=\"showYearPick=true\" [class.date-picker-pointer]=\"!showYearPick\"> {{viewDate.getMonthString() | loc}}&nbsp;&nbsp;{{viewDate.getYearString()}} </span> <button type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"nextMonth()\"> <div class=\"vclIcogram\"> <div class=\"vclIcon fa fa-angle-right\" aria-hidden=\"false\" aria-label=\"next\" role=\"img\"></div> </div> </button> </div> </div> </div> <ng-container *ngIf=\"!showYearPick\"> <div *ngIf=\"displayWeekNumbers || displayWeekdays\" class=\"vclDGRow\"> <div *ngIf=\"displayWeekNumbers\" class=\"vclDGCell vclCalItem vclOtherMonth\"> {{'week' | loc}} </div> <div *ngFor=\"let day of viewDate.getWeekDays()\" class=\"vclDGCell vclWeekdayLabel\"> <ng-container *ngIf=\"displayWeekdays\"> {{day | loc}} </ng-container> </div> </div> <div class=\"vclDGRow\" *ngFor=\"let week of viewDate.getMonthBlock()\"> <div *ngIf=\"displayWeekNumbers && week.length==7\" class=\"vclDGCell\"> {{week[5].getWeekNumber()}} </div> <div *ngFor=\"let day of week\" class=\"vclDGCell vclCalItem\" [class.vclDisabled]=\"isDisabled(day)\" [class.vclOtherMonth]=\"!day.isSameMonthAndYear(viewDate)\" [class.vclSelected]=\"isMarked(day)\" (click)=\"select(day)\" [class.vclToday]=\"highlightSelected && day.isToday()\"> {{day.date.getDate()}} </div> </div> <div *ngIf=\"displayJumpSelected || displayJumpToday\" class=\"vclDGRow\"> <div class=\"vclDGCell\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified\" role=\"menubar\" aria-level=\"2\"> <button *ngIf=\"displayJumpToday\" type=\"button\" title=\"go to today\" class=\"vclButton vclTransparent vclLayoutFlex\" (click)=\"gotoToday()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to today</span> </div> </button> <button *ngIf=\"displayJumpSelected\" type=\"button\" title=\"go to selected\" class=\"vclButton vclTransparent vclLayoutFlex\" (click)=\"gotoSelected()\"> <div class=\" vclIcogram\"> <span class=\"vclText \">go to selected</span> </div> </button> </div> </div> </div> </ng-container> <ng-container *ngIf=\"showYearPick\"> <div class=\"vclDGRow\" role=\"row\" *ngFor=\"let row of viewDate.getYearsBlock()\"> <div *ngFor=\"let year of row\" class=\"vclDGCell vclCalItem\" role=\"gridcell\" [class.vclSelected]=\"viewDate.date.getFullYear()==year\" (click)=\"yearPickSelect(year)\" [class.vclToday]=\"highlightSelected && today.isInYear(year)\"> {{year}} </div> </div> </ng-container> </div> ",
-        styles: [
-            ".hidden{display:none;}\n     .date-picker-pointer{cursor: pointer;}\n    "
-        ],
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$11],
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        host: {
-            '[class.vclDatePicker]': 'true',
-            '[attr.role]': '"listbox"',
-            '[attr.aria-multiselectable]': 'false',
-            '[style.height]': '"284px"' // TODO this fixes for IE11
-        }
-    }),
-    __metadata$40("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], exports.DatePickerComponent);
 
 var __decorate$66 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6459,19 +6455,19 @@ var __decorate$66 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLDatePickerModule = (function () {
+var VCLDatePickerModule = (function () {
     function VCLDatePickerModule() {
     }
+    VCLDatePickerModule = __decorate$66([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLButtonModule, L10nModule],
+            exports: [DatePickerComponent],
+            declarations: [DatePickerComponent],
+            providers: [],
+        })
+    ], VCLDatePickerModule);
     return VCLDatePickerModule;
 }());
-exports.VCLDatePickerModule = __decorate$66([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLButtonModule, exports.L10nModule],
-        exports: [exports.DatePickerComponent],
-        declarations: [exports.DatePickerComponent],
-        providers: [],
-    })
-], exports.VCLDatePickerModule);
 
 var __decorate$69 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6482,7 +6478,7 @@ var __decorate$69 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$41 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.MonthPickerComponent = MonthPickerComponent_1 = (function () {
+var MonthPickerComponent = (function () {
     //
     function MonthPickerComponent(ref) {
         this.ref = ref;
@@ -6514,6 +6510,7 @@ exports.MonthPickerComponent = MonthPickerComponent_1 = (function () {
         this.minYear = Number.MIN_SAFE_INTEGER;
         this.maxYear = Number.MAX_SAFE_INTEGER;
     }
+    MonthPickerComponent_1 = MonthPickerComponent;
     MonthPickerComponent.prototype.ngOnInit = function () {
         var _this = this;
         // Create month labels.
@@ -6744,119 +6741,119 @@ exports.MonthPickerComponent = MonthPickerComponent_1 = (function () {
             }, this.getYearMeta(year)[month]);
         }
     };
+    MonthPickerComponent.Tag = 'MonthPickerComponent';
+    MonthPickerComponent.MonthCount = 12;
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "debug", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "expanded", void 0);
+    __decorate$69([
+        _angular_core.Output(),
+        __metadata$41("design:type", _angular_core.EventEmitter)
+    ], MonthPickerComponent.prototype, "expandedChange", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Number)
+    ], MonthPickerComponent.prototype, "currentYear", void 0);
+    __decorate$69([
+        _angular_core.Output(),
+        __metadata$41("design:type", _angular_core.EventEmitter)
+    ], MonthPickerComponent.prototype, "currentYearChange", void 0);
+    __decorate$69([
+        _angular_core.Output(),
+        __metadata$41("design:type", Object)
+    ], MonthPickerComponent.prototype, "prevYearBtnTap", void 0);
+    __decorate$69([
+        _angular_core.Output(),
+        __metadata$41("design:type", Object)
+    ], MonthPickerComponent.prototype, "nextYearBtnTap", void 0);
+    __decorate$69([
+        _angular_core.Output(),
+        __metadata$41("design:type", Object)
+    ], MonthPickerComponent.prototype, "select", void 0);
+    __decorate$69([
+        _angular_core.Output(),
+        __metadata$41("design:type", Object)
+    ], MonthPickerComponent.prototype, "deselect", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Number)
+    ], MonthPickerComponent.prototype, "tabindex", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Number)
+    ], MonthPickerComponent.prototype, "monthsPerRow", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Array)
+    ], MonthPickerComponent.prototype, "colors", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Object)
+    ], MonthPickerComponent.prototype, "locales", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Object)
+    ], MonthPickerComponent.prototype, "dateOptions", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "expandable", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "prevYearAvailable", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "nextYearAvailable", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Boolean)
+    ], MonthPickerComponent.prototype, "useAvailableMonths", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", String)
+    ], MonthPickerComponent.prototype, "closeBtnIcon", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", String)
+    ], MonthPickerComponent.prototype, "prevYearBtnIcon", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", String)
+    ], MonthPickerComponent.prototype, "nextYearBtnIcon", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Number)
+    ], MonthPickerComponent.prototype, "maxSelectableMonths", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Number)
+    ], MonthPickerComponent.prototype, "minSelectableMonths", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Number)
+    ], MonthPickerComponent.prototype, "minYear", void 0);
+    __decorate$69([
+        _angular_core.Input(),
+        __metadata$41("design:type", Number)
+    ], MonthPickerComponent.prototype, "maxYear", void 0);
+    MonthPickerComponent = MonthPickerComponent_1 = __decorate$69([
+        _angular_core.Component({
+            selector: 'vcl-month-picker',
+            template: "<div class=\"vclDatePicker\" [class.vclLayoutHidden]=\"!expanded\"> <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" [attr.role]=\"'grid'\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"maxSelectableMonths > 1\" [attr.aria-expanded]=\"expanded\"> <div class=\"vclLayoutFlex vclDGRow vclLayoutAuto\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button vcl-button class=\"vclButton vclTransparent vclSquare\" type=\"button\" [class.vclDisabled]=\"!prevYearAvailable\" [appIcon]=\"prevYearBtnIcon\" (click)=\"onPrevYearTap()\"> </button> <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span> <button vcl-button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [class.vclDisabled]=\"!nextYearAvailable\" [appIcon]=\"nextYearBtnIcon\" (click)=\"onNextYearTap()\"> </button> <button vcl-button *ngIf=\"expandable\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" [appIcon]=\"closeBtnIcon\" (click)=\"onCloseBtnTap()\"> </button> </div> </div> <div class=\"vclSeparator\"></div> <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\"> <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclLayoutFlex vclDGRow vclLayoutAuto\" role=\"row\"> <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\" (click)=\"selectMonth(currentYear, i+j)\" class=\"vclDGCell vclCalItem\" [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\" [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclToday]=\"isCurrentMonth(i+j)\" [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\" [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" [style.background-color]=\"currentMeta[i+j].color\" [style.order]=\"i+j\" [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" role=\"gridcell\" tabindex=\"0\"> <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\"> {{months[i + j]}} </div> </div> </div> </ng-template> </div> </div> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata$41("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], MonthPickerComponent);
     return MonthPickerComponent;
+    var MonthPickerComponent_1;
 }());
-exports.MonthPickerComponent.Tag = 'MonthPickerComponent';
-exports.MonthPickerComponent.MonthCount = 12;
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Boolean)
-], exports.MonthPickerComponent.prototype, "debug", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Boolean)
-], exports.MonthPickerComponent.prototype, "expanded", void 0);
-__decorate$69([
-    _angular_core.Output(),
-    __metadata$41("design:type", _angular_core.EventEmitter)
-], exports.MonthPickerComponent.prototype, "expandedChange", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Number)
-], exports.MonthPickerComponent.prototype, "currentYear", void 0);
-__decorate$69([
-    _angular_core.Output(),
-    __metadata$41("design:type", _angular_core.EventEmitter)
-], exports.MonthPickerComponent.prototype, "currentYearChange", void 0);
-__decorate$69([
-    _angular_core.Output(),
-    __metadata$41("design:type", Object)
-], exports.MonthPickerComponent.prototype, "prevYearBtnTap", void 0);
-__decorate$69([
-    _angular_core.Output(),
-    __metadata$41("design:type", Object)
-], exports.MonthPickerComponent.prototype, "nextYearBtnTap", void 0);
-__decorate$69([
-    _angular_core.Output(),
-    __metadata$41("design:type", Object)
-], exports.MonthPickerComponent.prototype, "select", void 0);
-__decorate$69([
-    _angular_core.Output(),
-    __metadata$41("design:type", Object)
-], exports.MonthPickerComponent.prototype, "deselect", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Number)
-], exports.MonthPickerComponent.prototype, "tabindex", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Number)
-], exports.MonthPickerComponent.prototype, "monthsPerRow", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Array)
-], exports.MonthPickerComponent.prototype, "colors", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Object)
-], exports.MonthPickerComponent.prototype, "locales", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Object)
-], exports.MonthPickerComponent.prototype, "dateOptions", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Boolean)
-], exports.MonthPickerComponent.prototype, "expandable", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Boolean)
-], exports.MonthPickerComponent.prototype, "prevYearAvailable", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Boolean)
-], exports.MonthPickerComponent.prototype, "nextYearAvailable", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Boolean)
-], exports.MonthPickerComponent.prototype, "useAvailableMonths", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", String)
-], exports.MonthPickerComponent.prototype, "closeBtnIcon", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", String)
-], exports.MonthPickerComponent.prototype, "prevYearBtnIcon", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", String)
-], exports.MonthPickerComponent.prototype, "nextYearBtnIcon", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Number)
-], exports.MonthPickerComponent.prototype, "maxSelectableMonths", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Number)
-], exports.MonthPickerComponent.prototype, "minSelectableMonths", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Number)
-], exports.MonthPickerComponent.prototype, "minYear", void 0);
-__decorate$69([
-    _angular_core.Input(),
-    __metadata$41("design:type", Number)
-], exports.MonthPickerComponent.prototype, "maxYear", void 0);
-exports.MonthPickerComponent = MonthPickerComponent_1 = __decorate$69([
-    _angular_core.Component({
-        selector: 'vcl-month-picker',
-        template: "<div class=\"vclDatePicker\" [class.vclLayoutHidden]=\"!expanded\"> <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" [attr.role]=\"'grid'\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"maxSelectableMonths > 1\" [attr.aria-expanded]=\"expanded\"> <div class=\"vclLayoutFlex vclDGRow vclLayoutAuto\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button vcl-button class=\"vclButton vclTransparent vclSquare\" type=\"button\" [class.vclDisabled]=\"!prevYearAvailable\" [appIcon]=\"prevYearBtnIcon\" (click)=\"onPrevYearTap()\"> </button> <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span> <button vcl-button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [class.vclDisabled]=\"!nextYearAvailable\" [appIcon]=\"nextYearBtnIcon\" (click)=\"onNextYearTap()\"> </button> <button vcl-button *ngIf=\"expandable\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" [appIcon]=\"closeBtnIcon\" (click)=\"onCloseBtnTap()\"> </button> </div> </div> <div class=\"vclSeparator\"></div> <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\"> <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclLayoutFlex vclDGRow vclLayoutAuto\" role=\"row\"> <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\" (click)=\"selectMonth(currentYear, i+j)\" class=\"vclDGCell vclCalItem\" [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\" [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclToday]=\"isCurrentMonth(i+j)\" [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\" [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" [style.background-color]=\"currentMeta[i+j].color\" [style.order]=\"i+j\" [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" role=\"gridcell\" tabindex=\"0\"> <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\"> {{months[i + j]}} </div> </div> </div> </ng-template> </div> </div> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    }),
-    __metadata$41("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], exports.MonthPickerComponent);
-var MonthPickerComponent_1;
 
 var __decorate$68 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6864,19 +6861,19 @@ var __decorate$68 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLMonthPickerModule = (function () {
+var VCLMonthPickerModule = (function () {
     function VCLMonthPickerModule() {
     }
+    VCLMonthPickerModule = __decorate$68([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, VCLButtonModule, L10nModule],
+            exports: [MonthPickerComponent],
+            declarations: [MonthPickerComponent],
+            providers: [],
+        })
+    ], VCLMonthPickerModule);
     return VCLMonthPickerModule;
 }());
-exports.VCLMonthPickerModule = __decorate$68([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.VCLButtonModule, exports.L10nModule],
-        exports: [exports.MonthPickerComponent],
-        declarations: [exports.MonthPickerComponent],
-        providers: [],
-    })
-], exports.VCLMonthPickerModule);
 
 var __decorate$71 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6933,50 +6930,50 @@ var LabelComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate$71([
+        _angular_core.Input('label'),
+        __metadata$42("design:type", Object)
+    ], LabelComponent.prototype, "label", void 0);
+    __decorate$71([
+        _angular_core.Input('type'),
+        __metadata$42("design:type", Object)
+    ], LabelComponent.prototype, "type", void 0);
+    __decorate$71([
+        _angular_core.HostBinding('class.vclPrimary'),
+        __metadata$42("design:type", Object),
+        __metadata$42("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclPrimary", null);
+    __decorate$71([
+        _angular_core.HostBinding('class.vclSuccess'),
+        __metadata$42("design:type", Object),
+        __metadata$42("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclSuccess", null);
+    __decorate$71([
+        _angular_core.HostBinding('class.vclInfo'),
+        __metadata$42("design:type", Object),
+        __metadata$42("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclInfo", null);
+    __decorate$71([
+        _angular_core.HostBinding('class.vclWarning'),
+        __metadata$42("design:type", Object),
+        __metadata$42("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclWarning", null);
+    __decorate$71([
+        _angular_core.HostBinding('class.vclError'),
+        __metadata$42("design:type", Object),
+        __metadata$42("design:paramtypes", [])
+    ], LabelComponent.prototype, "vclError", null);
+    LabelComponent = __decorate$71([
+        _angular_core.Component({
+            selector: '[vcl-label], vcl-label',
+            template: "{{ label | loc }} <ng-content></ng-content>",
+            host: {
+                '[class.vclLabel]': 'true'
+            }
+        })
+    ], LabelComponent);
     return LabelComponent;
 }());
-__decorate$71([
-    _angular_core.Input('label'),
-    __metadata$42("design:type", String)
-], LabelComponent.prototype, "label", void 0);
-__decorate$71([
-    _angular_core.Input('type'),
-    __metadata$42("design:type", String)
-], LabelComponent.prototype, "type", void 0);
-__decorate$71([
-    _angular_core.HostBinding('class.vclPrimary'),
-    __metadata$42("design:type", Object),
-    __metadata$42("design:paramtypes", [])
-], LabelComponent.prototype, "vclPrimary", null);
-__decorate$71([
-    _angular_core.HostBinding('class.vclSuccess'),
-    __metadata$42("design:type", Object),
-    __metadata$42("design:paramtypes", [])
-], LabelComponent.prototype, "vclSuccess", null);
-__decorate$71([
-    _angular_core.HostBinding('class.vclInfo'),
-    __metadata$42("design:type", Object),
-    __metadata$42("design:paramtypes", [])
-], LabelComponent.prototype, "vclInfo", null);
-__decorate$71([
-    _angular_core.HostBinding('class.vclWarning'),
-    __metadata$42("design:type", Object),
-    __metadata$42("design:paramtypes", [])
-], LabelComponent.prototype, "vclWarning", null);
-__decorate$71([
-    _angular_core.HostBinding('class.vclError'),
-    __metadata$42("design:type", Object),
-    __metadata$42("design:paramtypes", [])
-], LabelComponent.prototype, "vclError", null);
-LabelComponent = __decorate$71([
-    _angular_core.Component({
-        selector: '[vcl-label], vcl-label',
-        template: "{{ label | loc }} <ng-content></ng-content>",
-        host: {
-            '[class.vclLabel]': 'true'
-        }
-    })
-], LabelComponent);
 
 var __decorate$70 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6984,19 +6981,19 @@ var __decorate$70 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLLabelModule = (function () {
+var VCLLabelModule = (function () {
     function VCLLabelModule() {
     }
+    VCLLabelModule = __decorate$70([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule, VCLMetalistModule],
+            exports: [LabelComponent],
+            declarations: [LabelComponent],
+            providers: [],
+        })
+    ], VCLLabelModule);
     return VCLLabelModule;
 }());
-exports.VCLLabelModule = __decorate$70([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule, exports.VCLMetalistModule],
-        exports: [LabelComponent],
-        declarations: [LabelComponent],
-        providers: [],
-    })
-], exports.VCLLabelModule);
 
 var __decorate$73 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7014,10 +7011,10 @@ var MoveDirection;
 })(MoveDirection || (MoveDirection = {}));
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$12 = {
     provide: _angular_forms.NG_VALUE_ACCESSOR,
-    useExisting: _angular_core.forwardRef(function () { return exports.SliderComponent; }),
+    useExisting: _angular_core.forwardRef(function () { return SliderComponent; }),
     multi: true
 };
-exports.SliderComponent = (function () {
+var SliderComponent = (function () {
     function SliderComponent(cdRef) {
         this.cdRef = cdRef;
         this.tabindex = 0;
@@ -7266,95 +7263,95 @@ exports.SliderComponent = (function () {
     SliderComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate$73([
+        _angular_core.HostBinding(),
+        __metadata$43("design:type", Object)
+    ], SliderComponent.prototype, "tabindex", void 0);
+    __decorate$73([
+        _angular_core.Input(),
+        __metadata$43("design:type", Number)
+    ], SliderComponent.prototype, "value", void 0);
+    __decorate$73([
+        _angular_core.Output(),
+        __metadata$43("design:type", Object)
+    ], SliderComponent.prototype, "valueChange", void 0);
+    __decorate$73([
+        _angular_core.HostBinding('class.vclDisabled'),
+        _angular_core.Input(),
+        __metadata$43("design:type", Boolean)
+    ], SliderComponent.prototype, "disabled", void 0);
+    __decorate$73([
+        _angular_core.Input(),
+        __metadata$43("design:type", Number)
+    ], SliderComponent.prototype, "min", void 0);
+    __decorate$73([
+        _angular_core.Input(),
+        __metadata$43("design:type", Number)
+    ], SliderComponent.prototype, "max", void 0);
+    __decorate$73([
+        _angular_core.Input('mousewheel'),
+        __metadata$43("design:type", Boolean)
+    ], SliderComponent.prototype, "wheel", void 0);
+    __decorate$73([
+        _angular_core.Input(),
+        __metadata$43("design:type", Boolean)
+    ], SliderComponent.prototype, "lock", void 0);
+    __decorate$73([
+        _angular_core.Input(),
+        __metadata$43("design:type", Object)
+    ], SliderComponent.prototype, "scale", void 0);
+    __decorate$73([
+        _angular_core.HostBinding('class.vclFocused'),
+        __metadata$43("design:type", Boolean)
+    ], SliderComponent.prototype, "focused", void 0);
+    __decorate$73([
+        _angular_core.ViewChild('scale'),
+        __metadata$43("design:type", _angular_core.ElementRef)
+    ], SliderComponent.prototype, "scaleElement", void 0);
+    __decorate$73([
+        _angular_core.HostListener('focus'),
+        __metadata$43("design:type", Function),
+        __metadata$43("design:paramtypes", []),
+        __metadata$43("design:returntype", void 0)
+    ], SliderComponent.prototype, "onFocus", null);
+    __decorate$73([
+        _angular_core.HostListener('blur'),
+        __metadata$43("design:type", Function),
+        __metadata$43("design:paramtypes", []),
+        __metadata$43("design:returntype", void 0)
+    ], SliderComponent.prototype, "onBlur", null);
+    __decorate$73([
+        _angular_core.HostListener('click', ['$event']),
+        __metadata$43("design:type", Function),
+        __metadata$43("design:paramtypes", [Object]),
+        __metadata$43("design:returntype", void 0)
+    ], SliderComponent.prototype, "onTap", null);
+    __decorate$73([
+        _angular_core.HostListener('wheel', ['$event']),
+        __metadata$43("design:type", Function),
+        __metadata$43("design:paramtypes", [Object]),
+        __metadata$43("design:returntype", void 0)
+    ], SliderComponent.prototype, "onWheel", null);
+    __decorate$73([
+        _angular_core.HostListener('keydown', ['$event']),
+        __metadata$43("design:type", Function),
+        __metadata$43("design:paramtypes", [Object]),
+        __metadata$43("design:returntype", void 0)
+    ], SliderComponent.prototype, "keydown", null);
+    SliderComponent = __decorate$73([
+        _angular_core.Component({
+            selector: 'vcl-slider',
+            template: "<div class=\"vclSliderRail\"> <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div> </div> <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\"> <div  class=\"vclSliderKnob\"></div> </div> </div> <div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\"> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (click)=\"selectPoint(point)\">{{point.label}}</div> </div> ",
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$12],
+            host: {
+                '[class.vclSlider]': 'true'
+            },
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        }),
+        __metadata$43("design:paramtypes", [_angular_core.ChangeDetectorRef])
+    ], SliderComponent);
     return SliderComponent;
 }());
-__decorate$73([
-    _angular_core.HostBinding(),
-    __metadata$43("design:type", Object)
-], exports.SliderComponent.prototype, "tabindex", void 0);
-__decorate$73([
-    _angular_core.Input(),
-    __metadata$43("design:type", Number)
-], exports.SliderComponent.prototype, "value", void 0);
-__decorate$73([
-    _angular_core.Output(),
-    __metadata$43("design:type", Object)
-], exports.SliderComponent.prototype, "valueChange", void 0);
-__decorate$73([
-    _angular_core.HostBinding('class.vclDisabled'),
-    _angular_core.Input(),
-    __metadata$43("design:type", Boolean)
-], exports.SliderComponent.prototype, "disabled", void 0);
-__decorate$73([
-    _angular_core.Input(),
-    __metadata$43("design:type", Number)
-], exports.SliderComponent.prototype, "min", void 0);
-__decorate$73([
-    _angular_core.Input(),
-    __metadata$43("design:type", Number)
-], exports.SliderComponent.prototype, "max", void 0);
-__decorate$73([
-    _angular_core.Input('mousewheel'),
-    __metadata$43("design:type", Boolean)
-], exports.SliderComponent.prototype, "wheel", void 0);
-__decorate$73([
-    _angular_core.Input(),
-    __metadata$43("design:type", Boolean)
-], exports.SliderComponent.prototype, "lock", void 0);
-__decorate$73([
-    _angular_core.Input(),
-    __metadata$43("design:type", Object)
-], exports.SliderComponent.prototype, "scale", void 0);
-__decorate$73([
-    _angular_core.HostBinding('class.vclFocused'),
-    __metadata$43("design:type", Boolean)
-], exports.SliderComponent.prototype, "focused", void 0);
-__decorate$73([
-    _angular_core.ViewChild('scale'),
-    __metadata$43("design:type", _angular_core.ElementRef)
-], exports.SliderComponent.prototype, "scaleElement", void 0);
-__decorate$73([
-    _angular_core.HostListener('focus'),
-    __metadata$43("design:type", Function),
-    __metadata$43("design:paramtypes", []),
-    __metadata$43("design:returntype", void 0)
-], exports.SliderComponent.prototype, "onFocus", null);
-__decorate$73([
-    _angular_core.HostListener('blur'),
-    __metadata$43("design:type", Function),
-    __metadata$43("design:paramtypes", []),
-    __metadata$43("design:returntype", void 0)
-], exports.SliderComponent.prototype, "onBlur", null);
-__decorate$73([
-    _angular_core.HostListener('click', ['$event']),
-    __metadata$43("design:type", Function),
-    __metadata$43("design:paramtypes", [Object]),
-    __metadata$43("design:returntype", void 0)
-], exports.SliderComponent.prototype, "onTap", null);
-__decorate$73([
-    _angular_core.HostListener('wheel', ['$event']),
-    __metadata$43("design:type", Function),
-    __metadata$43("design:paramtypes", [Object]),
-    __metadata$43("design:returntype", void 0)
-], exports.SliderComponent.prototype, "onWheel", null);
-__decorate$73([
-    _angular_core.HostListener('keydown', ['$event']),
-    __metadata$43("design:type", Function),
-    __metadata$43("design:paramtypes", [Object]),
-    __metadata$43("design:returntype", void 0)
-], exports.SliderComponent.prototype, "keydown", null);
-exports.SliderComponent = __decorate$73([
-    _angular_core.Component({
-        selector: 'vcl-slider',
-        template: "<div class=\"vclSliderRail\"> <div class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\" #scale> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointMark\"></div> </div> <div *ngIf=\"valueValid\" class=\"vclSliderKnobContainer\" [style.left]=\"percentLeftKnob + '%'\" (pan)=\"onPan($event)\"> <div  class=\"vclSliderKnob\"></div> </div> </div> <div *ngIf=\"showScale\" class=\"vclSliderScale\" horizontal=\"\" justified=\"\" layout=\"\"> <div *ngFor=\"let point of scalePoints\" class=\"vclSliderScalePointLabel\" (click)=\"selectPoint(point)\">{{point.label}}</div> </div> ",
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$12],
-        host: {
-            '[class.vclSlider]': 'true'
-        },
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    }),
-    __metadata$43("design:paramtypes", [_angular_core.ChangeDetectorRef])
-], exports.SliderComponent);
 
 var __decorate$72 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7362,19 +7359,19 @@ var __decorate$72 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLSliderModule = (function () {
+var VCLSliderModule = (function () {
     function VCLSliderModule() {
     }
+    VCLSliderModule = __decorate$72([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule],
+            exports: [SliderComponent],
+            declarations: [SliderComponent],
+            providers: [],
+        })
+    ], VCLSliderModule);
     return VCLSliderModule;
 }());
-exports.VCLSliderModule = __decorate$72([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule],
-        exports: [exports.SliderComponent],
-        declarations: [exports.SliderComponent],
-        providers: [],
-    })
-], exports.VCLSliderModule);
 
 var __decorate$75 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7393,27 +7390,27 @@ var InputControlGroup = (function () {
     InputControlGroup.prototype.ucfirst = function (str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
+    __decorate$75([
+        _angular_core.Input('type'),
+        __metadata$44("design:type", Object)
+    ], InputControlGroup.prototype, "type", void 0);
+    __decorate$75([
+        _angular_core.Input('label'),
+        __metadata$44("design:type", String)
+    ], InputControlGroup.prototype, "label", void 0);
+    InputControlGroup = __decorate$75([
+        _angular_core.Component({
+            selector: 'vcl-input-control-group',
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            host: {
+                '[class.vclInputControlGroup]': 'true',
+            },
+            template: "<ng-content></ng-content> <div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\" [class.vclError]=\"type=='error'\" [class.vclWarning]=\"type=='warning'\" [class.vclSuccess]=\"type=='success'\"> {{label}} </div> "
+        }),
+        __metadata$44("design:paramtypes", [_angular_core.ElementRef])
+    ], InputControlGroup);
     return InputControlGroup;
 }());
-__decorate$75([
-    _angular_core.Input('type'),
-    __metadata$44("design:type", String)
-], InputControlGroup.prototype, "type", void 0);
-__decorate$75([
-    _angular_core.Input('label'),
-    __metadata$44("design:type", String)
-], InputControlGroup.prototype, "label", void 0);
-InputControlGroup = __decorate$75([
-    _angular_core.Component({
-        selector: 'vcl-input-control-group',
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        host: {
-            '[class.vclInputControlGroup]': 'true',
-        },
-        template: "<ng-content></ng-content> <div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\" [class.vclError]=\"type=='error'\" [class.vclWarning]=\"type=='warning'\" [class.vclSuccess]=\"type=='success'\"> {{label}} </div> "
-    }),
-    __metadata$44("design:paramtypes", [_angular_core.ElementRef])
-], InputControlGroup);
 
 var __decorate$74 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7421,19 +7418,19 @@ var __decorate$74 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLInputControlGroupModule = (function () {
+var VCLInputControlGroupModule = (function () {
     function VCLInputControlGroupModule() {
     }
+    VCLInputControlGroupModule = __decorate$74([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule],
+            exports: [InputControlGroup],
+            declarations: [InputControlGroup],
+            providers: [],
+        })
+    ], VCLInputControlGroupModule);
     return VCLInputControlGroupModule;
 }());
-exports.VCLInputControlGroupModule = __decorate$74([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule],
-        exports: [InputControlGroup],
-        declarations: [InputControlGroup],
-        providers: [],
-    })
-], exports.VCLInputControlGroupModule);
 
 var __extends$13 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -7673,29 +7670,29 @@ var AlertComponent = (function () {
     AlertComponent.prototype.valueChange = function (value) {
         this.value = value;
     };
+    __decorate$77([
+        _angular_core.Input(),
+        __metadata$45("design:type", Object)
+    ], AlertComponent.prototype, "alert", void 0);
+    __decorate$77([
+        _angular_core.HostListener('keyup', ['$event']),
+        __metadata$45("design:type", Function),
+        __metadata$45("design:paramtypes", [KeyboardEvent]),
+        __metadata$45("design:returntype", void 0)
+    ], AlertComponent.prototype, "onKeyUp", null);
+    AlertComponent = __decorate$77([
+        _angular_core.Component({
+            template: "<div class=\"vclNotification\" [ngClass]=\"alertClass\"> <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" [ngClass]=\"titleAlignmentClass\" *ngIf=\"alert.title\"> <div class=\"vclLayoutFlex\">{{alert.title}}</div> <button *ngIf=\"alert.showCloseButton\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"close()\"><i class=\"fa fa-times\"></i></button> </div> <div class=\"vclNotificationContent vclLayoutVertical vclLayoutCenterJustified \"> <div *ngIf=\"iconClass\" class=\"vclNotificationIconContainer\" [ngClass]=\"iconAlignmentClass\"> <span class=\"vclIcon vclNotificationIcon\" [ngClass]=\"iconClass\"></span> </div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" *ngIf=\"alert.text && !alert.html\">{{alert.text}}</div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" [innerHtml]=\"alert.text\" *ngIf=\"alert.text && alert.html\"></div> <div style=\"padding-bottom: 0.5em\" *ngIf=\"alert.input\"><alert-input [alert]=\"alert\" (valueChange)=\"valueChange($event)\"></alert-input></div> <div *ngIf=\"validationError\" class=\"vclNotification vclError\"> <div class=\"vclNotificationContent\"> <vcl-icogram label=\"{{validationError}}\" prepIcon=\"fa:exclamation-circle\"></vcl-icogram> </div> </div> <div class=\"vclLayoutHorizontal vclLooseButtonGroup\" [ngClass]=\"buttonAlignmentClass\"> <button vcl-button *ngIf=\"!!alert.showConfirmButton\" (click)=\"confirm()\" [style.background-color]=\"alert.confirmButtonColor\" [ngClass]=\"alert.confirmButtonClass\" [busy]=\"!!alert.loader\" type=\"button\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.confirmButtonAppIcon\" [prepIcon]=\"alert.confirmButtonPrepIcon\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> </button> <button vcl-button *ngIf=\"!!alert.showCancelButton\" [style.background-color]=\"!!alert.cancelButtonColor\" [ngClass]=\"alert.cancelButtonClass\" [busy]=\"!alert.showConfirmButton && !!alert.loader\" [disabled]=\"!!alert.showConfirmButton && !!alert.loader\" type=\"button\" (click)=\"cancel()\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.cancelButtonAppIcon\" [prepIcon]=\"alert.cancelButtonPrepIcon\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> </button> </div> <div *ngIf=\"!alert.showCancelButton && !alert.showConfirmButton && !!alert.loader\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i class=\"vclBusy-busyIndCircular\"></i> </div> </div> </div> </div> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            host: {
+                '[tabindex]': '0',
+                '[style.outline]': '"none"'
+            }
+        }),
+        __metadata$45("design:paramtypes", [_angular_core.ElementRef, LayerRef, LayerService, _angular_core.ChangeDetectorRef])
+    ], AlertComponent);
     return AlertComponent;
 }());
-__decorate$77([
-    _angular_core.Input(),
-    __metadata$45("design:type", Object)
-], AlertComponent.prototype, "alert", void 0);
-__decorate$77([
-    _angular_core.HostListener('keyup', ['$event']),
-    __metadata$45("design:type", Function),
-    __metadata$45("design:paramtypes", [KeyboardEvent]),
-    __metadata$45("design:returntype", void 0)
-], AlertComponent.prototype, "onKeyUp", null);
-AlertComponent = __decorate$77([
-    _angular_core.Component({
-        template: "<div class=\"vclNotification\" [ngClass]=\"alertClass\"> <div class=\"vclNotificationHeader vclLayoutHorizontal vclLayoutCenter\" [ngClass]=\"titleAlignmentClass\" *ngIf=\"alert.title\"> <div class=\"vclLayoutFlex\">{{alert.title}}</div> <button *ngIf=\"alert.showCloseButton\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" (click)=\"close()\"><i class=\"fa fa-times\"></i></button> </div> <div class=\"vclNotificationContent vclLayoutVertical vclLayoutCenterJustified \"> <div style=\"padding-bottom: 1em\" *ngIf=\"iconClass\" [ngClass]=\"iconAlignmentClass\"> <span class=\"vclIcon vclNotificationIcon\" [ngClass]=\"iconClass\"></span> </div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" *ngIf=\"alert.text && !alert.html\">{{alert.text}}</div> <div style=\"padding-bottom: 1em\" [ngClass]=\"contentAlignmentClass\" [innerHtml]=\"alert.text\" *ngIf=\"alert.text && alert.html\"></div> <div style=\"padding-bottom: 0.5em\" *ngIf=\"alert.input\"><alert-input [alert]=\"alert\" (valueChange)=\"valueChange($event)\"></alert-input></div> <div *ngIf=\"validationError\" class=\"vclNotification vclError\"> <div class=\"vclNotificationContent\"> <vcl-icogram label=\"{{validationError}}\" prepIcon=\"fa:exclamation-circle\"></vcl-icogram> </div> </div> <div class=\"vclLayoutHorizontal vclLooseButtonGroup\" [ngClass]=\"buttonAlignmentClass\"> <button vcl-button *ngIf=\"!!alert.showConfirmButton\" (click)=\"confirm()\" [style.background-color]=\"alert.confirmButtonColor\" [ngClass]=\"alert.confirmButtonClass\" [busy]=\"!!alert.loader\" type=\"button\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.confirmButtonAppIcon\" [prepIcon]=\"alert.confirmButtonPrepIcon\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.confirmButtonLabel\"> </vcl-icogram> </button> <button vcl-button *ngIf=\"!!alert.showCancelButton\" [style.background-color]=\"!!alert.cancelButtonColor\" [ngClass]=\"alert.cancelButtonClass\" [busy]=\"!alert.showConfirmButton && !!alert.loader\" [disabled]=\"!!alert.showConfirmButton && !!alert.loader\" type=\"button\" (click)=\"cancel()\" > <vcl-icogram *vclButtonStateContent=\"['enabled','disabled']\" [appIcon]=\"alert.cancelButtonAppIcon\" [prepIcon]=\"alert.cancelButtonPrepIcon\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> <vcl-icogram *vclButtonStateContent=\"'busy'\" prepIcon=\"fa:refresh fa-spin\" [label]=\"alert.cancelButtonLabel\"> </vcl-icogram> </button> </div> <div *ngIf=\"!alert.showCancelButton && !alert.showConfirmButton && !!alert.loader\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i class=\"vclBusy-busyIndCircular\"></i> </div> </div> </div> </div> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        host: {
-            '[tabindex]': '0',
-            '[style.outline]': '"none"'
-        }
-    }),
-    __metadata$45("design:paramtypes", [_angular_core.ElementRef, LayerRef, exports.LayerService, _angular_core.ChangeDetectorRef])
-], AlertComponent);
 
 var __decorate$78 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7744,27 +7741,27 @@ var AlertInputComponent = (function () {
     AlertInputComponent.prototype.inputValueChange = function (value) {
         this.valueChange.emit(value);
     };
+    __decorate$78([
+        _angular_core.ViewChild('input'),
+        __metadata$46("design:type", _angular_core.ElementRef)
+    ], AlertInputComponent.prototype, "input", void 0);
+    __decorate$78([
+        _angular_core.Input(),
+        __metadata$46("design:type", Object)
+    ], AlertInputComponent.prototype, "alert", void 0);
+    __decorate$78([
+        _angular_core.Output(),
+        __metadata$46("design:type", Object)
+    ], AlertInputComponent.prototype, "valueChange", void 0);
+    AlertInputComponent = __decorate$78([
+        _angular_core.Component({
+            template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            selector: 'alert-input'
+        })
+    ], AlertInputComponent);
     return AlertInputComponent;
 }());
-__decorate$78([
-    _angular_core.ViewChild('input'),
-    __metadata$46("design:type", _angular_core.ElementRef)
-], AlertInputComponent.prototype, "input", void 0);
-__decorate$78([
-    _angular_core.Input(),
-    __metadata$46("design:type", Object)
-], AlertInputComponent.prototype, "alert", void 0);
-__decorate$78([
-    _angular_core.Output(),
-    __metadata$46("design:type", Object)
-], AlertInputComponent.prototype, "valueChange", void 0);
-AlertInputComponent = __decorate$78([
-    _angular_core.Component({
-        template: "<input #input *ngIf=\"control==='input'\" class=\"vclInput\" [placeholder]=\"placeholder\" [ngModel]=\"inputValue\" (ngModelChange)=\"inputValueChange($event)\" autofocus> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        selector: 'alert-input'
-    })
-], AlertInputComponent);
 
 var __decorate$79 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7775,7 +7772,7 @@ var __decorate$79 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$47 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.AlertService = (function () {
+var AlertService = (function () {
     function AlertService(ls) {
         this.ls = ls;
         this.noop = function () { };
@@ -7826,12 +7823,12 @@ exports.AlertService = (function () {
             attrs: { alert: alert }
         });
     };
+    AlertService = __decorate$79([
+        _angular_core.Injectable(),
+        __metadata$47("design:paramtypes", [LayerService])
+    ], AlertService);
     return AlertService;
 }());
-exports.AlertService = __decorate$79([
-    _angular_core.Injectable(),
-    __metadata$47("design:paramtypes", [exports.LayerService])
-], exports.AlertService);
 
 var __decorate$76 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7839,27 +7836,27 @@ var __decorate$76 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLAlertModule = (function () {
+var VCLAlertModule = (function () {
     function VCLAlertModule() {
     }
+    VCLAlertModule = __decorate$76([
+        _angular_core.NgModule({
+            imports: [
+                _angular_forms.FormsModule,
+                _angular_common.CommonModule,
+                VCLButtonModule,
+                VCLInputModule,
+                VCLIcogramModule,
+                VCLLayerModule.forChild({ layers: [] })
+            ],
+            exports: [],
+            declarations: [AlertComponent, AlertInputComponent],
+            entryComponents: [AlertComponent],
+            providers: [AlertService],
+        })
+    ], VCLAlertModule);
     return VCLAlertModule;
 }());
-exports.VCLAlertModule = __decorate$76([
-    _angular_core.NgModule({
-        imports: [
-            _angular_forms.FormsModule,
-            _angular_common.CommonModule,
-            exports.VCLButtonModule,
-            exports.VCLInputModule,
-            exports.VCLIcogramModule,
-            exports.VCLLayerModule.forChild({ layers: [] })
-        ],
-        exports: [],
-        declarations: [AlertComponent, AlertInputComponent],
-        entryComponents: [AlertComponent],
-        providers: [exports.AlertService],
-    })
-], exports.VCLAlertModule);
 
 var __decorate$81 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7881,19 +7878,19 @@ var BusyIndicatorComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    __decorate$81([
+        _angular_core.Input(),
+        __metadata$48("design:type", String)
+    ], BusyIndicatorComponent.prototype, "type", void 0);
+    BusyIndicatorComponent = __decorate$81([
+        _angular_core.Component({
+            selector: 'vcl-busy-indicator',
+            template: "<div class=\"vclLayoutVertical vclLayoutCenterJustified\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i [ngClass]=\"indicatorClass\"></i> <ng-content></ng-content> </div> </div> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        })
+    ], BusyIndicatorComponent);
     return BusyIndicatorComponent;
 }());
-__decorate$81([
-    _angular_core.Input(),
-    __metadata$48("design:type", String)
-], BusyIndicatorComponent.prototype, "type", void 0);
-BusyIndicatorComponent = __decorate$81([
-    _angular_core.Component({
-        selector: 'vcl-busy-indicator',
-        template: "<div class=\"vclLayoutVertical vclLayoutCenterJustified\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i [ngClass]=\"indicatorClass\"></i> <ng-content></ng-content> </div> </div> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    })
-], BusyIndicatorComponent);
 
 var __decorate$82 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7908,28 +7905,28 @@ var BusyComponent = (function () {
     function BusyComponent() {
         this.busy = false;
     }
+    __decorate$82([
+        _angular_core.Input('vclBusy'),
+        _angular_core.HostBinding('class.vclLoadingLayerContainer'),
+        __metadata$49("design:type", Object)
+    ], BusyComponent.prototype, "busy", void 0);
+    __decorate$82([
+        _angular_core.Input(),
+        __metadata$49("design:type", String)
+    ], BusyComponent.prototype, "busyIndicatorType", void 0);
+    __decorate$82([
+        _angular_core.Input(),
+        __metadata$49("design:type", Object)
+    ], BusyComponent.prototype, "busyLabel", void 0);
+    BusyComponent = __decorate$82([
+        _angular_core.Component({
+            selector: '[vclBusy]',
+            template: "<ng-content></ng-content> <div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\"> <div class=\"vclLoadingLayerContent\"> <vcl-busy-indicator [type]=\"busyIndicatorType\"> <span *ngIf=\"busyLabel\">{{busyLabel}}</span> </vcl-busy-indicator> </div> </div> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
+        })
+    ], BusyComponent);
     return BusyComponent;
 }());
-__decorate$82([
-    _angular_core.Input('vclBusy'),
-    _angular_core.HostBinding('class.vclLoadingLayerContainer'),
-    __metadata$49("design:type", Object)
-], BusyComponent.prototype, "busy", void 0);
-__decorate$82([
-    _angular_core.Input(),
-    __metadata$49("design:type", String)
-], BusyComponent.prototype, "busyIndicatorType", void 0);
-__decorate$82([
-    _angular_core.Input(),
-    __metadata$49("design:type", String)
-], BusyComponent.prototype, "busyLabel", void 0);
-BusyComponent = __decorate$82([
-    _angular_core.Component({
-        selector: '[vclBusy]',
-        template: "<ng-content></ng-content> <div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\"> <div class=\"vclLoadingLayerContent\"> <vcl-busy-indicator [type]=\"busyIndicatorType\"> <span *ngIf=\"busyLabel\">{{busyLabel}}</span> </vcl-busy-indicator> </div> </div> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush
-    })
-], BusyComponent);
 
 var __decorate$80 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7937,18 +7934,18 @@ var __decorate$80 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLBusyIndicatorModule = (function () {
+var VCLBusyIndicatorModule = (function () {
     function VCLBusyIndicatorModule() {
     }
+    VCLBusyIndicatorModule = __decorate$80([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule],
+            exports: [BusyComponent, BusyIndicatorComponent],
+            declarations: [BusyComponent, BusyIndicatorComponent]
+        })
+    ], VCLBusyIndicatorModule);
     return VCLBusyIndicatorModule;
 }());
-exports.VCLBusyIndicatorModule = __decorate$80([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule],
-        exports: [BusyComponent, BusyIndicatorComponent],
-        declarations: [BusyComponent, BusyIndicatorComponent]
-    })
-], exports.VCLBusyIndicatorModule);
 
 var __decorate$84 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7959,43 +7956,43 @@ var __decorate$84 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$50 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.NotificationComponent = (function () {
+var NotificationComponent = (function () {
     function NotificationComponent() {
         this.notifications = [];
     }
+    __decorate$84([
+        _angular_core.Input(),
+        __metadata$50("design:type", Object)
+    ], NotificationComponent.prototype, "notifications", void 0);
+    NotificationComponent = __decorate$84([
+        _angular_core.Component({
+            template: "<div *ngFor=\"let notification of notifications\"  (mouseenter)=\"notification.mouseEnter()\"  (mouseleave)=\"notification.mouseLeave()\"  class=\"vclNotification vclLayoutHorizontal vclLayoutCenter\"  [ngClass]=\"notification.layerClass\"  [style.color]=\"notification.textColor\" [style.background-color]=\"notification.backgroundColor\" [@notificationState]=\"notification.state\"  > <div class=\"vclNotificationIconContainer\"> <span *ngIf=\"notification.iconClass\" class=\"vclIcon vclNotificationIcon\" [ngClass]=\"notification.iconClass\"></span> </div> <div class=\"vclNotificationContent vclLayoutFlex\"> <div *ngIf=\"notification.text && !notification.html\">{{notification.text}}</div> <div *ngIf=\"notification.text && notification.html\" [innerHtml]=\"notification.text\"></div> </div> <button vcl-button *ngIf=\"notification.showCloseButton\" (click)=\"notification.close()\" class=\"vclSquare vclTransparent vclLayoutSelfStart\" prepIcon=\"fa:times\" title=\"Close\"></button> </div> ",
+            changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
+            encapsulation: _angular_core.ViewEncapsulation.None,
+            styles: [
+                "\n     .vclLayerNotificationTopRight { left: auto; bottom: auto; top: 1em; right: 1em; }\n     .vclLayerNotificationTop { left: 0; bottom: auto; top: 1em; right: 0; }\n     .vclLayerNotificationTopLeft { left: 1em; bottom: auto; top: 1em; right: auto; }\n     .vclLayerNotificationBottomRight { left: auto; bottom: 1em; top: auto; right: 1em; }\n     .vclLayerNotificationBottom { left: 0; bottom: 1em; top: auto; right: 0; }\n     .vclLayerNotificationBottomLeft { left: 1em; bottom: 1em; top: auto; right: auto; }\n    "
+            ],
+            animations: [
+                _angular_core.trigger('notificationState', [
+                    _angular_core.state('visible', _angular_core.style({ opacity: 0.91 })),
+                    _angular_core.state('hovered', _angular_core.style({ opacity: 1.0 })),
+                    _angular_core.transition(':enter', [
+                        _angular_core.style({ opacity: 0 }),
+                        _angular_core.animate('200ms ease-in')
+                    ]),
+                    _angular_core.transition(':leave', [
+                        _angular_core.animate('200ms ease-out', _angular_core.style({ opacity: 0 }))
+                    ]),
+                    _angular_core.transition('visible <=> hovered', _angular_core.animate('300ms'))
+                ]),
+            ],
+            host: {
+                '[@notificationState]': 'true'
+            },
+        })
+    ], NotificationComponent);
     return NotificationComponent;
 }());
-__decorate$84([
-    _angular_core.Input(),
-    __metadata$50("design:type", Object)
-], exports.NotificationComponent.prototype, "notifications", void 0);
-exports.NotificationComponent = __decorate$84([
-    _angular_core.Component({
-        template: "<div *ngFor=\"let notification of notifications\"  (mouseenter)=\"notification.mouseEnter()\"  (mouseleave)=\"notification.mouseLeave()\"  class=\"vclNotification vclLayoutHorizontal vclLayoutCenter\"  [ngClass]=\"notification.layerClass\"  [style.color]=\"notification.textColor\" [style.background-color]=\"notification.backgroundColor\" [@notificationState]=\"notification.state\"  > <div class=\"vclNotificationIconContainer\"> <span *ngIf=\"notification.iconClass\" class=\"vclIcon vclNotificationIcon\" [ngClass]=\"notification.iconClass\"></span> </div> <div class=\"vclNotificationContent vclLayoutFlex\"> <div *ngIf=\"notification.text && !notification.html\">{{notification.text}}</div> <div *ngIf=\"notification.text && notification.html\" [innerHtml]=\"notification.text\"></div> </div> <button vcl-button *ngIf=\"notification.showCloseButton\" (click)=\"notification.close()\" class=\"vclSquare vclTransparent vclLayoutSelfStart\" prepIcon=\"fa:times\" title=\"Close\"></button> </div> ",
-        changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
-        encapsulation: _angular_core.ViewEncapsulation.None,
-        styles: [
-            "\n     .vclLayerNotificationTopRight { left: auto; bottom: auto; top: 1em; right: 1em; }\n     .vclLayerNotificationTop { left: 0; bottom: auto; top: 1em; right: 0; }\n     .vclLayerNotificationTopLeft { left: 1em; bottom: auto; top: 1em; right: auto; }\n     .vclLayerNotificationBottomRight { left: auto; bottom: 1em; top: auto; right: 1em; }\n     .vclLayerNotificationBottom { left: 0; bottom: 1em; top: auto; right: 0; }\n     .vclLayerNotificationBottomLeft { left: 1em; bottom: 1em; top: auto; right: auto; }\n    "
-        ],
-        animations: [
-            _angular_core.trigger('notificationState', [
-                _angular_core.state('visible', _angular_core.style({ opacity: 0.91 })),
-                _angular_core.state('hovered', _angular_core.style({ opacity: 1.0 })),
-                _angular_core.transition(':enter', [
-                    _angular_core.style({ opacity: 0 }),
-                    _angular_core.animate('200ms ease-in')
-                ]),
-                _angular_core.transition(':leave', [
-                    _angular_core.animate('200ms ease-out', _angular_core.style({ opacity: 0 }))
-                ]),
-                _angular_core.transition('visible <=> hovered', _angular_core.animate('300ms'))
-            ]),
-        ],
-        host: {
-            '[@notificationState]': 'true'
-        },
-    })
-], exports.NotificationComponent);
 
 var __extends$14 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -8046,61 +8043,61 @@ var NotificationLayerTopRight = (function (_super) {
     function NotificationLayerTopRight() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    NotificationLayerTopRight = __decorate$85([
+        Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopRight', offClick: noop })
+    ], NotificationLayerTopRight);
     return NotificationLayerTopRight;
 }(NotificationLayer));
-NotificationLayerTopRight = __decorate$85([
-    Layer(exports.NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopRight', offClick: noop })
-], NotificationLayerTopRight);
 var NotificationLayerTop = (function (_super) {
     __extends$14(NotificationLayerTop, _super);
     function NotificationLayerTop() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    NotificationLayerTop = __decorate$85([
+        Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTop', offClick: noop })
+    ], NotificationLayerTop);
     return NotificationLayerTop;
 }(NotificationLayer));
-NotificationLayerTop = __decorate$85([
-    Layer(exports.NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTop', offClick: noop })
-], NotificationLayerTop);
 var NotificationLayerTopLeft = (function (_super) {
     __extends$14(NotificationLayerTopLeft, _super);
     function NotificationLayerTopLeft() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    NotificationLayerTopLeft = __decorate$85([
+        Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopLeft', offClick: noop })
+    ], NotificationLayerTopLeft);
     return NotificationLayerTopLeft;
 }(NotificationLayer));
-NotificationLayerTopLeft = __decorate$85([
-    Layer(exports.NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationTopLeft', offClick: noop })
-], NotificationLayerTopLeft);
 var NotificationLayerBottomRight = (function (_super) {
     __extends$14(NotificationLayerBottomRight, _super);
     function NotificationLayerBottomRight() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    NotificationLayerBottomRight = __decorate$85([
+        Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomRight', offClick: noop })
+    ], NotificationLayerBottomRight);
     return NotificationLayerBottomRight;
 }(NotificationLayer));
-NotificationLayerBottomRight = __decorate$85([
-    Layer(exports.NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomRight', offClick: noop })
-], NotificationLayerBottomRight);
 var NotificationLayerBottom = (function (_super) {
     __extends$14(NotificationLayerBottom, _super);
     function NotificationLayerBottom() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    NotificationLayerBottom = __decorate$85([
+        Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottom', offClick: noop })
+    ], NotificationLayerBottom);
     return NotificationLayerBottom;
 }(NotificationLayer));
-NotificationLayerBottom = __decorate$85([
-    Layer(exports.NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottom', offClick: noop })
-], NotificationLayerBottom);
 var NotificationLayerBottomLeft = (function (_super) {
     __extends$14(NotificationLayerBottomLeft, _super);
     function NotificationLayerBottomLeft() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    NotificationLayerBottomLeft = __decorate$85([
+        Layer(NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomLeft', offClick: noop })
+    ], NotificationLayerBottomLeft);
     return NotificationLayerBottomLeft;
 }(NotificationLayer));
-NotificationLayerBottomLeft = __decorate$85([
-    Layer(exports.NotificationComponent, { transparent: true, customClass: 'vclLayerNotificationBottomLeft', offClick: noop })
-], NotificationLayerBottomLeft);
 
 (function (NotificationType) {
     NotificationType[NotificationType["None"] = 0] = "None";
@@ -8267,7 +8264,7 @@ var __decorate$86 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$51 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-exports.NotificationService = (function () {
+var NotificationService = (function () {
     function NotificationService(notificationLayerTopRightRef, notificationLayerBottomRightRef, notificationLayerBottomRef, notificationLayerBottomLeftRef, notificationLayerTopLeftRef, notificationLayerTopRef) {
         this.notificationLayerTopRightRef = notificationLayerTopRightRef;
         this.notificationLayerBottomRightRef = notificationLayerBottomRightRef;
@@ -8326,17 +8323,17 @@ exports.NotificationService = (function () {
         }
         return notification;
     };
+    NotificationService = __decorate$86([
+        _angular_core.Injectable(),
+        __metadata$51("design:paramtypes", [NotificationLayerTopRight,
+            NotificationLayerBottomRight,
+            NotificationLayerBottom,
+            NotificationLayerBottomLeft,
+            NotificationLayerTopLeft,
+            NotificationLayerTop])
+    ], NotificationService);
     return NotificationService;
 }());
-exports.NotificationService = __decorate$86([
-    _angular_core.Injectable(),
-    __metadata$51("design:paramtypes", [NotificationLayerTopRight,
-        NotificationLayerBottomRight,
-        NotificationLayerBottom,
-        NotificationLayerBottomLeft,
-        NotificationLayerTopLeft,
-        NotificationLayerTop])
-], exports.NotificationService);
 
 var __decorate$83 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8344,34 +8341,34 @@ var __decorate$83 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLNotificationModule = (function () {
+var VCLNotificationModule = (function () {
     function VCLNotificationModule() {
     }
+    VCLNotificationModule = __decorate$83([
+        _angular_core.NgModule({
+            imports: [
+                _angular_forms.FormsModule,
+                _angular_common.CommonModule,
+                VCLButtonModule,
+                VCLLayerModule.forChild({ layers: [
+                        NotificationLayerTopRight,
+                        NotificationLayerBottomRight,
+                        NotificationLayerBottom,
+                        NotificationLayerBottomLeft,
+                        NotificationLayerTopLeft,
+                        NotificationLayerTop
+                    ] })
+            ],
+            exports: [],
+            declarations: [NotificationComponent],
+            entryComponents: [NotificationComponent],
+            providers: [
+                NotificationService,
+            ],
+        })
+    ], VCLNotificationModule);
     return VCLNotificationModule;
 }());
-exports.VCLNotificationModule = __decorate$83([
-    _angular_core.NgModule({
-        imports: [
-            _angular_forms.FormsModule,
-            _angular_common.CommonModule,
-            exports.VCLButtonModule,
-            exports.VCLLayerModule.forChild({ layers: [
-                    NotificationLayerTopRight,
-                    NotificationLayerBottomRight,
-                    NotificationLayerBottom,
-                    NotificationLayerBottomLeft,
-                    NotificationLayerTopLeft,
-                    NotificationLayerTop
-                ] })
-        ],
-        exports: [],
-        declarations: [exports.NotificationComponent],
-        entryComponents: [exports.NotificationComponent],
-        providers: [
-            exports.NotificationService,
-        ],
-    })
-], exports.VCLNotificationModule);
 
 var __decorate$89 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8486,11 +8483,11 @@ var TooltipService = (function () {
         }
         return offsetParent || window.document;
     };
+    TooltipService = __decorate$89([
+        _angular_core.Injectable()
+    ], TooltipService);
     return TooltipService;
 }());
-TooltipService = __decorate$89([
-    _angular_core.Injectable()
-], TooltipService);
 
 var __decorate$88 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8584,41 +8581,41 @@ var TooltipComponent = (function () {
             this.element.nativeElement.parentNode.removeChild(this.element.nativeElement);
         }
     };
+    __decorate$88([
+        _angular_core.Input(),
+        __metadata$52("design:type", String)
+    ], TooltipComponent.prototype, "content", void 0);
+    __decorate$88([
+        _angular_core.Input(),
+        __metadata$52("design:type", String)
+    ], TooltipComponent.prototype, "placement", void 0);
+    __decorate$88([
+        _angular_core.Input(),
+        __metadata$52("design:type", HTMLElement)
+    ], TooltipComponent.prototype, "hostElement", void 0);
+    TooltipComponent = __decorate$88([
+        _angular_core.Component({
+            selector: 'vcl-tooltip',
+            template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} <ng-content></ng-content> </div> <div class=\"vclArrowPointer\"></div> </div> ",
+            host: {
+                '[class.vclTooltip]': 'true',
+            },
+            styles: [":host{ top: 0; left: 0 }"],
+            animations: [
+                _angular_core.trigger('enterAnimation', [
+                    _angular_core.state('shown', _angular_core.style({ opacity: 1, 'z-index': 'initial' })),
+                    _angular_core.state('hidden', _angular_core.style({ opacity: 0, 'z-index': '-1' })),
+                    _angular_core.state('none', _angular_core.style({ opacity: 0 })),
+                    _angular_core.transition('hidden => shown', _angular_core.animate('0.2s')),
+                ])
+            ]
+        }),
+        __param$8(1, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
+        __metadata$52("design:paramtypes", [_angular_core.ElementRef, Object, _angular_core.Renderer,
+            TooltipService])
+    ], TooltipComponent);
     return TooltipComponent;
 }());
-__decorate$88([
-    _angular_core.Input(),
-    __metadata$52("design:type", String)
-], TooltipComponent.prototype, "content", void 0);
-__decorate$88([
-    _angular_core.Input(),
-    __metadata$52("design:type", String)
-], TooltipComponent.prototype, "placement", void 0);
-__decorate$88([
-    _angular_core.Input(),
-    __metadata$52("design:type", HTMLElement)
-], TooltipComponent.prototype, "hostElement", void 0);
-TooltipComponent = __decorate$88([
-    _angular_core.Component({
-        selector: 'vcl-tooltip',
-        template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} <ng-content></ng-content> </div> <div class=\"vclArrowPointer\"></div> </div> ",
-        host: {
-            '[class.vclTooltip]': 'true',
-        },
-        styles: [":host{ top: 0; left: 0 }"],
-        animations: [
-            _angular_core.trigger('enterAnimation', [
-                _angular_core.state('shown', _angular_core.style({ opacity: 1, 'z-index': 'initial' })),
-                _angular_core.state('hidden', _angular_core.style({ opacity: 0, 'z-index': '-1' })),
-                _angular_core.state('none', _angular_core.style({ opacity: 0 })),
-                _angular_core.transition('hidden => shown', _angular_core.animate('0.2s')),
-            ])
-        ]
-    }),
-    __param$8(1, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
-    __metadata$52("design:paramtypes", [_angular_core.ElementRef, Object, _angular_core.Renderer,
-        TooltipService])
-], TooltipComponent);
 
 var __decorate$90 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8664,37 +8661,37 @@ var TooltipDirective = (function () {
             this.tooltip.destroy();
         }
     };
+    __decorate$90([
+        _angular_core.Input(),
+        __metadata$53("design:type", String)
+    ], TooltipDirective.prototype, "content", void 0);
+    __decorate$90([
+        _angular_core.Input(),
+        __metadata$53("design:type", String)
+    ], TooltipDirective.prototype, "position", void 0);
+    __decorate$90([
+        _angular_core.HostListener('mouseenter'),
+        _angular_core.HostListener('focusin'),
+        __metadata$53("design:type", Function),
+        __metadata$53("design:paramtypes", []),
+        __metadata$53("design:returntype", void 0)
+    ], TooltipDirective.prototype, "onMouseEnter", null);
+    __decorate$90([
+        _angular_core.HostListener('focusout'),
+        _angular_core.HostListener('mouseleave'),
+        __metadata$53("design:type", Function),
+        __metadata$53("design:paramtypes", []),
+        __metadata$53("design:returntype", void 0)
+    ], TooltipDirective.prototype, "ngOnDestroy", null);
+    TooltipDirective = __decorate$90([
+        _angular_core.Directive({ selector: '[vcl-tooltip]' }),
+        __param$9(3, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
+        __metadata$53("design:paramtypes", [_angular_core.ElementRef,
+            _angular_core.ComponentFactoryResolver,
+            _angular_core.ViewContainerRef, Object])
+    ], TooltipDirective);
     return TooltipDirective;
 }());
-__decorate$90([
-    _angular_core.Input(),
-    __metadata$53("design:type", String)
-], TooltipDirective.prototype, "content", void 0);
-__decorate$90([
-    _angular_core.Input(),
-    __metadata$53("design:type", String)
-], TooltipDirective.prototype, "position", void 0);
-__decorate$90([
-    _angular_core.HostListener('mouseenter'),
-    _angular_core.HostListener('focusin'),
-    __metadata$53("design:type", Function),
-    __metadata$53("design:paramtypes", []),
-    __metadata$53("design:returntype", void 0)
-], TooltipDirective.prototype, "onMouseEnter", null);
-__decorate$90([
-    _angular_core.HostListener('focusout'),
-    _angular_core.HostListener('mouseleave'),
-    __metadata$53("design:type", Function),
-    __metadata$53("design:paramtypes", []),
-    __metadata$53("design:returntype", void 0)
-], TooltipDirective.prototype, "ngOnDestroy", null);
-TooltipDirective = __decorate$90([
-    _angular_core.Directive({ selector: '[vcl-tooltip]' }),
-    __param$9(3, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
-    __metadata$53("design:paramtypes", [_angular_core.ElementRef,
-        _angular_core.ComponentFactoryResolver,
-        _angular_core.ViewContainerRef, Object])
-], TooltipDirective);
 
 var __decorate$87 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8702,20 +8699,20 @@ var __decorate$87 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLTooltipModule = (function () {
+var VCLTooltipModule = (function () {
     function VCLTooltipModule() {
     }
+    VCLTooltipModule = __decorate$87([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule],
+            exports: [TooltipComponent, TooltipDirective],
+            declarations: [TooltipComponent, TooltipDirective],
+            providers: [TooltipService],
+            entryComponents: [TooltipComponent]
+        })
+    ], VCLTooltipModule);
     return VCLTooltipModule;
 }());
-exports.VCLTooltipModule = __decorate$87([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule],
-        exports: [TooltipComponent, TooltipDirective],
-        declarations: [TooltipComponent, TooltipDirective],
-        providers: [TooltipService],
-        entryComponents: [TooltipComponent]
-    })
-], exports.VCLTooltipModule);
 
 var __decorate$93 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8757,12 +8754,12 @@ var TableService = (function () {
         this.renderer.removeClass(this.el.nativeElement, className);
         return false;
     };
+    TableService = __decorate$93([
+        _angular_core.Injectable(),
+        __metadata$55("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], TableService);
     return TableService;
 }());
-TableService = __decorate$93([
-    _angular_core.Injectable(),
-    __metadata$55("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], TableService);
 
 /*
 Enables VCL table behavior
@@ -8787,18 +8784,18 @@ var VclTableDirective = (function () {
             this.selectable = this.tableService.ClassToggle('vclTable', this.selectable, 'table');
         }
     };
+    __decorate$92([
+        _angular_core.Input('selectable'),
+        __metadata$54("design:type", Object)
+    ], VclTableDirective.prototype, "selectable", void 0);
+    VclTableDirective = __decorate$92([
+        _angular_core.Directive({
+            selector: '[vcl-table]',
+        }),
+        __metadata$54("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], VclTableDirective);
     return VclTableDirective;
 }());
-__decorate$92([
-    _angular_core.Input('selectable'),
-    __metadata$54("design:type", Object)
-], VclTableDirective.prototype, "selectable", void 0);
-VclTableDirective = __decorate$92([
-    _angular_core.Directive({
-        selector: '[vcl-table]',
-    }),
-    __metadata$54("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], VclTableDirective);
 
 /*
 Column width
@@ -8835,18 +8832,18 @@ var SpanDirective = (function () {
             console.error('Column width can be set only for header tag!');
         }
     };
+    __decorate$94([
+        _angular_core.Input('span'),
+        __metadata$56("design:type", Number)
+    ], SpanDirective.prototype, "width", void 0);
+    SpanDirective = __decorate$94([
+        _angular_core.Directive({
+            selector: '[span]',
+        }),
+        __metadata$56("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], SpanDirective);
     return SpanDirective;
 }());
-__decorate$94([
-    _angular_core.Input('span'),
-    __metadata$56("design:type", Number)
-], SpanDirective.prototype, "width", void 0);
-SpanDirective = __decorate$94([
-    _angular_core.Directive({
-        selector: '[span]',
-    }),
-    __metadata$56("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], SpanDirective);
 
 /*
 Cell and column highlighting
@@ -8874,18 +8871,18 @@ var HighlightDirective = (function () {
             this.hightlight = this.tableService.ClassToggle('vclCellHighlight', this.hightlight, 'td');
         }
     };
+    __decorate$95([
+        _angular_core.Input('hightlight'),
+        __metadata$57("design:type", Object)
+    ], HighlightDirective.prototype, "hightlight", void 0);
+    HighlightDirective = __decorate$95([
+        _angular_core.Directive({
+            selector: '[hightlight]',
+        }),
+        __metadata$57("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], HighlightDirective);
     return HighlightDirective;
 }());
-__decorate$95([
-    _angular_core.Input('hightlight'),
-    __metadata$57("design:type", Object)
-], HighlightDirective.prototype, "hightlight", void 0);
-HighlightDirective = __decorate$95([
-    _angular_core.Directive({
-        selector: '[hightlight]',
-    }),
-    __metadata$57("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], HighlightDirective);
 
 var __decorate$97 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8921,20 +8918,20 @@ var SortIconComponent = (function () {
             }
         }
     };
+    __decorate$97([
+        _angular_core.Input(),
+        __metadata$59("design:type", Object)
+    ], SortIconComponent.prototype, "sort", void 0);
+    SortIconComponent = __decorate$97([
+        _angular_core.Component({
+            selector: 'sort-icon',
+            template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
+        }),
+        __param$10(0, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
+        __metadata$59("design:paramtypes", [Object, _angular_core.ElementRef])
+    ], SortIconComponent);
     return SortIconComponent;
 }());
-__decorate$97([
-    _angular_core.Input(),
-    __metadata$59("design:type", Object)
-], SortIconComponent.prototype, "sort", void 0);
-SortIconComponent = __decorate$97([
-    _angular_core.Component({
-        selector: 'sort-icon',
-        template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
-    }),
-    __param$10(0, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
-    __metadata$59("design:paramtypes", [Object, _angular_core.ElementRef])
-], SortIconComponent);
 
 /*
 Column sortability
@@ -8991,30 +8988,30 @@ var SortDirective = (function () {
             }
         }
     };
+    __decorate$96([
+        _angular_core.ContentChild(SortIconComponent),
+        __metadata$58("design:type", SortIconComponent)
+    ], SortDirective.prototype, "sortIconComponent", void 0);
+    __decorate$96([
+        _angular_core.Output(),
+        __metadata$58("design:type", _angular_core.EventEmitter)
+    ], SortDirective.prototype, "change", void 0);
+    __decorate$96([
+        _angular_core.HostListener('click'),
+        __metadata$58("design:type", Function),
+        __metadata$58("design:paramtypes", []),
+        __metadata$58("design:returntype", void 0)
+    ], SortDirective.prototype, "OnChangeOrder", null);
+    SortDirective = __decorate$96([
+        _angular_core.Directive({
+            selector: '[sort]',
+            exportAs: 'sort-directive'
+        }),
+        __metadata$58("design:paramtypes", [_angular_core.Renderer2,
+            _angular_core.ElementRef])
+    ], SortDirective);
     return SortDirective;
 }());
-__decorate$96([
-    _angular_core.ContentChild(SortIconComponent),
-    __metadata$58("design:type", SortIconComponent)
-], SortDirective.prototype, "sortIconComponent", void 0);
-__decorate$96([
-    _angular_core.Output(),
-    __metadata$58("design:type", _angular_core.EventEmitter)
-], SortDirective.prototype, "change", void 0);
-__decorate$96([
-    _angular_core.HostListener('click'),
-    __metadata$58("design:type", Function),
-    __metadata$58("design:paramtypes", []),
-    __metadata$58("design:returntype", void 0)
-], SortDirective.prototype, "OnChangeOrder", null);
-SortDirective = __decorate$96([
-    _angular_core.Directive({
-        selector: '[sort]',
-        exportAs: 'sort-directive'
-    }),
-    __metadata$58("design:paramtypes", [_angular_core.Renderer2,
-        _angular_core.ElementRef])
-], SortDirective);
 
 /*
 Row and cell selection
@@ -9041,18 +9038,18 @@ var SelectDirective = (function () {
             this.selected = this.tableService.ClassToggle('vclSelected', this.selected, 'tr');
         }
     };
+    __decorate$98([
+        _angular_core.Input('selected'),
+        __metadata$60("design:type", Object)
+    ], SelectDirective.prototype, "selected", void 0);
+    SelectDirective = __decorate$98([
+        _angular_core.Directive({
+            selector: '[selected]'
+        }),
+        __metadata$60("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], SelectDirective);
     return SelectDirective;
 }());
-__decorate$98([
-    _angular_core.Input('selected'),
-    __metadata$60("design:type", Object)
-], SelectDirective.prototype, "selected", void 0);
-SelectDirective = __decorate$98([
-    _angular_core.Directive({
-        selector: '[selected]'
-    }),
-    __metadata$60("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], SelectDirective);
 
 /*
 Row and cell selectability
@@ -9079,18 +9076,18 @@ var SelectableDirective = (function () {
             this.selectable = this.tableService.ClassToggle('vclRowSelectability', this.selectable, 'tr');
         }
     };
+    __decorate$99([
+        _angular_core.Input('selectable'),
+        __metadata$61("design:type", Object)
+    ], SelectableDirective.prototype, "selectable", void 0);
+    SelectableDirective = __decorate$99([
+        _angular_core.Directive({
+            selector: '[selectable]',
+        }),
+        __metadata$61("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], SelectableDirective);
     return SelectableDirective;
 }());
-__decorate$99([
-    _angular_core.Input('selectable'),
-    __metadata$61("design:type", Object)
-], SelectableDirective.prototype, "selectable", void 0);
-SelectableDirective = __decorate$99([
-    _angular_core.Directive({
-        selector: '[selectable]',
-    }),
-    __metadata$61("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], SelectableDirective);
 
 /*
 Row hover highlighting
@@ -9119,14 +9116,14 @@ var HoverDirective = (function () {
             console.error('[hover] should be used for table tag only!');
         }
     }
+    HoverDirective = __decorate$100([
+        _angular_core.Directive({
+            selector: '[hover]',
+        }),
+        __metadata$62("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], HoverDirective);
     return HoverDirective;
 }());
-HoverDirective = __decorate$100([
-    _angular_core.Directive({
-        selector: '[hover]',
-    }),
-    __metadata$62("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], HoverDirective);
 
 /*
 Disabled rows
@@ -9153,18 +9150,18 @@ var DisableDirective = (function () {
             this.disabled = this.tableService.ClassToggle('vclDisabled', this.disabled, 'tr');
         }
     };
+    __decorate$101([
+        _angular_core.Input('disabled'),
+        __metadata$63("design:type", Object)
+    ], DisableDirective.prototype, "disabled", void 0);
+    DisableDirective = __decorate$101([
+        _angular_core.Directive({
+            selector: '[disabled]'
+        }),
+        __metadata$63("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], DisableDirective);
     return DisableDirective;
 }());
-__decorate$101([
-    _angular_core.Input('disabled'),
-    __metadata$63("design:type", Object)
-], DisableDirective.prototype, "disabled", void 0);
-DisableDirective = __decorate$101([
-    _angular_core.Directive({
-        selector: '[disabled]'
-    }),
-    __metadata$63("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], DisableDirective);
 
 /*
 Alternating row color
@@ -9191,18 +9188,18 @@ var AltRowColorDirective = (function () {
             this.alt = this.tableService.ClassToggle('vclAltRowColor', this.alt, 'table');
         }
     };
+    __decorate$102([
+        _angular_core.Input('altrow'),
+        __metadata$64("design:type", Object)
+    ], AltRowColorDirective.prototype, "alt", void 0);
+    AltRowColorDirective = __decorate$102([
+        _angular_core.Directive({
+            selector: '[altrow]',
+        }),
+        __metadata$64("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], AltRowColorDirective);
     return AltRowColorDirective;
 }());
-__decorate$102([
-    _angular_core.Input('altrow'),
-    __metadata$64("design:type", Object)
-], AltRowColorDirective.prototype, "alt", void 0);
-AltRowColorDirective = __decorate$102([
-    _angular_core.Directive({
-        selector: '[altrow]',
-    }),
-    __metadata$64("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], AltRowColorDirective);
 
 /*
 Border configuration
@@ -9229,18 +9226,18 @@ var NoBorderDirective = (function () {
             this.noborder = this.tableService.ClassToggle('vclNoBorder', this.noborder, 'table');
         }
     };
+    __decorate$103([
+        _angular_core.Input('noborder'),
+        __metadata$65("design:type", Object)
+    ], NoBorderDirective.prototype, "noborder", void 0);
+    NoBorderDirective = __decorate$103([
+        _angular_core.Directive({
+            selector: '[noborder]',
+        }),
+        __metadata$65("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], NoBorderDirective);
     return NoBorderDirective;
 }());
-__decorate$103([
-    _angular_core.Input('noborder'),
-    __metadata$65("design:type", Object)
-], NoBorderDirective.prototype, "noborder", void 0);
-NoBorderDirective = __decorate$103([
-    _angular_core.Directive({
-        selector: '[noborder]',
-    }),
-    __metadata$65("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], NoBorderDirective);
 
 /*
 Border configuration
@@ -9267,18 +9264,18 @@ var DottedBorderDirective = (function () {
             this.dottedborder = this.tableService.ClassToggle('vclDottedBorder', this.dottedborder, 'table');
         }
     };
+    __decorate$104([
+        _angular_core.Input('dottedborder'),
+        __metadata$66("design:type", Object)
+    ], DottedBorderDirective.prototype, "dottedborder", void 0);
+    DottedBorderDirective = __decorate$104([
+        _angular_core.Directive({
+            selector: '[dottedborder]',
+        }),
+        __metadata$66("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], DottedBorderDirective);
     return DottedBorderDirective;
 }());
-__decorate$104([
-    _angular_core.Input('dottedborder'),
-    __metadata$66("design:type", Object)
-], DottedBorderDirective.prototype, "dottedborder", void 0);
-DottedBorderDirective = __decorate$104([
-    _angular_core.Directive({
-        selector: '[dottedborder]',
-    }),
-    __metadata$66("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], DottedBorderDirective);
 
 /*
 Padding style
@@ -9305,18 +9302,18 @@ var CondensedDirective = (function () {
             this.condensed = this.tableService.ClassToggle('vclCondensed', this.condensed, 'table');
         }
     };
+    __decorate$105([
+        _angular_core.Input('condensed'),
+        __metadata$67("design:type", Object)
+    ], CondensedDirective.prototype, "condensed", void 0);
+    CondensedDirective = __decorate$105([
+        _angular_core.Directive({
+            selector: '[condensed]',
+        }),
+        __metadata$67("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], CondensedDirective);
     return CondensedDirective;
 }());
-__decorate$105([
-    _angular_core.Input('condensed'),
-    __metadata$67("design:type", Object)
-], CondensedDirective.prototype, "condensed", void 0);
-CondensedDirective = __decorate$105([
-    _angular_core.Directive({
-        selector: '[condensed]',
-    }),
-    __metadata$67("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], CondensedDirective);
 
 /*
 Borders style
@@ -9343,18 +9340,18 @@ var VerticalBorderDirective = (function () {
             this.border = this.tableService.ClassToggle('vclVerticalBorder', this.border, 'table');
         }
     };
+    __decorate$106([
+        _angular_core.Input('vertical-border'),
+        __metadata$68("design:type", Object)
+    ], VerticalBorderDirective.prototype, "border", void 0);
+    VerticalBorderDirective = __decorate$106([
+        _angular_core.Directive({
+            selector: '[vertical-border]',
+        }),
+        __metadata$68("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], VerticalBorderDirective);
     return VerticalBorderDirective;
 }());
-__decorate$106([
-    _angular_core.Input('vertical-border'),
-    __metadata$68("design:type", Object)
-], VerticalBorderDirective.prototype, "border", void 0);
-VerticalBorderDirective = __decorate$106([
-    _angular_core.Directive({
-        selector: '[vertical-border]',
-    }),
-    __metadata$68("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], VerticalBorderDirective);
 
 /*
 Text alignment
@@ -9381,18 +9378,18 @@ var AlignmentCenterDirective = (function () {
             this.align = this.tableService.ClassToggle('vclAlignCentered', this.align, 'td');
         }
     };
+    __decorate$107([
+        _angular_core.Input('align-center'),
+        __metadata$69("design:type", Object)
+    ], AlignmentCenterDirective.prototype, "align", void 0);
+    AlignmentCenterDirective = __decorate$107([
+        _angular_core.Directive({
+            selector: '[align-center]',
+        }),
+        __metadata$69("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], AlignmentCenterDirective);
     return AlignmentCenterDirective;
 }());
-__decorate$107([
-    _angular_core.Input('align-center'),
-    __metadata$69("design:type", Object)
-], AlignmentCenterDirective.prototype, "align", void 0);
-AlignmentCenterDirective = __decorate$107([
-    _angular_core.Directive({
-        selector: '[align-center]',
-    }),
-    __metadata$69("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], AlignmentCenterDirective);
 
 /*
 Text alignment
@@ -9419,18 +9416,18 @@ var AlignmentRightDirective = (function () {
             this.align = this.tableService.ClassToggle('vclAlignRight', this.align, 'td');
         }
     };
+    __decorate$108([
+        _angular_core.Input('align-right'),
+        __metadata$70("design:type", Object)
+    ], AlignmentRightDirective.prototype, "align", void 0);
+    AlignmentRightDirective = __decorate$108([
+        _angular_core.Directive({
+            selector: '[align-right]',
+        }),
+        __metadata$70("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], AlignmentRightDirective);
     return AlignmentRightDirective;
 }());
-__decorate$108([
-    _angular_core.Input('align-right'),
-    __metadata$70("design:type", Object)
-], AlignmentRightDirective.prototype, "align", void 0);
-AlignmentRightDirective = __decorate$108([
-    _angular_core.Directive({
-        selector: '[align-right]',
-    }),
-    __metadata$70("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], AlignmentRightDirective);
 
 /*
 Vertical alignment
@@ -9458,18 +9455,18 @@ var AlignmentbottomDirective = (function () {
             this.align = this.tableService.ClassToggle('vclVAlignBottom', this.align, '');
         }
     };
+    __decorate$109([
+        _angular_core.Input('align-bottom'),
+        __metadata$71("design:type", Object)
+    ], AlignmentbottomDirective.prototype, "align", void 0);
+    AlignmentbottomDirective = __decorate$109([
+        _angular_core.Directive({
+            selector: '[align-bottom]',
+        }),
+        __metadata$71("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], AlignmentbottomDirective);
     return AlignmentbottomDirective;
 }());
-__decorate$109([
-    _angular_core.Input('align-bottom'),
-    __metadata$71("design:type", Object)
-], AlignmentbottomDirective.prototype, "align", void 0);
-AlignmentbottomDirective = __decorate$109([
-    _angular_core.Directive({
-        selector: '[align-bottom]',
-    }),
-    __metadata$71("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], AlignmentbottomDirective);
 
 /*
 Vertical alignment
@@ -9497,18 +9494,18 @@ var AlignmentMiddleDirective = (function () {
             this.align = this.tableService.ClassToggle('vclVAlignMiddle', this.align, '');
         }
     };
+    __decorate$110([
+        _angular_core.Input('align-middle'),
+        __metadata$72("design:type", Object)
+    ], AlignmentMiddleDirective.prototype, "align", void 0);
+    AlignmentMiddleDirective = __decorate$110([
+        _angular_core.Directive({
+            selector: '[align-middle]',
+        }),
+        __metadata$72("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], AlignmentMiddleDirective);
     return AlignmentMiddleDirective;
 }());
-__decorate$110([
-    _angular_core.Input('align-middle'),
-    __metadata$72("design:type", Object)
-], AlignmentMiddleDirective.prototype, "align", void 0);
-AlignmentMiddleDirective = __decorate$110([
-    _angular_core.Directive({
-        selector: '[align-middle]',
-    }),
-    __metadata$72("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], AlignmentMiddleDirective);
 
 /*
 Layout
@@ -9535,18 +9532,18 @@ var LayoutDirective = (function () {
             this.fixed = this.tableService.ClassToggle('vclFixed', this.fixed, 'table');
         }
     };
+    __decorate$111([
+        _angular_core.Input('fixed'),
+        __metadata$73("design:type", Object)
+    ], LayoutDirective.prototype, "fixed", void 0);
+    LayoutDirective = __decorate$111([
+        _angular_core.Directive({
+            selector: '[fixed]',
+        }),
+        __metadata$73("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], LayoutDirective);
     return LayoutDirective;
 }());
-__decorate$111([
-    _angular_core.Input('fixed'),
-    __metadata$73("design:type", Object)
-], LayoutDirective.prototype, "fixed", void 0);
-LayoutDirective = __decorate$111([
-    _angular_core.Directive({
-        selector: '[fixed]',
-    }),
-    __metadata$73("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], LayoutDirective);
 
 /*
 Truncation
@@ -9575,18 +9572,18 @@ var NoWrapDirective = (function () {
             this.nowrap = this.tableService.ClassToggle('vclNoWrap', this.nowrap, 'td');
         }
     };
+    __decorate$112([
+        _angular_core.Input('nowrap'),
+        __metadata$74("design:type", Object)
+    ], NoWrapDirective.prototype, "nowrap", void 0);
+    NoWrapDirective = __decorate$112([
+        _angular_core.Directive({
+            selector: '[nowrap]'
+        }),
+        __metadata$74("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], NoWrapDirective);
     return NoWrapDirective;
 }());
-__decorate$112([
-    _angular_core.Input('nowrap'),
-    __metadata$74("design:type", Object)
-], NoWrapDirective.prototype, "nowrap", void 0);
-NoWrapDirective = __decorate$112([
-    _angular_core.Directive({
-        selector: '[nowrap]'
-    }),
-    __metadata$74("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], NoWrapDirective);
 
 /*
 Truncation
@@ -9615,18 +9612,18 @@ var OverflowEllipsisDirective = (function () {
             this.ellipsis = this.tableService.ClassToggle('vclOverflowEllipsis', this.ellipsis, 'td');
         }
     };
+    __decorate$113([
+        _angular_core.Input('overflow-ellipsis'),
+        __metadata$75("design:type", Object)
+    ], OverflowEllipsisDirective.prototype, "ellipsis", void 0);
+    OverflowEllipsisDirective = __decorate$113([
+        _angular_core.Directive({
+            selector: '[overflow-ellipsis]'
+        }),
+        __metadata$75("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], OverflowEllipsisDirective);
     return OverflowEllipsisDirective;
 }());
-__decorate$113([
-    _angular_core.Input('overflow-ellipsis'),
-    __metadata$75("design:type", Object)
-], OverflowEllipsisDirective.prototype, "ellipsis", void 0);
-OverflowEllipsisDirective = __decorate$113([
-    _angular_core.Directive({
-        selector: '[overflow-ellipsis]'
-    }),
-    __metadata$75("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], OverflowEllipsisDirective);
 
 /*
 Wrapping behavior
@@ -9653,18 +9650,18 @@ var BreakingWordsDirective = (function () {
             this.breakWords = this.tableService.ClassToggle('vclBreakWords', this.breakWords, '');
         }
     };
+    __decorate$114([
+        _angular_core.Input('break-words'),
+        __metadata$76("design:type", Object)
+    ], BreakingWordsDirective.prototype, "breakWords", void 0);
+    BreakingWordsDirective = __decorate$114([
+        _angular_core.Directive({
+            selector: '[break-words]',
+        }),
+        __metadata$76("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
+    ], BreakingWordsDirective);
     return BreakingWordsDirective;
 }());
-__decorate$114([
-    _angular_core.Input('break-words'),
-    __metadata$76("design:type", Object)
-], BreakingWordsDirective.prototype, "breakWords", void 0);
-BreakingWordsDirective = __decorate$114([
-    _angular_core.Directive({
-        selector: '[break-words]',
-    }),
-    __metadata$76("design:paramtypes", [_angular_core.Renderer2, _angular_core.ElementRef])
-], BreakingWordsDirective);
 
 var directives = [
     VclTableDirective,
@@ -9696,42 +9693,116 @@ var __decorate$91 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.VCLTableModule = (function () {
+var VCLTableModule = (function () {
     function VCLTableModule() {
     }
+    VCLTableModule = __decorate$91([
+        _angular_core.NgModule({
+            imports: [_angular_common.CommonModule, L10nModule],
+            exports: [SortIconComponent].concat(directives),
+            declarations: [SortIconComponent].concat(directives),
+            entryComponents: [SortIconComponent],
+            providers: [],
+        })
+    ], VCLTableModule);
     return VCLTableModule;
 }());
-exports.VCLTableModule = __decorate$91([
-    _angular_core.NgModule({
-        imports: [_angular_common.CommonModule, exports.L10nModule],
-        exports: [SortIconComponent].concat(directives),
-        declarations: [SortIconComponent].concat(directives),
-        entryComponents: [SortIconComponent],
-        providers: [],
-    })
-], exports.VCLTableModule);
 
 exports.ObservableComponent = ObservableComponent;
 exports.defineMetadata = defineMetadata;
 exports.getMetadata = getMetadata;
+exports.InputDirective = InputDirective;
+exports.VCLInputModule = VCLInputModule;
+exports.VCLFileInputModule = VCLFileInputModule;
+exports.VCLTextareaModule = VCLTextareaModule;
+exports.VCLFlipSwitchModule = VCLFlipSwitchModule;
+exports.IconComponent = IconComponent;
+exports.IconService = IconService;
+exports.VCLIconModule = VCLIconModule;
+exports.MetalistItem = MetalistItem;
+exports.MetalistComponent = MetalistComponent;
+exports.VCLMetalistModule = VCLMetalistModule;
+exports.DropdownOption = DropdownOption;
+exports.DropdownComponent = DropdownComponent;
+exports.VCLDropdownModule = VCLDropdownModule;
+exports.SelectComponent = SelectComponent;
+exports.SelectOption = SelectOption;
+exports.VCLSelectModule = VCLSelectModule;
+exports.IcogramComponent = IcogramComponent;
+exports.VCLIcogramModule = VCLIcogramModule;
+exports.ButtonComponent = ButtonComponent;
+exports.ButtonStateContentDirective = ButtonStateContentDirective;
+exports.VCLButtonModule = VCLButtonModule;
+exports.ButtonGroupComponent = ButtonGroupComponent;
+exports.VCLButtonGroupModule = VCLButtonGroupModule;
+exports.LayerRefDirective = LayerRefDirective;
 exports.LayerRef = LayerRef;
+exports.LayerService = LayerService;
+exports.LayerContainerComponent = LayerContainerComponent;
 exports.DynamicLayerRef = DynamicLayerRef;
 exports.LAYER_ANIMATIONS = LAYER_ANIMATIONS;
 exports.LayerResult = LayerResult;
 exports.LAYERS = LAYERS;
 exports.Layer = Layer;
+exports.VCLLayerModule = VCLLayerModule;
+exports.VCLTabNavModule = VCLTabNavModule;
+exports.NavigationComponent = NavigationComponent;
+exports.NavigationItemDirective = NavigationItemDirective;
+exports.VCLNavigationModule = VCLNavigationModule;
+exports.VCLToolbarModule = VCLToolbarModule;
+exports.VCLLinkModule = VCLLinkModule;
+exports.PopoverComponent = PopoverComponent;
 exports.AttachmentX = AttachmentX;
 exports.AttachmentY = AttachmentY;
 exports.POPOVER_ANIMATIONS = POPOVER_ANIMATIONS;
+exports.VCLPopoverModule = VCLPopoverModule;
+exports.VCLProgressBarModule = VCLProgressBarModule;
+exports.RadioButtonComponent = RadioButtonComponent;
+exports.RadioGroupComponent = RadioGroupComponent;
+exports.VCLRadioButtonModule = VCLRadioButtonModule;
+exports.CheckboxComponent = CheckboxComponent;
+exports.VCLCheckboxModule = VCLCheckboxModule;
+exports.VCLOffClickModule = VCLOffClickModule;
+exports.DatePickerComponent = DatePickerComponent;
+exports.VCLDatePickerModule = VCLDatePickerModule;
+exports.VCLFormControlLabelModule = VCLFormControlLabelModule;
 exports.TemplateWormhole = TemplateWormhole;
 exports.ComponentWormhole = ComponentWormhole;
 exports.Wormhole = Wormhole;
+exports.WormholeDirective = WormholeDirective;
 exports.DomComponentWormhole = DomComponentWormhole;
 exports.DomTemplateWormhole = DomTemplateWormhole;
 exports.WormholeHost = WormholeHost;
 exports.DomWormholeHost = DomWormholeHost;
+exports.VCLWormholeModule = VCLWormholeModule;
+exports.MonthPickerComponent = MonthPickerComponent;
+exports.VCLMonthPickerModule = VCLMonthPickerModule;
+exports.VCLLabelModule = VCLLabelModule;
+exports.TokenComponent = TokenComponent;
+exports.TokenInputComponent = TokenInputComponent;
+exports.TokenListComponent = TokenListComponent;
+exports.VCLTokenModule = VCLTokenModule;
+exports.SliderComponent = SliderComponent;
+exports.VCLSliderModule = VCLSliderModule;
+exports.VCLInputControlGroupModule = VCLInputControlGroupModule;
+exports.AlertService = AlertService;
 exports.AlertError = AlertError;
+exports.VCLAlertModule = VCLAlertModule;
+exports.BusyComponent = BusyComponent;
+exports.BusyIndicatorComponent = BusyIndicatorComponent;
+exports.VCLBusyIndicatorModule = VCLBusyIndicatorModule;
 exports.Notification = Notification;
+exports.NotificationService = NotificationService;
+exports.NotificationComponent = NotificationComponent;
+exports.VCLNotificationModule = VCLNotificationModule;
+exports.L10nNoopLoaderService = L10nNoopLoaderService;
+exports.L10nStaticLoaderService = L10nStaticLoaderService;
+exports.L10nAsyncLoaderService = L10nAsyncLoaderService;
+exports.L10nFormatParserService = L10nFormatParserService;
+exports.L10nService = L10nService;
+exports.L10nModule = L10nModule;
+exports.VCLTooltipModule = VCLTooltipModule;
+exports.VCLTableModule = VCLTableModule;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -27,16 +27,16 @@ var NoWrapDirective = (function () {
             this.nowrap = this.tableService.ClassToggle('vclNoWrap', this.nowrap, 'td');
         }
     };
+    __decorate([
+        Input('nowrap'),
+        __metadata("design:type", Object)
+    ], NoWrapDirective.prototype, "nowrap", void 0);
+    NoWrapDirective = __decorate([
+        Directive({
+            selector: '[nowrap]'
+        }),
+        __metadata("design:paramtypes", [Renderer2, ElementRef])
+    ], NoWrapDirective);
     return NoWrapDirective;
 }());
-__decorate([
-    Input('nowrap'),
-    __metadata("design:type", Object)
-], NoWrapDirective.prototype, "nowrap", void 0);
-NoWrapDirective = __decorate([
-    Directive({
-        selector: '[nowrap]'
-    }),
-    __metadata("design:paramtypes", [Renderer2, ElementRef])
-], NoWrapDirective);
 export { NoWrapDirective };

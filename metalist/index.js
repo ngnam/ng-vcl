@@ -14,14 +14,14 @@ export { MetalistItem, MetalistComponent, SelectionMode };
 var VCLMetalistModule = (function () {
     function VCLMetalistModule() {
     }
+    VCLMetalistModule = __decorate([
+        NgModule({
+            imports: [CommonModule, L10nModule, VCLWormholeModule],
+            exports: [MetalistComponent, MetalistItem],
+            declarations: [MetalistComponent, MetalistItem],
+            providers: [],
+        })
+    ], VCLMetalistModule);
     return VCLMetalistModule;
 }());
-VCLMetalistModule = __decorate([
-    NgModule({
-        imports: [CommonModule, L10nModule, VCLWormholeModule],
-        exports: [MetalistComponent, MetalistItem],
-        declarations: [MetalistComponent, MetalistItem],
-        providers: [],
-    })
-], VCLMetalistModule);
 export { VCLMetalistModule };

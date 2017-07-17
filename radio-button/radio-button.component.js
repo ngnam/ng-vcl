@@ -66,71 +66,71 @@ var RadioButtonComponent = (function () {
     RadioButtonComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "checkedIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "uncheckedIcon", void 0);
+    __decorate([
+        HostBinding('attr.aria-disabled'),
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "disabled", void 0);
+    __decorate([
+        Input('value'),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "value", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], RadioButtonComponent.prototype, "labelPosition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], RadioButtonComponent.prototype, "label", void 0);
+    __decorate([
+        HostBinding(),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "tabindex", void 0);
+    __decorate([
+        HostBinding('attr.checked'),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], RadioButtonComponent.prototype, "checked", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "checkedChange", void 0);
+    __decorate([
+        HostListener('keydown', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], RadioButtonComponent.prototype, "onKeydown", null);
+    __decorate([
+        HostListener('click', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Event]),
+        __metadata("design:returntype", void 0)
+    ], RadioButtonComponent.prototype, "onTap", null);
+    RadioButtonComponent = __decorate([
+        Component({
+            selector: 'vcl-radio-button',
+            template: "<vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='right'\"></vcl-icon> <label vcl-form-control-label *ngIf=\"label\" [label]=\"label\"></label> <ng-content></ng-content> <vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
+            host: {
+                '[attr.role]': '"radio"',
+                '[class.vclRadioButton]': 'true',
+                '[style.userSelect]': '"none"'
+            },
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+        }),
+        __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
+    ], RadioButtonComponent);
     return RadioButtonComponent;
 }());
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], RadioButtonComponent.prototype, "checkedIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], RadioButtonComponent.prototype, "uncheckedIcon", void 0);
-__decorate([
-    HostBinding('attr.aria-disabled'),
-    HostBinding('class.vclDisabled'),
-    Input(),
-    __metadata("design:type", Object)
-], RadioButtonComponent.prototype, "disabled", void 0);
-__decorate([
-    Input('value'),
-    __metadata("design:type", Object)
-], RadioButtonComponent.prototype, "value", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], RadioButtonComponent.prototype, "labelPosition", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], RadioButtonComponent.prototype, "label", void 0);
-__decorate([
-    HostBinding(),
-    __metadata("design:type", Object)
-], RadioButtonComponent.prototype, "tabindex", void 0);
-__decorate([
-    HostBinding('attr.checked'),
-    Input(),
-    __metadata("design:type", Boolean)
-], RadioButtonComponent.prototype, "checked", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], RadioButtonComponent.prototype, "checkedChange", void 0);
-__decorate([
-    HostListener('keydown', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [KeyboardEvent]),
-    __metadata("design:returntype", void 0)
-], RadioButtonComponent.prototype, "onKeydown", null);
-__decorate([
-    HostListener('click', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Event]),
-    __metadata("design:returntype", void 0)
-], RadioButtonComponent.prototype, "onTap", null);
-RadioButtonComponent = __decorate([
-    Component({
-        selector: 'vcl-radio-button',
-        template: "<vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='right'\"></vcl-icon> <label vcl-form-control-label *ngIf=\"label\" [label]=\"label\"></label> <ng-content></ng-content> <vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
-        host: {
-            '[attr.role]': '"radio"',
-            '[class.vclRadioButton]': 'true',
-            '[style.userSelect]': '"none"'
-        },
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
-    }),
-    __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
-], RadioButtonComponent);
 export { RadioButtonComponent };

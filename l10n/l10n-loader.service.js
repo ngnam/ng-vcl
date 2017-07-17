@@ -65,13 +65,13 @@ var L10nStaticLoaderService = (function (_super) {
     L10nStaticLoaderService.prototype.getSupportedLocales = function () {
         return Observable.of(extractLocales(this.config));
     };
+    L10nStaticLoaderService = __decorate([
+        Injectable(),
+        __param(0, Inject(L10N_LOADER_CONFIG)),
+        __metadata("design:paramtypes", [Object])
+    ], L10nStaticLoaderService);
     return L10nStaticLoaderService;
 }(L10nLoaderService));
-L10nStaticLoaderService = __decorate([
-    Injectable(),
-    __param(0, Inject(L10N_LOADER_CONFIG)),
-    __metadata("design:paramtypes", [Object])
-], L10nStaticLoaderService);
 export { L10nStaticLoaderService };
 var L10nAsyncLoaderService = (function (_super) {
     __extends(L10nAsyncLoaderService, _super);
@@ -95,13 +95,13 @@ var L10nAsyncLoaderService = (function (_super) {
     L10nAsyncLoaderService.prototype.getSupportedLocales = function () {
         return this.data$.map(function (data) { return extractLocales(data); });
     };
+    L10nAsyncLoaderService = __decorate([
+        Injectable(),
+        __param(0, Inject(L10N_LOADER_CONFIG)),
+        __metadata("design:paramtypes", [Object])
+    ], L10nAsyncLoaderService);
     return L10nAsyncLoaderService;
 }(L10nLoaderService));
-L10nAsyncLoaderService = __decorate([
-    Injectable(),
-    __param(0, Inject(L10N_LOADER_CONFIG)),
-    __metadata("design:paramtypes", [Object])
-], L10nAsyncLoaderService);
 export { L10nAsyncLoaderService };
 var L10nNoopLoaderService = (function (_super) {
     __extends(L10nNoopLoaderService, _super);
@@ -114,9 +114,9 @@ var L10nNoopLoaderService = (function (_super) {
     L10nNoopLoaderService.prototype.getSupportedLocales = function () {
         return Observable.of([]);
     };
+    L10nNoopLoaderService = __decorate([
+        Injectable()
+    ], L10nNoopLoaderService);
     return L10nNoopLoaderService;
 }(L10nLoaderService));
-L10nNoopLoaderService = __decorate([
-    Injectable()
-], L10nNoopLoaderService);
 export { L10nNoopLoaderService };

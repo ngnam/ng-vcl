@@ -13,35 +13,35 @@ var SelectOption = (function () {
         this.disabled = false;
         this.selected = false;
     }
+    __decorate([
+        ViewChild(TemplateRef),
+        __metadata("design:type", TemplateRef)
+    ], SelectOption.prototype, "content", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], SelectOption.prototype, "value", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SelectOption.prototype, "sublabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], SelectOption.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SelectOption.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], SelectOption.prototype, "selected", void 0);
+    SelectOption = __decorate([
+        Directive({
+            selector: 'vcl-select-option'
+        })
+    ], SelectOption);
     return SelectOption;
 }());
-__decorate([
-    ViewChild(TemplateRef),
-    __metadata("design:type", TemplateRef)
-], SelectOption.prototype, "content", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], SelectOption.prototype, "value", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], SelectOption.prototype, "sublabel", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], SelectOption.prototype, "label", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], SelectOption.prototype, "disabled", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], SelectOption.prototype, "selected", void 0);
-SelectOption = __decorate([
-    Directive({
-        selector: 'vcl-select-option'
-    })
-], SelectOption);
 export { SelectOption };

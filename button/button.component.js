@@ -116,115 +116,115 @@ var ButtonComponent = (function (_super) {
     ButtonComponent.prototype.ngOnDestroy = function () {
         _super.prototype.ngOnDestroy.call(this);
     };
+    __decorate([
+        HostBinding('class.vclHovered'),
+        __metadata("design:type", Boolean)
+    ], ButtonComponent.prototype, "hovered", void 0);
+    __decorate([
+        HostBinding('attr.disabled'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], ButtonComponent.prototype, "isDisabled", null);
+    __decorate([
+        Input(),
+        HostBinding('class.vclSelected'),
+        __metadata("design:type", Boolean)
+    ], ButtonComponent.prototype, "selected", void 0);
+    __decorate([
+        HostBinding('attr.aria-label'),
+        Input(),
+        __metadata("design:type", String)
+    ], ButtonComponent.prototype, "title", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], ButtonComponent.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], ButtonComponent.prototype, "disableA11yClick", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], ButtonComponent.prototype, "busy", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], ButtonComponent.prototype, "flexLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], ButtonComponent.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], ButtonComponent.prototype, "prepIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], ButtonComponent.prototype, "appIcon", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], ButtonComponent.prototype, "appIconSrc", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], ButtonComponent.prototype, "prepIconSrc", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Observable),
+        __metadata("design:paramtypes", [])
+    ], ButtonComponent.prototype, "press", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], ButtonComponent.prototype, "stateChange", void 0);
+    __decorate([
+        ContentChildren(ButtonStateContentDirective),
+        __metadata("design:type", QueryList)
+    ], ButtonComponent.prototype, "buttonContent", void 0);
+    __decorate([
+        HostListener('keypress', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [KeyboardEvent]),
+        __metadata("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onKeypress", null);
+    __decorate([
+        HostListener('mouseenter', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onMouseEnter", null);
+    __decorate([
+        HostListener('mouseleave', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onMouseLeave", null);
+    __decorate([
+        HostListener('click', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Event]),
+        __metadata("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onTap", null);
+    __decorate([
+        HostListener('click', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Event]),
+        __metadata("design:returntype", void 0)
+    ], ButtonComponent.prototype, "onClick", null);
+    ButtonComponent = __decorate([
+        Component({
+            selector: 'button[vcl-button]',
+            host: {
+                '[class.vclButton]': 'true',
+            },
+            template: "<vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\" [appIconSrc]=\"appIconSrc\" [prepIconSrc]=\"prepIconSrc\"> <ng-content></ng-content> </vcl-icogram> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], ButtonComponent);
     return ButtonComponent;
 }(ObservableComponent));
-__decorate([
-    HostBinding('class.vclHovered'),
-    __metadata("design:type", Boolean)
-], ButtonComponent.prototype, "hovered", void 0);
-__decorate([
-    HostBinding('attr.disabled'),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [])
-], ButtonComponent.prototype, "isDisabled", null);
-__decorate([
-    Input(),
-    HostBinding('class.vclSelected'),
-    __metadata("design:type", Boolean)
-], ButtonComponent.prototype, "selected", void 0);
-__decorate([
-    HostBinding('attr.aria-label'),
-    Input(),
-    __metadata("design:type", String)
-], ButtonComponent.prototype, "title", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], ButtonComponent.prototype, "disabled", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], ButtonComponent.prototype, "disableA11yClick", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], ButtonComponent.prototype, "busy", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Boolean)
-], ButtonComponent.prototype, "flexLabel", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], ButtonComponent.prototype, "label", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], ButtonComponent.prototype, "prepIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], ButtonComponent.prototype, "appIcon", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], ButtonComponent.prototype, "appIconSrc", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", String)
-], ButtonComponent.prototype, "prepIconSrc", void 0);
-__decorate([
-    Output(),
-    __metadata("design:type", Observable),
-    __metadata("design:paramtypes", [])
-], ButtonComponent.prototype, "press", null);
-__decorate([
-    Output(),
-    __metadata("design:type", Object)
-], ButtonComponent.prototype, "stateChange", void 0);
-__decorate([
-    ContentChildren(ButtonStateContentDirective),
-    __metadata("design:type", QueryList)
-], ButtonComponent.prototype, "buttonContent", void 0);
-__decorate([
-    HostListener('keypress', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [KeyboardEvent]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onKeypress", null);
-__decorate([
-    HostListener('mouseenter', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseEnter", null);
-__decorate([
-    HostListener('mouseleave', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onMouseLeave", null);
-__decorate([
-    HostListener('click', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Event]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onTap", null);
-__decorate([
-    HostListener('click', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Event]),
-    __metadata("design:returntype", void 0)
-], ButtonComponent.prototype, "onClick", null);
-ButtonComponent = __decorate([
-    Component({
-        selector: 'button[vcl-button]',
-        host: {
-            '[class.vclButton]': 'true',
-        },
-        template: "<vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\" [appIconSrc]=\"appIconSrc\" [prepIconSrc]=\"prepIconSrc\"> <ng-content></ng-content> </vcl-icogram> ",
-        changeDetection: ChangeDetectionStrategy.OnPush,
-    }),
-    __metadata("design:paramtypes", [ElementRef])
-], ButtonComponent);
 export { ButtonComponent };
