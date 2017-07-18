@@ -1,8 +1,8 @@
-import { OnInit, ChangeDetectorRef } from '@angular/core';
+import { OnInit, OnChanges, EventEmitter, ChangeDetectorRef, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { CalendarDate } from './calendar-date';
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
-export declare class DatePickerComponent implements OnInit, ControlValueAccessor {
+export declare class DatePickerComponent implements OnInit, OnChanges, ControlValueAccessor {
     private cdRef;
     closeOnSelect: boolean;
     highlightToday: boolean;
@@ -13,19 +13,23 @@ export declare class DatePickerComponent implements OnInit, ControlValueAccessor
     nextYearBtnIcon: string;
     displayJumpToday: boolean;
     displayJumpSelected: boolean;
-    selectedDate: Date;
+    selectedDate: Date | undefined;
     selectRange: boolean;
     selectedRangeEnd: Date | undefined;
     maxRangeLength: number;
     minDate: Date | undefined;
     maxDate: Date | undefined;
-    currentDate: CalendarDate | null;
-    currentRangeEnd: CalendarDate | null;
-    viewDate: CalendarDate;
+    change: EventEmitter<Date | (Date | undefined)[]>;
+    currentDate: CalendarDate | undefined;
+    currentRangeEnd: CalendarDate | undefined;
+    viewDate: CalendarDate | undefined;
     today: CalendarDate;
     showYearPick: boolean;
     constructor(cdRef: ChangeDetectorRef);
     ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    setDate(date?: Date): void;
+    onDateTap(date: CalendarDate): void;
     /**
      * activate the given date
      */
