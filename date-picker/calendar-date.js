@@ -32,6 +32,9 @@ var CalendarDate = (function () {
         }
         this.date = date;
     }
+    CalendarDate.prototype.clone = function () {
+        return new CalendarDate(new Date(this.date.getTime()));
+    };
     CalendarDate.prototype.getWeekDays = function () {
         return WEEK_DAYS;
     };

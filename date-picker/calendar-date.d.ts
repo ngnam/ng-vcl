@@ -1,6 +1,7 @@
 export declare class CalendarDate {
     date: Date;
     constructor(date?: Date);
+    clone(): CalendarDate;
     getWeekDays(): string[];
     getMonthString(): string;
     getYearString(): string;
