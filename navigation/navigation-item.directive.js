@@ -15,7 +15,6 @@ import { NavigationComponent } from './navigation.component';
 import { Router, NavigationEnd } from "@angular/router";
 var NavigationItemDirective = (function () {
     function NavigationItemDirective(router, nav, parent) {
-        var _this = this;
         this.router = router;
         this.nav = nav;
         this.parent = parent;
@@ -23,13 +22,7 @@ var NavigationItemDirective = (function () {
         this.selected = false;
         this.opened = false;
         this.heading = false;
-        if (nav.useRouter) {
-            this._subscription = router.events.subscribe(function (s) {
-                if (s instanceof NavigationEnd) {
-                    _this.updateSelectedState();
-                }
-            });
-        }
+        this.exactRoute = true;
     }
     NavigationItemDirective_1 = NavigationItemDirective;
     Object.defineProperty(NavigationItemDirective.prototype, "items", {
@@ -52,7 +45,7 @@ var NavigationItemDirective = (function () {
         configurable: true
     });
     NavigationItemDirective.prototype.updateSelectedState = function () {
-        this.selected = !!this._urlTree && this.router.isActive(this._urlTree, true);
+        this.selected = !!this._urlTree && this.router.isActive(this._urlTree, this.exactRoute);
         if (this.selected) {
             this.openParents();
         }
@@ -65,6 +58,16 @@ var NavigationItemDirective = (function () {
             }
         };
         openParents(this);
+    };
+    NavigationItemDirective.prototype.ngAfterContentInit = function () {
+        var _this = this;
+        if (this.nav.useRouter) {
+            this._subscription = this.router.events.subscribe(function (s) {
+                if (s instanceof NavigationEnd) {
+                    _this.updateSelectedState();
+                }
+            });
+        }
     };
     NavigationItemDirective.prototype.ngOnDestroy = function () {
         this._subscription && this._subscription.unsubscribe();
@@ -111,6 +114,10 @@ var NavigationItemDirective = (function () {
         Input(),
         __metadata("design:type", Object)
     ], NavigationItemDirective.prototype, "href", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], NavigationItemDirective.prototype, "exactRoute", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object),

@@ -37,4 +37,5 @@ export declare class FileInputComponent implements ControlValueAccessor {
     writeValue(files: FileList): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }

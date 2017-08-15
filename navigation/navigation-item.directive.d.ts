@@ -29,11 +29,13 @@ export declare class NavigationItemDirective implements NavigationItem {
     appIcon: string | undefined;
     class: string | undefined;
     href: string | undefined;
+    exactRoute: boolean;
     route: any[] | undefined;
     contentItems: QueryList<NavigationItemDirective>;
     constructor(router: Router, nav: NavigationComponent, parent: NavigationItemDirective);
     private updateSelectedState();
     openParents(): void;
+    ngAfterContentInit(): void;
     ngOnDestroy(): void;
     readonly calcPrepIcon: string | undefined;
     readonly calcAppIcon: string | undefined;

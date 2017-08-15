@@ -22,6 +22,8 @@ export declare class SliderComponent implements ControlValueAccessor {
     scale: string[] | number | undefined;
     focused: boolean;
     scaleElement: ElementRef;
+    readonly pmin: number;
+    readonly pmax: number;
     percentLeftKnob: number;
     scalePoints: ScalePoint[];
     constructor(cdRef: ChangeDetectorRef);
@@ -59,4 +61,5 @@ export declare class SliderComponent implements ControlValueAccessor {
     writeValue(value: any): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }

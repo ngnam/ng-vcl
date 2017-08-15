@@ -17,6 +17,7 @@ export declare class TokenInputComponent implements ControlValueAccessor {
     icon: string;
     tabindex: number;
     tokenClass: string | undefined;
+    disabled: boolean;
     change: EventEmitter<Token[]>;
     add: EventEmitter<Token>;
     remove: EventEmitter<Token>;
@@ -46,4 +47,5 @@ export declare class TokenInputComponent implements ControlValueAccessor {
     writeValue(tokens: any): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }

@@ -59,8 +59,10 @@ var DropdownComponent = (function () {
         // If `Single`, a single item can be selected
         // If `Multiple` multiple items can be selected
         this.selectionMode = SelectionMode.Single;
+        this.disabled = false;
         this.listenKeys = true;
         this.change = new EventEmitter();
+        this.focused = false;
         /**
          * things needed for ControlValueAccessor-Interface
          */
@@ -139,7 +141,11 @@ var DropdownComponent = (function () {
             _this.cdRef.markForCheck();
         });
     };
+    DropdownComponent.prototype.onMetalistFocus = function () {
+        this.focused = true;
+    };
     DropdownComponent.prototype.onMetalistBlur = function () {
+        this.focused = false;
         this.onTouched();
     };
     DropdownComponent.prototype.onMetalistChange = function (value) {
@@ -157,6 +163,10 @@ var DropdownComponent = (function () {
     };
     DropdownComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
+    };
+    DropdownComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+        this.cdRef.markForCheck();
     };
     __decorate([
         ViewChild('metalist'),
@@ -189,6 +199,10 @@ var DropdownComponent = (function () {
     ], DropdownComponent.prototype, "maxSelectableItems", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", Object)
+    ], DropdownComponent.prototype, "disabled", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", Boolean)
     ], DropdownComponent.prototype, "listenKeys", void 0);
     __decorate([
@@ -198,7 +212,7 @@ var DropdownComponent = (function () {
     DropdownComponent = __decorate([
         Component({
             selector: 'vcl-dropdown',
-            template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <!--  (mousedown) is used because tap will break scrolling on mobiles --> <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"metaItem.disabled\" [class.vclHighlighted]=\"metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (tap)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
+            template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [class.vclDisabled]=\"disabled\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (focus)=\"onMetalistFocus()\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"disabled || item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"disabled || metaItem.disabled\" [class.vclHighlighted]=\"focused && metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (tap)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {

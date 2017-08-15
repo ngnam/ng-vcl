@@ -14,7 +14,7 @@ var NotificationComponent = (function () {
     }
     __decorate([
         Input(),
-        __metadata("design:type", Object)
+        __metadata("design:type", Array)
     ], NotificationComponent.prototype, "notifications", void 0);
     NotificationComponent = __decorate([
         Component({

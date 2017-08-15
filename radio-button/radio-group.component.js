@@ -7,8 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, ChangeDetectionStrategy, ContentChildren, QueryList, Output, EventEmitter, forwardRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ContentChildren, Output, EventEmitter, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
 import { RadioButtonComponent } from './radio-button.component';
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 export var SelectionMode;
@@ -33,14 +34,16 @@ var RadioGroupComponent = (function () {
     }
     RadioGroupComponent.prototype.syncValue = function () {
         var value = undefined;
-        this.radioButtons.toArray().every(function (rbtn, idx) {
-            if (rbtn.checked) {
-                value = rbtn.value === undefined ? idx : rbtn.value;
-                return false;
-            }
-            return !rbtn.checked;
-        });
-        this.value = value;
+        if (this.radioButtons) {
+            this.radioButtons.toArray().every(function (rbtn, idx) {
+                if (rbtn.checked) {
+                    value = rbtn.value === undefined ? idx : rbtn.value;
+                    return false;
+                }
+                return !rbtn.checked;
+            });
+            this.value = value;
+        }
     };
     RadioGroupComponent.prototype.syncRadioButtons = function () {
         var _this = this;
@@ -61,17 +64,23 @@ var RadioGroupComponent = (function () {
         // Subscribes to radio button change event
         var listenChange = function () {
             _this.dispose();
-            var checked$ = Observable.merge.apply(Observable, (_this.radioButtons.map(function (rbtn, idx) { return rbtn.checkedChange.map(function () { return ({ rbtn: rbtn, idx: idx }); }); })));
-            _this.checkedSubscription = checked$.subscribe(function (source) {
-                _this.radioButtons.forEach(function (crbtn) {
-                    crbtn.setChecked(crbtn === source.rbtn);
+            if (_this.radioButtons) {
+                var checked$ = Observable.merge.apply(Observable, (_this.radioButtons.map(function (rbtn, idx) { return rbtn.checkedChange.map(function () { return ({ rbtn: rbtn, idx: idx }); }); })));
+                _this.blurSub = _this.radioButtons.last.blur.subscribe(function () {
+                    _this.onTouched();
                 });
-                _this.syncValue();
-                _this.triggerChange();
-            });
+                _this.checkedSub = checked$.subscribe(function (source) {
+                    if (_this.radioButtons) {
+                        _this.radioButtons && _this.radioButtons.forEach(function (crbtn) {
+                            crbtn.setChecked(crbtn === source.rbtn);
+                        });
+                        _this.syncValue();
+                        _this.triggerChange();
+                    }
+                });
+            }
         };
-        listenChange();
-        this.radioButtons.changes.subscribe(function (x) {
+        this.radioButtons && this.radioButtons.changes.startWith(null).subscribe(function () {
             listenChange();
         });
     };
@@ -79,7 +88,8 @@ var RadioGroupComponent = (function () {
         this.dispose();
     };
     RadioGroupComponent.prototype.dispose = function () {
-        this.checkedSubscription && this.checkedSubscription.unsubscribe();
+        this.checkedSub && this.checkedSub.unsubscribe();
+        this.blurSub && this.blurSub.unsubscribe();
     };
     RadioGroupComponent.prototype.writeValue = function (value) {
         this.value = value;
@@ -91,13 +101,16 @@ var RadioGroupComponent = (function () {
     RadioGroupComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    RadioGroupComponent.prototype.setDisabledState = function (isDisabled) {
+        this.radioButtons && this.radioButtons.forEach(function (rb) { return rb.setDisabledState(isDisabled); });
+    };
     __decorate([
         Output(),
         __metadata("design:type", Object)
     ], RadioGroupComponent.prototype, "change", void 0);
     __decorate([
         ContentChildren(RadioButtonComponent),
-        __metadata("design:type", QueryList)
+        __metadata("design:type", Object)
     ], RadioGroupComponent.prototype, "radioButtons", void 0);
     RadioGroupComponent = __decorate([
         Component({

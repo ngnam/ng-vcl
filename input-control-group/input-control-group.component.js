@@ -7,33 +7,42 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 var InputControlGroup = (function () {
-    function InputControlGroup(elRef) {
-        this.elRef = elRef;
-        this.elRef = elRef;
+    function InputControlGroup() {
+        this.inline = false;
     }
-    InputControlGroup.prototype.ucfirst = function (str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    };
+    Object.defineProperty(InputControlGroup.prototype, "notInline", {
+        get: function () {
+            return !this.inline;
+        },
+        enumerable: true,
+        configurable: true
+    });
     __decorate([
-        Input('type'),
+        Input(),
         __metadata("design:type", Object)
     ], InputControlGroup.prototype, "type", void 0);
     __decorate([
-        Input('label'),
+        Input(),
         __metadata("design:type", String)
     ], InputControlGroup.prototype, "label", void 0);
+    __decorate([
+        HostBinding('class.vclInputInlineControlGroup'),
+        Input(),
+        __metadata("design:type", Object)
+    ], InputControlGroup.prototype, "inline", void 0);
+    __decorate([
+        HostBinding('class.vclInputControlGroup'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], InputControlGroup.prototype, "notInline", null);
     InputControlGroup = __decorate([
         Component({
-            selector: 'vcl-input-control-group',
+            selector: 'vcl-input-control-group, [vcl-input-control-group]',
             changeDetection: ChangeDetectionStrategy.OnPush,
-            host: {
-                '[class.vclInputControlGroup]': 'true',
-            },
             template: "<ng-content></ng-content> <div *ngIf=\"type!==null && label!==null && label!==''\" class=\"vclFormControlHint\" [class.vclError]=\"type=='error'\" [class.vclWarning]=\"type=='warning'\" [class.vclSuccess]=\"type=='success'\"> {{label}} </div> "
-        }),
-        __metadata("design:paramtypes", [ElementRef])
+        })
     ], InputControlGroup);
     return InputControlGroup;
 }());

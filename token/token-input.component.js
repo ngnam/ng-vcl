@@ -76,6 +76,7 @@ var TokenInputComponent = (function () {
         this.placeholder = 'Type to add tokens';
         this.icon = 'fa:remove';
         this.tabindex = 0;
+        this.disabled = false;
         this.change = new EventEmitter();
         this.add = new EventEmitter();
         this.remove = new EventEmitter();
@@ -175,6 +176,9 @@ var TokenInputComponent = (function () {
     TokenInputComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    TokenInputComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+    };
     __decorate([
         ViewChild('input'),
         __metadata("design:type", ElementRef)
@@ -207,6 +211,11 @@ var TokenInputComponent = (function () {
         Input(),
         __metadata("design:type", Object)
     ], TokenInputComponent.prototype, "tokenClass", void 0);
+    __decorate([
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata("design:type", Object)
+    ], TokenInputComponent.prototype, "disabled", void 0);
     __decorate([
         Output(),
         __metadata("design:type", Object)
@@ -250,7 +259,7 @@ var TokenInputComponent = (function () {
     TokenInputComponent = __decorate([
         Component({
             selector: 'vcl-token-input',
-            template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (tap)=\"select(token)\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
+            template: "<div class=\"vclTokenContainer\"> <wormhole *ngIf=\"labelPre\" [connect]=\"labelPre\"></wormhole> <vcl-token *ngFor=\"let token of tokens\" (remove)=\"removeToken(token)\" (tap)=\"select(token)\" [disabled]=\"disabled\" [ngClass]=\"tokenClass\" [selected]=\"token.selected\" [removable]=\"true\" [icon]=\"icon\" [attr.tabindex]=\"-1\" [label]=\"token.label\"> </vcl-token> <wormhole *ngIf=\"labelPost\" [connect]=\"labelPost\"></wormhole> </div> <ng-content></ng-content> <input  vcl-input #input [disabled]=\"disabled\" [placeholder]=\"placeholder\"  [ngClass]=\"inputClass\" autocomplete=\"off\"  [tabindex]=\"tabindex\" (keyup.enter)=\"addToken(input.value)\" (focus)=\"onInputFocus()\" (blur)=\"onInputBlur()\" flex /> ",
             host: {
                 '[class.vclInput]': 'true',
                 '[class.vclTokenInput]': 'true',

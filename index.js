@@ -34,3 +34,4 @@ export * from './notification/index';
 export * from './l10n/index';
 export * from './tooltip/index';
 export * from './table/index';
+export * from './password-input/index';

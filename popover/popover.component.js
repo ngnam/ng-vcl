@@ -61,16 +61,11 @@ var PopoverComponent = (function (_super) {
         _this.state = PopoverState.hidden;
         _this.translateX = 1;
         _this.translateY = 0;
-        _this.observeChanges('target').subscribe(function () {
-            var tag = _this.tag + ".[target]$";
-            _this.setTag();
-            // if (this.debug) console.log(tag, 'this.target:', this.target);
-            // if (this.debug) console.log(tag, 'this.tag:', this.tag);
-        });
-        var observe = ['target', 'targetX', 'targetY', 'attachmentX', 'attachmentY'];
-        _this.observeChanges.apply(_this, observe).subscribe(function () {
-            var tag = _this.tag + ".[" + observe.join(', ') + "]$";
-            // if (this.debug) console.log(tag, 'this.target:', this.target);
+        _this.observeChanges('target', 'targetX', 'targetY', 'attachmentX', 'attachmentY').subscribe(function (changes) {
+            if (changes.target) {
+                _this.setTarget(changes.target.currentValue);
+                _this.setTag();
+            }
             _this.reposition();
         });
         return _this;
@@ -113,10 +108,11 @@ var PopoverComponent = (function (_super) {
         configurable: true
     });
     PopoverComponent.prototype.ngOnInit = function () {
-        var tag = this.tag + ".ngOnInit()";
-        if (this.debug)
+        if (this.debug) {
+            var tag = this.tag + ".ngOnInit()";
             console.log(tag, 'this:', this);
-        this.setTag();
+            this.setTag();
+        }
     };
     PopoverComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -128,6 +124,20 @@ var PopoverComponent = (function (_super) {
             if (this.animations.leave) {
                 this.leaveAnimationFactory = this.builder.build(this.animations.leave);
             }
+        }
+    };
+    PopoverComponent.prototype.setTarget = function (value) {
+        if (typeof value === 'string') {
+            this.targetElement = document.querySelector(value) || undefined;
+        }
+        else if (value instanceof Element) {
+            this.targetElement = value;
+        }
+        else if (value instanceof ElementRef) {
+            this.targetElement = value.nativeElement || undefined;
+        }
+        else {
+            this.targetElement = undefined;
         }
     };
     PopoverComponent.prototype.open = function () {
@@ -182,37 +192,21 @@ var PopoverComponent = (function (_super) {
         this.tag = PopoverComponent_1.Tag + "." + this.target;
     };
     PopoverComponent.prototype.ngOnChanges = function (changes) {
-        var tag = this.tag + ".ngOnChanges()";
-        if (this.debug)
+        if (this.debug) {
+            var tag = this.tag + ".ngOnChanges()";
             console.log(tag, 'changes:', changes);
+        }
         _super.prototype.ngOnChanges.call(this, changes);
     };
     PopoverComponent.prototype.onWindowResize = function (ev) {
         this.reposition();
-    };
-    PopoverComponent.prototype.getTargetPosition = function () {
-        var tag = this.tag + ".getTargetPosition()";
-        var targetEl;
-        if (typeof this.target === 'string') {
-            targetEl = document.querySelector(this.target);
-        }
-        else if (this.target instanceof Element) {
-            targetEl = this.target;
-        }
-        else if (this.target instanceof ElementRef && this.target.nativeElement) {
-            targetEl = this.target.nativeElement;
-        }
-        if (this.debug)
-            console.log(tag, 'targetEl:', targetEl);
-        return targetEl instanceof Element ? targetEl.getBoundingClientRect() : undefined;
     };
     PopoverComponent.prototype.getAttachmentPosition = function () {
         return this.me.nativeElement.getBoundingClientRect();
     };
     PopoverComponent.prototype.reposition = function () {
         var tag = this.tag + ".reposition()";
-        // if (this.debug) console.log(tag, 'this:', this);
-        var targetPos = this.getTargetPosition();
+        var targetPos = this.targetElement ? this.targetElement.getBoundingClientRect() : undefined;
         if (this.debug)
             console.log(tag, 'targetPos:', targetPos);
         if (!this.visible || !targetPos)
@@ -235,7 +229,7 @@ var PopoverComponent = (function (_super) {
             ownPos[AttachmentY.Top] - ownPos[Dimension.Height] / 2 :
             ownPos[this.attachmentY];
         var diffY = mustY - isY;
-        if (this.debug)
+        if (this.debug) {
             console.log(tag, {
                 targetPos: targetPos,
                 ownPos: ownPos,
@@ -246,6 +240,7 @@ var PopoverComponent = (function (_super) {
                 isY: isY,
                 diffY: diffY
             });
+        }
         this.translateY = this.translateY + diffY;
     };
     PopoverComponent.Tag = 'PopoverComponent';

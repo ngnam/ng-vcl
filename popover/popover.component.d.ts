@@ -31,7 +31,8 @@ export declare class PopoverComponent extends ObservableComponent {
     private static readonly Tag;
     private tag;
     debug: false;
-    target: string | any;
+    target?: string | ElementRef | Element;
+    private targetElement?;
     targetX: AttachmentX;
     targetY: AttachmentY;
     attachmentX: AttachmentX;
@@ -50,13 +51,13 @@ export declare class PopoverComponent extends ObservableComponent {
     constructor(me: ElementRef, builder: AnimationBuilder, animations: PopoverAnimationConfig);
     ngOnInit(): void;
     ngAfterViewInit(): void;
+    setTarget(value: Element | ElementRef | string): void;
     open(): void;
     close(): void;
     toggle(): void;
     setTag(): void;
     ngOnChanges(changes: SimpleChanges): void;
     private onWindowResize(ev);
-    private getTargetPosition();
     private getAttachmentPosition();
     reposition(): void;
 }

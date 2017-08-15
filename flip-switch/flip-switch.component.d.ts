@@ -7,6 +7,7 @@ export declare class FlipSwitchComponent implements ControlValueAccessor {
     onLabel: string;
     offLabel: string;
     value: boolean;
+    disabled: boolean;
     valueChange: EventEmitter<boolean>;
     constructor(cdRef: ChangeDetectorRef);
     onTap(): void;
@@ -20,4 +21,5 @@ export declare class FlipSwitchComponent implements ControlValueAccessor {
     writeValue(value: boolean): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }

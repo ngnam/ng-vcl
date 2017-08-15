@@ -1,3 +1,4 @@
+import { Notification } from './notification';
 export declare class NotificationComponent {
-    notifications: never[];
+    notifications: Notification[];
 }

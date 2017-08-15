@@ -24,12 +24,15 @@ export interface NotificationOptions {
     textColor?: string;
 }
 export declare const NOTIFICATION_DEFAULTS: NotificationOptions;
-export declare const POSITION_CLASS_MAP: {
-    [x: number]: string;
-};
 export declare const TYPE_CLASS_MAP: {
     [x: number]: {
         notificationClass: string;
         iconClass: string;
+    };
+};
+export declare const POSITION_MAP: {
+    [x: number]: {
+        class: string;
+        reverse: boolean;
     };
 };

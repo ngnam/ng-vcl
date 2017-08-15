@@ -14,9 +14,6 @@ export interface ChildLayerConfig {
 }
 export declare function Layer<T>(component: Type<T>, opts?: LayerOptions): (target: any) => void;
 export declare class VCLLayerModule {
-    private layers;
-    private layerManager;
-    private injector;
     static forRoot(config?: RootLayerConfig): ModuleWithProviders;
     static forChild(config?: ChildLayerConfig): ModuleWithProviders;
     constructor(layers: Type<LayerRef>[], layerManager: LayerManagerService, injector: Injector);
