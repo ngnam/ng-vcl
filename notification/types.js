@@ -21,34 +21,52 @@ export var NOTIFICATION_DEFAULTS = {
     position: NotificationPosition.TopRight,
     showCloseButton: true
 };
-export var POSITION_CLASS_MAP = (_a = {},
-    _a[NotificationPosition.TopRight] = 'vclLayerNotificationTopRight',
-    _a[NotificationPosition.Top] = 'vclLayerNotificationTop',
-    _a[NotificationPosition.TopLeft] = 'vclLayerNotificationTopLeft',
-    _a[NotificationPosition.BottomRight] = 'vclLayerNotificationBottomRight',
-    _a[NotificationPosition.Bottom] = 'vclLayerNotificationBottom',
-    _a[NotificationPosition.BottomLeft] = 'vclLayerNotificationBottomLeft',
-    _a);
-export var TYPE_CLASS_MAP = (_b = {},
-    _b[NotificationType.None] = {
+export var TYPE_CLASS_MAP = (_a = {},
+    _a[NotificationType.None] = {
         notificationClass: '',
         iconClass: ''
     },
-    _b[NotificationType.Info] = {
+    _a[NotificationType.Info] = {
         notificationClass: 'vclInfo',
         iconClass: 'fa fa-info-circle'
     },
-    _b[NotificationType.Success] = {
+    _a[NotificationType.Success] = {
         notificationClass: 'vclSuccess',
         iconClass: 'fa fa-check-circle'
     },
-    _b[NotificationType.Warning] = {
+    _a[NotificationType.Warning] = {
         notificationClass: 'vclWarning',
         iconClass: 'fa fa-warning'
     },
-    _b[NotificationType.Error] = {
+    _a[NotificationType.Error] = {
         notificationClass: 'vclError',
         iconClass: 'fa fa-exclamation-circle'
+    },
+    _a);
+export var POSITION_MAP = (_b = {},
+    _b[NotificationPosition.TopRight] = {
+        class: 'vclLayerNotificationTopRight',
+        reverse: true
+    },
+    _b[NotificationPosition.Top] = {
+        class: 'vclLayerNotificationTop',
+        reverse: true,
+    },
+    _b[NotificationPosition.TopLeft] = {
+        class: 'vclLayerNotificationTopLeft',
+        reverse: true
+    },
+    _b[NotificationPosition.BottomRight] = {
+        class: 'vclLayerNotificationBottomRight',
+        reverse: false
+    },
+    _b[NotificationPosition.Bottom] = {
+        class: 'vclLayerNotificationBottom',
+        reverse: false
+    },
+    _b[NotificationPosition.BottomLeft] = {
+        class: 'vclLayerNotificationBottomLeft',
+        reverse: false
     },
     _b);
 var _a, _b;

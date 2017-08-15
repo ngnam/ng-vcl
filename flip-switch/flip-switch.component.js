@@ -21,6 +21,7 @@ var FlipSwitchComponent = (function () {
         this.onLabel = 'On';
         this.offLabel = 'Off';
         this.value = false;
+        this.disabled = false;
         this.valueChange = new EventEmitter();
     }
     FlipSwitchComponent.prototype.onTap = function () {
@@ -47,6 +48,9 @@ var FlipSwitchComponent = (function () {
         }
     };
     FlipSwitchComponent.prototype.toggle = function () {
+        if (this.disabled) {
+            return;
+        }
         this.value = !this.value;
         this.valueChange.emit(this.value);
         this.onChangeCallback && this.onChangeCallback(this.value);
@@ -60,6 +64,10 @@ var FlipSwitchComponent = (function () {
     };
     FlipSwitchComponent.prototype.registerOnTouched = function (fn) {
         this.onTouchedCallback = fn;
+    };
+    FlipSwitchComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+        this.cdRef.markForCheck();
     };
     __decorate([
         HostBinding(),
@@ -77,6 +85,11 @@ var FlipSwitchComponent = (function () {
         Input(),
         __metadata("design:type", Boolean)
     ], FlipSwitchComponent.prototype, "value", void 0);
+    __decorate([
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], FlipSwitchComponent.prototype, "disabled", void 0);
     __decorate([
         Output(),
         __metadata("design:type", Object)

@@ -125,6 +125,10 @@ var FileInputComponent = (function () {
     FileInputComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    FileInputComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+        this.cdRef.markForCheck();
+    };
     __decorate([
         Input(),
         __metadata("design:type", String)

@@ -30,14 +30,15 @@ export function Layer(component, opts) {
 }
 var VCLLayerModule = (function () {
     function VCLLayerModule(layers, layerManager, injector) {
-        this.layers = layers;
-        this.layerManager = layerManager;
-        this.injector = injector;
         if (layers) {
-            (layers || []).forEach(function (layerCls) {
+            // Flatten and filter layer classes
+            layers = [].concat.apply([], layers).filter(function (layerCls) { return layerCls !== undefined; });
+            layers.forEach(function (layerCls) {
                 var layerMeta = getMetadata(COMPONENT_LAYER_ANNOTATION_ID, layerCls);
                 var layerRef = injector.get(layerCls);
-                layerManager._register(layerRef, layerMeta.component, injector, layerMeta.opts);
+                if (layerMeta && layerRef) {
+                    layerManager._register(layerRef, layerMeta.component, injector, layerMeta.opts);
+                }
             });
         }
     }
@@ -50,11 +51,12 @@ var VCLLayerModule = (function () {
             ].concat((config.layers || []), [
                 {
                     provide: LayerRef,
-                    useValue: null
+                    useValue: undefined
                 },
                 {
                     provide: LAYERS,
-                    useValue: config.layers
+                    useValue: config.layers,
+                    multi: true
                 }
             ]) };
     };
@@ -67,7 +69,8 @@ var VCLLayerModule = (function () {
             ].concat((config.layers || []), [
                 {
                     provide: LAYERS,
-                    useValue: config.layers
+                    useValue: config.layers,
+                    multi: true
                 }
             ])
         };

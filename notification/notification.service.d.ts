@@ -1,18 +1,17 @@
-import { NotificationOptions } from './types';
+import { NotificationOptions, NotificationPosition } from './types';
 import { Notification } from './notification';
-import { NotificationLayerTopRight, NotificationLayerBottomRight, NotificationLayerBottom, NotificationLayerBottomLeft, NotificationLayerTopLeft, NotificationLayerTop } from './notification.layer';
+import { LayerService, LayerRef } from "../layer/index";
+export declare class NotificationLayerRef extends LayerRef {
+    notifications: Notification[];
+}
 export declare class NotificationService {
-    private notificationLayerTopRightRef;
-    private notificationLayerBottomRightRef;
-    private notificationLayerBottomRef;
-    private notificationLayerBottomLeftRef;
-    private notificationLayerTopLeftRef;
-    private notificationLayerTopRef;
-    constructor(notificationLayerTopRightRef: NotificationLayerTopRight, notificationLayerBottomRightRef: NotificationLayerBottomRight, notificationLayerBottomRef: NotificationLayerBottom, notificationLayerBottomLeftRef: NotificationLayerBottomLeft, notificationLayerTopLeftRef: NotificationLayerTopLeft, notificationLayerTopRef: NotificationLayerTop);
-    show(text: string, opts?: NotificationOptions): Notification;
-    info(text: string, opts?: NotificationOptions): Notification;
-    success(text: string, opts?: NotificationOptions): Notification;
-    warning(text: string, opts?: NotificationOptions): Notification;
-    error(text: string, opts?: NotificationOptions): Notification;
+    private ls;
+    constructor(ls: LayerService);
+    layers: Map<NotificationPosition, NotificationLayerRef>;
+    show(text: string, opts?: NotificationOptions): void;
+    info(text: string, opts?: NotificationOptions): void;
+    success(text: string, opts?: NotificationOptions): void;
+    warning(text: string, opts?: NotificationOptions): void;
+    error(text: string, opts?: NotificationOptions): void;
     private queue(...opts);
 }

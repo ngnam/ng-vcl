@@ -15,6 +15,7 @@ export declare class SelectComponent implements ControlValueAccessor {
     mode: 'multiple' | 'single';
     tabindex: number;
     expanded: boolean;
+    disabled: boolean;
     listenKeys: boolean;
     maxSelectableItems: number;
     expandedIcon: string;
@@ -46,4 +47,5 @@ export declare class SelectComponent implements ControlValueAccessor {
     writeValue(value: any): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }

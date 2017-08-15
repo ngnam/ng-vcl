@@ -80,6 +80,10 @@ var CheckboxComponent = (function () {
     CheckboxComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    CheckboxComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+        this.cdRef.markForCheck();
+    };
     __decorate([
         HostBinding(),
         __metadata("design:type", Object)

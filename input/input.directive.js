@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Directive, Input, ElementRef, HostListener } from '@angular/core';
+import { Directive, Input, ElementRef, HostListener, HostBinding } from '@angular/core';
 // Invalid input type. Using one of these will throw an error
 var INPUT_INVALID_TYPES = [
     'button',
@@ -26,6 +26,7 @@ var InputDirective = (function () {
         this.elRef = elRef;
         this.type = 'text';
         this.selectOnFocus = false;
+        this.disabled = false;
     }
     InputDirective.prototype.ngOnInit = function () {
         if (INPUT_INVALID_TYPES.includes(this.type)) {
@@ -35,6 +36,13 @@ var InputDirective = (function () {
     Object.defineProperty(InputDirective.prototype, "value", {
         get: function () {
             return this.elRef ? this.elRef.nativeElement.value : '';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(InputDirective.prototype, "attrDisabled", {
+        get: function () {
+            return this.disabled ? true : null;
         },
         enumerable: true,
         configurable: true
@@ -56,13 +64,23 @@ var InputDirective = (function () {
         }
     };
     __decorate([
-        Input('type'),
+        Input(),
         __metadata("design:type", String)
     ], InputDirective.prototype, "type", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Boolean)
     ], InputDirective.prototype, "selectOnFocus", void 0);
+    __decorate([
+        HostBinding('class.vclDisabled'),
+        Input(),
+        __metadata("design:type", Boolean)
+    ], InputDirective.prototype, "disabled", void 0);
+    __decorate([
+        HostBinding('attr.disabled'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], InputDirective.prototype, "attrDisabled", null);
     __decorate([
         HostListener('focus'),
         __metadata("design:type", Function),

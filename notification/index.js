@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { VCLButtonModule } from './../button/index';
 import { VCLLayerModule } from './../layer/index';
 import { NotificationComponent } from './notification.component';
-import { NotificationLayerTopRight, NotificationLayerBottomRight, NotificationLayerBottom, NotificationLayerBottomLeft, NotificationLayerTopLeft, NotificationLayerTop } from './notification.layer';
 import { NotificationService } from './notification.service';
 import { Notification } from './notification';
 import { NotificationType, NotificationPosition } from './types';
@@ -24,20 +23,13 @@ var VCLNotificationModule = (function () {
                 FormsModule,
                 CommonModule,
                 VCLButtonModule,
-                VCLLayerModule.forChild({ layers: [
-                        NotificationLayerTopRight,
-                        NotificationLayerBottomRight,
-                        NotificationLayerBottom,
-                        NotificationLayerBottomLeft,
-                        NotificationLayerTopLeft,
-                        NotificationLayerTop
-                    ] })
+                VCLLayerModule.forChild()
             ],
             exports: [],
             declarations: [NotificationComponent],
             entryComponents: [NotificationComponent],
             providers: [
-                NotificationService,
+                NotificationService
             ],
         })
     ], VCLNotificationModule);

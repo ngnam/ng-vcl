@@ -5,6 +5,7 @@ export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
 export declare class DatePickerComponent implements OnInit, OnChanges, ControlValueAccessor {
     private cdRef;
     closeOnSelect: boolean;
+    disabled: boolean;
     highlightToday: boolean;
     highlightSelected: boolean;
     displayWeekNumbers: boolean;
@@ -29,6 +30,7 @@ export declare class DatePickerComponent implements OnInit, OnChanges, ControlVa
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
     setDate(date?: Date): void;
+    showYear(): void;
     onDateTap(date: CalendarDate): void;
     /**
      * activate the given date
@@ -38,7 +40,7 @@ export declare class DatePickerComponent implements OnInit, OnChanges, ControlVa
      * ui-markers
      */
     isMarked(date: CalendarDate): boolean;
-    isDisabled(day: CalendarDate): boolean;
+    isDayDisabled(day: CalendarDate): boolean;
     /**
      * functions to move viewDate
      */
@@ -55,4 +57,5 @@ export declare class DatePickerComponent implements OnInit, OnChanges, ControlVa
     writeValue(value: Date): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }

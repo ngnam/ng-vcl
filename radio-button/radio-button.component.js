@@ -14,10 +14,13 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return RadioButtonComponent; }),
     multi: true
 };
+var uniqueID = 0;
 var RadioButtonComponent = (function () {
     function RadioButtonComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
+        this.uniqueID = "vcl-radio-button-" + ++uniqueID;
+        this.id = this.uniqueID;
         this.checkedIcon = 'fa:dot-circle-o';
         this.uncheckedIcon = 'fa:circle-o';
         this.disabled = false;
@@ -25,12 +28,24 @@ var RadioButtonComponent = (function () {
         this.tabindex = 0;
         this.checked = false;
         this.checkedChange = new EventEmitter();
+        this.focus = new EventEmitter();
+        this.blur = new EventEmitter();
+        this.focused = true;
         /**
          * things needed for ControlValueAccessor-Interface
          */
         this.onChange = function () { };
         this.onTouched = function () { };
+        // Store cva disabled state in an extra property to remember the old state after the radio group has been disabled
+        this.cvaDisabled = false;
     }
+    Object.defineProperty(RadioButtonComponent.prototype, "radioID", {
+        get: function () {
+            return this.id || this.uniqueID;
+        },
+        enumerable: true,
+        configurable: true
+    });
     RadioButtonComponent.prototype.onKeydown = function (e) {
         switch (e.code) {
             case 'Space':
@@ -39,25 +54,37 @@ var RadioButtonComponent = (function () {
         }
     };
     RadioButtonComponent.prototype.onTap = function (e) {
-        return this.triggerChangeAction(e);
+        this.triggerChangeAction(e);
     };
     RadioButtonComponent.prototype.triggerChangeAction = function (e) {
         e.preventDefault();
-        if (this.disabled)
+        if (this.isDisabled) {
             return;
-        if (this.checked == true)
-            return; // radio-buttons cannot be 'unchecked' by definition
+        }
+        // radio-buttons cannot be 'unchecked' by definition
+        if (this.checked == true) {
+            return;
+        }
         this.checked = true;
         this.checkedChange.emit(this.checked);
         this.onChange(this.checked);
+        this.onTouched();
     };
     RadioButtonComponent.prototype.setChecked = function (value) {
         this.checked = value;
         this.cdRef.markForCheck();
     };
+    RadioButtonComponent.prototype.onFocus = function () {
+        this.focused = true;
+        this.focus.emit();
+    };
+    RadioButtonComponent.prototype.onBlur = function () {
+        this.focused = false;
+        this.blur.emit();
+    };
     RadioButtonComponent.prototype.writeValue = function (value) {
         if (value !== this.checked) {
-            this.checked = value;
+            this.setChecked(!!value);
         }
     };
     RadioButtonComponent.prototype.registerOnChange = function (fn) {
@@ -66,6 +93,22 @@ var RadioButtonComponent = (function () {
     RadioButtonComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
     };
+    RadioButtonComponent.prototype.setDisabledState = function (isDisabled) {
+        this.cvaDisabled = isDisabled;
+        this.cdRef.markForCheck();
+    };
+    Object.defineProperty(RadioButtonComponent.prototype, "isDisabled", {
+        get: function () {
+            return this.cvaDisabled || this.disabled;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    __decorate([
+        HostBinding('attr.id'),
+        Input(),
+        __metadata("design:type", String)
+    ], RadioButtonComponent.prototype, "id", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)
@@ -75,13 +118,11 @@ var RadioButtonComponent = (function () {
         __metadata("design:type", Object)
     ], RadioButtonComponent.prototype, "uncheckedIcon", void 0);
     __decorate([
-        HostBinding('attr.aria-disabled'),
-        HostBinding('class.vclDisabled'),
         Input(),
         __metadata("design:type", Object)
     ], RadioButtonComponent.prototype, "disabled", void 0);
     __decorate([
-        Input('value'),
+        Input(),
         __metadata("design:type", Object)
     ], RadioButtonComponent.prototype, "value", void 0);
     __decorate([
@@ -94,9 +135,11 @@ var RadioButtonComponent = (function () {
     ], RadioButtonComponent.prototype, "label", void 0);
     __decorate([
         HostBinding(),
+        Input(),
         __metadata("design:type", Object)
     ], RadioButtonComponent.prototype, "tabindex", void 0);
     __decorate([
+        HostBinding('attr.aria-checked'),
         HostBinding('attr.checked'),
         Input(),
         __metadata("design:type", Boolean)
@@ -105,6 +148,14 @@ var RadioButtonComponent = (function () {
         Output(),
         __metadata("design:type", Object)
     ], RadioButtonComponent.prototype, "checkedChange", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "focus", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], RadioButtonComponent.prototype, "blur", void 0);
     __decorate([
         HostListener('keydown', ['$event']),
         __metadata("design:type", Function),
@@ -117,17 +168,22 @@ var RadioButtonComponent = (function () {
         __metadata("design:paramtypes", [Event]),
         __metadata("design:returntype", void 0)
     ], RadioButtonComponent.prototype, "onTap", null);
+    __decorate([
+        HostBinding('attr.aria-disabled'),
+        HostBinding('class.vclDisabled'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], RadioButtonComponent.prototype, "isDisabled", null);
     RadioButtonComponent = __decorate([
         Component({
             selector: 'vcl-radio-button',
-            template: "<vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='right'\"></vcl-icon> <label vcl-form-control-label *ngIf=\"label\" [label]=\"label\"></label> <ng-content></ng-content> <vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
+            template: "<ng-container *ngIf=\"labelPosition==='left'\"> <label vcl-form-control-label [label]=\"label\" [attr.for]=\"radioID\" (click)=\"onTap($event)\"> <ng-content></ng-content> </label> </ng-container> <vcl-icon [icon]=\"checked ? checkedIcon : uncheckedIcon\"></vcl-icon> <ng-container *ngIf=\"labelPosition==='right'\"> <label vcl-form-control-label [label]=\"label\" [attr.for]=\"radioID\" (click)=\"onTap($event)\"> <ng-content></ng-content> </label> </ng-container> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {
                 '[attr.role]': '"radio"',
-                '[class.vclRadioButton]': 'true',
-                '[style.userSelect]': '"none"'
-            },
-            changeDetection: ChangeDetectionStrategy.OnPush,
-            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+                '[class.vclRadioButton]': 'true'
+            }
         }),
         __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
     ], RadioButtonComponent);

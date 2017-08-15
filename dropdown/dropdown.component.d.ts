@@ -13,13 +13,16 @@ export declare class DropdownComponent implements ControlValueAccessor {
     selectionMode: SelectionMode;
     mode: 'multiple' | 'single';
     maxSelectableItems: number | undefined;
+    disabled: boolean;
     listenKeys: boolean;
     change: EventEmitter<any>;
+    focused: boolean;
     constructor(elementRef: ElementRef, cdRef: ChangeDetectorRef);
     scrollToMarked(): Promise<void>;
     onMetalistItemTap(metaItem: MetalistItem): void;
     onMetalistKeydown(ev: any): void;
     ngAfterViewInit(): void;
+    onMetalistFocus(): void;
     onMetalistBlur(): void;
     onMetalistChange(value: any): void;
     setValue(value: any): void;
@@ -31,4 +34,5 @@ export declare class DropdownComponent implements ControlValueAccessor {
     writeValue(value: any): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
+    setDisabledState(isDisabled: boolean): void;
 }

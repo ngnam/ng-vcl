@@ -40,6 +40,22 @@ var SliderComponent = (function () {
         this.onChange = function () { };
         this.onTouched = function () { };
     }
+    Object.defineProperty(SliderComponent.prototype, "pmin", {
+        get: function () {
+            var min = Number(this.min);
+            return !isNaN(min) ? min : 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SliderComponent.prototype, "pmax", {
+        get: function () {
+            var max = Number(this.max);
+            return !isNaN(max) ? max : 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
     SliderComponent.prototype.ngAfterContentInit = function () {
         this.percentLeftKnob = this.calculatePercentLeftKnob(this.value);
     };
@@ -51,7 +67,7 @@ var SliderComponent = (function () {
         configurable: true
     });
     SliderComponent.prototype.validateValue = function (value) {
-        return typeof this.value === 'number' && this.value >= this.min && this.value <= this.max;
+        return typeof this.value === 'number' && this.value >= this.pmin && this.value <= this.pmax;
     };
     Object.defineProperty(SliderComponent.prototype, "showScale", {
         get: function () {
@@ -66,7 +82,7 @@ var SliderComponent = (function () {
         }
     };
     SliderComponent.prototype.setValue = function (value, updateKnob) {
-        this.value = value;
+        this.value = Number(value);
         if (updateKnob) {
             this.percentLeftKnob = this.calculatePercentLeftKnob(value);
         }
@@ -77,13 +93,13 @@ var SliderComponent = (function () {
         if (!this.validateValue(value)) {
             return 0;
         }
-        var rangeLength = this.max - this.min;
-        var valueLeft = value - this.min;
+        var rangeLength = this.pmax - this.pmin;
+        var valueLeft = value - this.pmin;
         var delta = rangeLength / valueLeft;
         return 100 / delta;
     };
     SliderComponent.prototype.percentToValue = function (per) {
-        var rangeLength = this.max - this.min;
+        var rangeLength = this.pmax - this.pmin;
         var newVal = (rangeLength / 100) * per;
         return Math.round(newVal);
     };
@@ -99,7 +115,13 @@ var SliderComponent = (function () {
             });
         }
         else {
-            var steps_2 = (typeof this.scale === 'number' ? this.scale : this.max - this.min) + 1;
+            var steps_2;
+            if (typeof this.scale === 'number') {
+                steps_2 = this.scale;
+            }
+            else {
+                steps_2 = this.pmax - this.pmin + 1;
+            }
             this.scalePoints = Array.from(Array(steps_2).keys()).map(function (i) {
                 var percent = (100 / (steps_2 - 1)) * i;
                 return {
@@ -184,16 +206,16 @@ var SliderComponent = (function () {
         this.setValue(value, true);
     };
     SliderComponent.prototype.moveValue = function (direction) {
-        var value = this.valueValid ? this.value : this.min;
+        var value = this.valueValid ? this.value : this.pmin;
         if (direction === MoveDirection.Right) {
             value++;
-            if (value > this.max)
-                value = this.max;
+            if (value > this.pmax)
+                value = this.pmax;
         }
         else {
             value--;
-            if (value < this.min)
-                value = this.min;
+            if (value < this.pmin)
+                value = this.pmin;
         }
         this.setValue(value, true);
     };
@@ -267,6 +289,10 @@ var SliderComponent = (function () {
     };
     SliderComponent.prototype.registerOnTouched = function (fn) {
         this.onTouched = fn;
+    };
+    SliderComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+        this.cdRef.markForCheck();
     };
     __decorate([
         HostBinding(),

@@ -7,8 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, forwardRef, ChangeDetectorRef, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TokenComponent } from './token.component';
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
@@ -20,6 +21,8 @@ var TokenListComponent = (function () {
     function TokenListComponent(cdRef) {
         this.cdRef = cdRef;
         this.selectable = false;
+        this.dispatchEvent = false;
+        this.disabled = false;
         this.change = new EventEmitter();
     }
     TokenListComponent.prototype.syncTokens = function () {
@@ -37,6 +40,11 @@ var TokenListComponent = (function () {
         this.change.emit(this.labels);
         !!this.onChangeCallback && this.onChangeCallback(this.labels);
     };
+    TokenListComponent.prototype.ngOnChanges = function (changes) {
+        if (changes.disabled) {
+            this.setDisabledState(changes.disabled.currentValue);
+        }
+    };
     TokenListComponent.prototype.ngAfterContentInit = function () {
         var _this = this;
         // Update the selectedIndex to match the selected buttons when not using ngModel
@@ -47,6 +55,7 @@ var TokenListComponent = (function () {
         // Subscribes to buttons press event
         var listenButtonPress = function () {
             _this.dispose();
+            _this.cdRef.markForCheck();
             var select$ = Observable.merge.apply(Observable, (_this.tokens.map(function (token) { return token.select.map(function () { return token; }); })));
             _this.tokenSubscription = select$.subscribe(function (token) {
                 if (_this.selectable) {
@@ -56,10 +65,12 @@ var TokenListComponent = (function () {
                 _this.triggerChange();
             });
         };
-        listenButtonPress();
-        this.tokens.changes.subscribe(function () {
+        this.tokens.changes.startWith(null).subscribe(function () {
             listenButtonPress();
-            setTimeout(function () { return _this.syncSelectedValues(); });
+            setTimeout(function () {
+                _this.syncSelectedValues();
+                _this.setDisabledState(_this.disabled);
+            });
         });
     };
     TokenListComponent.prototype.ngOnDestroy = function () {
@@ -79,6 +90,9 @@ var TokenListComponent = (function () {
     TokenListComponent.prototype.registerOnTouched = function (fn) {
         this.onTouchedCallback = fn;
     };
+    TokenListComponent.prototype.setDisabledState = function (isDisabled) {
+        this.tokens && this.tokens.forEach(function (t) { return t.setDisabledState(isDisabled); });
+    };
     __decorate([
         ContentChildren(TokenComponent),
         __metadata("design:type", QueryList)
@@ -87,6 +101,14 @@ var TokenListComponent = (function () {
         Input(),
         __metadata("design:type", Boolean)
     ], TokenListComponent.prototype, "selectable", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TokenListComponent.prototype, "dispatchEvent", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], TokenListComponent.prototype, "disabled", void 0);
     __decorate([
         Output(),
         __metadata("design:type", Object)
@@ -99,7 +121,7 @@ var TokenListComponent = (function () {
                 '[class.vclTokenList]': 'true',
                 '[class.vclTokenContainer]': 'true'
             },
-            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+            providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
         }),
         __metadata("design:paramtypes", [ChangeDetectorRef])
     ], TokenListComponent);
