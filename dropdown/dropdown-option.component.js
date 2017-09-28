@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, TemplateRef, ViewChild, Input } from "@angular/core";
-var DropdownOption = (function () {
+var DropdownOption = /** @class */ (function () {
     function DropdownOption() {
         this.disabled = false;
         this.selected = false;

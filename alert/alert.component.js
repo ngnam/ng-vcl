@@ -19,7 +19,7 @@ export function dismiss(layer, err) {
         layer.closeWithError(new AlertError(err));
     }
 }
-var AlertComponent = (function () {
+var AlertComponent = /** @class */ (function () {
     function AlertComponent(elementRef, alertLayer, layerService, cdRef) {
         this.elementRef = elementRef;
         this.alertLayer = alertLayer;

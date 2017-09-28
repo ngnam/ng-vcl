@@ -14,7 +14,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return PasswordInputComponent; }),
     multi: true
 };
-var PasswordInputComponent = (function () {
+var PasswordInputComponent = /** @class */ (function () {
     function PasswordInputComponent(cdRef) {
         this.cdRef = cdRef;
         this.visibleIcon = 'fa:eye-slash';

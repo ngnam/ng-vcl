@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Directive, ElementRef, Input, HostBinding, HostListener } from '@angular/core';
-var TextareaDirective = (function () {
+var TextareaDirective = /** @class */ (function () {
     function TextareaDirective(elRef) {
         this.elRef = elRef;
         this.selectAllOnFocus = false;

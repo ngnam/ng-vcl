@@ -14,7 +14,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 import { TableService } from '../services/table.service';
-var BreakingWordsDirective = (function () {
+var BreakingWordsDirective = /** @class */ (function () {
     function BreakingWordsDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

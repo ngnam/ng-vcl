@@ -8,11 +8,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-var ProgressBarComponent = (function () {
+var ProgressBarComponent = /** @class */ (function () {
     function ProgressBarComponent() {
         this.minValue = 0;
         this.maxValue = 100;
         this.indeterminate = false;
+        this.speed = 1;
     }
     Object.defineProperty(ProgressBarComponent.prototype, "showIndeterminate", {
         get: function () {
@@ -51,6 +52,14 @@ var ProgressBarComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ProgressBarComponent.prototype, "animationDurationValue", {
+        get: function () {
+            var value = this.isNumber(this.speed) ? this.speed : 1;
+            return value + "s";
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ProgressBarComponent.prototype, "range", {
         get: function () {
             return this.maxValue - this.minValue;
@@ -62,10 +71,12 @@ var ProgressBarComponent = (function () {
         return (value - this.minValue) / this.range;
     };
     ProgressBarComponent.prototype.validateValue = function (value) {
-        return typeof value === 'number' &&
-            value !== NaN &&
+        return this.isNumber(value) &&
             value >= this.minValue &&
             value <= this.maxValue;
+    };
+    ProgressBarComponent.prototype.isNumber = function (value) {
+        return typeof value === 'number' && value !== NaN;
     };
     __decorate([
         Input(),
@@ -91,10 +102,14 @@ var ProgressBarComponent = (function () {
         Input(),
         __metadata("design:type", String)
     ], ProgressBarComponent.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], ProgressBarComponent.prototype, "speed", void 0);
     ProgressBarComponent = __decorate([
         Component({
             selector: 'vcl-progress-bar',
-            template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\"></div> </div> ",
+            template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.animation-duration]=\"animationDurationValue\"></div> </div> ",
             host: {
                 '[attr.role]': '"progressbar"',
             },

@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 import { TemplateRef, ApplicationRef } from "@angular/core";
 import { ComponentWormhole, TemplateWormhole } from "./wormhole";
 import { DomComponentWormhole, DomTemplateWormhole } from "./wormhole-dom";
-var WormholeHostBase = (function () {
+var WormholeHostBase = /** @class */ (function () {
     function WormholeHostBase() {
         this._wormholes = [];
     }
@@ -60,7 +60,7 @@ var WormholeHostBase = (function () {
     return WormholeHostBase;
 }());
 export { WormholeHostBase };
-var WormholeHost = (function (_super) {
+var WormholeHost = /** @class */ (function (_super) {
     __extends(WormholeHost, _super);
     function WormholeHost(_host, _injector) {
         var _this = _super.call(this) || this;
@@ -88,7 +88,7 @@ var WormholeHost = (function (_super) {
     return WormholeHost;
 }(WormholeHostBase));
 export { WormholeHost };
-var DomWormholeHost = (function (_super) {
+var DomWormholeHost = /** @class */ (function (_super) {
     __extends(DomWormholeHost, _super);
     function DomWormholeHost(_host, _node, _injector) {
         var _this = _super.call(this) || this;

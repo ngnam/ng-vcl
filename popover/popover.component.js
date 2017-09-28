@@ -45,7 +45,7 @@ export var PopoverState;
     PopoverState[PopoverState["closing"] = 3] = "closing";
 })(PopoverState || (PopoverState = {}));
 export var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
-var PopoverComponent = (function (_super) {
+var PopoverComponent = /** @class */ (function (_super) {
     __extends(PopoverComponent, _super);
     function PopoverComponent(me, builder, animations) {
         var _this = _super.call(this) || this;

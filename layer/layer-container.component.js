@@ -16,7 +16,7 @@ import { ComponentWormhole, TemplateWormhole } from '../wormhole/index';
 import { LayerRef } from './layer-ref';
 export var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
 export var LAYER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#layer_animations');
-var LayerContainerComponent = (function () {
+var LayerContainerComponent = /** @class */ (function () {
     function LayerContainerComponent(cdRef, builder, elementRef, animations) {
         this.cdRef = cdRef;
         this.zIndex = 1000;

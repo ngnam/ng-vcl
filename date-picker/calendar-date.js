@@ -25,7 +25,7 @@ var WEEK_DAYS = [
     'Sa',
     'Su'
 ];
-var CalendarDate = (function () {
+var CalendarDate = /** @class */ (function () {
     function CalendarDate(date) {
         if (!(date instanceof Date)) {
             date = new Date;

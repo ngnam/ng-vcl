@@ -21,7 +21,7 @@ import 'rxjs/add/operator/publishReplay';
 import { L10nLoaderService } from './l10n-loader.service';
 import { L10nParserService } from './l10n-parser.service';
 export var L10N_CONFIG = new OpaqueToken('l10n.config');
-var L10nService = (function () {
+var L10nService = /** @class */ (function () {
     function L10nService(config, // TODO: L10nConfig - problem with ngc
         loader, parser) {
         var _this = this;

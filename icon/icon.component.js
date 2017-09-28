@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component, Input, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { IconService } from './icon.service';
-var IconComponent = (function () {
+var IconComponent = /** @class */ (function () {
     function IconComponent(_iconService) {
         this._iconService = _iconService;
     }

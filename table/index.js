@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { L10nModule } from '../l10n/index';
 import { directives } from './directives/directives';
 import { SortIconComponent } from './components/sorticon.component';
-var VCLTableModule = (function () {
+var VCLTableModule = /** @class */ (function () {
     function VCLTableModule() {
     }
     VCLTableModule = __decorate([

@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { SliderComponent } from './slider.component';
 import { L10nModule } from '../l10n/index';
 export { SliderComponent };
-var VCLSliderModule = (function () {
+var VCLSliderModule = /** @class */ (function () {
     function VCLSliderModule() {
     }
     VCLSliderModule = __decorate([

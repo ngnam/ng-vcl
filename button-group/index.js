@@ -10,7 +10,7 @@ import { ButtonGroupComponent } from './button-group.component';
 import { VCLButtonModule } from '../button/index';
 import { L10nModule } from '../l10n/index';
 export { ButtonGroupComponent };
-var VCLButtonGroupModule = (function () {
+var VCLButtonGroupModule = /** @class */ (function () {
     function VCLButtonGroupModule() {
     }
     VCLButtonGroupModule = __decorate([

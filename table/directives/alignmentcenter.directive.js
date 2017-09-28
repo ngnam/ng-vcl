@@ -14,7 +14,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 import { TableService } from '../services/table.service';
-var AlignmentCenterDirective = (function () {
+var AlignmentCenterDirective = /** @class */ (function () {
     function AlignmentCenterDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

@@ -58,7 +58,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return SelectComponent; }),
     multi: true
 };
-var SelectComponent = (function () {
+var SelectComponent = /** @class */ (function () {
     function SelectComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;

@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { VCLIconModule } from '../icon/index';
 import { L10nModule } from '../l10n/index';
 import { FormControlLabelComponent } from './form-control-label.component';
-var VCLFormControlLabelModule = (function () {
+var VCLFormControlLabelModule = /** @class */ (function () {
     function VCLFormControlLabelModule() {
     }
     VCLFormControlLabelModule = __decorate([

@@ -11,7 +11,7 @@ import { VCLIcogramModule } from '../icogram/index';
 import { L10nModule } from '../l10n/index';
 import { ButtonComponent } from './button.component';
 export { ButtonComponent, ButtonStateContentDirective };
-var VCLButtonModule = (function () {
+var VCLButtonModule = /** @class */ (function () {
     function VCLButtonModule() {
     }
     VCLButtonModule = __decorate([

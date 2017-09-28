@@ -11,7 +11,7 @@ import { RadioButtonComponent } from './radio-button.component';
 import { RadioGroupComponent } from './radio-group.component';
 import { VCLFormControlLabelModule } from "../form-control-label/index";
 export { RadioButtonComponent, RadioGroupComponent };
-var VCLRadioButtonModule = (function () {
+var VCLRadioButtonModule = /** @class */ (function () {
     function VCLRadioButtonModule() {
     }
     VCLRadioButtonModule = __decorate([

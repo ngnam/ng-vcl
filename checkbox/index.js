@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { VCLIconModule } from './../icon/index';
 import { CheckboxComponent } from './checkbox.component';
 export { CheckboxComponent };
-var VCLCheckboxModule = (function () {
+var VCLCheckboxModule = /** @class */ (function () {
     function VCLCheckboxModule() {
     }
     VCLCheckboxModule = __decorate([

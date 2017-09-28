@@ -12,7 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 import { Component, Input, Inject, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-var SortIconComponent = (function () {
+var SortIconComponent = /** @class */ (function () {
     function SortIconComponent(document, element) {
         this.document = document;
         this.element = element;

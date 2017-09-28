@@ -15,7 +15,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return CheckboxComponent; }),
     multi: true
 };
-var CheckboxComponent = (function () {
+var CheckboxComponent = /** @class */ (function () {
     function CheckboxComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -136,7 +136,7 @@ var CheckboxComponent = (function () {
     CheckboxComponent = __decorate([
         Component({
             selector: 'vcl-checkbox',
-            template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
+            template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition == 'right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content><br *ngIf=\"labelPosition=='top'\"/> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition != 'right'\"></vcl-icon> ",
             animations: [trigger('checkState', [])],
             host: {
                 '[attr.role]': '"checkbox"',

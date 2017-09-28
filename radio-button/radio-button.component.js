@@ -15,7 +15,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     multi: true
 };
 var uniqueID = 0;
-var RadioButtonComponent = (function () {
+var RadioButtonComponent = /** @class */ (function () {
     function RadioButtonComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;

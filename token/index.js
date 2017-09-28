@@ -16,7 +16,7 @@ import { TokenComponent } from './token.component';
 import { TokenListComponent } from './token-list.component';
 import { TokenInputComponent, TokenInputLabelPost, TokenInputLabelPre } from './token-input.component';
 export { TokenComponent, TokenInputComponent, TokenListComponent };
-var VCLTokenModule = (function () {
+var VCLTokenModule = /** @class */ (function () {
     function VCLTokenModule() {
     }
     VCLTokenModule = __decorate([

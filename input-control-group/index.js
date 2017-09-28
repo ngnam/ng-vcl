@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { InputControlGroup } from './input-control-group.component';
 import { CommonModule } from '@angular/common';
-var VCLInputControlGroupModule = (function () {
+var VCLInputControlGroupModule = /** @class */ (function () {
     function VCLInputControlGroupModule() {
     }
     VCLInputControlGroupModule = __decorate([

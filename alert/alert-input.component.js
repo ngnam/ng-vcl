@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component, ChangeDetectionStrategy, ViewChild, Output, Input, EventEmitter, ElementRef } from '@angular/core';
 import { AlertInput } from './types';
 // TODO: support text, password, textarea, select, radio, checkbox file.
-var AlertInputComponent = (function () {
+var AlertInputComponent = /** @class */ (function () {
     function AlertInputComponent() {
         this.alert = {};
         this.valueChange = new EventEmitter();

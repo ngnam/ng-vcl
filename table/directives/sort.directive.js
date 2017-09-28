@@ -20,7 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Directive, ElementRef, Renderer2, EventEmitter, Output, HostListener, ContentChild } from '@angular/core';
 import { SortIconComponent } from '../components/sorticon.component';
 import { TableService } from '../services/table.service';
-var SortDirective = (function () {
+var SortDirective = /** @class */ (function () {
     function SortDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

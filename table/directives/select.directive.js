@@ -14,7 +14,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Directive, Input, ElementRef, Renderer2 } from '@angular/core';
 import { TableService } from '../services/table.service';
-var SelectDirective = (function () {
+var SelectDirective = /** @class */ (function () {
     function SelectDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

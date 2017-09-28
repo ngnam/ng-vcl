@@ -15,7 +15,7 @@ import { VCLTokenModule } from '../token/index';
 import { SelectOption } from './select-option.component';
 import { SelectComponent } from './select.component';
 export { SelectComponent, SelectOption };
-var VCLSelectModule = (function () {
+var VCLSelectModule = /** @class */ (function () {
     function VCLSelectModule() {
     }
     VCLSelectModule = __decorate([

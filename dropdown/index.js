@@ -12,7 +12,7 @@ import { VCLMetalistModule } from "../metalist/index";
 import { DropdownComponent } from './dropdown.component';
 import { DropdownOption } from './dropdown-option.component';
 export { DropdownOption, DropdownComponent };
-var VCLDropdownModule = (function () {
+var VCLDropdownModule = /** @class */ (function () {
     function VCLDropdownModule() {
     }
     VCLDropdownModule = __decorate([

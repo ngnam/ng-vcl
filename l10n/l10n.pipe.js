@@ -12,7 +12,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 import { Optional, Inject, Pipe } from '@angular/core';
 import { L10nService } from './l10n.service';
-var L10nPipe = (function () {
+var L10nPipe = /** @class */ (function () {
     function L10nPipe(l10n) {
         this.l10n = l10n;
         this.args = [];

@@ -20,7 +20,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return MetalistComponent; }),
     multi: true
 };
-var MetalistComponent = (function () {
+var MetalistComponent = /** @class */ (function () {
     function MetalistComponent(cdRef) {
         this.cdRef = cdRef;
         // If `Single`, a single item can be selected

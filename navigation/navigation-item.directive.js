@@ -13,13 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { Directive, ContentChildren, Input, QueryList, SkipSelf, Inject, forwardRef, Optional } from "@angular/core";
 import { NavigationComponent } from './navigation.component';
 import { Router, NavigationEnd } from "@angular/router";
-var NavigationItemDirective = (function () {
+var NavigationItemDirective = /** @class */ (function () {
     function NavigationItemDirective(router, nav, parent) {
         this.router = router;
         this.nav = nav;
         this.parent = parent;
-        // @Input()
         this.selected = false;
+        this.selectable = true;
         this.opened = false;
         this.heading = false;
         this.exactRoute = true;
@@ -90,6 +90,14 @@ var NavigationItemDirective = (function () {
         Input(),
         __metadata("design:type", String)
     ], NavigationItemDirective.prototype, "label", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], NavigationItemDirective.prototype, "name", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], NavigationItemDirective.prototype, "selectable", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Boolean)

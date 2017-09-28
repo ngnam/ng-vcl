@@ -14,7 +14,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Directive, Input, ElementRef, Renderer2 } from '@angular/core';
 import { TableService } from '../services/table.service';
-var DisableDirective = (function () {
+var DisableDirective = /** @class */ (function () {
     function DisableDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

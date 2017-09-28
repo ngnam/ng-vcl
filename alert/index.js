@@ -16,7 +16,7 @@ import { AlertInputComponent } from './alert-input.component';
 import { AlertService } from './alert.service';
 import { AlertType, AlertError, AlertInput, AlertAlignment } from './types';
 export { AlertService, AlertType, AlertInput, AlertError, AlertAlignment };
-var VCLAlertModule = (function () {
+var VCLAlertModule = /** @class */ (function () {
     function VCLAlertModule() {
     }
     VCLAlertModule = __decorate([

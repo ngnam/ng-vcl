@@ -10,7 +10,7 @@ import { DatePickerComponent } from './date-picker.component';
 import { VCLButtonModule } from '../button/index';
 import { L10nModule } from '../l10n/index';
 export { DatePickerComponent };
-var VCLDatePickerModule = (function () {
+var VCLDatePickerModule = /** @class */ (function () {
     function VCLDatePickerModule() {
     }
     VCLDatePickerModule = __decorate([

@@ -14,7 +14,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Directive, Input, ElementRef, Renderer2 } from '@angular/core';
-var SpanDirective = (function () {
+var SpanDirective = /** @class */ (function () {
     function SpanDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

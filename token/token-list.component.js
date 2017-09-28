@@ -17,7 +17,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return TokenListComponent; }),
     multi: true
 };
-var TokenListComponent = (function () {
+var TokenListComponent = /** @class */ (function () {
     function TokenListComponent(cdRef) {
         this.cdRef = cdRef;
         this.selectable = false;

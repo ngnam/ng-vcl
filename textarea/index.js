@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TextareaDirective } from './textarea.directive';
-var VCLTextareaModule = (function () {
+var VCLTextareaModule = /** @class */ (function () {
     function VCLTextareaModule() {
     }
     VCLTextareaModule = __decorate([

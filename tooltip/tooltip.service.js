@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Injectable } from '@angular/core';
-var TooltipService = (function () {
+var TooltipService = /** @class */ (function () {
     function TooltipService() {
         // padding between tooltip and target obj.
         this.offsetCorrection = 10;

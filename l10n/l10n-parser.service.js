@@ -15,13 +15,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Injectable } from '@angular/core';
-var L10nParserService = (function () {
+var L10nParserService = /** @class */ (function () {
     function L10nParserService() {
     }
     return L10nParserService;
 }());
 export { L10nParserService };
-var L10nFormatParserService = (function (_super) {
+var L10nFormatParserService = /** @class */ (function (_super) {
     __extends(L10nFormatParserService, _super);
     function L10nFormatParserService() {
         return _super !== null && _super.apply(this, arguments) || this;

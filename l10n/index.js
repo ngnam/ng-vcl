@@ -11,7 +11,7 @@ import { L10nService, L10N_CONFIG } from './l10n.service';
 import { L10nPipe } from './l10n.pipe';
 // export {L10nNoopLoaderService, L10nStaticLoaderService, L10nFormatParserService, L10nService };
 export { L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService };
-var L10nModule = (function () {
+var L10nModule = /** @class */ (function () {
     function L10nModule() {
     }
     L10nModule_1 = L10nModule;

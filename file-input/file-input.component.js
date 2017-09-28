@@ -18,7 +18,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return FileInputComponent; }),
     multi: true
 };
-var FileInputComponent = (function () {
+var FileInputComponent = /** @class */ (function () {
     function FileInputComponent(cdRef) {
         this.cdRef = cdRef;
         this.accept = '*';

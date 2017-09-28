@@ -11,7 +11,7 @@ import { DomComponentWormhole, DomTemplateWormhole } from './wormhole-dom';
 import { WormholeDirective } from './wormhole.directive';
 import { WormholeHost, DomWormholeHost } from "./wormhole-host";
 export { TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost };
-var VCLWormholeModule = (function () {
+var VCLWormholeModule = /** @class */ (function () {
     function VCLWormholeModule() {
     }
     VCLWormholeModule = __decorate([

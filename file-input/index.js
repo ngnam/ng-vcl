@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { FileInputComponent } from './file-input.component';
 import { CommonModule } from '@angular/common';
-var VCLFileInputModule = (function () {
+var VCLFileInputModule = /** @class */ (function () {
     function VCLFileInputModule() {
     }
     VCLFileInputModule = __decorate([

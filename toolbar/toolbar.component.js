@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input } from '@angular/core';
-var ToolbarComponent = (function () {
+var ToolbarComponent = /** @class */ (function () {
     function ToolbarComponent() {
         this.ariaLevel = 1;
     }

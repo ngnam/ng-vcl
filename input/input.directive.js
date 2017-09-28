@@ -21,7 +21,7 @@ var INPUT_INVALID_TYPES = [
     'reset',
     'submit'
 ];
-var InputDirective = (function () {
+var InputDirective = /** @class */ (function () {
     function InputDirective(elRef) {
         this.elRef = elRef;
         this.type = 'text';

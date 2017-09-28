@@ -49,7 +49,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return TokenInputComponent; }),
     multi: true
 };
-var TokenInputLabelPre = (function () {
+var TokenInputLabelPre = /** @class */ (function () {
     function TokenInputLabelPre() {
     }
     TokenInputLabelPre = __decorate([
@@ -58,7 +58,7 @@ var TokenInputLabelPre = (function () {
     return TokenInputLabelPre;
 }());
 export { TokenInputLabelPre };
-var TokenInputLabelPost = (function () {
+var TokenInputLabelPost = /** @class */ (function () {
     function TokenInputLabelPost() {
     }
     TokenInputLabelPost = __decorate([
@@ -67,7 +67,7 @@ var TokenInputLabelPost = (function () {
     return TokenInputLabelPost;
 }());
 export { TokenInputLabelPost };
-var TokenInputComponent = (function () {
+var TokenInputComponent = /** @class */ (function () {
     function TokenInputComponent(cdRef) {
         this.cdRef = cdRef;
         this.tokens = [];

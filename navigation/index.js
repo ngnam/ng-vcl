@@ -11,7 +11,7 @@ import { L10nModule } from '../l10n/index';
 import { NavigationComponent } from './navigation.component';
 import { NavigationItemDirective } from './navigation-item.directive';
 export { NavigationComponent, NavigationItemDirective };
-var VCLNavigationModule = (function () {
+var VCLNavigationModule = /** @class */ (function () {
     function VCLNavigationModule() {
     }
     VCLNavigationModule = __decorate([

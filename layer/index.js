@@ -28,7 +28,7 @@ export function Layer(component, opts) {
         defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, { component: component, opts: opts }, target);
     };
 }
-var VCLLayerModule = (function () {
+var VCLLayerModule = /** @class */ (function () {
     function VCLLayerModule(layers, layerManager, injector) {
         if (layers) {
             // Flatten and filter layer classes

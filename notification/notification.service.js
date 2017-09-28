@@ -22,7 +22,7 @@ import { NotificationType, NotificationPosition, NOTIFICATION_DEFAULTS, POSITION
 import { Notification } from './notification';
 import { LayerService, LayerRef } from "../layer/index";
 import { NotificationComponent } from "./notification.component";
-var NotificationLayerRef = (function (_super) {
+var NotificationLayerRef = /** @class */ (function (_super) {
     __extends(NotificationLayerRef, _super);
     function NotificationLayerRef() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -30,7 +30,7 @@ var NotificationLayerRef = (function (_super) {
     return NotificationLayerRef;
 }(LayerRef));
 export { NotificationLayerRef };
-var NotificationService = (function () {
+var NotificationService = /** @class */ (function () {
     function NotificationService(ls) {
         this.ls = ls;
         this.layers = new Map();

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable, Injector } from "@angular/core";
 import { LayerManagerService } from "./layer-manager.service";
 import { DynamicLayerRef } from "./layer-ref";
-var LayerService = (function () {
+var LayerService = /** @class */ (function () {
     function LayerService(layerManager, injector) {
         this.layerManager = layerManager;
         this.injector = injector;

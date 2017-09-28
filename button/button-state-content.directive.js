@@ -19,7 +19,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { ViewContainerRef, Directive, TemplateRef, Input } from '@angular/core';
 import { WormholeHost } from "../wormhole/index";
-var ButtonStateContentDirective = (function (_super) {
+var ButtonStateContentDirective = /** @class */ (function (_super) {
     __extends(ButtonStateContentDirective, _super);
     function ButtonStateContentDirective(viewContainerRef, tempRef) {
         var _this = _super.call(this, viewContainerRef) || this;

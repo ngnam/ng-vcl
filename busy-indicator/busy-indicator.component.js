@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-var BusyIndicatorComponent = (function () {
+var BusyIndicatorComponent = /** @class */ (function () {
     function BusyIndicatorComponent() {
         this.type = 'circular';
     }

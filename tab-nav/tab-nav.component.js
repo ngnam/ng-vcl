@@ -11,7 +11,7 @@ import { WormholeHost } from './../wormhole/index';
 import { Component, ContentChildren, QueryList, Input, Output, EventEmitter, ViewChild, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { TabComponent } from './tab.component';
-var TabNavComponent = (function () {
+var TabNavComponent = /** @class */ (function () {
     function TabNavComponent() {
         this.layout = '';
         this.tabbableClass = '';

@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-var LayerResult = (function (_super) {
+var LayerResult = /** @class */ (function (_super) {
     __extends(LayerResult, _super);
     function LayerResult(source, layerRef) {
         var _this = _super.call(this) || this;
@@ -27,7 +27,7 @@ var LayerResult = (function (_super) {
     return LayerResult;
 }(Observable));
 export { LayerResult };
-var LayerRef = (function () {
+var LayerRef = /** @class */ (function () {
     function LayerRef() {
         this.stateChange = new Subject();
         this.state$ = this.stateChange.asObservable();
@@ -69,7 +69,7 @@ var LayerRef = (function () {
     return LayerRef;
 }());
 export { LayerRef };
-var DynamicLayerRef = (function (_super) {
+var DynamicLayerRef = /** @class */ (function (_super) {
     __extends(DynamicLayerRef, _super);
     function DynamicLayerRef(_register, _unregister) {
         var _this = _super.call(this) || this;

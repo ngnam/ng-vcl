@@ -10,7 +10,7 @@ import { VCLIconModule } from '../icon/index';
 import { L10nModule } from '../l10n/index';
 import { IcogramComponent } from './icogram.component';
 export { IcogramComponent };
-var VCLIcogramModule = (function () {
+var VCLIcogramModule = /** @class */ (function () {
     function VCLIcogramModule() {
     }
     VCLIcogramModule = __decorate([
