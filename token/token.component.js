@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, Output, EventEmitter, trigger, HostListener, HostBinding, ChangeDetectorRef } from '@angular/core';
-var TokenComponent = (function () {
+var TokenComponent = /** @class */ (function () {
     function TokenComponent(cdRef) {
         this.cdRef = cdRef;
         this.disabled = false;

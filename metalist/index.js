@@ -11,7 +11,7 @@ import { VCLWormholeModule } from '../wormhole/index';
 import { MetalistItem } from './metalist-item.component';
 import { MetalistComponent, SelectionMode } from './metalist.component';
 export { MetalistItem, MetalistComponent, SelectionMode };
-var VCLMetalistModule = (function () {
+var VCLMetalistModule = /** @class */ (function () {
     function VCLMetalistModule() {
     }
     VCLMetalistModule = __decorate([

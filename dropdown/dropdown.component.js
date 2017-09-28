@@ -51,7 +51,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return DropdownComponent; }),
     multi: true
 };
-var DropdownComponent = (function () {
+var DropdownComponent = /** @class */ (function () {
     function DropdownComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;

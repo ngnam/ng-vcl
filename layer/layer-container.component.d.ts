@@ -47,7 +47,7 @@ export declare class LayerContainerComponent {
     coverLeaveAnimationFactory: AnimationFactory | undefined;
     constructor(cdRef: ChangeDetectorRef, builder: AnimationBuilder, elementRef: ElementRef, animations: LayerAnimationConfig);
     ngAfterViewInit(): void;
-    animateLeave(): Promise<{}[]>;
+    animateLeave(): Promise<[{}, {}]>;
     ngOnDestroy(): void;
     triggerOffClick(event: any): void;
 }

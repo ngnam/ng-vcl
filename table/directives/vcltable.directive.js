@@ -12,7 +12,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Directive, Input, ElementRef, Renderer2 } from '@angular/core';
 import { TableService } from '../services/table.service';
-var VclTableDirective = (function () {
+var VclTableDirective = /** @class */ (function () {
     function VclTableDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

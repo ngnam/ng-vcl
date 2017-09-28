@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, ChangeDetectionStrategy, HostBinding } from '@angular/core';
-var InputControlGroup = (function () {
+var InputControlGroup = /** @class */ (function () {
     function InputControlGroup() {
         this.inline = false;
     }

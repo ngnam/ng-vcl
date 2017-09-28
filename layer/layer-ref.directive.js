@@ -20,7 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Input, TemplateRef, Directive, Injector } from '@angular/core';
 import { LayerRef } from './layer-ref';
 import { LayerManagerService } from "./layer-manager.service";
-var LayerRefDirective = (function (_super) {
+var LayerRefDirective = /** @class */ (function (_super) {
     __extends(LayerRefDirective, _super);
     function LayerRefDirective(templateRef, layerManager, injector) {
         var _this = _super.call(this) || this;

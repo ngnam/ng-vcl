@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { Injectable } from '@angular/core';
-var IconService = (function () {
+var IconService = /** @class */ (function () {
     function IconService() {
     }
     // A default name resolver following the CSS class name conventions of

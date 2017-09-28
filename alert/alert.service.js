@@ -11,7 +11,7 @@ import { Injectable } from '@angular/core';
 import { AlertType, ALERT_DEFAULTS } from './types';
 import { AlertComponent, dismiss } from './alert.component';
 import { LayerService } from './../layer/index';
-var AlertService = (function () {
+var AlertService = /** @class */ (function () {
     function AlertService(ls) {
         this.ls = ls;
         this.noop = function () { };

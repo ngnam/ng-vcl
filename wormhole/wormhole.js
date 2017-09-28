@@ -13,7 +13,7 @@ import 'rxjs/add/observable/never';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 import { ComponentWormholeBase, TemplateWormholeBase } from './wormhole-base';
-var TemplateWormhole = (function (_super) {
+var TemplateWormhole = /** @class */ (function (_super) {
     __extends(TemplateWormhole, _super);
     // The wormhole directive needs a reference to the template
     function TemplateWormhole(templateRef, viewContainerRef) {
@@ -42,7 +42,7 @@ var TemplateWormhole = (function (_super) {
     return TemplateWormhole;
 }(TemplateWormholeBase));
 export { TemplateWormhole };
-var ComponentWormhole = (function (_super) {
+var ComponentWormhole = /** @class */ (function (_super) {
     __extends(ComponentWormhole, _super);
     function ComponentWormhole(componentClass, viewContainerRef, injector) {
         var _this = _super.call(this, componentClass) || this;

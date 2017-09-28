@@ -21,8 +21,10 @@ export declare class NavigationItemDirective implements NavigationItem {
     private _urlTree;
     private _subscription;
     label: string;
+    name: string;
     readonly items: any;
     selected: boolean;
+    selectable: boolean;
     opened: boolean;
     heading: boolean;
     prepIcon: string | undefined;

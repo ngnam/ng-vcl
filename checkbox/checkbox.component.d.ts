@@ -8,7 +8,7 @@ export declare class CheckboxComponent implements ControlValueAccessor {
     checkedIcon: string;
     uncheckedIcon: string;
     disabled: boolean;
-    labelPosition: 'left' | 'right';
+    labelPosition: 'left' | 'top' | 'right';
     /**
     Reflects the checked state, `true` is checked and `false` is unchecked
     @public

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Injectable, Injector, ApplicationRef } from '@angular/core';
 import { DomWormholeHost } from '../wormhole/index';
 import { LayerContainerComponent } from './layer-container.component';
-var LayerManagerService = (function () {
+var LayerManagerService = /** @class */ (function () {
     function LayerManagerService(appRef, injector) {
         this.injector = injector;
         this.layerMetaMap = new Map();

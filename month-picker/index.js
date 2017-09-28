@@ -10,7 +10,7 @@ import { L10nModule } from '../l10n/index';
 import { VCLButtonModule } from '../button/index';
 import { MonthPickerComponent } from './month-picker.component';
 export { MonthPickerComponent };
-var VCLMonthPickerModule = (function () {
+var VCLMonthPickerModule = /** @class */ (function () {
     function VCLMonthPickerModule() {
     }
     VCLMonthPickerModule = __decorate([

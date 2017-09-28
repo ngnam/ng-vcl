@@ -10,7 +10,7 @@ import { L10nModule } from '../l10n/index';
 import { IconComponent } from './icon.component';
 import { IconService } from './icon.service';
 export { IconComponent, IconService };
-var VCLIconModule = (function () {
+var VCLIconModule = /** @class */ (function () {
     function VCLIconModule() {
     }
     VCLIconModule_1 = VCLIconModule;

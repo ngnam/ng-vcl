@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ContentChild, ViewChild, Input, Directive, TemplateRef } from '@angular/core';
-var TabLabelDirective = (function () {
+var TabLabelDirective = /** @class */ (function () {
     function TabLabelDirective() {
     }
     TabLabelDirective = __decorate([
@@ -17,7 +17,7 @@ var TabLabelDirective = (function () {
     return TabLabelDirective;
 }());
 export { TabLabelDirective };
-var TabComponent = (function () {
+var TabComponent = /** @class */ (function () {
     function TabComponent() {
         this.disabled = false;
         this.tabClass = '';

@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { FlipSwitchComponent } from './flip-switch.component';
 import { VCLMetalistModule } from '../metalist/index';
 import { L10nModule } from '../l10n/index';
-var VCLFlipSwitchModule = (function () {
+var VCLFlipSwitchModule = /** @class */ (function () {
     function VCLFlipSwitchModule() {
     }
     VCLFlipSwitchModule = __decorate([

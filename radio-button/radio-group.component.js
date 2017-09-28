@@ -22,7 +22,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return RadioGroupComponent; }),
     multi: true
 };
-var RadioGroupComponent = (function () {
+var RadioGroupComponent = /** @class */ (function () {
     function RadioGroupComponent(cdRef) {
         this.cdRef = cdRef;
         this.change = new EventEmitter();

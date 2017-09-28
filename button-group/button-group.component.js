@@ -21,7 +21,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return ButtonGroupComponent; }),
     multi: true
 };
-var ButtonGroupComponent = (function () {
+var ButtonGroupComponent = /** @class */ (function () {
     function ButtonGroupComponent() {
         // If `Single`, a single button from the group can be selected
         // If `Multiple` multiple buttons can be selected

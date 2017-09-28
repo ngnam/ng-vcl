@@ -28,7 +28,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/skipWhile';
 import { DOCUMENT } from '@angular/platform-browser';
 
-var ObservableComponent = (function () {
+var ObservableComponent = /** @class */ (function () {
     function ObservableComponent() {
         this.changesSubject = new Subject();
         this.observedProps = {};
@@ -93,7 +93,7 @@ var INPUT_INVALID_TYPES = [
     'reset',
     'submit'
 ];
-var InputDirective = (function () {
+var InputDirective = /** @class */ (function () {
     function InputDirective(elRef) {
         this.elRef = elRef;
         this.type = 'text';
@@ -177,7 +177,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLInputModule = (function () {
+var VCLInputModule = /** @class */ (function () {
     function VCLInputModule() {
     }
     VCLInputModule = __decorate([
@@ -238,7 +238,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return FileInputComponent; }),
     multi: true
 };
-var FileInputComponent = (function () {
+var FileInputComponent = /** @class */ (function () {
     function FileInputComponent(cdRef) {
         this.cdRef = cdRef;
         this.accept = '*';
@@ -451,7 +451,7 @@ var __decorate$2 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLFileInputModule = (function () {
+var VCLFileInputModule = /** @class */ (function () {
     function VCLFileInputModule() {
     }
     VCLFileInputModule = __decorate$2([
@@ -474,7 +474,7 @@ var __decorate$5 = (this && this.__decorate) || function (decorators, target, ke
 var __metadata$2 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var TextareaDirective = (function () {
+var TextareaDirective = /** @class */ (function () {
     function TextareaDirective(elRef) {
         this.elRef = elRef;
         this.selectAllOnFocus = false;
@@ -553,7 +553,7 @@ var __decorate$4 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLTextareaModule = (function () {
+var VCLTextareaModule = /** @class */ (function () {
     function VCLTextareaModule() {
     }
     VCLTextareaModule = __decorate$4([
@@ -581,7 +581,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$1 = {
     useExisting: forwardRef(function () { return FlipSwitchComponent; }),
     multi: true
 };
-var FlipSwitchComponent = (function () {
+var FlipSwitchComponent = /** @class */ (function () {
     function FlipSwitchComponent(cdRef) {
         this.cdRef = cdRef;
         this.tabindex = 0;
@@ -715,7 +715,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var L10N_LOADER_CONFIG = new OpaqueToken('l10n.loader.config');
-var L10nLoaderService = (function () {
+var L10nLoaderService = /** @class */ (function () {
     function L10nLoaderService() {
     }
     return L10nLoaderService;
@@ -741,7 +741,7 @@ function flatten(locale, group) {
     });
     return pkg;
 }
-var L10nStaticLoaderService = (function (_super) {
+var L10nStaticLoaderService = /** @class */ (function (_super) {
     __extends(L10nStaticLoaderService, _super);
     function L10nStaticLoaderService(config) {
         var _this = _super.call(this) || this;
@@ -761,7 +761,7 @@ var L10nStaticLoaderService = (function (_super) {
     ], L10nStaticLoaderService);
     return L10nStaticLoaderService;
 }(L10nLoaderService));
-var L10nAsyncLoaderService = (function (_super) {
+var L10nAsyncLoaderService = /** @class */ (function (_super) {
     __extends(L10nAsyncLoaderService, _super);
     function L10nAsyncLoaderService(config) {
         var _this = _super.call(this) || this;
@@ -790,7 +790,7 @@ var L10nAsyncLoaderService = (function (_super) {
     ], L10nAsyncLoaderService);
     return L10nAsyncLoaderService;
 }(L10nLoaderService));
-var L10nNoopLoaderService = (function (_super) {
+var L10nNoopLoaderService = /** @class */ (function (_super) {
     __extends(L10nNoopLoaderService, _super);
     function L10nNoopLoaderService() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -823,12 +823,12 @@ var __decorate$11 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var L10nParserService = (function () {
+var L10nParserService = /** @class */ (function () {
     function L10nParserService() {
     }
     return L10nParserService;
 }());
-var L10nFormatParserService = (function (_super) {
+var L10nFormatParserService = /** @class */ (function (_super) {
     __extends$1(L10nFormatParserService, _super);
     function L10nFormatParserService() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -861,7 +861,7 @@ var __param$1 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var L10N_CONFIG = new OpaqueToken('l10n.config');
-var L10nService = (function () {
+var L10nService = /** @class */ (function () {
     function L10nService(config, // TODO: L10nConfig - problem with ngc
         loader, parser) {
         var _this = this;
@@ -1011,7 +1011,7 @@ var __metadata$6 = (this && this.__metadata) || function (k, v) {
 var __param$2 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var L10nPipe = (function () {
+var L10nPipe = /** @class */ (function () {
     function L10nPipe(l10n) {
         this.l10n = l10n;
         this.args = [];
@@ -1081,7 +1081,7 @@ var __decorate$9 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var L10nModule = (function () {
+var L10nModule = /** @class */ (function () {
     function L10nModule() {
     }
     L10nModule_1 = L10nModule;
@@ -1128,12 +1128,12 @@ var __extends$2 = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Wormhole = (function () {
+var Wormhole = /** @class */ (function () {
     function Wormhole() {
     }
     return Wormhole;
 }());
-var TemplateWormholeBase = (function (_super) {
+var TemplateWormholeBase = /** @class */ (function (_super) {
     __extends$2(TemplateWormholeBase, _super);
     // The wormhole directive needs a reference to the template
     function TemplateWormholeBase(templateRef) {
@@ -1180,7 +1180,7 @@ var TemplateWormholeBase = (function (_super) {
     };
     return TemplateWormholeBase;
 }(Wormhole));
-var ComponentWormholeBase = (function (_super) {
+var ComponentWormholeBase = /** @class */ (function (_super) {
     __extends$2(ComponentWormholeBase, _super);
     function ComponentWormholeBase(componentClass) {
         var _this = _super.call(this) || this;
@@ -1257,7 +1257,7 @@ var __extends$3 = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var TemplateWormhole = (function (_super) {
+var TemplateWormhole = /** @class */ (function (_super) {
     __extends$3(TemplateWormhole, _super);
     // The wormhole directive needs a reference to the template
     function TemplateWormhole(templateRef, viewContainerRef) {
@@ -1285,7 +1285,7 @@ var TemplateWormhole = (function (_super) {
     });
     return TemplateWormhole;
 }(TemplateWormholeBase));
-var ComponentWormhole = (function (_super) {
+var ComponentWormhole = /** @class */ (function (_super) {
     __extends$3(ComponentWormhole, _super);
     function ComponentWormhole(componentClass, viewContainerRef, injector) {
         var _this = _super.call(this, componentClass) || this;
@@ -1336,7 +1336,7 @@ function getViewRootNode(embeddedViewRef) {
 function getComponentRootNode(componentRef) {
     return getViewRootNode(componentRef.hostView);
 }
-var DomComponentWormhole = (function (_super) {
+var DomComponentWormhole = /** @class */ (function (_super) {
     __extends$4(DomComponentWormhole, _super);
     function DomComponentWormhole(componentClass, appRef, node, injector) {
         var _this = _super.call(this, componentClass) || this;
@@ -1389,7 +1389,7 @@ var DomComponentWormhole = (function (_super) {
     });
     return DomComponentWormhole;
 }(ComponentWormholeBase));
-var DomTemplateWormhole = (function (_super) {
+var DomTemplateWormhole = /** @class */ (function (_super) {
     __extends$4(DomTemplateWormhole, _super);
     // The wormhole directive needs a reference to the template
     function DomTemplateWormhole(templateRef, appRef, node, injector) {
@@ -1450,7 +1450,7 @@ var __extends$6 = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var WormholeHostBase = (function () {
+var WormholeHostBase = /** @class */ (function () {
     function WormholeHostBase() {
         this._wormholes = [];
     }
@@ -1498,7 +1498,7 @@ var WormholeHostBase = (function () {
     };
     return WormholeHostBase;
 }());
-var WormholeHost = (function (_super) {
+var WormholeHost = /** @class */ (function (_super) {
     __extends$6(WormholeHost, _super);
     function WormholeHost(_host, _injector) {
         var _this = _super.call(this) || this;
@@ -1525,7 +1525,7 @@ var WormholeHost = (function (_super) {
     };
     return WormholeHost;
 }(WormholeHostBase));
-var DomWormholeHost = (function (_super) {
+var DomWormholeHost = /** @class */ (function (_super) {
     __extends$6(DomWormholeHost, _super);
     function DomWormholeHost(_host, _node, _injector) {
         var _this = _super.call(this) || this;
@@ -1573,7 +1573,7 @@ var __decorate$15 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$7 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var WormholeDirective = (function (_super) {
+var WormholeDirective = /** @class */ (function (_super) {
     __extends$5(WormholeDirective, _super);
     function WormholeDirective(viewContainerRef) {
         return _super.call(this, viewContainerRef) || this;
@@ -1626,7 +1626,7 @@ var __decorate$14 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLWormholeModule = (function () {
+var VCLWormholeModule = /** @class */ (function () {
     function VCLWormholeModule() {
     }
     VCLWormholeModule = __decorate$14([
@@ -1648,7 +1648,7 @@ var __decorate$16 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$8 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var MetalistItem = (function () {
+var MetalistItem = /** @class */ (function () {
     function MetalistItem() {
         this.disabled = false;
         this.marked = false;
@@ -1706,7 +1706,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$2 = {
     useExisting: forwardRef(function () { return MetalistComponent; }),
     multi: true
 };
-var MetalistComponent = (function () {
+var MetalistComponent = /** @class */ (function () {
     function MetalistComponent(cdRef) {
         this.cdRef = cdRef;
         // If `Single`, a single item can be selected
@@ -1901,7 +1901,7 @@ var __decorate$8 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLMetalistModule = (function () {
+var VCLMetalistModule = /** @class */ (function () {
     function VCLMetalistModule() {
     }
     VCLMetalistModule = __decorate$8([
@@ -1921,7 +1921,7 @@ var __decorate$6 = (this && this.__decorate) || function (decorators, target, ke
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLFlipSwitchModule = (function () {
+var VCLFlipSwitchModule = /** @class */ (function () {
     function VCLFlipSwitchModule() {
     }
     VCLFlipSwitchModule = __decorate$6([
@@ -1941,7 +1941,7 @@ var __decorate$20 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var IconService = (function () {
+var IconService = /** @class */ (function () {
     function IconService() {
     }
     // A default name resolver following the CSS class name conventions of
@@ -1994,7 +1994,7 @@ var __decorate$19 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$10 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var IconComponent = (function () {
+var IconComponent = /** @class */ (function () {
     function IconComponent(_iconService) {
         this._iconService = _iconService;
     }
@@ -2070,7 +2070,7 @@ var __decorate$18 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLIconModule = (function () {
+var VCLIconModule = /** @class */ (function () {
     function VCLIconModule() {
     }
     VCLIconModule_1 = VCLIconModule;
@@ -2106,7 +2106,7 @@ var __decorate$23 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$12 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var DropdownOption = (function () {
+var DropdownOption = /** @class */ (function () {
     function DropdownOption() {
         this.disabled = false;
         this.selected = false;
@@ -2197,7 +2197,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3 = {
     useExisting: forwardRef(function () { return DropdownComponent; }),
     multi: true
 };
-var DropdownComponent = (function () {
+var DropdownComponent = /** @class */ (function () {
     function DropdownComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -2376,7 +2376,7 @@ var __decorate$21 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLDropdownModule = (function () {
+var VCLDropdownModule = /** @class */ (function () {
     function VCLDropdownModule() {
     }
     VCLDropdownModule = __decorate$21([
@@ -2409,7 +2409,7 @@ var __decorate$26 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$13 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var ButtonStateContentDirective = (function (_super) {
+var ButtonStateContentDirective = /** @class */ (function (_super) {
     __extends$7(ButtonStateContentDirective, _super);
     function ButtonStateContentDirective(viewContainerRef, tempRef) {
         var _this = _super.call(this, viewContainerRef) || this;
@@ -2456,7 +2456,7 @@ var __decorate$28 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$14 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var IcogramComponent = (function () {
+var IcogramComponent = /** @class */ (function () {
     function IcogramComponent(elRef) {
         this.elRef = elRef;
     }
@@ -2505,7 +2505,7 @@ var __decorate$27 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLIcogramModule = (function () {
+var VCLIcogramModule = /** @class */ (function () {
     function VCLIcogramModule() {
     }
     VCLIcogramModule = __decorate$27([
@@ -2547,7 +2547,7 @@ var InteractionType;
     InteractionType[InteractionType["Click"] = 0] = "Click";
     InteractionType[InteractionType["Tap"] = 1] = "Tap";
 })(InteractionType || (InteractionType = {}));
-var ButtonComponent = (function (_super) {
+var ButtonComponent = /** @class */ (function (_super) {
     __extends$8(ButtonComponent, _super);
     function ButtonComponent(elementRef) {
         var _this = _super.call(this) || this;
@@ -2752,7 +2752,7 @@ var __decorate$25 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLButtonModule = (function () {
+var VCLButtonModule = /** @class */ (function () {
     function VCLButtonModule() {
     }
     VCLButtonModule = __decorate$25([
@@ -2775,7 +2775,7 @@ var __decorate$31 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$16 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var OffClickDirective = (function () {
+var OffClickDirective = /** @class */ (function () {
     function OffClickDirective(elem) {
         this.elem = elem;
         this.offClick = new EventEmitter();
@@ -2818,7 +2818,7 @@ var __decorate$30 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLOffClickModule = (function () {
+var VCLOffClickModule = /** @class */ (function () {
     function VCLOffClickModule() {
     }
     VCLOffClickModule = __decorate$30([
@@ -2874,7 +2874,7 @@ var PopoverState;
     PopoverState[PopoverState["closing"] = 3] = "closing";
 })(PopoverState || (PopoverState = {}));
 var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
-var PopoverComponent = (function (_super) {
+var PopoverComponent = /** @class */ (function (_super) {
     __extends$9(PopoverComponent, _super);
     function PopoverComponent(me, builder, animations) {
         var _this = _super.call(this) || this;
@@ -3155,7 +3155,7 @@ var __decorate$32 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLPopoverModule = (function () {
+var VCLPopoverModule = /** @class */ (function () {
     function VCLPopoverModule() {
     }
     VCLPopoverModule = __decorate$32([
@@ -3181,7 +3181,7 @@ var __decorate$35 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$18 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var TokenComponent = (function () {
+var TokenComponent = /** @class */ (function () {
     function TokenComponent(cdRef) {
         this.cdRef = cdRef;
         this.disabled = false;
@@ -3283,7 +3283,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$4 = {
     useExisting: forwardRef(function () { return TokenListComponent; }),
     multi: true
 };
-var TokenListComponent = (function () {
+var TokenListComponent = /** @class */ (function () {
     function TokenListComponent(cdRef) {
         this.cdRef = cdRef;
         this.selectable = false;
@@ -3443,7 +3443,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$5 = {
     useExisting: forwardRef(function () { return TokenInputComponent; }),
     multi: true
 };
-var TokenInputLabelPre = (function () {
+var TokenInputLabelPre = /** @class */ (function () {
     function TokenInputLabelPre() {
     }
     TokenInputLabelPre = __decorate$37([
@@ -3451,7 +3451,7 @@ var TokenInputLabelPre = (function () {
     ], TokenInputLabelPre);
     return TokenInputLabelPre;
 }());
-var TokenInputLabelPost = (function () {
+var TokenInputLabelPost = /** @class */ (function () {
     function TokenInputLabelPost() {
     }
     TokenInputLabelPost = __decorate$37([
@@ -3459,7 +3459,7 @@ var TokenInputLabelPost = (function () {
     ], TokenInputLabelPost);
     return TokenInputLabelPost;
 }());
-var TokenInputComponent = (function () {
+var TokenInputComponent = /** @class */ (function () {
     function TokenInputComponent(cdRef) {
         this.cdRef = cdRef;
         this.tokens = [];
@@ -3673,7 +3673,7 @@ var __decorate$34 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLTokenModule = (function () {
+var VCLTokenModule = /** @class */ (function () {
     function VCLTokenModule() {
     }
     VCLTokenModule = __decorate$34([
@@ -3696,7 +3696,7 @@ var __decorate$38 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$21 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var SelectOption = (function () {
+var SelectOption = /** @class */ (function () {
     function SelectOption() {
         this.disabled = false;
         this.selected = false;
@@ -3787,7 +3787,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$6 = {
     useExisting: forwardRef(function () { return SelectComponent; }),
     multi: true
 };
-var SelectComponent = (function () {
+var SelectComponent = /** @class */ (function () {
     function SelectComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -4110,7 +4110,7 @@ var __decorate$24 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLSelectModule = (function () {
+var VCLSelectModule = /** @class */ (function () {
     function VCLSelectModule() {
     }
     VCLSelectModule = __decorate$24([
@@ -4143,7 +4143,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$7 = {
     useExisting: forwardRef(function () { return ButtonGroupComponent; }),
     multi: true
 };
-var ButtonGroupComponent = (function () {
+var ButtonGroupComponent = /** @class */ (function () {
     function ButtonGroupComponent() {
         // If `Single`, a single button from the group can be selected
         // If `Multiple` multiple buttons can be selected
@@ -4271,7 +4271,7 @@ var __decorate$40 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLButtonGroupModule = (function () {
+var VCLButtonGroupModule = /** @class */ (function () {
     function VCLButtonGroupModule() {
     }
     VCLButtonGroupModule = __decorate$40([
@@ -4295,7 +4295,7 @@ var __extends$10 = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var LayerResult = (function (_super) {
+var LayerResult = /** @class */ (function (_super) {
     __extends$10(LayerResult, _super);
     function LayerResult(source, layerRef) {
         var _this = _super.call(this) || this;
@@ -4311,7 +4311,7 @@ var LayerResult = (function (_super) {
     };
     return LayerResult;
 }(Observable));
-var LayerRef = (function () {
+var LayerRef = /** @class */ (function () {
     function LayerRef() {
         this.stateChange = new Subject();
         this.state$ = this.stateChange.asObservable();
@@ -4352,7 +4352,7 @@ var LayerRef = (function () {
     };
     return LayerRef;
 }());
-var DynamicLayerRef = (function (_super) {
+var DynamicLayerRef = /** @class */ (function (_super) {
     __extends$10(DynamicLayerRef, _super);
     function DynamicLayerRef(_register, _unregister) {
         var _this = _super.call(this) || this;
@@ -4389,7 +4389,7 @@ var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
 };
 var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
 var LAYER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#layer_animations');
-var LayerContainerComponent = (function () {
+var LayerContainerComponent = /** @class */ (function () {
     function LayerContainerComponent(cdRef, builder, elementRef, animations) {
         this.cdRef = cdRef;
         this.zIndex = 1000;
@@ -4560,7 +4560,7 @@ var __decorate$43 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$25 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var LayerManagerService = (function () {
+var LayerManagerService = /** @class */ (function () {
     function LayerManagerService(appRef, injector) {
         this.injector = injector;
         this.layerMetaMap = new Map();
@@ -4640,7 +4640,7 @@ var __decorate$45 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$27 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var LayerService = (function () {
+var LayerService = /** @class */ (function () {
     function LayerService(layerManager, injector) {
         this.layerManager = layerManager;
         this.injector = injector;
@@ -4703,7 +4703,7 @@ var __decorate$46 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$28 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var LayerRefDirective = (function (_super) {
+var LayerRefDirective = /** @class */ (function (_super) {
     __extends$11(LayerRefDirective, _super);
     function LayerRefDirective(templateRef, layerManager, injector) {
         var _this = _super.call(this) || this;
@@ -4772,7 +4772,7 @@ function Layer(component, opts) {
         defineMetadata(COMPONENT_LAYER_ANNOTATION_ID, { component: component, opts: opts }, target);
     };
 }
-var VCLLayerModule = (function () {
+var VCLLayerModule = /** @class */ (function () {
     function VCLLayerModule(layers, layerManager, injector) {
         if (layers) {
             // Flatten and filter layer classes
@@ -4847,7 +4847,7 @@ var __decorate$49 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$30 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var TabLabelDirective = (function () {
+var TabLabelDirective = /** @class */ (function () {
     function TabLabelDirective() {
     }
     TabLabelDirective = __decorate$49([
@@ -4855,7 +4855,7 @@ var TabLabelDirective = (function () {
     ], TabLabelDirective);
     return TabLabelDirective;
 }());
-var TabComponent = (function () {
+var TabComponent = /** @class */ (function () {
     function TabComponent() {
         this.disabled = false;
         this.tabClass = '';
@@ -4894,7 +4894,7 @@ var __decorate$48 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$29 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var TabNavComponent = (function () {
+var TabNavComponent = /** @class */ (function () {
     function TabNavComponent() {
         this.layout = '';
         this.tabbableClass = '';
@@ -5002,7 +5002,7 @@ var __decorate$47 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLTabNavModule = (function () {
+var VCLTabNavModule = /** @class */ (function () {
     function VCLTabNavModule() {
     }
     VCLTabNavModule = __decorate$47([
@@ -5038,7 +5038,7 @@ var __metadata$31 = (this && this.__metadata) || function (k, v) {
 var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var LinkComponent = (function (_super) {
+var LinkComponent = /** @class */ (function (_super) {
     __extends$12(LinkComponent, _super);
     function LinkComponent(l10n) {
         var _this = _super.call(this) || this;
@@ -5140,7 +5140,7 @@ var __decorate$51 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLLinkModule = (function () {
+var VCLLinkModule = /** @class */ (function () {
     function VCLLinkModule() {
     }
     VCLLinkModule = __decorate$51([
@@ -5166,13 +5166,13 @@ var __metadata$33 = (this && this.__metadata) || function (k, v) {
 var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var NavigationItemDirective = (function () {
+var NavigationItemDirective = /** @class */ (function () {
     function NavigationItemDirective(router, nav, parent) {
         this.router = router;
         this.nav = nav;
         this.parent = parent;
-        // @Input()
         this.selected = false;
+        this.selectable = true;
         this.opened = false;
         this.heading = false;
         this.exactRoute = true;
@@ -5245,6 +5245,14 @@ var NavigationItemDirective = (function () {
     ], NavigationItemDirective.prototype, "label", void 0);
     __decorate$54([
         Input(),
+        __metadata$33("design:type", String)
+    ], NavigationItemDirective.prototype, "name", void 0);
+    __decorate$54([
+        Input(),
+        __metadata$33("design:type", Boolean)
+    ], NavigationItemDirective.prototype, "selectable", void 0);
+    __decorate$54([
+        Input(),
         __metadata$33("design:type", Boolean)
     ], NavigationItemDirective.prototype, "opened", void 0);
     __decorate$54([
@@ -5304,7 +5312,7 @@ var __metadata$32 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 // import { containsTree } from "@angular/router/url_tree";
-var NavigationComponent = (function () {
+var NavigationComponent = /** @class */ (function () {
     function NavigationComponent(router) {
         this.router = router;
         this.ariaRole = 'presentation';
@@ -5444,7 +5452,7 @@ var NavigationComponent = (function () {
             host: {
                 '[class.vclNavigation]': 'true'
             },
-            template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (click)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
+            template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selectable && item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selectable && item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (click)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
         }),
         __metadata$32("design:paramtypes", [Router])
     ], NavigationComponent);
@@ -5457,7 +5465,7 @@ var __decorate$50 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLNavigationModule = (function () {
+var VCLNavigationModule = /** @class */ (function () {
     function VCLNavigationModule() {
     }
     VCLNavigationModule = __decorate$50([
@@ -5480,7 +5488,7 @@ var __decorate$56 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$34 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var ToolbarComponent = (function () {
+var ToolbarComponent = /** @class */ (function () {
     function ToolbarComponent() {
         this.ariaLevel = 1;
     }
@@ -5512,7 +5520,7 @@ var __decorate$55 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLToolbarModule = (function () {
+var VCLToolbarModule = /** @class */ (function () {
     function VCLToolbarModule() {
     }
     VCLToolbarModule = __decorate$55([
@@ -5535,11 +5543,12 @@ var __decorate$58 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$35 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var ProgressBarComponent = (function () {
+var ProgressBarComponent = /** @class */ (function () {
     function ProgressBarComponent() {
         this.minValue = 0;
         this.maxValue = 100;
         this.indeterminate = false;
+        this.speed = 1;
     }
     Object.defineProperty(ProgressBarComponent.prototype, "showIndeterminate", {
         get: function () {
@@ -5578,6 +5587,14 @@ var ProgressBarComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ProgressBarComponent.prototype, "animationDurationValue", {
+        get: function () {
+            var value = this.isNumber(this.speed) ? this.speed : 1;
+            return value + "s";
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ProgressBarComponent.prototype, "range", {
         get: function () {
             return this.maxValue - this.minValue;
@@ -5589,10 +5606,12 @@ var ProgressBarComponent = (function () {
         return (value - this.minValue) / this.range;
     };
     ProgressBarComponent.prototype.validateValue = function (value) {
-        return typeof value === 'number' &&
-            value !== NaN &&
+        return this.isNumber(value) &&
             value >= this.minValue &&
             value <= this.maxValue;
+    };
+    ProgressBarComponent.prototype.isNumber = function (value) {
+        return typeof value === 'number' && value !== NaN;
     };
     __decorate$58([
         Input(),
@@ -5618,10 +5637,14 @@ var ProgressBarComponent = (function () {
         Input(),
         __metadata$35("design:type", String)
     ], ProgressBarComponent.prototype, "label", void 0);
+    __decorate$58([
+        Input(),
+        __metadata$35("design:type", Number)
+    ], ProgressBarComponent.prototype, "speed", void 0);
     ProgressBarComponent = __decorate$58([
         Component({
             selector: 'vcl-progress-bar',
-            template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\"></div> </div> ",
+            template: "<div class=\"vclProgressBar\" [attr.aria-valuenow]=\"value\"  [attr.aria-valuemin]=\"minValue\"  [attr.aria-valuemax]=\"maxValue\"  [attr.aria-valuetext]=\"label\" [class.vclIndeterminate]=\"showIndeterminate\" > <div *ngIf=\"showValue\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.transform]=\"transformValue\"></div> <div *ngIf=\"showSecondaryValue\" class=\"vclProgress vclSecondary vclLayoutFit\" [style.transform]=\"transformSecondaryValue\"></div> <div *ngIf=\"showIndeterminate\" class=\"vclProgress vclPrimary vclLayoutFit\" [style.animation-duration]=\"animationDurationValue\"></div> </div> ",
             host: {
                 '[attr.role]': '"progressbar"',
             },
@@ -5637,7 +5660,7 @@ var __decorate$57 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLProgressBarModule = (function () {
+var VCLProgressBarModule = /** @class */ (function () {
     function VCLProgressBarModule() {
     }
     VCLProgressBarModule = __decorate$57([
@@ -5665,7 +5688,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$8 = {
     multi: true
 };
 var uniqueID = 0;
-var RadioButtonComponent = (function () {
+var RadioButtonComponent = /** @class */ (function () {
     function RadioButtonComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -5859,7 +5882,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$9 = {
     useExisting: forwardRef(function () { return RadioGroupComponent; }),
     multi: true
 };
-var RadioGroupComponent = (function () {
+var RadioGroupComponent = /** @class */ (function () {
     function RadioGroupComponent(cdRef) {
         this.cdRef = cdRef;
         this.change = new EventEmitter();
@@ -5970,7 +5993,7 @@ var __decorate$63 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$38 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var FormControlLabelComponent = (function () {
+var FormControlLabelComponent = /** @class */ (function () {
     function FormControlLabelComponent() {
         this.disabled = false;
         this.requiredIndicatorCharacter = '•';
@@ -6037,7 +6060,7 @@ var __decorate$62 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLFormControlLabelModule = (function () {
+var VCLFormControlLabelModule = /** @class */ (function () {
     function VCLFormControlLabelModule() {
     }
     VCLFormControlLabelModule = __decorate$62([
@@ -6056,7 +6079,7 @@ var __decorate$59 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLRadioButtonModule = (function () {
+var VCLRadioButtonModule = /** @class */ (function () {
     function VCLRadioButtonModule() {
     }
     VCLRadioButtonModule = __decorate$59([
@@ -6083,7 +6106,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$10 = {
     useExisting: forwardRef(function () { return CheckboxComponent; }),
     multi: true
 };
-var CheckboxComponent = (function () {
+var CheckboxComponent = /** @class */ (function () {
     function CheckboxComponent(elementRef, cdRef) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
@@ -6204,7 +6227,7 @@ var CheckboxComponent = (function () {
     CheckboxComponent = __decorate$65([
         Component({
             selector: 'vcl-checkbox',
-            template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition=='left'\"></vcl-icon> ",
+            template: "  <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition == 'right'\" [@checkState]=\"checked\"></vcl-icon> <ng-content></ng-content><br *ngIf=\"labelPosition=='top'\"/> <vcl-icon [icon]=\"icon\" *ngIf=\"labelPosition != 'right'\"></vcl-icon> ",
             animations: [trigger$1('checkState', [])],
             host: {
                 '[attr.role]': '"checkbox"',
@@ -6225,7 +6248,7 @@ var __decorate$64 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLCheckboxModule = (function () {
+var VCLCheckboxModule = /** @class */ (function () {
     function VCLCheckboxModule() {
     }
     VCLCheckboxModule = __decorate$64([
@@ -6265,7 +6288,7 @@ var WEEK_DAYS = [
     'Sa',
     'Su'
 ];
-var CalendarDate = (function () {
+var CalendarDate = /** @class */ (function () {
     function CalendarDate(date) {
         if (!(date instanceof Date)) {
             date = new Date;
@@ -6466,7 +6489,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$11 = {
     useExisting: forwardRef(function () { return DatePickerComponent; }),
     multi: true
 };
-var DatePickerComponent = (function () {
+var DatePickerComponent = /** @class */ (function () {
     function DatePickerComponent(cdRef) {
         this.cdRef = cdRef;
         // behavior
@@ -6724,7 +6747,7 @@ var __decorate$66 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLDatePickerModule = (function () {
+var VCLDatePickerModule = /** @class */ (function () {
     function VCLDatePickerModule() {
     }
     VCLDatePickerModule = __decorate$66([
@@ -6747,7 +6770,7 @@ var __decorate$69 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$41 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var MonthPickerComponent = (function () {
+var MonthPickerComponent = /** @class */ (function () {
     //
     function MonthPickerComponent(ref) {
         this.ref = ref;
@@ -7130,7 +7153,7 @@ var __decorate$68 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLMonthPickerModule = (function () {
+var VCLMonthPickerModule = /** @class */ (function () {
     function VCLMonthPickerModule() {
     }
     VCLMonthPickerModule = __decorate$68([
@@ -7153,7 +7176,7 @@ var __decorate$71 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$42 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var LabelComponent = (function () {
+var LabelComponent = /** @class */ (function () {
     function LabelComponent() {
     }
     Object.defineProperty(LabelComponent.prototype, "vclPrimary", {
@@ -7250,7 +7273,7 @@ var __decorate$70 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLLabelModule = (function () {
+var VCLLabelModule = /** @class */ (function () {
     function VCLLabelModule() {
     }
     VCLLabelModule = __decorate$70([
@@ -7283,7 +7306,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$12 = {
     useExisting: forwardRef(function () { return SliderComponent; }),
     multi: true
 };
-var SliderComponent = (function () {
+var SliderComponent = /** @class */ (function () {
     function SliderComponent(cdRef) {
         this.cdRef = cdRef;
         this.tabindex = 0;
@@ -7654,7 +7677,7 @@ var __decorate$72 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLSliderModule = (function () {
+var VCLSliderModule = /** @class */ (function () {
     function VCLSliderModule() {
     }
     VCLSliderModule = __decorate$72([
@@ -7677,7 +7700,7 @@ var __decorate$75 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$44 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var InputControlGroup = (function () {
+var InputControlGroup = /** @class */ (function () {
     function InputControlGroup() {
         this.inline = false;
     }
@@ -7722,7 +7745,7 @@ var __decorate$74 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLInputControlGroupModule = (function () {
+var VCLInputControlGroupModule = /** @class */ (function () {
     function VCLInputControlGroupModule() {
     }
     VCLInputControlGroupModule = __decorate$74([
@@ -7822,7 +7845,7 @@ var BUTTON_ALIGNMENT_CLASS_MAP = (_c = {},
     _c[AlertAlignment.Center] = 'vclLayoutCenterJustified',
     _c[AlertAlignment.Right] = 'vclLayoutEndJustified',
     _c);
-var AlertError = (function (_super) {
+var AlertError = /** @class */ (function (_super) {
     __extends$13(AlertError, _super);
     function AlertError(reason, message) {
         var _this = _super.call(this, message) || this;
@@ -7852,7 +7875,7 @@ function dismiss(layer, err) {
         layer.closeWithError(new AlertError(err));
     }
 }
-var AlertComponent = (function () {
+var AlertComponent = /** @class */ (function () {
     function AlertComponent(elementRef, alertLayer, layerService, cdRef) {
         this.elementRef = elementRef;
         this.alertLayer = alertLayer;
@@ -8008,7 +8031,7 @@ var __metadata$46 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 // TODO: support text, password, textarea, select, radio, checkbox file.
-var AlertInputComponent = (function () {
+var AlertInputComponent = /** @class */ (function () {
     function AlertInputComponent() {
         this.alert = {};
         this.valueChange = new EventEmitter();
@@ -8076,7 +8099,7 @@ var __decorate$79 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$47 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var AlertService = (function () {
+var AlertService = /** @class */ (function () {
     function AlertService(ls) {
         this.ls = ls;
         this.noop = function () { };
@@ -8140,7 +8163,7 @@ var __decorate$76 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLAlertModule = (function () {
+var VCLAlertModule = /** @class */ (function () {
     function VCLAlertModule() {
     }
     VCLAlertModule = __decorate$76([
@@ -8171,7 +8194,7 @@ var __decorate$81 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$48 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var BusyIndicatorComponent = (function () {
+var BusyIndicatorComponent = /** @class */ (function () {
     function BusyIndicatorComponent() {
         this.type = 'circular';
     }
@@ -8205,7 +8228,7 @@ var __decorate$82 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$49 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var BusyComponent = (function () {
+var BusyComponent = /** @class */ (function () {
     function BusyComponent() {
         this.busy = false;
     }
@@ -8238,7 +8261,7 @@ var __decorate$80 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLBusyIndicatorModule = (function () {
+var VCLBusyIndicatorModule = /** @class */ (function () {
     function VCLBusyIndicatorModule() {
     }
     VCLBusyIndicatorModule = __decorate$80([
@@ -8260,7 +8283,7 @@ var __decorate$84 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$50 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var NotificationComponent = (function () {
+var NotificationComponent = /** @class */ (function () {
     function NotificationComponent() {
         this.notifications = [];
     }
@@ -8382,7 +8405,7 @@ var __extends$15 = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Notification = (function (_super) {
+var Notification = /** @class */ (function (_super) {
     __extends$15(Notification, _super);
     function Notification(opts) {
         var _this = _super.call(this) || this;
@@ -8500,14 +8523,14 @@ var __decorate$85 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$51 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var NotificationLayerRef = (function (_super) {
+var NotificationLayerRef = /** @class */ (function (_super) {
     __extends$14(NotificationLayerRef, _super);
     function NotificationLayerRef() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return NotificationLayerRef;
 }(LayerRef));
-var NotificationService = (function () {
+var NotificationService = /** @class */ (function () {
     function NotificationService(ls) {
         this.ls = ls;
         this.layers = new Map();
@@ -8577,7 +8600,7 @@ var __decorate$83 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLNotificationModule = (function () {
+var VCLNotificationModule = /** @class */ (function () {
     function VCLNotificationModule() {
     }
     VCLNotificationModule = __decorate$83([
@@ -8605,7 +8628,7 @@ var __decorate$88 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var TooltipService = (function () {
+var TooltipService = /** @class */ (function () {
     function TooltipService() {
         // padding between tooltip and target obj.
         this.offsetCorrection = 10;
@@ -8730,7 +8753,7 @@ var __metadata$52 = (this && this.__metadata) || function (k, v) {
 var __param$8 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var TooltipComponent = (function () {
+var TooltipComponent = /** @class */ (function () {
     function TooltipComponent(element, document, renderer, tooltipService) {
         this.element = element;
         this.document = document;
@@ -8858,7 +8881,7 @@ var __metadata$53 = (this && this.__metadata) || function (k, v) {
 var __param$9 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var TooltipDirective = (function () {
+var TooltipDirective = /** @class */ (function () {
     function TooltipDirective(element, resolver, viewContainerRef, document) {
         this.element = element;
         this.resolver = resolver;
@@ -8928,7 +8951,7 @@ var __decorate$86 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLTooltipModule = (function () {
+var VCLTooltipModule = /** @class */ (function () {
     function VCLTooltipModule() {
     }
     VCLTooltipModule = __decorate$86([
@@ -8952,7 +8975,7 @@ var __decorate$92 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$55 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var TableService = (function () {
+var TableService = /** @class */ (function () {
     function TableService(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9002,7 +9025,7 @@ var __decorate$91 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$54 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var VclTableDirective = (function () {
+var VclTableDirective = /** @class */ (function () {
     function VclTableDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9041,7 +9064,7 @@ var __decorate$93 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$56 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var SpanDirective = (function () {
+var SpanDirective = /** @class */ (function () {
     function SpanDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9089,7 +9112,7 @@ var __decorate$94 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$57 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var HighlightDirective = (function () {
+var HighlightDirective = /** @class */ (function () {
     function HighlightDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9125,7 +9148,7 @@ var __metadata$59 = (this && this.__metadata) || function (k, v) {
 var __param$10 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var SortIconComponent = (function () {
+var SortIconComponent = /** @class */ (function () {
     function SortIconComponent(document, element) {
         this.document = document;
         this.element = element;
@@ -9181,7 +9204,7 @@ var __decorate$95 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$58 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var SortDirective = (function () {
+var SortDirective = /** @class */ (function () {
     function SortDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9256,7 +9279,7 @@ var __decorate$97 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$60 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var SelectDirective = (function () {
+var SelectDirective = /** @class */ (function () {
     function SelectDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9294,7 +9317,7 @@ var __decorate$98 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$61 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var SelectableDirective = (function () {
+var SelectableDirective = /** @class */ (function () {
     function SelectableDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9334,7 +9357,7 @@ var __decorate$99 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$62 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var HoverDirective = (function () {
+var HoverDirective = /** @class */ (function () {
     function HoverDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9368,7 +9391,7 @@ var __decorate$100 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$63 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var DisableDirective = (function () {
+var DisableDirective = /** @class */ (function () {
     function DisableDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9406,7 +9429,7 @@ var __decorate$101 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$64 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var AltRowColorDirective = (function () {
+var AltRowColorDirective = /** @class */ (function () {
     function AltRowColorDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9444,7 +9467,7 @@ var __decorate$102 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$65 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var NoBorderDirective = (function () {
+var NoBorderDirective = /** @class */ (function () {
     function NoBorderDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9482,7 +9505,7 @@ var __decorate$103 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$66 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var DottedBorderDirective = (function () {
+var DottedBorderDirective = /** @class */ (function () {
     function DottedBorderDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9520,7 +9543,7 @@ var __decorate$104 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$67 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var CondensedDirective = (function () {
+var CondensedDirective = /** @class */ (function () {
     function CondensedDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9558,7 +9581,7 @@ var __decorate$105 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$68 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var VerticalBorderDirective = (function () {
+var VerticalBorderDirective = /** @class */ (function () {
     function VerticalBorderDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9596,7 +9619,7 @@ var __decorate$106 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$69 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var AlignmentCenterDirective = (function () {
+var AlignmentCenterDirective = /** @class */ (function () {
     function AlignmentCenterDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9634,7 +9657,7 @@ var __decorate$107 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$70 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var AlignmentRightDirective = (function () {
+var AlignmentRightDirective = /** @class */ (function () {
     function AlignmentRightDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9673,7 +9696,7 @@ var __decorate$108 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$71 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var AlignmentbottomDirective = (function () {
+var AlignmentbottomDirective = /** @class */ (function () {
     function AlignmentbottomDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9712,7 +9735,7 @@ var __decorate$109 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$72 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var AlignmentMiddleDirective = (function () {
+var AlignmentMiddleDirective = /** @class */ (function () {
     function AlignmentMiddleDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9750,7 +9773,7 @@ var __decorate$110 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$73 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var LayoutDirective = (function () {
+var LayoutDirective = /** @class */ (function () {
     function LayoutDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9790,7 +9813,7 @@ var __decorate$111 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$74 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var NoWrapDirective = (function () {
+var NoWrapDirective = /** @class */ (function () {
     function NoWrapDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9830,7 +9853,7 @@ var __decorate$112 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$75 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var OverflowEllipsisDirective = (function () {
+var OverflowEllipsisDirective = /** @class */ (function () {
     function OverflowEllipsisDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9868,7 +9891,7 @@ var __decorate$113 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$76 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var BreakingWordsDirective = (function () {
+var BreakingWordsDirective = /** @class */ (function () {
     function BreakingWordsDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;
@@ -9922,7 +9945,7 @@ var __decorate$90 = (this && this.__decorate) || function (decorators, target, k
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLTableModule = (function () {
+var VCLTableModule = /** @class */ (function () {
     function VCLTableModule() {
     }
     VCLTableModule = __decorate$90([
@@ -9951,7 +9974,7 @@ var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$13 = {
     useExisting: forwardRef(function () { return PasswordInputComponent; }),
     multi: true
 };
-var PasswordInputComponent = (function () {
+var PasswordInputComponent = /** @class */ (function () {
     function PasswordInputComponent(cdRef) {
         this.cdRef = cdRef;
         this.visibleIcon = 'fa:eye-slash';
@@ -10054,7 +10077,7 @@ var __decorate$114 = (this && this.__decorate) || function (decorators, target, 
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var VCLPasswordInputModule = (function () {
+var VCLPasswordInputModule = /** @class */ (function () {
     function VCLPasswordInputModule() {
     }
     VCLPasswordInputModule = __decorate$114([

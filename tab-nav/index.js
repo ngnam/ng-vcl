@@ -10,7 +10,7 @@ import { TabNavComponent } from './tab-nav.component';
 import { TabComponent, TabLabelDirective } from './tab.component';
 import { L10nModule } from '../l10n/index';
 import { VCLWormholeModule } from '../wormhole/index';
-var VCLTabNavModule = (function () {
+var VCLTabNavModule = /** @class */ (function () {
     function VCLTabNavModule() {
     }
     VCLTabNavModule = __decorate([

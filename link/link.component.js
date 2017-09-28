@@ -24,7 +24,7 @@ import { Observable } from 'rxjs/Observable';
 import { Component, Input, HostBinding, Optional } from '@angular/core';
 import { L10nService } from '../l10n/index';
 import { ObservableComponent } from '../core/index';
-var LinkComponent = (function (_super) {
+var LinkComponent = /** @class */ (function (_super) {
     __extends(LinkComponent, _super);
     function LinkComponent(l10n) {
         var _this = _super.call(this) || this;

@@ -15,7 +15,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return DatePickerComponent; }),
     multi: true
 };
-var DatePickerComponent = (function () {
+var DatePickerComponent = /** @class */ (function () {
     function DatePickerComponent(cdRef) {
         this.cdRef = cdRef;
         // behavior

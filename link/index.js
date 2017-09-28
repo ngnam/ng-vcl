@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { LinkComponent } from './link.component';
 import { VCLIcogramModule } from '../icogram/index';
 import { L10nModule } from '../l10n/index';
-var VCLLinkModule = (function () {
+var VCLLinkModule = /** @class */ (function () {
     function VCLLinkModule() {
     }
     VCLLinkModule = __decorate([

@@ -12,13 +12,13 @@ import { TemplateRef } from "@angular/core";
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-var Wormhole = (function () {
+var Wormhole = /** @class */ (function () {
     function Wormhole() {
     }
     return Wormhole;
 }());
 export { Wormhole };
-var TemplateWormholeBase = (function (_super) {
+var TemplateWormholeBase = /** @class */ (function (_super) {
     __extends(TemplateWormholeBase, _super);
     // The wormhole directive needs a reference to the template
     function TemplateWormholeBase(templateRef) {
@@ -66,7 +66,7 @@ var TemplateWormholeBase = (function (_super) {
     return TemplateWormholeBase;
 }(Wormhole));
 export { TemplateWormholeBase };
-var ComponentWormholeBase = (function (_super) {
+var ComponentWormholeBase = /** @class */ (function (_super) {
     __extends(ComponentWormholeBase, _super);
     function ComponentWormholeBase(componentClass) {
         var _this = _super.call(this) || this;

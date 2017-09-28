@@ -10,7 +10,7 @@ import { VCLInputModule } from '../input/index';
 import { VCLButtonModule } from '../button/index';
 import { PasswordInputComponent } from './password-input.component';
 export { PasswordInputComponent };
-var VCLPasswordInputModule = (function () {
+var VCLPasswordInputModule = /** @class */ (function () {
     function VCLPasswordInputModule() {
     }
     VCLPasswordInputModule = __decorate([

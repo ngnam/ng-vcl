@@ -14,7 +14,7 @@ import { NotificationService } from './notification.service';
 import { Notification } from './notification';
 import { NotificationType, NotificationPosition } from './types';
 export { Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent };
-var VCLNotificationModule = (function () {
+var VCLNotificationModule = /** @class */ (function () {
     function VCLNotificationModule() {
     }
     VCLNotificationModule = __decorate([

@@ -17,7 +17,7 @@ function getViewRootNode(embeddedViewRef) {
 function getComponentRootNode(componentRef) {
     return getViewRootNode(componentRef.hostView);
 }
-var DomComponentWormhole = (function (_super) {
+var DomComponentWormhole = /** @class */ (function (_super) {
     __extends(DomComponentWormhole, _super);
     function DomComponentWormhole(componentClass, appRef, node, injector) {
         var _this = _super.call(this, componentClass) || this;
@@ -71,7 +71,7 @@ var DomComponentWormhole = (function (_super) {
     return DomComponentWormhole;
 }(ComponentWormholeBase));
 export { DomComponentWormhole };
-var DomTemplateWormhole = (function (_super) {
+var DomTemplateWormhole = /** @class */ (function (_super) {
     __extends(DomTemplateWormhole, _super);
     // The wormhole directive needs a reference to the template
     function DomTemplateWormhole(templateRef, appRef, node, injector) {

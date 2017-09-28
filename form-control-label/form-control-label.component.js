@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, HostBinding, ViewChild, ChangeDetectionStrategy, ElementRef } from '@angular/core';
-var FormControlLabelComponent = (function () {
+var FormControlLabelComponent = /** @class */ (function () {
     function FormControlLabelComponent() {
         this.disabled = false;
         this.requiredIndicatorCharacter = '•';

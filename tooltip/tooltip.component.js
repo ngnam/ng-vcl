@@ -13,7 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { Component, Input, ElementRef, trigger, state, transition, animate, style, Inject, Renderer } from '@angular/core';
 import { TooltipService } from './tooltip.service';
 import { DOCUMENT } from '@angular/platform-browser';
-var TooltipComponent = (function () {
+var TooltipComponent = /** @class */ (function () {
     function TooltipComponent(element, document, renderer, tooltipService) {
         this.element = element;
         this.document = document;

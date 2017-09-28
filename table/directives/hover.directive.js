@@ -15,7 +15,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
-var HoverDirective = (function () {
+var HoverDirective = /** @class */ (function () {
     function HoverDirective(renderer, el) {
         this.renderer = renderer;
         this.el = el;

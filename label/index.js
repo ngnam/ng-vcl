@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { LabelComponent } from './label.component';
 import { VCLMetalistModule } from '../metalist/index';
 import { L10nModule } from '../l10n/index';
-var VCLLabelModule = (function () {
+var VCLLabelModule = /** @class */ (function () {
     function VCLLabelModule() {
     }
     VCLLabelModule = __decorate([

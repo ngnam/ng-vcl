@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { NgModule } from '@angular/core';
 import { InputDirective } from './input.directive';
 export { InputDirective };
-var VCLInputModule = (function () {
+var VCLInputModule = /** @class */ (function () {
     function VCLInputModule() {
     }
     VCLInputModule = __decorate([

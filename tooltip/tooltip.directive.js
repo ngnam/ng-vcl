@@ -13,7 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { Directive, HostListener, Input, ElementRef, ComponentFactoryResolver, ViewContainerRef, Inject } from '@angular/core';
 import { TooltipComponent } from './tooltip.component';
 import { DOCUMENT } from '@angular/platform-browser';
-var TooltipDirective = (function () {
+var TooltipDirective = /** @class */ (function () {
     function TooltipDirective(element, resolver, viewContainerRef, document) {
         this.element = element;
         this.resolver = resolver;

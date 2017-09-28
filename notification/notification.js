@@ -16,7 +16,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/skipWhile';
 import { Subject } from 'rxjs/Subject';
 import { NotificationType, TYPE_CLASS_MAP } from './types';
-var Notification = (function (_super) {
+var Notification = /** @class */ (function (_super) {
     __extends(Notification, _super);
     function Notification(opts) {
         var _this = _super.call(this) || this;

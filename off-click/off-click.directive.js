@@ -13,7 +13,7 @@ import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/skipUntil';
 import 'rxjs/add/operator/first';
-var OffClickDirective = (function () {
+var OffClickDirective = /** @class */ (function () {
     function OffClickDirective(elem) {
         this.elem = elem;
         this.offClick = new EventEmitter();

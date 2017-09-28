@@ -19,7 +19,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { ViewContainerRef, Directive, Input } from '@angular/core';
 import { WormholeHost } from "./wormhole-host";
-var WormholeDirective = (function (_super) {
+var WormholeDirective = /** @class */ (function (_super) {
     __extends(WormholeDirective, _super);
     function WormholeDirective(viewContainerRef) {
         return _super.call(this, viewContainerRef) || this;

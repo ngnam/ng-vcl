@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ChangeDetectionStrategy, Input, ViewEncapsulation, trigger, state, transition, animate, style } from '@angular/core';
-var NotificationComponent = (function () {
+var NotificationComponent = /** @class */ (function () {
     function NotificationComponent() {
         this.notifications = [];
     }

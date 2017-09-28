@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { OffClickDirective } from './off-click.directive';
-var VCLOffClickModule = (function () {
+var VCLOffClickModule = /** @class */ (function () {
     function VCLOffClickModule() {
     }
     VCLOffClickModule = __decorate([

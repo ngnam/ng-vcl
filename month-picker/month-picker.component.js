@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, ChangeDetectorRef, } from '@angular/core';
-var MonthPickerComponent = (function () {
+var MonthPickerComponent = /** @class */ (function () {
     //
     function MonthPickerComponent(ref) {
         this.ref = ref;

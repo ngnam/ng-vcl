@@ -8,7 +8,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from './toolbar.component';
 import { L10nModule } from '../l10n/index';
-var VCLToolbarModule = (function () {
+var VCLToolbarModule = /** @class */ (function () {
     function VCLToolbarModule() {
     }
     VCLToolbarModule = __decorate([

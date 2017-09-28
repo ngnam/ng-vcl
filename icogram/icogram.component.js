@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component, Input, ChangeDetectionStrategy, ElementRef } from '@angular/core';
-var IcogramComponent = (function () {
+var IcogramComponent = /** @class */ (function () {
     function IcogramComponent(elRef) {
         this.elRef = elRef;
     }

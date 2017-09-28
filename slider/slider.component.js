@@ -19,7 +19,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return SliderComponent; }),
     multi: true
 };
-var SliderComponent = (function () {
+var SliderComponent = /** @class */ (function () {
     function SliderComponent(cdRef) {
         this.cdRef = cdRef;
         this.tabindex = 0;

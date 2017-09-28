@@ -14,7 +14,7 @@ export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return FlipSwitchComponent; }),
     multi: true
 };
-var FlipSwitchComponent = (function () {
+var FlipSwitchComponent = /** @class */ (function () {
     function FlipSwitchComponent(cdRef) {
         this.cdRef = cdRef;
         this.tabindex = 0;

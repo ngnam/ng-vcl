@@ -84,7 +84,7 @@ export var BUTTON_ALIGNMENT_CLASS_MAP = (_c = {},
     _c[AlertAlignment.Center] = 'vclLayoutCenterJustified',
     _c[AlertAlignment.Right] = 'vclLayoutEndJustified',
     _c);
-var AlertError = (function (_super) {
+var AlertError = /** @class */ (function (_super) {
     __extends(AlertError, _super);
     function AlertError(reason, message) {
         var _this = _super.call(this, message) || this;

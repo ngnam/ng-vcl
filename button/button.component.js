@@ -29,7 +29,7 @@ var InteractionType;
     InteractionType[InteractionType["Click"] = 0] = "Click";
     InteractionType[InteractionType["Tap"] = 1] = "Tap";
 })(InteractionType || (InteractionType = {}));
-var ButtonComponent = (function (_super) {
+var ButtonComponent = /** @class */ (function (_super) {
     __extends(ButtonComponent, _super);
     function ButtonComponent(elementRef) {
         var _this = _super.call(this) || this;

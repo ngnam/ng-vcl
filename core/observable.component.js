@@ -2,7 +2,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishReplay';
-var ObservableComponent = (function () {
+var ObservableComponent = /** @class */ (function () {
     function ObservableComponent() {
         this.changesSubject = new Subject();
         this.observedProps = {};

@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ProgressBarComponent } from './progress-bar.component';
-var VCLProgressBarModule = (function () {
+var VCLProgressBarModule = /** @class */ (function () {
     function VCLProgressBarModule() {
     }
     VCLProgressBarModule = __decorate([

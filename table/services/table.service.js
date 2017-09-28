@@ -8,7 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Injectable, Renderer2, ElementRef } from '@angular/core';
-var TableService = (function () {
+var TableService = /** @class */ (function () {
     function TableService(renderer, el) {
         this.renderer = renderer;
         this.el = el;

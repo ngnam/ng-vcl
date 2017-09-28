@@ -25,7 +25,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 export var L10N_LOADER_CONFIG = new OpaqueToken('l10n.loader.config');
-var L10nLoaderService = (function () {
+var L10nLoaderService = /** @class */ (function () {
     function L10nLoaderService() {
     }
     return L10nLoaderService;
@@ -52,7 +52,7 @@ function flatten(locale, group) {
     });
     return pkg;
 }
-var L10nStaticLoaderService = (function (_super) {
+var L10nStaticLoaderService = /** @class */ (function (_super) {
     __extends(L10nStaticLoaderService, _super);
     function L10nStaticLoaderService(config) {
         var _this = _super.call(this) || this;
@@ -73,7 +73,7 @@ var L10nStaticLoaderService = (function (_super) {
     return L10nStaticLoaderService;
 }(L10nLoaderService));
 export { L10nStaticLoaderService };
-var L10nAsyncLoaderService = (function (_super) {
+var L10nAsyncLoaderService = /** @class */ (function (_super) {
     __extends(L10nAsyncLoaderService, _super);
     function L10nAsyncLoaderService(config) {
         var _this = _super.call(this) || this;
@@ -103,7 +103,7 @@ var L10nAsyncLoaderService = (function (_super) {
     return L10nAsyncLoaderService;
 }(L10nLoaderService));
 export { L10nAsyncLoaderService };
-var L10nNoopLoaderService = (function (_super) {
+var L10nNoopLoaderService = /** @class */ (function (_super) {
     __extends(L10nNoopLoaderService, _super);
     function L10nNoopLoaderService() {
         return _super !== null && _super.apply(this, arguments) || this;

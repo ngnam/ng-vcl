@@ -10,7 +10,7 @@ import { TooltipComponent } from './tooltip.component';
 import { TooltipDirective } from './tooltip.directive';
 import { L10nModule } from '../l10n/index';
 import { TooltipService } from './tooltip.service';
-var VCLTooltipModule = (function () {
+var VCLTooltipModule = /** @class */ (function () {
     function VCLTooltipModule() {
     }
     VCLTooltipModule = __decorate([
