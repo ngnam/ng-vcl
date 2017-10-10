@@ -15,9 +15,10 @@ export declare class SelectComponent implements ControlValueAccessor {
     mode: 'multiple' | 'single';
     tabindex: number;
     expanded: boolean;
+    zIndex: number;
     disabled: boolean;
     listenKeys: boolean;
-    maxSelectableItems: number;
+    maxSelectableItems?: number;
     expandedIcon: string;
     collapsedIcon: string;
     change: EventEmitter<any>;

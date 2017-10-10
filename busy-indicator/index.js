@@ -6,6 +6,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { VCLIconModule } from '../icon/index';
+import { VCLIcogramModule } from '../icogram/index';
 import { BusyIndicatorComponent } from './busy-indicator.component';
 import { BusyComponent } from './busy.component';
 export { BusyComponent, BusyIndicatorComponent };
@@ -14,7 +16,7 @@ var VCLBusyIndicatorModule = /** @class */ (function () {
     }
     VCLBusyIndicatorModule = __decorate([
         NgModule({
-            imports: [CommonModule],
+            imports: [CommonModule, VCLIconModule, VCLIcogramModule],
             exports: [BusyComponent, BusyIndicatorComponent],
             declarations: [BusyComponent, BusyIndicatorComponent]
         })

@@ -26,7 +26,6 @@ var MetalistComponent = /** @class */ (function () {
         // If `Single`, a single item can be selected
         // If `Multiple` multiple items can be selected
         this.selectionMode = SelectionMode.Single;
-        this.maxSelectableItems = Infinity;
         this.change = new EventEmitter();
         /**
          * things needed for ControlValueAccessor-Interface
@@ -101,7 +100,8 @@ var MetalistComponent = /** @class */ (function () {
             if (this.selectionMode === SelectionMode.Multiple) {
                 var selectedItems = (this.items || []).filter(function (i) { return i.selected; });
                 // prevent overflow
-                var overflow = this.selectionMode === SelectionMode.Multiple && !item.selected && selectedItems.length >= this.maxSelectableItems;
+                var maxSelectableItems = typeof this.maxSelectableItems === 'number' ? this.maxSelectableItems : Infinity;
+                var overflow = this.selectionMode === SelectionMode.Multiple && !item.selected && selectedItems.length >= maxSelectableItems;
                 if (!overflow) {
                     item.selected = !item.selected;
                 }

@@ -10,7 +10,7 @@ export declare class MetalistComponent implements ControlValueAccessor {
     private cdRef;
     selectionMode: SelectionMode;
     mode: 'multiple' | 'single';
-    maxSelectableItems: number;
+    maxSelectableItems?: number;
     change: EventEmitter<any>;
     items: QueryList<MetalistItem>;
     value: any | any[];

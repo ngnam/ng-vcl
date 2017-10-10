@@ -20,7 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Component, Input, Output, EventEmitter, ElementRef, trigger, HostListener, HostBinding, ChangeDetectionStrategy, OpaqueToken, Inject, Optional } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, trigger, HostListener, HostBinding, ChangeDetectionStrategy, OpaqueToken, Inject, Optional, ChangeDetectorRef } from '@angular/core';
 import { ObservableComponent } from "../core/index";
 import { AnimationBuilder } from "@angular/animations";
 export var AttachmentX = {
@@ -47,10 +47,11 @@ export var PopoverState;
 export var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent = /** @class */ (function (_super) {
     __extends(PopoverComponent, _super);
-    function PopoverComponent(me, builder, animations) {
+    function PopoverComponent(me, builder, cdRef, animations) {
         var _this = _super.call(this) || this;
         _this.me = me;
         _this.builder = builder;
+        _this.cdRef = cdRef;
         _this.animations = animations;
         _this.targetX = AttachmentX.Left;
         _this.targetY = AttachmentY.Bottom;
@@ -159,6 +160,7 @@ var PopoverComponent = /** @class */ (function (_super) {
                 player_1.play();
             }
             _this.state = PopoverState.visible;
+            _this.cdRef.markForCheck();
         }, 0);
     };
     PopoverComponent.prototype.close = function () {
@@ -173,11 +175,13 @@ var PopoverComponent = /** @class */ (function (_super) {
             player_2.onDone(function () {
                 player_2.destroy();
                 _this.state = PopoverState.hidden;
+                _this.cdRef.markForCheck();
             });
             player_2.play();
         }
         else {
             this.state = PopoverState.hidden;
+            this.cdRef.markForCheck();
         }
     };
     PopoverComponent.prototype.toggle = function () {
@@ -313,8 +317,10 @@ var PopoverComponent = /** @class */ (function (_super) {
                 '[style.position]': '"absolute"'
             }
         }),
-        __param(2, Optional()), __param(2, Inject(POPOVER_ANIMATIONS)),
-        __metadata("design:paramtypes", [ElementRef, AnimationBuilder, Object])
+        __param(3, Optional()), __param(3, Inject(POPOVER_ANIMATIONS)),
+        __metadata("design:paramtypes", [ElementRef,
+            AnimationBuilder,
+            ChangeDetectorRef, Object])
     ], PopoverComponent);
     return PopoverComponent;
     var PopoverComponent_1;

@@ -67,10 +67,9 @@ var SelectComponent = /** @class */ (function () {
         this.selectionMode = SelectionMode.Single;
         this.tabindex = 0;
         this.expanded = false;
+        this.zIndex = 999999;
         this.disabled = false;
         this.listenKeys = true;
-        // multi-select
-        this.maxSelectableItems = 1;
         // styling
         this.expandedIcon = 'fa:chevron-up';
         this.collapsedIcon = 'fa:chevron-down';
@@ -318,6 +317,10 @@ var SelectComponent = /** @class */ (function () {
     ], SelectComponent.prototype, "expanded", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", Number)
+    ], SelectComponent.prototype, "zIndex", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", Boolean)
     ], SelectComponent.prototype, "disabled", void 0);
     __decorate([
@@ -361,7 +364,7 @@ var SelectComponent = /** @class */ (function () {
     SelectComponent = __decorate([
         Component({
             selector: 'vcl-select',
-            template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (tap)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list [disabled]=\"disabled\"> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button [disabled]=\"disabled\" type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (tap)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown tabindex=\"-1\" [disabled]=\"disabled\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" [style.display]=\"expanded ? null : 'none'\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"999999\" (change)=\"onDropdownChange($event)\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"disabled || item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
+            template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (tap)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list [disabled]=\"disabled\"> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button [disabled]=\"disabled\" type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (tap)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown tabindex=\"-1\" [disabled]=\"disabled\" [expanded]=\"expanded\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"zIndex\" (change)=\"onDropdownChange($event)\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"disabled || item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {

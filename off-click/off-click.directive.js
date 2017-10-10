@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { EventEmitter, Output, Directive, ElementRef } from '@angular/core';
+import { EventEmitter, Output, Input, Directive, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/observable/fromEvent';
@@ -16,19 +16,23 @@ import 'rxjs/add/operator/first';
 var OffClickDirective = /** @class */ (function () {
     function OffClickDirective(elem) {
         this.elem = elem;
+        this.offClickDelay = 10;
         this.offClick = new EventEmitter();
     }
     OffClickDirective.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (typeof document !== 'undefined') {
             // Add a small delay, so any click that causes this directive to render does not trigger an off-click
-            var delay$ = Observable.timer(10).first();
+            var delay$ = Observable.timer(this.offClickDelay).first();
             this.sub = Observable.fromEvent(document, 'click')
                 .skipUntil(delay$)
                 .subscribe(function (ev) {
                 var me = _this.elem.nativeElement;
                 // Check that the target is not the off-clicks target element or any sub element
-                if (ev.target && me !== ev.target && !me.contains(ev.target)) {
+                var excludes = [
+                    me
+                ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; }));
+                if (ev.target && excludes.every(function (e) { return e !== ev.target && !e.contains(ev.target); })) {
                     _this.offClick.emit();
                 }
             });
@@ -37,6 +41,14 @@ var OffClickDirective = /** @class */ (function () {
     OffClickDirective.prototype.ngOnDestroy = function () {
         this.sub && this.sub.unsubscribe();
     };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], OffClickDirective.prototype, "offClickDelay", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], OffClickDirective.prototype, "offClickExcludes", void 0);
     __decorate([
         Output('offClick'),
         __metadata("design:type", Object)

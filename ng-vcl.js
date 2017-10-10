@@ -16,17 +16,17 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/observable/never';
+import { AnimationBuilder, trigger as trigger$1 } from '@angular/animations';
 import 'rxjs/add/operator/publishBehavior';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/skipUntil';
 import 'rxjs/add/operator/first';
-import { AnimationBuilder, trigger as trigger$1 } from '@angular/animations';
 import 'rxjs/add/operator/startWith';
 import { NavigationEnd, Router } from '@angular/router';
+import { DOCUMENT, DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/skipWhile';
-import { DOCUMENT } from '@angular/platform-browser';
 
 var ObservableComponent = /** @class */ (function () {
     function ObservableComponent() {
@@ -1712,7 +1712,6 @@ var MetalistComponent = /** @class */ (function () {
         // If `Single`, a single item can be selected
         // If `Multiple` multiple items can be selected
         this.selectionMode = SelectionMode.Single;
-        this.maxSelectableItems = Infinity;
         this.change = new EventEmitter();
         /**
          * things needed for ControlValueAccessor-Interface
@@ -1787,7 +1786,8 @@ var MetalistComponent = /** @class */ (function () {
             if (this.selectionMode === SelectionMode.Multiple) {
                 var selectedItems = (this.items || []).filter(function (i) { return i.selected; });
                 // prevent overflow
-                var overflow = this.selectionMode === SelectionMode.Multiple && !item.selected && selectedItems.length >= this.maxSelectableItems;
+                var maxSelectableItems = typeof this.maxSelectableItems === 'number' ? this.maxSelectableItems : Infinity;
+                var overflow = this.selectionMode === SelectionMode.Multiple && !item.selected && selectedItems.length >= maxSelectableItems;
                 if (!overflow) {
                     item.selected = !item.selected;
                 }
@@ -2157,6 +2157,9 @@ var __decorate$22 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$11 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param$3 = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -2192,16 +2195,29 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var DropdownState;
+(function (DropdownState) {
+    DropdownState[DropdownState["Expanded"] = 0] = "Expanded";
+    DropdownState[DropdownState["Closed"] = 1] = "Closed";
+    DropdownState[DropdownState["Expanding"] = 2] = "Expanding";
+    DropdownState[DropdownState["Closing"] = 3] = "Closing";
+})(DropdownState || (DropdownState = {}));
+var DROPDOWN_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#dropdown_animations');
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3 = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return DropdownComponent; }),
     multi: true
 };
 var DropdownComponent = /** @class */ (function () {
-    function DropdownComponent(elementRef, cdRef) {
+    function DropdownComponent(elementRef, cdRef, builder, animations) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
+        this.builder = builder;
+        this.animations = animations;
         this.tabindex = 0;
+        this.state = DropdownState.Expanded;
+        this.willClose = new EventEmitter();
+        this.willExpand = new EventEmitter();
         // If `Single`, a single item can be selected
         // If `Multiple` multiple items can be selected
         this.selectionMode = SelectionMode.Single;
@@ -2214,7 +2230,23 @@ var DropdownComponent = /** @class */ (function () {
          */
         this.onChange = function () { };
         this.onTouched = function () { };
+        this.DropdownState = DropdownState;
     }
+    Object.defineProperty(DropdownComponent.prototype, "expanded", {
+        get: function () {
+            return (this.state === DropdownState.Expanding || this.state === DropdownState.Expanded);
+        },
+        set: function (value) {
+            if (value) {
+                this.expand();
+            }
+            else {
+                this.close();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DropdownComponent.prototype, "mode", {
         get: function () {
             return this.selectionMode === SelectionMode.Multiple ? 'multiple' : 'single';
@@ -2226,6 +2258,51 @@ var DropdownComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DropdownComponent.prototype.expand = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var player_1;
+            return __generator(this, function (_a) {
+                if (this.state === DropdownState.Expanded || this.state === DropdownState.Expanding) {
+                    return [2 /*return*/];
+                }
+                this.state = DropdownState.Expanding;
+                this.willExpand.emit();
+                if (this.enterAnimationFactory && this.elementRef) {
+                    player_1 = this.enterAnimationFactory.create(this.elementRef.nativeElement);
+                    player_1.onDone(function () {
+                        player_1.destroy();
+                        _this.state = DropdownState.Expanded;
+                    });
+                    player_1.play();
+                }
+                else {
+                    this.state = DropdownState.Expanded;
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    DropdownComponent.prototype.close = function () {
+        var _this = this;
+        if (this.state === DropdownState.Closed || this.state === DropdownState.Closing) {
+            return;
+        }
+        this.state = DropdownState.Closing;
+        this.willClose.emit();
+        if (this.leaveAnimationFactory && this.elementRef) {
+            var player_2 = this.leaveAnimationFactory.create(this.elementRef.nativeElement);
+            player_2.onDone(function () {
+                player_2.destroy();
+                _this.state = DropdownState.Closed;
+                _this.cdRef.markForCheck();
+            });
+            player_2.play();
+        }
+        else {
+            this.state = DropdownState.Closed;
+        }
+    };
     DropdownComponent.prototype.scrollToMarked = function () {
         return __awaiter(this, void 0, void 0, function () {
             var itemEl, scrollPos, boxHeight, itemHeight, itemOffset, scrollToItem;
@@ -2286,6 +2363,14 @@ var DropdownComponent = /** @class */ (function () {
         this.items.changes.subscribe(function () {
             _this.cdRef.markForCheck();
         });
+        if (this.animations) {
+            if (this.animations.enter) {
+                this.enterAnimationFactory = this.builder.build(this.animations.enter);
+            }
+            if (this.animations.leave) {
+                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
+            }
+        }
     };
     DropdownComponent.prototype.onMetalistFocus = function () {
         this.focused = true;
@@ -2332,6 +2417,19 @@ var DropdownComponent = /** @class */ (function () {
     ], DropdownComponent.prototype, "tabindex", void 0);
     __decorate$22([
         Input(),
+        __metadata$11("design:type", Object),
+        __metadata$11("design:paramtypes", [Object])
+    ], DropdownComponent.prototype, "expanded", null);
+    __decorate$22([
+        Output(),
+        __metadata$11("design:type", Object)
+    ], DropdownComponent.prototype, "willClose", void 0);
+    __decorate$22([
+        Output(),
+        __metadata$11("design:type", Object)
+    ], DropdownComponent.prototype, "willExpand", void 0);
+    __decorate$22([
+        Input(),
         __metadata$11("design:type", Number)
     ], DropdownComponent.prototype, "selectionMode", void 0);
     __decorate$22([
@@ -2341,7 +2439,7 @@ var DropdownComponent = /** @class */ (function () {
     ], DropdownComponent.prototype, "mode", null);
     __decorate$22([
         Input(),
-        __metadata$11("design:type", Object)
+        __metadata$11("design:type", Number)
     ], DropdownComponent.prototype, "maxSelectableItems", void 0);
     __decorate$22([
         Input(),
@@ -2358,14 +2456,17 @@ var DropdownComponent = /** @class */ (function () {
     DropdownComponent = __decorate$22([
         Component({
             selector: 'vcl-dropdown',
-            template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [class.vclDisabled]=\"disabled\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (focus)=\"onMetalistFocus()\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"disabled || item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"disabled || metaItem.disabled\" [class.vclHighlighted]=\"focused && metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (tap)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
+            template: "<ul vcl-metalist #metalist [class.vclLayoutHidden]=\"state === DropdownState.Closed\"  [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" class=\"vclDropdown vclOpen\" role=\"listbox\" [class.vclDisabled]=\"disabled\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (focus)=\"onMetalistFocus()\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"disabled || item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"disabled || metaItem.disabled\" [class.vclHighlighted]=\"focused && metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (tap)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3],
             host: {
                 '[attr.tabindex]': '-1',
             }
         }),
-        __metadata$11("design:paramtypes", [ElementRef, ChangeDetectorRef])
+        __param$3(3, Optional()), __param$3(3, Inject(DROPDOWN_ANIMATIONS)),
+        __metadata$11("design:paramtypes", [ElementRef,
+            ChangeDetectorRef,
+            AnimationBuilder, Object])
     ], DropdownComponent);
     return DropdownComponent;
 }());
@@ -2801,19 +2902,23 @@ var __metadata$16 = (this && this.__metadata) || function (k, v) {
 var OffClickDirective = /** @class */ (function () {
     function OffClickDirective(elem) {
         this.elem = elem;
+        this.offClickDelay = 10;
         this.offClick = new EventEmitter();
     }
     OffClickDirective.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (typeof document !== 'undefined') {
             // Add a small delay, so any click that causes this directive to render does not trigger an off-click
-            var delay$ = Observable.timer(10).first();
+            var delay$ = Observable.timer(this.offClickDelay).first();
             this.sub = Observable.fromEvent(document, 'click')
                 .skipUntil(delay$)
                 .subscribe(function (ev) {
                 var me = _this.elem.nativeElement;
                 // Check that the target is not the off-clicks target element or any sub element
-                if (ev.target && me !== ev.target && !me.contains(ev.target)) {
+                var excludes = [
+                    me
+                ].concat((_this.offClickExcludes || []).map(function (e) { return e instanceof ElementRef ? e.nativeElement : e; }).filter(function (e) { return e instanceof Element; }));
+                if (ev.target && excludes.every(function (e) { return e !== ev.target && !e.contains(ev.target); })) {
                     _this.offClick.emit();
                 }
             });
@@ -2822,6 +2927,14 @@ var OffClickDirective = /** @class */ (function () {
     OffClickDirective.prototype.ngOnDestroy = function () {
         this.sub && this.sub.unsubscribe();
     };
+    __decorate$31([
+        Input(),
+        __metadata$16("design:type", Object)
+    ], OffClickDirective.prototype, "offClickDelay", void 0);
+    __decorate$31([
+        Input(),
+        __metadata$16("design:type", Array)
+    ], OffClickDirective.prototype, "offClickExcludes", void 0);
     __decorate$31([
         Output('offClick'),
         __metadata$16("design:type", Object)
@@ -2872,7 +2985,7 @@ var __decorate$33 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$17 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$3 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$4 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var AttachmentX = {
@@ -2899,10 +3012,11 @@ var PopoverState;
 var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent = /** @class */ (function (_super) {
     __extends$9(PopoverComponent, _super);
-    function PopoverComponent(me, builder, animations) {
+    function PopoverComponent(me, builder, cdRef, animations) {
         var _this = _super.call(this) || this;
         _this.me = me;
         _this.builder = builder;
+        _this.cdRef = cdRef;
         _this.animations = animations;
         _this.targetX = AttachmentX.Left;
         _this.targetY = AttachmentY.Bottom;
@@ -3011,6 +3125,7 @@ var PopoverComponent = /** @class */ (function (_super) {
                 player_1.play();
             }
             _this.state = PopoverState.visible;
+            _this.cdRef.markForCheck();
         }, 0);
     };
     PopoverComponent.prototype.close = function () {
@@ -3025,11 +3140,13 @@ var PopoverComponent = /** @class */ (function (_super) {
             player_2.onDone(function () {
                 player_2.destroy();
                 _this.state = PopoverState.hidden;
+                _this.cdRef.markForCheck();
             });
             player_2.play();
         }
         else {
             this.state = PopoverState.hidden;
+            this.cdRef.markForCheck();
         }
     };
     PopoverComponent.prototype.toggle = function () {
@@ -3165,8 +3282,10 @@ var PopoverComponent = /** @class */ (function (_super) {
                 '[style.position]': '"absolute"'
             }
         }),
-        __param$3(2, Optional()), __param$3(2, Inject(POPOVER_ANIMATIONS)),
-        __metadata$17("design:paramtypes", [ElementRef, AnimationBuilder, Object])
+        __param$4(3, Optional()), __param$4(3, Inject(POPOVER_ANIMATIONS)),
+        __metadata$17("design:paramtypes", [ElementRef,
+            AnimationBuilder,
+            ChangeDetectorRef, Object])
     ], PopoverComponent);
     return PopoverComponent;
     var PopoverComponent_1;
@@ -3819,10 +3938,9 @@ var SelectComponent = /** @class */ (function () {
         this.selectionMode = SelectionMode.Single;
         this.tabindex = 0;
         this.expanded = false;
+        this.zIndex = 999999;
         this.disabled = false;
         this.listenKeys = true;
-        // multi-select
-        this.maxSelectableItems = 1;
         // styling
         this.expandedIcon = 'fa:chevron-up';
         this.collapsedIcon = 'fa:chevron-down';
@@ -4070,6 +4188,10 @@ var SelectComponent = /** @class */ (function () {
     ], SelectComponent.prototype, "expanded", void 0);
     __decorate$39([
         Input(),
+        __metadata$22("design:type", Number)
+    ], SelectComponent.prototype, "zIndex", void 0);
+    __decorate$39([
+        Input(),
         __metadata$22("design:type", Boolean)
     ], SelectComponent.prototype, "disabled", void 0);
     __decorate$39([
@@ -4113,7 +4235,7 @@ var SelectComponent = /** @class */ (function () {
     SelectComponent = __decorate$39([
         Component({
             selector: 'vcl-select',
-            template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (tap)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list [disabled]=\"disabled\"> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button [disabled]=\"disabled\" type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (tap)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown tabindex=\"-1\" [disabled]=\"disabled\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" [style.display]=\"expanded ? null : 'none'\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"999999\" (change)=\"onDropdownChange($event)\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"disabled || item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
+            template: "<div (offClick)=\"close()\"> <div #select class=\"vclLayoutHorizontal vclSelect vclInputGroupEmb\" [style.marginBottom]=\"0\" > <div *ngIf=\"showDisplayValue\" class=\"vclInput\" readonly [class.vclSelected]=\"focused\" (tap)=\"toggle($event)\"> {{displayValue}} </div> <div *ngIf=\"!showDisplayValue\" class=\"vclInput vclTokenInput vclLayoutHorizontal vclLayoutWrap\" readonly [class.vclSelected]=\"focused\" (click)=\"toggle($event)\"> <vcl-token-list [disabled]=\"disabled\"> <vcl-token *ngFor=\"let item of selectedItems\" [label]=\"item.label\" [removable]=\"true\" (remove)=\"deselectItem(item, $event)\"></vcl-token> </vcl-token-list> </div> <button vcl-button [disabled]=\"disabled\" type=\"button\" tabindex=\"-1\" class=\"vclTransparent vclSquare vclAppended\" [appIcon]=\"expanded ? expandedIcon : collapsedIcon\" (tap)=\"toggle()\"> </button> </div> <vcl-dropdown  #dropdown tabindex=\"-1\" [disabled]=\"disabled\" [expanded]=\"expanded\" [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" [style.position]=\"'relative'\" [style.top.px]=\"dropdownTop\" [style.width]=\"'100%'\" [style.position]=\"'absolute'\" [style.zIndex]=\"zIndex\" (change)=\"onDropdownChange($event)\"> <vcl-dropdown-option  *ngFor=\"let item of items\"  [metadata]=\"item\"  [value]=\"item.value\"  [selected]=\"item.selected\"  [disabled]=\"disabled || item.disabled\"  [label]=\"item.label\"  [sublabel]=\"item.sublabel\"> </vcl-dropdown-option> </vcl-dropdown> </div> ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$6],
             host: {
@@ -4407,7 +4529,7 @@ var __decorate$44 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$26 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
@@ -4566,7 +4688,7 @@ var LayerContainerComponent = /** @class */ (function () {
         Component({
             template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layerOpts.customClass\" [class.vclTransparent]=\"layerOpts.transparent\" [class.vclLayerFill]=\"layerOpts.fill\" [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (tap)='triggerOffClick($event)' > <div #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div> ",
         }),
-        __param$5(3, Optional()), __param$5(3, Inject(LAYER_ANIMATIONS)),
+        __param$6(3, Optional()), __param$6(3, Inject(LAYER_ANIMATIONS)),
         __metadata$26("design:paramtypes", [ChangeDetectorRef,
             AnimationBuilder,
             ElementRef, Object])
@@ -4784,7 +4906,7 @@ var __decorate$42 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$24 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$4 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var LAYERS = new OpaqueToken('@ng-vcl/ng-vcl#layers');
@@ -4853,7 +4975,7 @@ var VCLLayerModule = /** @class */ (function () {
             entryComponents: [LayerContainerComponent],
             providers: []
         }),
-        __param$4(0, Inject(LAYERS)),
+        __param$5(0, Inject(LAYERS)),
         __metadata$24("design:paramtypes", [Array, LayerManagerService,
             Injector])
     ], VCLLayerModule);
@@ -5058,7 +5180,7 @@ var __decorate$52 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$31 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var LinkComponent = /** @class */ (function (_super) {
@@ -5151,7 +5273,7 @@ var LinkComponent = /** @class */ (function (_super) {
             selector: '[vcl-link]',
             template: "<vcl-icogram *ngIf=\"useIcogram\" [label]=\"(locLabel$ | async) || href\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> <ng-container *ngIf=\"!useIcogram\"> {{(locLabel$ | async) || href}} <ng-content></ng-content> </ng-container> "
         }),
-        __param$6(0, Optional()),
+        __param$7(0, Optional()),
         __metadata$31("design:paramtypes", [L10nService])
     ], LinkComponent);
     return LinkComponent;
@@ -5186,7 +5308,7 @@ var __decorate$54 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$33 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$8 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var NavigationItemDirective = /** @class */ (function () {
@@ -5315,8 +5437,8 @@ var NavigationItemDirective = /** @class */ (function () {
         Directive({
             selector: 'vcl-navitem'
         }),
-        __param$7(1, Inject(forwardRef(function () { return NavigationComponent; }))),
-        __param$7(2, Optional()), __param$7(2, SkipSelf()), __param$7(2, Inject(NavigationItemDirective_1)),
+        __param$8(1, Inject(forwardRef(function () { return NavigationComponent; }))),
+        __param$8(2, Optional()), __param$8(2, SkipSelf()), __param$8(2, Inject(NavigationItemDirective_1)),
         __metadata$33("design:paramtypes", [Router,
             NavigationComponent,
             NavigationItemDirective])
@@ -7161,7 +7283,7 @@ var MonthPickerComponent = /** @class */ (function () {
     MonthPickerComponent = MonthPickerComponent_1 = __decorate$69([
         Component({
             selector: 'vcl-month-picker',
-            template: "<div class=\"vclDatePicker\" [class.vclLayoutHidden]=\"!expanded\"> <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" [attr.role]=\"'grid'\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"maxSelectableMonths > 1\" [attr.aria-expanded]=\"expanded\"> <div class=\"vclLayoutFlex vclDGRow vclLayoutAuto\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button vcl-button class=\"vclButton vclTransparent vclSquare\" type=\"button\" [class.vclDisabled]=\"!prevYearAvailable\" [appIcon]=\"prevYearBtnIcon\" (click)=\"onPrevYearTap()\"> </button> <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span> <button vcl-button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [class.vclDisabled]=\"!nextYearAvailable\" [appIcon]=\"nextYearBtnIcon\" (click)=\"onNextYearTap()\"> </button> <button vcl-button *ngIf=\"expandable\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" [appIcon]=\"closeBtnIcon\" (click)=\"onCloseBtnTap()\"> </button> </div> </div> <div class=\"vclSeparator\"></div> <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\"> <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclLayoutFlex vclDGRow vclLayoutAuto\" role=\"row\"> <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\" (click)=\"selectMonth(currentYear, i+j)\" class=\"vclDGCell vclCalItem\" [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\" [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclToday]=\"isCurrentMonth(i+j)\" [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\" [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" [style.background-color]=\"currentMeta[i+j].color\" [style.order]=\"i+j\" [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" role=\"gridcell\" tabindex=\"0\"> <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\"> {{months[i + j]}} </div> </div> </div> </ng-template> </div> </div> ",
+            template: "<div class=\"vclDatePicker\"> <div class=\"vclDataGrid vclDGVAlignMiddle vclDGAlignCentered vclCalendar vclCalInput\" [attr.role]=\"'grid'\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"maxSelectableMonths > 1\" [attr.aria-expanded]=\"expanded\"> <div class=\"vclLayoutFlex vclDGRow vclLayoutAuto\"> <div class=\"vclToolbar vclLayoutFlex vclLayoutHorizontal vclLayoutJustified vclLayoutCenter\" role=\"menubar\" aria-level=\"1\"> <button vcl-button class=\"vclButton vclTransparent vclSquare\" type=\"button\" [class.vclDisabled]=\"!prevYearAvailable\" [appIcon]=\"prevYearBtnIcon\" (click)=\"onPrevYearTap()\"> </button> <span class=\"vclCalHeaderLabel\">{{ currentYear }}</span> <button vcl-button type=\"button\" class=\"vclButton vclTransparent vclSquare\" [class.vclDisabled]=\"!nextYearAvailable\" [appIcon]=\"nextYearBtnIcon\" (click)=\"onNextYearTap()\"> </button> <button vcl-button *ngIf=\"expandable\" type=\"button\" class=\"vclButton vclTransparent vclSquare\" [appIcon]=\"closeBtnIcon\" (click)=\"onCloseBtnTap()\"> </button> </div> </div> <div class=\"vclSeparator\"></div> <ng-template ngFor let-iM [ngForOf]=\"months\" let-i=\"index\"> <div *ngIf=\"i % monthsPerRow === 0\" class=\"vclLayoutFlex vclDGRow vclLayoutAuto\" role=\"row\"> <div *ngFor=\"let jM of months.slice(i, (i + monthsPerRow > months.length ? months.length : i + monthsPerRow)); let j = index;\" (click)=\"selectMonth(currentYear, i+j)\" class=\"vclDGCell vclCalItem\" [class.vclAvailable]=\"!useAvailableMonths || currentMeta[i+j].available\" [class.vclUnavailable]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclToday]=\"isCurrentMonth(i+j)\" [class.vclOtherMonth]=\"!isCurrentMonth(i+j)\" [class.vclDisabled]=\"useAvailableMonths && !currentMeta[i+j].available\" [class.vclSelected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" [style.background-color]=\"currentMeta[i+j].color\" [style.order]=\"i+j\" [attr.aria-selected]=\"currentMeta[i+j].selected || currentMeta[i+j].preselected\" role=\"gridcell\" tabindex=\"0\"> <div class=\"vclLayoutHorizontal vclLayoutCenterJustified vclMonthPickerListItemLabel\"> {{months[i + j]}} </div> </div> </div> </ng-template> </div> </div> ",
             changeDetection: ChangeDetectionStrategy.OnPush
         }),
         __metadata$41("design:paramtypes", [ChangeDetectorRef])
@@ -8217,13 +8339,19 @@ var __decorate$81 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$48 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var CIRCULAR = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iCiAgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIgogICAgIHZpZXdCb3g9IjAgMCAxMDAgMTAwIgogICAgIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIgoJd2lkdGg9IjEwMCUiCiAgICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICAgIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KCTxnPgoJICAgIDxkZWZzPgoJICAgIAk8Y2xpcFBhdGggaWQ9ImNsaXAiPgoJICAgICAgCQk8cGF0aCAgZD0iTSA1MCA1MCBMIDM1IDAgTCA2NSAwIHoiIC8+CgkJICAgIDwvY2xpcFBhdGg+CgkgICAgCTxlbGxpcHNlIGlkPSJDaXJjbGVCbG9jayIgY2xpcC1wYXRoPSJ1cmwoI2NsaXApIiBjeD0iNTAiIGN5PSI1MCIgcng9IjQwIiByeT0iNDAiIHN0eWxlPSJmaWxsOm5vbmU7IHN0cm9rZTojRThFOEU4IiBzdHJva2Utd2lkdGg9IjE1Ii8+CgkgICAgPC9kZWZzPgoKCQk8dXNlIHhsaW5rOmhyZWY9IiNDaXJjbGVCbG9jayIgLz4KCQk8dXNlIHhsaW5rOmhyZWY9IiNDaXJjbGVCbG9jayIgdHJhbnNmb3JtPSJyb3RhdGUoNDAgNTAgNTApIiAvPgoJCTx1c2UgeGxpbms6aHJlZj0iI0NpcmNsZUJsb2NrIiB0cmFuc2Zvcm09InJvdGF0ZSg4MCA1MCA1MCkiIC8+CgkJPHVzZSB4bGluazpocmVmPSIjQ2lyY2xlQmxvY2siIHRyYW5zZm9ybT0icm90YXRlKDEyMCA1MCA1MCkiLz4KCQk8dXNlIHhsaW5rOmhyZWY9IiNDaXJjbGVCbG9jayIgdHJhbnNmb3JtPSJyb3RhdGUoMTYwIDUwIDUwKSIvPgoJCTx1c2UgeGxpbms6aHJlZj0iI0NpcmNsZUJsb2NrIiB0cmFuc2Zvcm09InJvdGF0ZSgyMDAgNTAgNTApIi8+CgkJPHVzZSB4bGluazpocmVmPSIjQ2lyY2xlQmxvY2siIHRyYW5zZm9ybT0icm90YXRlKDI0MCA1MCA1MCkiLz4KCQk8dXNlIHhsaW5rOmhyZWY9IiNDaXJjbGVCbG9jayIgdHJhbnNmb3JtPSJyb3RhdGUoMjgwIDUwIDUwKSIvPgoJCTx1c2UgeGxpbms6aHJlZj0iI0NpcmNsZUJsb2NrIiB0cmFuc2Zvcm09InJvdGF0ZSgzMjAgNTAgNTApIi8+CgoJCTxlbGxpcHNlIGNsaXAtcGF0aD0idXJsKCNjbGlwKSIgY3g9IjUwIiBjeT0iNTAiIHJ4PSI0MCIgcnk9IjQwIiBzdHlsZT0iZmlsbDpub25lOyBzdHJva2U6IzAwMDAwMCIgc3Ryb2tlLXdpZHRoPSIxNSI+CgkJCTxhbmltYXRlVHJhbnNmb3JtCgkJCQlhdHRyaWJ1dGVOYW1lPSJ0cmFuc2Zvcm0iCgkJCQlhdHRyaWJ1dGVUeXBlPSJYTUwiCgkJCQl0eXBlPSJyb3RhdGUiCgkJCQl2YWx1ZXM9IjAgNTAgNTA7IDQwIDUwIDUwOyA4MCA1MCA1MDsgMTIwIDUwIDUwOyAxNjAgNTAgNTA7IDIwMCA1MCA1MDsgMjQwIDUwIDUwOyAyODAgNTAgNTA7IDMyMCA1MCA1MCIKCQkJCWR1cj0iM3MiCgkJCQlyZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIKCQkJCWFkZGl0aXZlPSJyZXBsYWNlIgoJCQkJY2FsY01vZGU9ImRpc2NyZXRlIgoJCQkJZmlsbD0iZnJlZXplIi8+CgkJPC9lbGxpcHNlPgoJPC9nPgo8L3N2Zz4=';
+var STRAIGHT = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iCiAgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4xIgogICAgIHZpZXdCb3g9IjAgMCA5MCA2MCIKICAgICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCIKCSB3aWR0aD0iMTAwJSIKCSBoZWlnaHQ9IjEyMCUiCiAgICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICAgIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj4KICAgICA8Zz4KCSAgICA8cmVjdAoJICAgIAlzdHJva2Utd2lkdGg9IjAiCgkgICAgCXN0cm9rZT0iI2ZmZiIKCSAgICAJZmlsbD0ibm9uZSIKCSAgICAJaGVpZ2h0PSIzMCIKCSAgICAJd2lkdGg9IjkwIgoJICAgIAl4PSIwIiB5PSIxNSI+PC9yZWN0PgoJICAgIDxkZWZzPgoJCQk8cmVjdCBjbGFzcz0idGVzdCIgZmlsbD0iI0U4RThFOCIgaWQ9IlJlY3QiIHg9IjAiIHk9IjE1IiBoZWlnaHQ9IjMwIiB3aWR0aD0iMTUiPjwvcmVjdD4KCSAgICA8L2RlZnM+CgoJCTx1c2UgeGxpbms6aHJlZj0iI1JlY3QiIC8+CgkJPHVzZSB4bGluazpocmVmPSIjUmVjdCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjUpIiAvPgoJCTx1c2UgeGxpbms6aHJlZj0iI1JlY3QiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUwKSIgLz4KCQk8dXNlIHhsaW5rOmhyZWY9IiNSZWN0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3NSkiIC8+CgoJCTxyZWN0IGZpbGw9IiMwMDAiIHg9IjUiIHk9IjE1IiBoZWlnaHQ9IjMwIiB3aWR0aD0iMTUiPgoJCQk8YW5pbWF0ZQoJCQkJZmlsbD0iZnJlZXplIgoJCQkJZHVyPSIxNTAwbXMiCgkJCQljYWxjTW9kZT0iZGlzY3JldGUiCgkJCQlyZXN0YXJ0PSJhbHdheXMiCgkJCQl2YWx1ZXM9IjA7MjU7NTA7NzUiCgkJCQlyZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIKCQkJCWF0dHJpYnV0ZU5hbWU9IngiLz4KCSAgICA8L3JlY3Q+Cgk8L2c+Cjwvc3ZnPgo=';
 var BusyIndicatorComponent = /** @class */ (function () {
-    function BusyIndicatorComponent() {
+    function BusyIndicatorComponent(sanitizer) {
+        this.sanitizer = sanitizer;
         this.type = 'circular';
+        this.label = 'Loading';
+        this.iconHeight = '3em';
+        this.iconWidth = '3em';
     }
-    Object.defineProperty(BusyIndicatorComponent.prototype, "indicatorClass", {
+    Object.defineProperty(BusyIndicatorComponent.prototype, "indicatorSrc", {
         get: function () {
-            return this.type === 'straight' ? 'vclBusy-busyIndStraight' : 'vclBusy-busyIndCircular';
+            return this.sanitizer.bypassSecurityTrustResourceUrl(this.type === 'straight' ? STRAIGHT : CIRCULAR);
         },
         enumerable: true,
         configurable: true
@@ -8232,12 +8360,25 @@ var BusyIndicatorComponent = /** @class */ (function () {
         Input(),
         __metadata$48("design:type", String)
     ], BusyIndicatorComponent.prototype, "type", void 0);
+    __decorate$81([
+        Input(),
+        __metadata$48("design:type", Object)
+    ], BusyIndicatorComponent.prototype, "label", void 0);
+    __decorate$81([
+        Input(),
+        __metadata$48("design:type", Object)
+    ], BusyIndicatorComponent.prototype, "iconHeight", void 0);
+    __decorate$81([
+        Input(),
+        __metadata$48("design:type", Object)
+    ], BusyIndicatorComponent.prototype, "iconWidth", void 0);
     BusyIndicatorComponent = __decorate$81([
         Component({
             selector: 'vcl-busy-indicator',
-            template: "<div class=\"vclLayoutVertical vclLayoutCenterJustified\"> <div class=\"vclBusyIndicator\" role=\"status\"> <i [ngClass]=\"indicatorClass\"></i> <ng-content></ng-content> </div> </div> ",
-            changeDetection: ChangeDetectionStrategy.OnPush
-        })
+            template: "<div class=\"vclLayoutVertical vclLayoutCenterJustified vclIcogram\" role=\"status\"> <div class=\"vclIcon vclLayoutSelfCenter\" [attr.aria-label]=\"label\" role=\"img\"> <img [style.height]=\"iconHeight\" [style.width]=\"iconWidth\" [src]=\"indicatorSrc\" role=”presentation”> </div> <div class=\"vclLayoutSelfCenter\"> <ng-content></ng-content> </div> </div> ",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        }),
+        __metadata$48("design:paramtypes", [DomSanitizer])
     ], BusyIndicatorComponent);
     return BusyIndicatorComponent;
 }());
@@ -8254,6 +8395,9 @@ var __metadata$49 = (this && this.__metadata) || function (k, v) {
 var BusyComponent = /** @class */ (function () {
     function BusyComponent() {
         this.busy = false;
+        this.busyIndicatorType = 'circular';
+        this.busyIconHeight = '3em';
+        this.busyIconWidth = '3em';
     }
     __decorate$82([
         Input('vclBusy'),
@@ -8268,10 +8412,18 @@ var BusyComponent = /** @class */ (function () {
         Input(),
         __metadata$49("design:type", Object)
     ], BusyComponent.prototype, "busyLabel", void 0);
+    __decorate$82([
+        Input(),
+        __metadata$49("design:type", Object)
+    ], BusyComponent.prototype, "busyIconHeight", void 0);
+    __decorate$82([
+        Input(),
+        __metadata$49("design:type", Object)
+    ], BusyComponent.prototype, "busyIconWidth", void 0);
     BusyComponent = __decorate$82([
         Component({
             selector: '[vclBusy]',
-            template: "<ng-content></ng-content> <div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\"> <div class=\"vclLoadingLayerContent\"> <vcl-busy-indicator [type]=\"busyIndicatorType\"> <span *ngIf=\"busyLabel\">{{busyLabel}}</span> </vcl-busy-indicator> </div> </div> ",
+            template: "<ng-content></ng-content> <div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\"> <div class=\"vclLoadingLayerContent\"> <vcl-busy-indicator [type]=\"busyIndicatorType\" [label]=\"busyLabel\" [iconHeight]=\"busyIconHeight\" [iconWidth]=\"busyIconWidth\"> <span *ngIf=\"busyLabel\">{{busyLabel}}</span> </vcl-busy-indicator> </div> </div> ",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], BusyComponent);
@@ -8289,7 +8441,7 @@ var VCLBusyIndicatorModule = /** @class */ (function () {
     }
     VCLBusyIndicatorModule = __decorate$80([
         NgModule({
-            imports: [CommonModule],
+            imports: [CommonModule, VCLIconModule, VCLIcogramModule],
             exports: [BusyComponent, BusyIndicatorComponent],
             declarations: [BusyComponent, BusyIndicatorComponent]
         })
@@ -8773,7 +8925,7 @@ var __decorate$87 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$52 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$8 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$9 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var TooltipComponent = /** @class */ (function () {
@@ -8885,7 +9037,7 @@ var TooltipComponent = /** @class */ (function () {
                 ])
             ]
         }),
-        __param$8(1, Inject(DOCUMENT)),
+        __param$9(1, Inject(DOCUMENT)),
         __metadata$52("design:paramtypes", [ElementRef, Object, Renderer,
             TooltipService])
     ], TooltipComponent);
@@ -8901,7 +9053,7 @@ var __decorate$89 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$53 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$9 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$10 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var TooltipDirective = /** @class */ (function () {
@@ -8960,7 +9112,7 @@ var TooltipDirective = /** @class */ (function () {
     ], TooltipDirective.prototype, "ngOnDestroy", null);
     TooltipDirective = __decorate$89([
         Directive({ selector: '[vcl-tooltip]' }),
-        __param$9(3, Inject(DOCUMENT)),
+        __param$10(3, Inject(DOCUMENT)),
         __metadata$53("design:paramtypes", [ElementRef,
             ComponentFactoryResolver,
             ViewContainerRef, Object])
@@ -9168,7 +9320,7 @@ var __decorate$96 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$59 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$10 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$11 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var SortIconComponent = /** @class */ (function () {
@@ -9202,7 +9354,7 @@ var SortIconComponent = /** @class */ (function () {
             selector: 'sort-icon',
             template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
         }),
-        __param$10(0, Inject(DOCUMENT)),
+        __param$11(0, Inject(DOCUMENT)),
         __metadata$59("design:paramtypes", [Object, ElementRef])
     ], SortIconComponent);
     return SortIconComponent;
@@ -10113,4 +10265,4 @@ var VCLPasswordInputModule = /** @class */ (function () {
     return VCLPasswordInputModule;
 }());
 
-export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, IcogramComponent, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, ButtonGroupComponent, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule, VCLTableModule, PasswordInputComponent, VCLPasswordInputModule };
+export { ObservableComponent, defineMetadata, getMetadata, InputDirective, VCLInputModule, VCLFileInputModule, VCLTextareaModule, VCLFlipSwitchModule, IconComponent, IconService, VCLIconModule, MetalistItem, MetalistComponent, SelectionMode, VCLMetalistModule, DropdownOption, DropdownComponent, DROPDOWN_ANIMATIONS, VCLDropdownModule, SelectComponent, SelectOption, VCLSelectModule, IcogramComponent, VCLIcogramModule, ButtonComponent, ButtonStateContentDirective, VCLButtonModule, ButtonGroupComponent, VCLButtonGroupModule, LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult, LAYERS, Layer, VCLLayerModule, VCLTabNavModule, NavigationComponent, NavigationItemDirective, VCLNavigationModule, VCLToolbarModule, VCLLinkModule, PopoverComponent, AttachmentX, AttachmentY, POPOVER_ANIMATIONS, VCLPopoverModule, VCLProgressBarModule, RadioButtonComponent, RadioGroupComponent, VCLRadioButtonModule, CheckboxComponent, VCLCheckboxModule, VCLOffClickModule, DatePickerComponent, VCLDatePickerModule, VCLFormControlLabelModule, TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost, VCLWormholeModule, MonthPickerComponent, VCLMonthPickerModule, VCLLabelModule, TokenComponent, TokenInputComponent, TokenListComponent, VCLTokenModule, SliderComponent, VCLSliderModule, VCLInputControlGroupModule, AlertService, AlertType, AlertInput, AlertError, AlertAlignment, VCLAlertModule, BusyComponent, BusyIndicatorComponent, VCLBusyIndicatorModule, Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent, VCLNotificationModule, L10nNoopLoaderService, L10nStaticLoaderService, L10nAsyncLoaderService, L10nFormatParserService, L10nService, L10nModule, VCLTooltipModule, VCLTableModule, PasswordInputComponent, VCLPasswordInputModule };
