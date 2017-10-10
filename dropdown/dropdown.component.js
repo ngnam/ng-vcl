@@ -7,6 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -42,20 +45,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter, forwardRef, ElementRef, ViewChild, ContentChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter, forwardRef, ElementRef, ViewChild, ContentChildren, QueryList, ChangeDetectorRef, OpaqueToken, Optional, Inject, } from '@angular/core';
+import { AnimationBuilder } from "@angular/animations";
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DropdownOption } from "./dropdown-option.component";
 import { MetalistComponent, SelectionMode } from "../metalist/index";
+export var DropdownState;
+(function (DropdownState) {
+    DropdownState[DropdownState["Expanded"] = 0] = "Expanded";
+    DropdownState[DropdownState["Closed"] = 1] = "Closed";
+    DropdownState[DropdownState["Expanding"] = 2] = "Expanding";
+    DropdownState[DropdownState["Closing"] = 3] = "Closing";
+})(DropdownState || (DropdownState = {}));
+export var DROPDOWN_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#dropdown_animations');
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return DropdownComponent; }),
     multi: true
 };
 var DropdownComponent = /** @class */ (function () {
-    function DropdownComponent(elementRef, cdRef) {
+    function DropdownComponent(elementRef, cdRef, builder, animations) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
+        this.builder = builder;
+        this.animations = animations;
         this.tabindex = 0;
+        this.state = DropdownState.Expanded;
+        this.willClose = new EventEmitter();
+        this.willExpand = new EventEmitter();
         // If `Single`, a single item can be selected
         // If `Multiple` multiple items can be selected
         this.selectionMode = SelectionMode.Single;
@@ -68,7 +85,23 @@ var DropdownComponent = /** @class */ (function () {
          */
         this.onChange = function () { };
         this.onTouched = function () { };
+        this.DropdownState = DropdownState;
     }
+    Object.defineProperty(DropdownComponent.prototype, "expanded", {
+        get: function () {
+            return (this.state === DropdownState.Expanding || this.state === DropdownState.Expanded);
+        },
+        set: function (value) {
+            if (value) {
+                this.expand();
+            }
+            else {
+                this.close();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DropdownComponent.prototype, "mode", {
         get: function () {
             return this.selectionMode === SelectionMode.Multiple ? 'multiple' : 'single';
@@ -80,6 +113,51 @@ var DropdownComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DropdownComponent.prototype.expand = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var player_1;
+            return __generator(this, function (_a) {
+                if (this.state === DropdownState.Expanded || this.state === DropdownState.Expanding) {
+                    return [2 /*return*/];
+                }
+                this.state = DropdownState.Expanding;
+                this.willExpand.emit();
+                if (this.enterAnimationFactory && this.elementRef) {
+                    player_1 = this.enterAnimationFactory.create(this.elementRef.nativeElement);
+                    player_1.onDone(function () {
+                        player_1.destroy();
+                        _this.state = DropdownState.Expanded;
+                    });
+                    player_1.play();
+                }
+                else {
+                    this.state = DropdownState.Expanded;
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    DropdownComponent.prototype.close = function () {
+        var _this = this;
+        if (this.state === DropdownState.Closed || this.state === DropdownState.Closing) {
+            return;
+        }
+        this.state = DropdownState.Closing;
+        this.willClose.emit();
+        if (this.leaveAnimationFactory && this.elementRef) {
+            var player_2 = this.leaveAnimationFactory.create(this.elementRef.nativeElement);
+            player_2.onDone(function () {
+                player_2.destroy();
+                _this.state = DropdownState.Closed;
+                _this.cdRef.markForCheck();
+            });
+            player_2.play();
+        }
+        else {
+            this.state = DropdownState.Closed;
+        }
+    };
     DropdownComponent.prototype.scrollToMarked = function () {
         return __awaiter(this, void 0, void 0, function () {
             var itemEl, scrollPos, boxHeight, itemHeight, itemOffset, scrollToItem;
@@ -140,6 +218,14 @@ var DropdownComponent = /** @class */ (function () {
         this.items.changes.subscribe(function () {
             _this.cdRef.markForCheck();
         });
+        if (this.animations) {
+            if (this.animations.enter) {
+                this.enterAnimationFactory = this.builder.build(this.animations.enter);
+            }
+            if (this.animations.leave) {
+                this.leaveAnimationFactory = this.builder.build(this.animations.leave);
+            }
+        }
     };
     DropdownComponent.prototype.onMetalistFocus = function () {
         this.focused = true;
@@ -186,6 +272,19 @@ var DropdownComponent = /** @class */ (function () {
     ], DropdownComponent.prototype, "tabindex", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], DropdownComponent.prototype, "expanded", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], DropdownComponent.prototype, "willClose", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", Object)
+    ], DropdownComponent.prototype, "willExpand", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", Number)
     ], DropdownComponent.prototype, "selectionMode", void 0);
     __decorate([
@@ -195,7 +294,7 @@ var DropdownComponent = /** @class */ (function () {
     ], DropdownComponent.prototype, "mode", null);
     __decorate([
         Input(),
-        __metadata("design:type", Object)
+        __metadata("design:type", Number)
     ], DropdownComponent.prototype, "maxSelectableItems", void 0);
     __decorate([
         Input(),
@@ -212,14 +311,17 @@ var DropdownComponent = /** @class */ (function () {
     DropdownComponent = __decorate([
         Component({
             selector: 'vcl-dropdown',
-            template: "<ul vcl-metalist [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" #metalist class=\"vclDropdown vclOpen\" role=\"listbox\" [class.vclDisabled]=\"disabled\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (focus)=\"onMetalistFocus()\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"disabled || item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"disabled || metaItem.disabled\" [class.vclHighlighted]=\"focused && metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (click)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
+            template: "<ul vcl-metalist #metalist [class.vclLayoutHidden]=\"state === DropdownState.Closed\"  [selectionMode]=\"selectionMode\" [maxSelectableItems]=\"maxSelectableItems\" class=\"vclDropdown vclOpen\" role=\"listbox\" [class.vclDisabled]=\"disabled\" [attr.tabindex]=\"tabindex\" [attr.aria-multiselectable]=\"mode === 'multiple'\" [style.position]=\"'static'\" (change)=\"onMetalistChange($event)\" (focus)=\"onMetalistFocus()\" (blur)=\"onMetalistBlur()\" (keydown)=\"onMetalistKeydown($event)\" > <vcl-metalist-item #metaItem *ngFor=\"let item of items\"  [metadata]=\"item\" [selected]=\"item.selected\" [disabled]=\"disabled || item.disabled\" [marked]=\"item.marked\" [value]=\"item.value\"> <li role=\"option\" class=\"vclDropdownItem\" [class.vclSelected]=\"metaItem.selected\" [class.vclDisabled]=\"disabled || metaItem.disabled\" [class.vclHighlighted]=\"focused && metaItem.marked\" [attr.aria-selected]=\"metaItem.selected\" (click)=\"onMetalistItemTap(metaItem)\"> <div *ngIf=\"item.label\" class=\"vclDropdownItemLabel\"> {{item.label}} </div> <div *ngIf=\"item.sublabel\" class=\"vclDropdownItemSubLabel\"> {{item.sublabel}} </div> <wormhole *ngIf=\"item.content\" [connect]=\"item.content\"></wormhole> </li> </vcl-metalist-item> </ul> ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
             host: {
                 '[attr.tabindex]': '-1',
             }
         }),
-        __metadata("design:paramtypes", [ElementRef, ChangeDetectorRef])
+        __param(3, Optional()), __param(3, Inject(DROPDOWN_ANIMATIONS)),
+        __metadata("design:paramtypes", [ElementRef,
+            ChangeDetectorRef,
+            AnimationBuilder, Object])
     ], DropdownComponent);
     return DropdownComponent;
 }());

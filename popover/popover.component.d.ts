@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef, SimpleChanges, OpaqueToken } from '@angular/core';
+import { EventEmitter, ElementRef, SimpleChanges, OpaqueToken, ChangeDetectorRef } from '@angular/core';
 import { ObservableComponent } from "../core/index";
 import { AnimationMetadata, AnimationFactory, AnimationBuilder } from "@angular/animations";
 export declare type AttachmentX = 'left' | 'center' | 'right';
@@ -27,6 +27,7 @@ export interface PopoverAnimationConfig {
 export declare class PopoverComponent extends ObservableComponent {
     protected readonly me: ElementRef;
     private builder;
+    private cdRef;
     private animations;
     private static readonly Tag;
     private tag;
@@ -48,7 +49,7 @@ export declare class PopoverComponent extends ObservableComponent {
     readonly transform: string;
     enterAnimationFactory: AnimationFactory | undefined;
     leaveAnimationFactory: AnimationFactory | undefined;
-    constructor(me: ElementRef, builder: AnimationBuilder, animations: PopoverAnimationConfig);
+    constructor(me: ElementRef, builder: AnimationBuilder, cdRef: ChangeDetectorRef, animations: PopoverAnimationConfig);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     setTarget(value: Element | ElementRef | string): void;

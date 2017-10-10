@@ -5,6 +5,8 @@ import 'rxjs/add/operator/skipUntil';
 import 'rxjs/add/operator/first';
 export declare class OffClickDirective {
     private elem;
+    offClickDelay: number;
+    offClickExcludes?: (ElementRef | Element)[];
     offClick: EventEmitter<{}>;
     private sub;
     constructor(elem: ElementRef);

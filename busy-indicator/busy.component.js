@@ -11,6 +11,9 @@ import { Component, Input, HostBinding, ChangeDetectionStrategy } from '@angular
 var BusyComponent = /** @class */ (function () {
     function BusyComponent() {
         this.busy = false;
+        this.busyIndicatorType = 'circular';
+        this.busyIconHeight = '3em';
+        this.busyIconWidth = '3em';
     }
     __decorate([
         Input('vclBusy'),
@@ -25,10 +28,18 @@ var BusyComponent = /** @class */ (function () {
         Input(),
         __metadata("design:type", Object)
     ], BusyComponent.prototype, "busyLabel", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], BusyComponent.prototype, "busyIconHeight", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object)
+    ], BusyComponent.prototype, "busyIconWidth", void 0);
     BusyComponent = __decorate([
         Component({
             selector: '[vclBusy]',
-            template: "<ng-content></ng-content> <div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\"> <div class=\"vclLoadingLayerContent\"> <vcl-busy-indicator [type]=\"busyIndicatorType\"> <span *ngIf=\"busyLabel\">{{busyLabel}}</span> </vcl-busy-indicator> </div> </div> ",
+            template: "<ng-content></ng-content> <div *ngIf=\"busy\" tabindex=\"-1\" class=\"vclLoadingLayer\"> <div class=\"vclLoadingLayerContent\"> <vcl-busy-indicator [type]=\"busyIndicatorType\" [label]=\"busyLabel\" [iconHeight]=\"busyIconHeight\" [iconWidth]=\"busyIconWidth\"> <span *ngIf=\"busyLabel\">{{busyLabel}}</span> </vcl-busy-indicator> </div> </div> ",
             changeDetection: ChangeDetectionStrategy.OnPush
         })
     ], BusyComponent);
