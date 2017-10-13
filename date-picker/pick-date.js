@@ -108,6 +108,10 @@ var PickDate = (function () {
         }
         // days of prev month but in same week
         var weekDay = firstDayOfMonth.getDay();
+        // since js starts counting week-days from Sunday (0), need to change it as last weekday (7)
+        if (weekDay === 0) {
+            weekDay = 7;
+        }
         var minus = 0;
         while (weekDay > 1) {
             minus--;
