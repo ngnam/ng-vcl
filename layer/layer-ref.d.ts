@@ -32,6 +32,7 @@ export declare class DynamicLayerRef extends LayerRef {
     }, _unregister: {
         (): void;
     });
+    private _registered;
     open(attrs?: LayerAttributes): LayerResult<any>;
     close(data?: any): void;
     closeWithError(data?: any): void;

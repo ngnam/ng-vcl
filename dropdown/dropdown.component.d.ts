@@ -1,4 +1,4 @@
-import { EventEmitter, ElementRef, QueryList, ChangeDetectorRef, OpaqueToken } from '@angular/core';
+import { EventEmitter, ElementRef, QueryList, ChangeDetectorRef, OpaqueToken, OnInit } from '@angular/core';
 import { AnimationMetadata, AnimationFactory, AnimationBuilder } from "@angular/animations";
 import { ControlValueAccessor } from '@angular/forms';
 import { DropdownOption } from "./dropdown-option.component";
@@ -15,7 +15,7 @@ export interface DropdownAnimationConfig {
     leave?: AnimationMetadata | AnimationMetadata[];
 }
 export declare const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any;
-export declare class DropdownComponent implements ControlValueAccessor {
+export declare class DropdownComponent implements ControlValueAccessor, OnInit {
     readonly elementRef: ElementRef;
     private readonly cdRef;
     private readonly builder;
@@ -38,9 +38,10 @@ export declare class DropdownComponent implements ControlValueAccessor {
     enterAnimationFactory: AnimationFactory | undefined;
     leaveAnimationFactory: AnimationFactory | undefined;
     constructor(elementRef: ElementRef, cdRef: ChangeDetectorRef, builder: AnimationBuilder, animations: DropdownAnimationConfig);
+    ngOnInit(): void;
     expand(): Promise<void>;
     close(): void;
-    scrollToMarked(): Promise<void>;
+    scrollToSelected(): Promise<void>;
     onMetalistItemTap(metaItem: MetalistItem): void;
     onMetalistKeydown(ev: any): void;
     ngAfterViewInit(): void;
