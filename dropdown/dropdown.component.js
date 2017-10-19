@@ -113,6 +113,9 @@ var DropdownComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DropdownComponent.prototype.ngOnInit = function () {
+        this.scrollToSelected();
+    };
     DropdownComponent.prototype.expand = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -158,28 +161,28 @@ var DropdownComponent = /** @class */ (function () {
             this.state = DropdownState.Closed;
         }
     };
-    DropdownComponent.prototype.scrollToMarked = function () {
+    DropdownComponent.prototype.scrollToSelected = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var itemEl, scrollPos, boxHeight, itemHeight, itemOffset, scrollToItem;
+            var selectedItem, allItems, scrollTop, items, itemIndex;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, new Promise(function (res) { return setTimeout(res, 0); })];
                     case 1:
                         _a.sent();
                         if (this.listbox.nativeElement) {
-                            itemEl = this.listbox.nativeElement.querySelectorAll('.vclHighlighted')[0];
-                            if (!itemEl) {
+                            selectedItem = this.listbox.nativeElement.querySelectorAll('.vclSelected')[0];
+                            if (!selectedItem) {
                                 return [2 /*return*/];
                             }
-                            scrollPos = this.listbox.nativeElement.scrollTop;
-                            boxHeight = this.listbox.nativeElement.offsetHeight;
-                            itemHeight = itemEl.offsetHeight;
-                            itemOffset = itemEl.offsetTop;
-                            scrollToItem = ((itemOffset + itemHeight) > (scrollPos + boxHeight)) // item below scroll bounds
-                                || (itemOffset < scrollPos);
-                            if (scrollToItem) {
-                                // TODO enable
-                                // this.listbox.nativeElement.scrollTop = itemOffset;
+                            allItems = this.listbox.nativeElement.querySelectorAll('.vclDropdownItem');
+                            scrollTop = -this.listbox.nativeElement.clientHeight / 2 + (selectedItem.clientHeight / 2);
+                            items = this.items.toArray();
+                            for (itemIndex = 0; itemIndex < items.length; ++itemIndex) {
+                                if (items[itemIndex].selected) {
+                                    this.listbox.nativeElement.scrollTop = scrollTop;
+                                    break;
+                                }
+                                scrollTop += allItems[itemIndex].clientHeight;
                             }
                         }
                         return [2 /*return*/];
@@ -197,11 +200,11 @@ var DropdownComponent = /** @class */ (function () {
             switch (ev.code) {
                 case 'ArrowDown':
                     this.metalist.markNext();
-                    this.scrollToMarked();
+                    this.scrollToSelected();
                     break;
                 case 'ArrowUp':
                     this.metalist.markPrev();
-                    this.scrollToMarked();
+                    this.scrollToSelected();
                     break;
                 case 'Enter':
                     this.metalist.selectMarked();

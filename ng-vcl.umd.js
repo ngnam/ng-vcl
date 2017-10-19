@@ -450,12 +450,21 @@ var __decorate$5 = (this && this.__decorate) || function (decorators, target, ke
 var __metadata$2 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var TextareaDirective = /** @class */ (function () {
-    function TextareaDirective(elRef) {
+    function TextareaDirective(model, elRef) {
+        this.model = model;
         this.elRef = elRef;
         this.selectAllOnFocus = false;
         this.autogrow = false;
     }
+    TextareaDirective.prototype.ngOnInit = function () {
+        if (this.autogrow && this.model && this.model.viewModel) {
+            this.setRowsByValue(this.model.viewModel);
+        }
+    };
     TextareaDirective.prototype.onModelChange = function (value) {
         this.setRowsByValue(value);
     };
@@ -518,7 +527,8 @@ var TextareaDirective = /** @class */ (function () {
                 '[class.vclInput]': 'true',
             }
         }),
-        __metadata$2("design:paramtypes", [_angular_core.ElementRef])
+        __param(0, _angular_core.Optional()),
+        __metadata$2("design:paramtypes", [_angular_forms.NgModel, _angular_core.ElementRef])
     ], TextareaDirective);
     return TextareaDirective;
 }());
@@ -687,7 +697,7 @@ var __decorate$10 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$4 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
+var __param$1 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var L10N_LOADER_CONFIG = new _angular_core.OpaqueToken('l10n.loader.config');
@@ -732,7 +742,7 @@ var L10nStaticLoaderService = /** @class */ (function (_super) {
     };
     L10nStaticLoaderService = __decorate$10([
         _angular_core.Injectable(),
-        __param(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
+        __param$1(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
         __metadata$4("design:paramtypes", [Object])
     ], L10nStaticLoaderService);
     return L10nStaticLoaderService;
@@ -761,7 +771,7 @@ var L10nAsyncLoaderService = /** @class */ (function (_super) {
     };
     L10nAsyncLoaderService = __decorate$10([
         _angular_core.Injectable(),
-        __param(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
+        __param$1(0, _angular_core.Inject(L10N_LOADER_CONFIG)),
         __metadata$4("design:paramtypes", [Object])
     ], L10nAsyncLoaderService);
     return L10nAsyncLoaderService;
@@ -833,7 +843,7 @@ var __decorate$12 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$5 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$1 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$2 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var L10N_CONFIG = new _angular_core.OpaqueToken('l10n.config');
@@ -968,7 +978,7 @@ var L10nService = /** @class */ (function () {
     };
     L10nService = __decorate$12([
         _angular_core.Injectable(),
-        __param$1(0, _angular_core.Inject(L10N_CONFIG)),
+        __param$2(0, _angular_core.Inject(L10N_CONFIG)),
         __metadata$5("design:paramtypes", [Object, L10nLoaderService,
             L10nParserService])
     ], L10nService);
@@ -984,7 +994,7 @@ var __decorate$13 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$6 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$2 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$3 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var L10nPipe = /** @class */ (function () {
@@ -1044,8 +1054,8 @@ var L10nPipe = /** @class */ (function () {
             name: 'loc',
             pure: false
         }),
-        __param$2(0, _angular_core.Inject(L10nService)),
-        __param$2(0, _angular_core.Optional()),
+        __param$3(0, _angular_core.Inject(L10nService)),
+        __param$3(0, _angular_core.Optional()),
         __metadata$6("design:paramtypes", [Object])
     ], L10nPipe);
     return L10nPipe;
@@ -2133,7 +2143,7 @@ var __decorate$22 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$11 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$3 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$4 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -2234,6 +2244,9 @@ var DropdownComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    DropdownComponent.prototype.ngOnInit = function () {
+        this.scrollToSelected();
+    };
     DropdownComponent.prototype.expand = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -2279,28 +2292,28 @@ var DropdownComponent = /** @class */ (function () {
             this.state = DropdownState.Closed;
         }
     };
-    DropdownComponent.prototype.scrollToMarked = function () {
+    DropdownComponent.prototype.scrollToSelected = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var itemEl, scrollPos, boxHeight, itemHeight, itemOffset, scrollToItem;
+            var selectedItem, allItems, scrollTop, items, itemIndex;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, new Promise(function (res) { return setTimeout(res, 0); })];
                     case 1:
                         _a.sent();
                         if (this.listbox.nativeElement) {
-                            itemEl = this.listbox.nativeElement.querySelectorAll('.vclHighlighted')[0];
-                            if (!itemEl) {
+                            selectedItem = this.listbox.nativeElement.querySelectorAll('.vclSelected')[0];
+                            if (!selectedItem) {
                                 return [2 /*return*/];
                             }
-                            scrollPos = this.listbox.nativeElement.scrollTop;
-                            boxHeight = this.listbox.nativeElement.offsetHeight;
-                            itemHeight = itemEl.offsetHeight;
-                            itemOffset = itemEl.offsetTop;
-                            scrollToItem = ((itemOffset + itemHeight) > (scrollPos + boxHeight)) // item below scroll bounds
-                                || (itemOffset < scrollPos);
-                            if (scrollToItem) {
-                                // TODO enable
-                                // this.listbox.nativeElement.scrollTop = itemOffset;
+                            allItems = this.listbox.nativeElement.querySelectorAll('.vclDropdownItem');
+                            scrollTop = -this.listbox.nativeElement.clientHeight / 2 + (selectedItem.clientHeight / 2);
+                            items = this.items.toArray();
+                            for (itemIndex = 0; itemIndex < items.length; ++itemIndex) {
+                                if (items[itemIndex].selected) {
+                                    this.listbox.nativeElement.scrollTop = scrollTop;
+                                    break;
+                                }
+                                scrollTop += allItems[itemIndex].clientHeight;
                             }
                         }
                         return [2 /*return*/];
@@ -2318,11 +2331,11 @@ var DropdownComponent = /** @class */ (function () {
             switch (ev.code) {
                 case 'ArrowDown':
                     this.metalist.markNext();
-                    this.scrollToMarked();
+                    this.scrollToSelected();
                     break;
                 case 'ArrowUp':
                     this.metalist.markPrev();
-                    this.scrollToMarked();
+                    this.scrollToSelected();
                     break;
                 case 'Enter':
                     this.metalist.selectMarked();
@@ -2439,7 +2452,7 @@ var DropdownComponent = /** @class */ (function () {
                 '[attr.tabindex]': '-1',
             }
         }),
-        __param$3(3, _angular_core.Optional()), __param$3(3, _angular_core.Inject(DROPDOWN_ANIMATIONS)),
+        __param$4(3, _angular_core.Optional()), __param$4(3, _angular_core.Inject(DROPDOWN_ANIMATIONS)),
         __metadata$11("design:paramtypes", [_angular_core.ElementRef,
             _angular_core.ChangeDetectorRef,
             _angular_animations.AnimationBuilder, Object])
@@ -2815,7 +2828,7 @@ var ButtonComponent = /** @class */ (function (_super) {
             host: {
                 '[class.vclButton]': 'true',
             },
-            template: "<vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\" [appIconSrc]=\"appIconSrc\" [prepIconSrc]=\"prepIconSrc\"> <ng-content></ng-content> </vcl-icogram> ",
+            template: "<div vcl-icogram [label]=\"label\" [flexLabel]=\"flexLabel\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\" [appIconSrc]=\"appIconSrc\" [prepIconSrc]=\"prepIconSrc\"> <ng-content></ng-content> </div> ",
             changeDetection: _angular_core.ChangeDetectionStrategy.OnPush,
         }),
         __metadata$15("design:paramtypes", [_angular_core.ElementRef])
@@ -2938,7 +2951,7 @@ var __decorate$33 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$17 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$4 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var AttachmentX = {
@@ -3235,7 +3248,7 @@ var PopoverComponent = /** @class */ (function (_super) {
                 '[style.position]': '"absolute"'
             }
         }),
-        __param$4(3, _angular_core.Optional()), __param$4(3, _angular_core.Inject(POPOVER_ANIMATIONS)),
+        __param$5(3, _angular_core.Optional()), __param$5(3, _angular_core.Inject(POPOVER_ANIMATIONS)),
         __metadata$17("design:paramtypes", [_angular_core.ElementRef,
             _angular_animations.AnimationBuilder,
             _angular_core.ChangeDetectorRef, Object])
@@ -4456,19 +4469,25 @@ var DynamicLayerRef = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this._register = _register;
         _this._unregister = _unregister;
+        _this._registered = false;
         return _this;
     }
     DynamicLayerRef.prototype.open = function (attrs) {
-        this._register();
+        if (!this._registered) {
+            this._register();
+            this._registered = true;
+        }
         return _super.prototype.open.call(this, attrs);
     };
     DynamicLayerRef.prototype.close = function (data) {
         _super.prototype.close.call(this, data);
         this._unregister();
+        this._registered = false;
     };
     DynamicLayerRef.prototype.closeWithError = function (data) {
         _super.prototype.closeWithError.call(this, data);
         this._unregister();
+        this._registered = false;
     };
     return DynamicLayerRef;
 }(LayerRef));
@@ -4482,7 +4501,7 @@ var __decorate$44 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$26 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
@@ -4641,7 +4660,7 @@ var LayerContainerComponent = /** @class */ (function () {
         _angular_core.Component({
             template: "<div  #container  class=\"vclLayer\" [ngClass]=\"layerOpts.customClass\" [class.vclTransparent]=\"layerOpts.transparent\" [class.vclLayerFill]=\"layerOpts.fill\" [class.vclLayerStickToBottom]=\"layerOpts.stickToBottom\" [style.z-index]=\"zIndex + 1\" [style.pointer-events]=\"'all'\"  role=\"dialog\"  (click)='triggerOffClick($event)' > <div #box class=\"vclLayerBox\" [class.vclLayerGutterPadding]=\"layerOpts.gutterPadding\" [style.pointer-events]=\"'all'\" [style.z-index]=\"zIndex + 2\"> <div #layerContent></div> </div> </div> <div #cover *ngIf=\"layerOpts.modal\" class=\"vclLayerCover\" [style.z-index]=\"zIndex\"></div> ",
         }),
-        __param$6(3, _angular_core.Optional()), __param$6(3, _angular_core.Inject(LAYER_ANIMATIONS)),
+        __param$7(3, _angular_core.Optional()), __param$7(3, _angular_core.Inject(LAYER_ANIMATIONS)),
         __metadata$26("design:paramtypes", [_angular_core.ChangeDetectorRef,
             _angular_animations.AnimationBuilder,
             _angular_core.ElementRef, Object])
@@ -4859,7 +4878,7 @@ var __decorate$42 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$24 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$5 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var LAYERS = new _angular_core.OpaqueToken('@ng-vcl/ng-vcl#layers');
@@ -4928,7 +4947,7 @@ var VCLLayerModule = /** @class */ (function () {
             entryComponents: [LayerContainerComponent],
             providers: []
         }),
-        __param$5(0, _angular_core.Inject(LAYERS)),
+        __param$6(0, _angular_core.Inject(LAYERS)),
         __metadata$24("design:paramtypes", [Array, LayerManagerService,
             _angular_core.Injector])
     ], VCLLayerModule);
@@ -5133,7 +5152,7 @@ var __decorate$52 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$31 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$8 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var LinkComponent = /** @class */ (function (_super) {
@@ -5226,7 +5245,7 @@ var LinkComponent = /** @class */ (function (_super) {
             selector: '[vcl-link]',
             template: "<vcl-icogram *ngIf=\"useIcogram\" [label]=\"(locLabel$ | async) || href\" [prepIcon]=\"prepIcon\" [appIcon]=\"appIcon\"> <ng-content></ng-content> </vcl-icogram> <ng-container *ngIf=\"!useIcogram\"> {{(locLabel$ | async) || href}} <ng-content></ng-content> </ng-container> "
         }),
-        __param$7(0, _angular_core.Optional()),
+        __param$8(0, _angular_core.Optional()),
         __metadata$31("design:paramtypes", [L10nService])
     ], LinkComponent);
     return LinkComponent;
@@ -5261,7 +5280,7 @@ var __decorate$54 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$33 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$8 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$9 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var NavigationItemDirective = /** @class */ (function () {
@@ -5390,8 +5409,8 @@ var NavigationItemDirective = /** @class */ (function () {
         _angular_core.Directive({
             selector: 'vcl-navitem'
         }),
-        __param$8(1, _angular_core.Inject(_angular_core.forwardRef(function () { return NavigationComponent; }))),
-        __param$8(2, _angular_core.Optional()), __param$8(2, _angular_core.SkipSelf()), __param$8(2, _angular_core.Inject(NavigationItemDirective_1)),
+        __param$9(1, _angular_core.Inject(_angular_core.forwardRef(function () { return NavigationComponent; }))),
+        __param$9(2, _angular_core.Optional()), __param$9(2, _angular_core.SkipSelf()), __param$9(2, _angular_core.Inject(NavigationItemDirective_1)),
         __metadata$33("design:paramtypes", [_angular_router.Router,
             NavigationComponent,
             NavigationItemDirective])
@@ -6500,6 +6519,10 @@ var CalendarDate = /** @class */ (function () {
         }
         // days of prev month but in same week
         var weekDay = firstDayOfMonth.getDay();
+        // since js starts counting week-days from Sunday (0), need to change it as last weekday (7)
+        if (weekDay === 0) {
+            weekDay = 7;
+        }
         var minus = 0;
         while (weekDay > 1) {
             minus--;
@@ -8877,7 +8900,7 @@ var __decorate$87 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$52 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$9 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$10 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var TooltipComponent = /** @class */ (function () {
@@ -8989,7 +9012,7 @@ var TooltipComponent = /** @class */ (function () {
                 ])
             ]
         }),
-        __param$9(1, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
+        __param$10(1, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
         __metadata$52("design:paramtypes", [_angular_core.ElementRef, Object, _angular_core.Renderer,
             TooltipService])
     ], TooltipComponent);
@@ -9005,7 +9028,7 @@ var __decorate$89 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$53 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$10 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$11 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var TooltipDirective = /** @class */ (function () {
@@ -9064,7 +9087,7 @@ var TooltipDirective = /** @class */ (function () {
     ], TooltipDirective.prototype, "ngOnDestroy", null);
     TooltipDirective = __decorate$89([
         _angular_core.Directive({ selector: '[vcl-tooltip]' }),
-        __param$10(3, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
+        __param$11(3, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
         __metadata$53("design:paramtypes", [_angular_core.ElementRef,
             _angular_core.ComponentFactoryResolver,
             _angular_core.ViewContainerRef, Object])
@@ -9272,7 +9295,7 @@ var __decorate$96 = (this && this.__decorate) || function (decorators, target, k
 var __metadata$59 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param$11 = (this && this.__param) || function (paramIndex, decorator) {
+var __param$12 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var SortIconComponent = /** @class */ (function () {
@@ -9306,7 +9329,7 @@ var SortIconComponent = /** @class */ (function () {
             selector: 'sort-icon',
             template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
         }),
-        __param$11(0, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
+        __param$12(0, _angular_core.Inject(_angular_platformBrowser.DOCUMENT)),
         __metadata$59("design:paramtypes", [Object, _angular_core.ElementRef])
     ], SortIconComponent);
     return SortIconComponent;

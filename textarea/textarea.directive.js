@@ -7,13 +7,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Directive, ElementRef, Input, HostBinding, HostListener } from '@angular/core';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { Directive, ElementRef, Input, HostBinding, HostListener, Optional } from '@angular/core';
+import { NgModel } from '@angular/forms';
 var TextareaDirective = /** @class */ (function () {
-    function TextareaDirective(elRef) {
+    function TextareaDirective(model, elRef) {
+        this.model = model;
         this.elRef = elRef;
         this.selectAllOnFocus = false;
         this.autogrow = false;
     }
+    TextareaDirective.prototype.ngOnInit = function () {
+        if (this.autogrow && this.model && this.model.viewModel) {
+            this.setRowsByValue(this.model.viewModel);
+        }
+    };
     TextareaDirective.prototype.onModelChange = function (value) {
         this.setRowsByValue(value);
     };
@@ -76,7 +86,8 @@ var TextareaDirective = /** @class */ (function () {
                 '[class.vclInput]': 'true',
             }
         }),
-        __metadata("design:paramtypes", [ElementRef])
+        __param(0, Optional()),
+        __metadata("design:paramtypes", [NgModel, ElementRef])
     ], TextareaDirective);
     return TextareaDirective;
 }());

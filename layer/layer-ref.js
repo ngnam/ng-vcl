@@ -75,19 +75,25 @@ var DynamicLayerRef = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this._register = _register;
         _this._unregister = _unregister;
+        _this._registered = false;
         return _this;
     }
     DynamicLayerRef.prototype.open = function (attrs) {
-        this._register();
+        if (!this._registered) {
+            this._register();
+            this._registered = true;
+        }
         return _super.prototype.open.call(this, attrs);
     };
     DynamicLayerRef.prototype.close = function (data) {
         _super.prototype.close.call(this, data);
         this._unregister();
+        this._registered = false;
     };
     DynamicLayerRef.prototype.closeWithError = function (data) {
         _super.prototype.closeWithError.call(this, data);
         this._unregister();
+        this._registered = false;
     };
     return DynamicLayerRef;
 }(LayerRef));
