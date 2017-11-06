@@ -10,17 +10,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { NgModule, Inject, Injectable, Injector, OpaqueToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken, Injector, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VCLWormholeModule } from '../wormhole/index';
 import { defineMetadata, getMetadata } from './../core/index';
 import { LayerManagerService } from './layer-manager.service';
 import { LayerService } from './layer.service';
-import { LayerRef, DynamicLayerRef, LayerResult } from './layer-ref';
-import { LayerContainerComponent, COMPONENT_LAYER_ANNOTATION_ID, LAYER_ANIMATIONS } from './layer-container.component';
+import { DynamicLayerRef, LayerRef, LayerResult } from './layer-ref';
+import { COMPONENT_LAYER_ANNOTATION_ID, LAYER_ANIMATIONS, LayerContainerComponent } from './layer-container.component';
 import { LayerRefDirective } from './layer-ref.directive';
 export { LayerRefDirective, LayerRef, LayerService, LayerContainerComponent, DynamicLayerRef, LAYER_ANIMATIONS, LayerResult };
-export var LAYERS = new OpaqueToken('@ng-vcl/ng-vcl#layers');
+export var LAYERS = new InjectionToken('@ng-vcl/ng-vcl#layers');
 // The @Layer annotation
 export function Layer(component, opts) {
     return function (target) {

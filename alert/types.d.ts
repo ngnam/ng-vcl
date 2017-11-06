@@ -53,16 +53,40 @@ export interface AlertOptions {
 }
 export declare const ALERT_DEFAULTS: AlertOptions;
 export declare const TYPE_CLASS_MAP: {
-    [x: number]: {
+    [AlertType.None]: {
+        alertClass: string;
+        iconClass: string;
+    };
+    [AlertType.Question]: {
+        alertClass: string;
+        iconClass: string;
+    };
+    [AlertType.Info]: {
+        alertClass: string;
+        iconClass: string;
+    };
+    [AlertType.Success]: {
+        alertClass: string;
+        iconClass: string;
+    };
+    [AlertType.Warning]: {
+        alertClass: string;
+        iconClass: string;
+    };
+    [AlertType.Error]: {
         alertClass: string;
         iconClass: string;
     };
 };
 export declare const TEXT_ALIGNMENT_CLASS_MAP: {
-    [x: number]: string;
+    [AlertAlignment.Left]: string;
+    [AlertAlignment.Center]: string;
+    [AlertAlignment.Right]: string;
 };
 export declare const BUTTON_ALIGNMENT_CLASS_MAP: {
-    [x: number]: string;
+    [AlertAlignment.Left]: string;
+    [AlertAlignment.Center]: string;
+    [AlertAlignment.Right]: string;
 };
 export interface AlertResult {
     value?: any;

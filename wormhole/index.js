@@ -6,10 +6,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { Wormhole } from './wormhole-base';
-import { TemplateWormhole, ComponentWormhole } from './wormhole';
+import { ComponentWormhole, TemplateWormhole } from './wormhole';
 import { DomComponentWormhole, DomTemplateWormhole } from './wormhole-dom';
 import { WormholeDirective } from './wormhole.directive';
-import { WormholeHost, DomWormholeHost } from "./wormhole-host";
+import { DomWormholeHost, WormholeHost } from "./wormhole-host";
 export { TemplateWormhole, ComponentWormhole, Wormhole, WormholeDirective, DomComponentWormhole, DomTemplateWormhole, WormholeHost, DomWormholeHost };
 var VCLWormholeModule = /** @class */ (function () {
     function VCLWormholeModule() {

@@ -10,12 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Component, ViewChild, Input, ViewContainerRef, ChangeDetectorRef, ReflectiveInjector, ElementRef, TemplateRef, OpaqueToken, Optional, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, InjectionToken, Input, Optional, ReflectiveInjector, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { AnimationBuilder } from '@angular/animations';
 import { ComponentWormhole, TemplateWormhole } from '../wormhole/index';
 import { LayerRef } from './layer-ref';
 export var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
-export var LAYER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#layer_animations');
+export var LAYER_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#layer_animations');
 var LayerContainerComponent = /** @class */ (function () {
     function LayerContainerComponent(cdRef, builder, elementRef, animations) {
         this.cdRef = cdRef;

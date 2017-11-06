@@ -1,6 +1,6 @@
-import { EventEmitter, ElementRef, SimpleChanges, OpaqueToken, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef, EventEmitter, InjectionToken, SimpleChanges } from '@angular/core';
 import { ObservableComponent } from "../core/index";
-import { AnimationMetadata, AnimationFactory, AnimationBuilder } from "@angular/animations";
+import { AnimationBuilder, AnimationFactory, AnimationMetadata } from "@angular/animations";
 export declare type AttachmentX = 'left' | 'center' | 'right';
 export declare const AttachmentX: {
     Left: AttachmentX;
@@ -19,7 +19,7 @@ export declare enum PopoverState {
     opening = 2,
     closing = 3,
 }
-export declare const POPOVER_ANIMATIONS: OpaqueToken;
+export declare const POPOVER_ANIMATIONS: InjectionToken<{}>;
 export interface PopoverAnimationConfig {
     enter?: AnimationMetadata | AnimationMetadata[];
     leave?: AnimationMetadata | AnimationMetadata[];

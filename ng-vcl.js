@@ -1,16 +1,16 @@
-import { Subject } from 'rxjs/Subject';
+import { Subject as Subject$1 } from 'rxjs/Subject';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/publishReplay';
-import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ContentChild, ContentChildren, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Inject, Injectable, Injector, Input, NgModule, OpaqueToken, Optional, Output, Pipe, QueryList, ReflectiveInjector, Renderer, Renderer2, SkipSelf, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation, animate, forwardRef, state, style, transition, trigger } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ContentChild, ContentChildren, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Inject, Injectable, InjectionToken, Injector, Input, NgModule, Optional, Output, Pipe, QueryList, ReflectiveInjector, Renderer, Renderer2, SkipSelf, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation, animate, forwardRef, state, style, transition, trigger } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/share';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
+import { Observable as Observable$1 } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject as BehaviorSubject$1 } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
@@ -30,7 +30,7 @@ import 'rxjs/add/operator/skipWhile';
 
 var ObservableComponent = /** @class */ (function () {
     function ObservableComponent() {
-        this.changesSubject = new Subject();
+        this.changesSubject = new Subject$1();
         this.observedProps = {};
         this.changes$ = this.changesSubject.asObservable();
     }
@@ -724,7 +724,7 @@ var __metadata$4 = (this && this.__metadata) || function (k, v) {
 var __param$1 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var L10N_LOADER_CONFIG = new OpaqueToken('l10n.loader.config');
+var L10N_LOADER_CONFIG = new InjectionToken('l10n.loader.config');
 var L10nLoaderService = /** @class */ (function () {
     function L10nLoaderService() {
     }
@@ -759,10 +759,10 @@ var L10nStaticLoaderService = /** @class */ (function (_super) {
         return _this;
     }
     L10nStaticLoaderService.prototype.getTranslationPackage = function (locale) {
-        return Observable.of(flatten(locale, this.config));
+        return Observable$1.of(flatten(locale, this.config));
     };
     L10nStaticLoaderService.prototype.getSupportedLocales = function () {
-        return Observable.of(extractLocales(this.config));
+        return Observable$1.of(extractLocales(this.config));
     };
     L10nStaticLoaderService = __decorate$10([
         Injectable(),
@@ -781,7 +781,7 @@ var L10nAsyncLoaderService = /** @class */ (function (_super) {
             streamlike = config();
         }
         else {
-            streamlike = Observable.from(config);
+            streamlike = Observable$1.from(config);
         }
         // Enable caching
         _this.data$ = streamlike.publishReplay(1).refCount();
@@ -806,10 +806,10 @@ var L10nNoopLoaderService = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     L10nNoopLoaderService.prototype.getTranslationPackage = function (locale) {
-        return Observable.of({});
+        return Observable$1.of({});
     };
     L10nNoopLoaderService.prototype.getSupportedLocales = function () {
-        return Observable.of([]);
+        return Observable$1.of([]);
     };
     L10nNoopLoaderService = __decorate$10([
         Injectable()
@@ -870,7 +870,7 @@ var __metadata$5 = (this && this.__metadata) || function (k, v) {
 var __param$2 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var L10N_CONFIG = new OpaqueToken('l10n.config');
+var L10N_CONFIG = new InjectionToken('l10n.config');
 var L10nService = /** @class */ (function () {
     function L10nService(config, // TODO: L10nConfig - problem with ngc
         loader, parser) {
@@ -880,11 +880,11 @@ var L10nService = /** @class */ (function () {
         this.parser = parser;
         this.packages = {};
         this.locale = (config.locale || this.getNavigatorLang() || 'en-us').toLowerCase();
-        this._locale$ = new BehaviorSubject(this.locale);
+        this._locale$ = new BehaviorSubject$1(this.locale);
         // Initialize the streams
         var supportedLocales$ = this.getSupportedLocales();
         // Set up stream of valid locale
-        var locale$ = Observable.combineLatest(supportedLocales$, this.locale$, function (supportedLocales, locale) {
+        var locale$ = Observable$1.combineLatest(supportedLocales$, this.locale$, function (supportedLocales, locale) {
             if (supportedLocales.length > 0) {
                 // If not supported use first locale as fallback
                 return (supportedLocales.indexOf(locale) >= 0) ? locale : supportedLocales[0];
@@ -895,7 +895,7 @@ var L10nService = /** @class */ (function () {
             }
         });
         // Set up stream of valid fallback locale
-        var fbLocale$ = Observable.combineLatest(supportedLocales$, locale$, function (supportedLocales, locale) {
+        var fbLocale$ = Observable$1.combineLatest(supportedLocales$, locale$, function (supportedLocales, locale) {
             if (supportedLocales.length > 0 && supportedLocales[0] !== locale) {
                 return supportedLocales[0];
             }
@@ -909,10 +909,10 @@ var L10nService = /** @class */ (function () {
         this.package$ = locale$.switchMap(function (locale) { return _this.getTranslationPackage(locale); });
         // Setup the fallback package stream
         var fbPackageTemp$ = fbLocale$.switchMap(function (fbLocale) {
-            return fbLocale ? _this.getTranslationPackage(fbLocale) : Observable.of({});
+            return fbLocale ? _this.getTranslationPackage(fbLocale) : Observable$1.of({});
         });
         // The real fallback stream is a combination of the latest package and fallback package
-        this.fbPackage$ = Observable.combineLatest(this.package$, fbPackageTemp$, function (pkg, fbPkg) {
+        this.fbPackage$ = Observable$1.combineLatest(this.package$, fbPackageTemp$, function (pkg, fbPkg) {
             return fbPkg ? Object.assign({}, fbPkg, pkg) : pkg;
         });
     }
@@ -973,7 +973,7 @@ var L10nService = /** @class */ (function () {
             args[_i - 1] = arguments[_i];
         }
         return this.package$.switchMap(function (pkg) {
-            return pkg[key] ? Observable.of(pkg) : _this.fbPackage$;
+            return pkg[key] ? Observable$1.of(pkg) : _this.fbPackage$;
         }).map(function (pkg) {
             return pkg[key] ? (_a = _this.parser).parse.apply(_a, [pkg[key]].concat(args)) : key;
             var _a;
@@ -1175,7 +1175,7 @@ var TemplateWormholeBase = /** @class */ (function (_super) {
             Object.assign(this.viewRef.context, this.cachedAttrs);
         }
         this.viewRef.detectChanges();
-        return Observable.never();
+        return Observable$1.never();
     };
     TemplateWormholeBase.prototype.disconnect = function () {
         this.detach();
@@ -1234,7 +1234,7 @@ var ComponentWormholeBase = /** @class */ (function (_super) {
                 throw 'Event not found: ' + event;
             return instance[event] && instance[event].map(function (value) { return ({ event: event, value: value }); });
         });
-        return Observable.merge.apply(Observable, events$);
+        return Observable$1.merge.apply(Observable$1, events$);
     };
     ComponentWormholeBase.prototype.disconnect = function () {
         this.detach();
@@ -1421,7 +1421,6 @@ var DomTemplateWormhole = /** @class */ (function (_super) {
         configurable: true
     });
     DomTemplateWormhole.prototype.attach = function (templateRef, index) {
-        var injector = this.injector || this.rootComponentRef.injector;
         var embeddedView = templateRef.createEmbeddedView(undefined);
         this.appRef.attachView(embeddedView);
         var compRefRootNode = getViewRootNode(embeddedView);
@@ -2212,18 +2211,18 @@ var DropdownState;
     DropdownState[DropdownState["Expanding"] = 2] = "Expanding";
     DropdownState[DropdownState["Closing"] = 3] = "Closing";
 })(DropdownState || (DropdownState = {}));
-var DROPDOWN_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#dropdown_animations');
+var DROPDOWN_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#dropdown_animations');
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$3 = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return DropdownComponent; }),
     multi: true
 };
 var DropdownComponent = /** @class */ (function () {
-    function DropdownComponent(elementRef, cdRef, builder, animations) {
+    function DropdownComponent(elementRef, cdRef, builder, animations$$1) {
         this.elementRef = elementRef;
         this.cdRef = cdRef;
         this.builder = builder;
-        this.animations = animations;
+        this.animations = animations$$1;
         this.tabindex = 0;
         this.state = DropdownState.Expanded;
         this.willClose = new EventEmitter();
@@ -2674,7 +2673,7 @@ var ButtonComponent = /** @class */ (function (_super) {
         _this.busy = false;
         _this.flexLabel = false;
         _this.pressEvent = new EventEmitter();
-        _this.stateChange = Observable.merge(_this.observeChange('disabled'), _this.observeChange('busy'))
+        _this.stateChange = Observable$1.merge(_this.observeChange('disabled'), _this.observeChange('busy'))
             .map(function () { return _this.state; })
             .distinctUntilChanged()
             .publishBehavior(_this.state)
@@ -2805,7 +2804,7 @@ var ButtonComponent = /** @class */ (function (_super) {
     ], ButtonComponent.prototype, "prepIconSrc", void 0);
     __decorate$29([
         Output(),
-        __metadata$15("design:type", Observable),
+        __metadata$15("design:type", Observable$1),
         __metadata$15("design:paramtypes", [])
     ], ButtonComponent.prototype, "press", null);
     __decorate$29([
@@ -2899,8 +2898,8 @@ var OffClickDirective = /** @class */ (function () {
         var _this = this;
         if (typeof document !== 'undefined') {
             // Add a small delay, so any click that causes this directive to render does not trigger an off-click
-            var delay$ = Observable.timer(this.offClickDelay).first();
-            this.sub = Observable.fromEvent(document, 'click')
+            var delay$ = Observable$1.timer(this.offClickDelay).first();
+            this.sub = Observable$1.fromEvent(document, 'click')
                 .skipUntil(delay$)
                 .subscribe(function (ev) {
                 var me = _this.elem.nativeElement;
@@ -2999,15 +2998,15 @@ var PopoverState;
     PopoverState[PopoverState["opening"] = 2] = "opening";
     PopoverState[PopoverState["closing"] = 3] = "closing";
 })(PopoverState || (PopoverState = {}));
-var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
+var POPOVER_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent = /** @class */ (function (_super) {
     __extends$9(PopoverComponent, _super);
-    function PopoverComponent(me, builder, cdRef, animations) {
+    function PopoverComponent(me, builder, cdRef, animations$$1) {
         var _this = _super.call(this) || this;
         _this.me = me;
         _this.builder = builder;
         _this.cdRef = cdRef;
-        _this.animations = animations;
+        _this.animations = animations$$1;
         _this.targetX = AttachmentX.Left;
         _this.targetY = AttachmentY.Bottom;
         _this.attachmentX = AttachmentX.Left;
@@ -3454,7 +3453,7 @@ var TokenListComponent = /** @class */ (function () {
         var listenButtonPress = function () {
             _this.dispose();
             _this.cdRef.markForCheck();
-            var select$ = Observable.merge.apply(Observable, (_this.tokens.map(function (token) { return token.select.map(function () { return token; }); })));
+            var select$ = Observable$1.merge.apply(Observable$1, (_this.tokens.map(function (token) { return token.select.map(function () { return token; }); })));
             _this.tokenSubscription = select$.subscribe(function (token) {
                 if (_this.selectable) {
                     token.selected = !token.selected;
@@ -4330,7 +4329,7 @@ var ButtonGroupComponent = /** @class */ (function () {
         // Subscribes to buttons press event
         var listenButtonPress = function () {
             _this.dispose();
-            var press$ = Observable.merge.apply(Observable, (_this.buttons.map(function (btn) { return btn.press.map(function () { return btn; }); })));
+            var press$ = Observable$1.merge.apply(Observable$1, (_this.buttons.map(function (btn) { return btn.press.map(function () { return btn; }); })));
             _this.pressSubscription = press$.subscribe(function (btn) {
                 _this.buttons.forEach(function (cbtn, idx) {
                     if (_this.selectionMode === SelectionMode$1.Single) {
@@ -4445,10 +4444,10 @@ var LayerResult = /** @class */ (function (_super) {
         this.layerRef.closeWithError();
     };
     return LayerResult;
-}(Observable));
+}(Observable$1));
 var LayerRef = /** @class */ (function () {
     function LayerRef() {
-        this.stateChange = new Subject();
+        this.stateChange = new Subject$1();
         this.state$ = this.stateChange.asObservable();
     }
     LayerRef.prototype.open = function (attrs) {
@@ -4458,7 +4457,7 @@ var LayerRef = /** @class */ (function () {
         if (this.results) {
             this.results.complete();
         }
-        this.results = new Subject();
+        this.results = new Subject$1();
         return new LayerResult(this.results, this);
     };
     LayerRef.prototype.close = function (data) {
@@ -4529,22 +4528,22 @@ var __param$7 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var COMPONENT_LAYER_ANNOTATION_ID = 'ng-vcl_component_layer';
-var LAYER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#layer_animations');
+var LAYER_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#layer_animations');
 var LayerContainerComponent = /** @class */ (function () {
-    function LayerContainerComponent(cdRef, builder, elementRef, animations) {
+    function LayerContainerComponent(cdRef, builder, elementRef, animations$$1) {
         this.cdRef = cdRef;
         this.zIndex = 1000;
-        if (animations && animations.boxEnter) {
-            this.boxEnterAnimationFactory = builder.build(animations.boxEnter);
+        if (animations$$1 && animations$$1.boxEnter) {
+            this.boxEnterAnimationFactory = builder.build(animations$$1.boxEnter);
         }
-        if (animations && animations.boxLeave) {
-            this.boxLeaveAnimationFactory = builder.build(animations.boxLeave);
+        if (animations$$1 && animations$$1.boxLeave) {
+            this.boxLeaveAnimationFactory = builder.build(animations$$1.boxLeave);
         }
-        if (animations && animations.coverEnter) {
-            this.coverEnterAnimationFactory = builder.build(animations.coverEnter);
+        if (animations$$1 && animations$$1.coverEnter) {
+            this.coverEnterAnimationFactory = builder.build(animations$$1.coverEnter);
         }
-        if (animations && animations.coverLeave) {
-            this.coverLeaveAnimationFactory = builder.build(animations.coverLeave);
+        if (animations$$1 && animations$$1.coverLeave) {
+            this.coverLeaveAnimationFactory = builder.build(animations$$1.coverLeave);
         }
     }
     Object.defineProperty(LayerContainerComponent.prototype, "layerAttrs", {
@@ -4905,7 +4904,7 @@ var __metadata$24 = (this && this.__metadata) || function (k, v) {
 var __param$6 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var LAYERS = new OpaqueToken('@ng-vcl/ng-vcl#layers');
+var LAYERS = new InjectionToken('@ng-vcl/ng-vcl#layers');
 // The @Layer annotation
 function Layer(component, opts) {
     return function (target) {
@@ -5125,7 +5124,7 @@ var TabNavComponent = /** @class */ (function () {
     ], TabNavComponent.prototype, "selectedTabIndex", void 0);
     __decorate$48([
         Output(),
-        __metadata$29("design:type", Observable),
+        __metadata$29("design:type", Observable$1),
         __metadata$29("design:paramtypes", [])
     ], TabNavComponent.prototype, "selectedTabIndexChange", null);
     TabNavComponent = __decorate$48([
@@ -5184,8 +5183,8 @@ var LinkComponent = /** @class */ (function (_super) {
     function LinkComponent(l10n) {
         var _this = _super.call(this) || this;
         _this.l10n = l10n;
-        _this.locLabel$ = _this.observeChangeValue('label').switchMap(function (label) { return _this.l10n ? _this.l10n.localize(label) : Observable.of(label); });
-        _this.locTitle$ = _this.observeChangeValue('title').switchMap(function (title) { return _this.l10n ? _this.l10n.localize(title) : Observable.of(title); });
+        _this.locLabel$ = _this.observeChangeValue('label').switchMap(function (label) { return _this.l10n ? _this.l10n.localize(label) : Observable$1.of(label); });
+        _this.locTitle$ = _this.observeChangeValue('title').switchMap(function (title) { return _this.l10n ? _this.l10n.localize(title) : Observable$1.of(title); });
         _this.locTitleSub = _this.locTitle$.subscribe(function (title) { return _this.locTitle = title; });
         return _this;
     }
@@ -5308,8 +5307,8 @@ var __param$9 = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var NavigationItemDirective = /** @class */ (function () {
-    function NavigationItemDirective(router, nav, parent) {
-        this.router = router;
+    function NavigationItemDirective(router$$1, nav, parent) {
+        this.router = router$$1;
         this.nav = nav;
         this.parent = parent;
         this.selected = false;
@@ -5454,8 +5453,8 @@ var __metadata$32 = (this && this.__metadata) || function (k, v) {
 };
 // import { containsTree } from "@angular/router/url_tree";
 var NavigationComponent = /** @class */ (function () {
-    function NavigationComponent(router) {
-        this.router = router;
+    function NavigationComponent(router$$1) {
+        this.router = router$$1;
         this.ariaRole = 'presentation';
         this.tabindex = 0;
         this.type = 'horizontal';
@@ -6066,7 +6065,7 @@ var RadioGroupComponent = /** @class */ (function () {
         var listenChange = function () {
             _this.dispose();
             if (_this.radioButtons) {
-                var checked$ = Observable.merge.apply(Observable, (_this.radioButtons.map(function (rbtn, idx) { return rbtn.checkedChange.map(function () { return ({ rbtn: rbtn, idx: idx }); }); })));
+                var checked$ = Observable$1.merge.apply(Observable$1, (_this.radioButtons.map(function (rbtn, idx) { return rbtn.checkedChange.map(function () { return ({ rbtn: rbtn, idx: idx }); }); })));
                 _this.blurSub = _this.radioButtons.last.blur.subscribe(function () {
                     _this.onTouched();
                 });
@@ -6606,12 +6605,12 @@ var CalendarDate = /** @class */ (function () {
     /**
      * returns true if this is between the given dates
      */
-    CalendarDate.prototype.inRange = function (from, to) {
-        if (!(from instanceof CalendarDate) || !(to instanceof CalendarDate)) {
+    CalendarDate.prototype.inRange = function (from$$1, to) {
+        if (!(from$$1 instanceof CalendarDate) || !(to instanceof CalendarDate)) {
             return false;
         }
-        return (this.date >= from.date && this.date <= to.date)
-            || this.isSameDay(from) || this.isSameDay(to);
+        return (this.date >= from$$1.date && this.date <= to.date)
+            || this.isSameDay(from$$1) || this.isSameDay(to);
     };
     CalendarDate.prototype.daysInRange = function (to) {
         var oneDay = 24 * 60 * 60 * 1000;
@@ -8092,7 +8091,6 @@ var AlertComponent = /** @class */ (function () {
         var result = {};
         if (this.alert.input) {
             if (this.alert.inputValidator) {
-                var validationError = 'Invalid value';
                 try {
                     var valid = this.alert.inputValidator(this.value);
                     if (!valid) {
@@ -8110,7 +8108,7 @@ var AlertComponent = /** @class */ (function () {
         if (this.alert.confirmAction) {
             this.alert.loader = true;
             this.cdRef.markForCheck();
-            var $ = Observable.from(typeof this.alert.confirmAction === 'function' ? this.alert.confirmAction(result) : this.alert.confirmAction);
+            var $ = Observable$1.from(typeof this.alert.confirmAction === 'function' ? this.alert.confirmAction(result) : this.alert.confirmAction);
             $.subscribe(function (value) {
                 var asyncResult = {};
                 asyncResult.value = value;
@@ -8468,7 +8466,7 @@ var NotificationComponent = /** @class */ (function () {
     ], NotificationComponent.prototype, "notifications", void 0);
     NotificationComponent = __decorate$84([
         Component({
-            template: "<div *ngFor=\"let notification of notifications\"  (mouseenter)=\"notification.mouseEnter()\"  (mouseleave)=\"notification.mouseLeave()\"  class=\"vclNotification vclLayoutHorizontal vclLayoutCenter\"  [ngClass]=\"notification.layerClass\"  [style.color]=\"notification.textColor\" [style.background-color]=\"notification.backgroundColor\" [@notificationState]=\"notification.state\"  > <div class=\"vclNotificationIconContainer\"> <span *ngIf=\"notification.iconClass\" class=\"vclIcon vclNotificationIcon\" [ngClass]=\"notification.iconClass\"></span> </div> <div class=\"vclNotificationContent vclLayoutFlex\"> <div *ngIf=\"notification.text && !notification.html\">{{notification.text}}</div> <div *ngIf=\"notification.text && notification.html\" [innerHtml]=\"notification.text\"></div> </div> <button vcl-button *ngIf=\"notification.showCloseButton\" (click)=\"notification.close()\" class=\"vclSquare vclTransparent vclLayoutSelfStart\" prepIcon=\"fa:times\" title=\"Close\"></button> </div> ",
+            template: "<div *ngFor=\"let notification of notifications\" (mouseenter)=\"notification.mouseEnter()\"  (mouseleave)=\"notification.mouseLeave()\"  class=\"vclNotification vclLayoutHorizontal vclLayoutCenter\"  [ngClass]=\"notification.layerClass\"  [style.color]=\"notification.textColor\" [style.background-color]=\"notification.backgroundColor\" [@notificationState]=\"notification.state\"  > <div class=\"vclNotificationIconContainer\"> <span *ngIf=\"notification.iconClass\" class=\"vclIcon vclNotificationIcon\" [ngClass]=\"notification.iconClass\"></span> </div> <div class=\"vclNotificationContent vclLayoutFlex\"> <div *ngIf=\"notification.text && !notification.html && !notification.opts.contentComponentDetails\">{{notification.text}}</div> <div *ngIf=\"notification.text && notification.html && !notification.opts.contentComponentDetails\" [innerHtml]=\"notification.text\"></div> <vcl-notification-content-component *ngIf=\"notification.opts.contentComponentDetails\" [wormholeComponentDetails]=\"notification.opts.contentComponentDetails\"></vcl-notification-content-component> </div> <button vcl-button *ngIf=\"notification.showCloseButton\" (click)=\"notification.close()\" class=\"vclSquare vclTransparent vclLayoutSelfStart\" prepIcon=\"fa:times\" title=\"Close\"></button> </div> ",
             changeDetection: ChangeDetectionStrategy.OnPush,
             encapsulation: ViewEncapsulation.None,
             styles: [
@@ -8585,13 +8583,13 @@ var Notification = /** @class */ (function (_super) {
     function Notification(opts) {
         var _this = _super.call(this) || this;
         _this.opts = opts;
-        _this.closeSubject = new Subject();
+        _this.closeSubject = new Subject$1();
         _this.state = 'visible';
         var timeout = _this.calculatedTimeout;
         var timeout$ = typeof timeout === 'number' ?
-            Observable.interval(timeout).skipWhile(function () { return _this.state === 'hovered'; }) :
-            Observable.never();
-        _this.source = Observable.merge(_this.closeSubject, timeout$).first();
+            Observable$1.interval(timeout).skipWhile(function () { return _this.state === 'hovered'; }) :
+            Observable$1.never();
+        _this.source = Observable$1.merge(_this.closeSubject, timeout$).first();
         return _this;
     }
     Notification.prototype.close = function () {
@@ -8677,7 +8675,7 @@ var Notification = /** @class */ (function (_super) {
         configurable: true
     });
     return Notification;
-}(Observable));
+}(Observable$1));
 
 var __extends$14 = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -8769,6 +8767,46 @@ var NotificationService = /** @class */ (function () {
     return NotificationService;
 }());
 
+var __decorate$86 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$52 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var VCLNotificationContentComponent = /** @class */ (function () {
+    function VCLNotificationContentComponent() {
+    }
+    Object.defineProperty(VCLNotificationContentComponent.prototype, "target", {
+        set: function (vcRef) {
+            this.host = new WormholeHost(vcRef);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    VCLNotificationContentComponent.prototype.ngAfterViewInit = function () {
+        this.host.connectWormhole(this.wormholeComponentDetails.contentComponentClass, this.wormholeComponentDetails.attributes);
+    };
+    __decorate$86([
+        Input(),
+        __metadata$52("design:type", Object)
+    ], VCLNotificationContentComponent.prototype, "wormholeComponentDetails", void 0);
+    __decorate$86([
+        ViewChild('wormholeHost', { read: ViewContainerRef }),
+        __metadata$52("design:type", ViewContainerRef),
+        __metadata$52("design:paramtypes", [ViewContainerRef])
+    ], VCLNotificationContentComponent.prototype, "target", null);
+    VCLNotificationContentComponent = __decorate$86([
+        Component({
+            selector: 'vcl-notification-content-component',
+            template: "<div #wormholeHost></div> "
+        })
+    ], VCLNotificationContentComponent);
+    return VCLNotificationContentComponent;
+}());
+
 var __decorate$83 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8784,10 +8822,11 @@ var VCLNotificationModule = /** @class */ (function () {
                 FormsModule,
                 CommonModule,
                 VCLButtonModule,
-                VCLLayerModule.forChild()
+                VCLLayerModule.forChild(),
+                VCLWormholeModule,
             ],
             exports: [],
-            declarations: [NotificationComponent],
+            declarations: [NotificationComponent, VCLNotificationContentComponent],
             entryComponents: [NotificationComponent],
             providers: [
                 NotificationService
@@ -8797,7 +8836,7 @@ var VCLNotificationModule = /** @class */ (function () {
     return VCLNotificationModule;
 }());
 
-var __decorate$88 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$89 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -8910,19 +8949,19 @@ var TooltipService = /** @class */ (function () {
         }
         return offsetParent || window.document;
     };
-    TooltipService = __decorate$88([
+    TooltipService = __decorate$89([
         Injectable()
     ], TooltipService);
     return TooltipService;
 }());
 
-var __decorate$87 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$88 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$52 = (this && this.__metadata) || function (k, v) {
+var __metadata$53 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var __param$10 = (this && this.__param) || function (paramIndex, decorator) {
@@ -9008,19 +9047,19 @@ var TooltipComponent = /** @class */ (function () {
             this.element.nativeElement.parentNode.removeChild(this.element.nativeElement);
         }
     };
-    __decorate$87([
+    __decorate$88([
         Input(),
-        __metadata$52("design:type", String)
+        __metadata$53("design:type", String)
     ], TooltipComponent.prototype, "content", void 0);
-    __decorate$87([
+    __decorate$88([
         Input(),
-        __metadata$52("design:type", String)
+        __metadata$53("design:type", String)
     ], TooltipComponent.prototype, "placement", void 0);
-    __decorate$87([
+    __decorate$88([
         Input(),
-        __metadata$52("design:type", HTMLElement)
+        __metadata$53("design:type", HTMLElement)
     ], TooltipComponent.prototype, "hostElement", void 0);
-    TooltipComponent = __decorate$87([
+    TooltipComponent = __decorate$88([
         Component({
             selector: 'vcl-tooltip',
             template: "<div [@enterAnimation]=\"animationState\" [style.left]=\"tooltipPlacement.Left + 'px'\" [style.top]=\"tooltipPlacement.Top + 'px'\" style=\"white-space:nowrap;\" role=\"tooltip\" [class]=\"tooltipPosition\"> <div class=\"vclTooltipContent\"> {{content}} <ng-content></ng-content> </div> <div class=\"vclArrowPointer\"></div> </div> ",
@@ -9038,19 +9077,19 @@ var TooltipComponent = /** @class */ (function () {
             ]
         }),
         __param$10(1, Inject(DOCUMENT)),
-        __metadata$52("design:paramtypes", [ElementRef, Object, Renderer,
+        __metadata$53("design:paramtypes", [ElementRef, Object, Renderer,
             TooltipService])
     ], TooltipComponent);
     return TooltipComponent;
 }());
 
-var __decorate$89 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$90 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$53 = (this && this.__metadata) || function (k, v) {
+var __metadata$54 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var __param$11 = (this && this.__param) || function (paramIndex, decorator) {
@@ -9088,39 +9127,39 @@ var TooltipDirective = /** @class */ (function () {
             this.tooltip.destroy();
         }
     };
-    __decorate$89([
+    __decorate$90([
         Input(),
-        __metadata$53("design:type", String)
+        __metadata$54("design:type", String)
     ], TooltipDirective.prototype, "content", void 0);
-    __decorate$89([
+    __decorate$90([
         Input(),
-        __metadata$53("design:type", String)
+        __metadata$54("design:type", String)
     ], TooltipDirective.prototype, "position", void 0);
-    __decorate$89([
+    __decorate$90([
         HostListener('mouseenter'),
         HostListener('focusin'),
-        __metadata$53("design:type", Function),
-        __metadata$53("design:paramtypes", []),
-        __metadata$53("design:returntype", void 0)
+        __metadata$54("design:type", Function),
+        __metadata$54("design:paramtypes", []),
+        __metadata$54("design:returntype", void 0)
     ], TooltipDirective.prototype, "onMouseEnter", null);
-    __decorate$89([
+    __decorate$90([
         HostListener('focusout'),
         HostListener('mouseleave'),
-        __metadata$53("design:type", Function),
-        __metadata$53("design:paramtypes", []),
-        __metadata$53("design:returntype", void 0)
+        __metadata$54("design:type", Function),
+        __metadata$54("design:paramtypes", []),
+        __metadata$54("design:returntype", void 0)
     ], TooltipDirective.prototype, "ngOnDestroy", null);
-    TooltipDirective = __decorate$89([
+    TooltipDirective = __decorate$90([
         Directive({ selector: '[vcl-tooltip]' }),
         __param$11(3, Inject(DOCUMENT)),
-        __metadata$53("design:paramtypes", [ElementRef,
+        __metadata$54("design:paramtypes", [ElementRef,
             ComponentFactoryResolver,
             ViewContainerRef, Object])
     ], TooltipDirective);
     return TooltipDirective;
 }());
 
-var __decorate$86 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$87 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -9129,7 +9168,7 @@ var __decorate$86 = (this && this.__decorate) || function (decorators, target, k
 var VCLTooltipModule = /** @class */ (function () {
     function VCLTooltipModule() {
     }
-    VCLTooltipModule = __decorate$86([
+    VCLTooltipModule = __decorate$87([
         NgModule({
             imports: [CommonModule, L10nModule],
             exports: [TooltipComponent, TooltipDirective],
@@ -9141,13 +9180,13 @@ var VCLTooltipModule = /** @class */ (function () {
     return VCLTooltipModule;
 }());
 
-var __decorate$92 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$93 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$55 = (this && this.__metadata) || function (k, v) {
+var __metadata$56 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var TableService = /** @class */ (function () {
@@ -9181,9 +9220,9 @@ var TableService = /** @class */ (function () {
         this.renderer.removeClass(this.el.nativeElement, className);
         return false;
     };
-    TableService = __decorate$92([
+    TableService = __decorate$93([
         Injectable(),
-        __metadata$55("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$56("design:paramtypes", [Renderer2, ElementRef])
     ], TableService);
     return TableService;
 }());
@@ -9191,13 +9230,13 @@ var TableService = /** @class */ (function () {
 /*
 Enables VCL table behavior
 */
-var __decorate$91 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$92 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$54 = (this && this.__metadata) || function (k, v) {
+var __metadata$55 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var VclTableDirective = /** @class */ (function () {
@@ -9211,15 +9250,15 @@ var VclTableDirective = /** @class */ (function () {
             this.selectable = this.tableService.ClassToggle('vclTable', this.selectable, 'table');
         }
     };
-    __decorate$91([
+    __decorate$92([
         Input('selectable'),
-        __metadata$54("design:type", Object)
+        __metadata$55("design:type", Object)
     ], VclTableDirective.prototype, "selectable", void 0);
-    VclTableDirective = __decorate$91([
+    VclTableDirective = __decorate$92([
         Directive({
             selector: '[vcl-table]',
         }),
-        __metadata$54("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$55("design:paramtypes", [Renderer2, ElementRef])
     ], VclTableDirective);
     return VclTableDirective;
 }());
@@ -9230,13 +9269,13 @@ Column width
 The column width can be defined in the table header using one of
 the layout spans vclSpan-5p - vclSpan-100p from the corresponding module.
 */
-var __decorate$93 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$94 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$56 = (this && this.__metadata) || function (k, v) {
+var __metadata$57 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var SpanDirective = /** @class */ (function () {
@@ -9259,15 +9298,15 @@ var SpanDirective = /** @class */ (function () {
             console.error('Column width can be set only for header tag!');
         }
     };
-    __decorate$93([
+    __decorate$94([
         Input('span'),
-        __metadata$56("design:type", Number)
+        __metadata$57("design:type", Number)
     ], SpanDirective.prototype, "width", void 0);
-    SpanDirective = __decorate$93([
+    SpanDirective = __decorate$94([
         Directive({
             selector: '[span]',
         }),
-        __metadata$56("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$57("design:paramtypes", [Renderer2, ElementRef])
     ], SpanDirective);
     return SpanDirective;
 }());
@@ -9278,13 +9317,13 @@ Cell and column highlighting
 Single cells and columns can be highlighted by using the
 vclCellHighlight class on each tdin the respective column or on single cells only.
 */
-var __decorate$94 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$95 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$57 = (this && this.__metadata) || function (k, v) {
+var __metadata$58 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var HighlightDirective = /** @class */ (function () {
@@ -9298,26 +9337,26 @@ var HighlightDirective = /** @class */ (function () {
             this.hightlight = this.tableService.ClassToggle('vclCellHighlight', this.hightlight, 'td');
         }
     };
-    __decorate$94([
+    __decorate$95([
         Input('hightlight'),
-        __metadata$57("design:type", Object)
+        __metadata$58("design:type", Object)
     ], HighlightDirective.prototype, "hightlight", void 0);
-    HighlightDirective = __decorate$94([
+    HighlightDirective = __decorate$95([
         Directive({
             selector: '[hightlight]',
         }),
-        __metadata$57("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$58("design:paramtypes", [Renderer2, ElementRef])
     ], HighlightDirective);
     return HighlightDirective;
 }());
 
-var __decorate$96 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$97 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$59 = (this && this.__metadata) || function (k, v) {
+var __metadata$60 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var __param$12 = (this && this.__param) || function (paramIndex, decorator) {
@@ -9345,17 +9384,17 @@ var SortIconComponent = /** @class */ (function () {
             }
         }
     };
-    __decorate$96([
+    __decorate$97([
         Input(),
-        __metadata$59("design:type", Object)
+        __metadata$60("design:type", Object)
     ], SortIconComponent.prototype, "sort", void 0);
-    SortIconComponent = __decorate$96([
+    SortIconComponent = __decorate$97([
         Component({
             selector: 'sort-icon',
             template: "<div class=\"vclFloatRight vclIcon fa {{faIcon}}\"></div>"
         }),
         __param$12(0, Inject(DOCUMENT)),
-        __metadata$59("design:paramtypes", [Object, ElementRef])
+        __metadata$60("design:paramtypes", [Object, ElementRef])
     ], SortIconComponent);
     return SortIconComponent;
 }());
@@ -9370,13 +9409,13 @@ for the whole th accordingly. Also an icon which indicates sortability should be
 used as shown in the second column. The currently active sort order is indicated
 by a respective icon and the classes vclSortAsc or vclSortDesc on the th element.
 */
-var __decorate$95 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$96 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$58 = (this && this.__metadata) || function (k, v) {
+var __metadata$59 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var SortDirective = /** @class */ (function () {
@@ -9415,26 +9454,26 @@ var SortDirective = /** @class */ (function () {
             }
         }
     };
-    __decorate$95([
+    __decorate$96([
         ContentChild(SortIconComponent),
-        __metadata$58("design:type", SortIconComponent)
+        __metadata$59("design:type", SortIconComponent)
     ], SortDirective.prototype, "sortIconComponent", void 0);
-    __decorate$95([
+    __decorate$96([
         Output(),
-        __metadata$58("design:type", EventEmitter)
+        __metadata$59("design:type", EventEmitter)
     ], SortDirective.prototype, "change", void 0);
-    __decorate$95([
+    __decorate$96([
         HostListener('click'),
-        __metadata$58("design:type", Function),
-        __metadata$58("design:paramtypes", []),
-        __metadata$58("design:returntype", void 0)
+        __metadata$59("design:type", Function),
+        __metadata$59("design:paramtypes", []),
+        __metadata$59("design:returntype", void 0)
     ], SortDirective.prototype, "OnChangeOrder", null);
-    SortDirective = __decorate$95([
+    SortDirective = __decorate$96([
         Directive({
             selector: '[sort]',
             exportAs: 'sort-directive'
         }),
-        __metadata$58("design:paramtypes", [Renderer2,
+        __metadata$59("design:paramtypes", [Renderer2,
             ElementRef])
     ], SortDirective);
     return SortDirective;
@@ -9445,13 +9484,13 @@ Row and cell selection
 
 Individual cells and thus rows can be visually selected using the vclSelected class.
 */
-var __decorate$97 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$98 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$60 = (this && this.__metadata) || function (k, v) {
+var __metadata$61 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var SelectDirective = /** @class */ (function () {
@@ -9465,15 +9504,15 @@ var SelectDirective = /** @class */ (function () {
             this.selected = this.tableService.ClassToggle('vclSelected', this.selected, 'tr');
         }
     };
-    __decorate$97([
+    __decorate$98([
         Input('selected'),
-        __metadata$60("design:type", Object)
+        __metadata$61("design:type", Object)
     ], SelectDirective.prototype, "selected", void 0);
-    SelectDirective = __decorate$97([
+    SelectDirective = __decorate$98([
         Directive({
             selector: '[selected]'
         }),
-        __metadata$60("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$61("design:paramtypes", [Renderer2, ElementRef])
     ], SelectDirective);
     return SelectDirective;
 }());
@@ -9483,13 +9522,13 @@ Row and cell selectability
 
 Rows can be styled to suggest their selectability (single or multiple) using the vclRowSelectability modifier which makes rows show a pointer cursor on hover.
 */
-var __decorate$98 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$99 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$61 = (this && this.__metadata) || function (k, v) {
+var __metadata$62 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var SelectableDirective = /** @class */ (function () {
@@ -9503,15 +9542,15 @@ var SelectableDirective = /** @class */ (function () {
             this.selectable = this.tableService.ClassToggle('vclRowSelectability', this.selectable, 'tr');
         }
     };
-    __decorate$98([
+    __decorate$99([
         Input('selectable'),
-        __metadata$61("design:type", Object)
+        __metadata$62("design:type", Object)
     ], SelectableDirective.prototype, "selectable", void 0);
-    SelectableDirective = __decorate$98([
+    SelectableDirective = __decorate$99([
         Directive({
             selector: '[selectable]',
         }),
-        __metadata$61("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$62("design:paramtypes", [Renderer2, ElementRef])
     ], SelectableDirective);
     return SelectableDirective;
 }());
@@ -9523,13 +9562,13 @@ If a table row should be highlighted on hover, the vclRowHoverHighlight
 modifier class can be used. This hovering's intention is just for the
 sake of readability and should not indicate an action.
 */
-var __decorate$99 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$100 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$62 = (this && this.__metadata) || function (k, v) {
+var __metadata$63 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var HoverDirective = /** @class */ (function () {
@@ -9543,11 +9582,11 @@ var HoverDirective = /** @class */ (function () {
             console.error('[hover] should be used for table tag only!');
         }
     }
-    HoverDirective = __decorate$99([
+    HoverDirective = __decorate$100([
         Directive({
             selector: '[hover]',
         }),
-        __metadata$62("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$63("design:paramtypes", [Renderer2, ElementRef])
     ], HoverDirective);
     return HoverDirective;
 }());
@@ -9557,13 +9596,13 @@ Disabled rows
 
 Rows can be visually disabled with the vclDisabled modifier.
 */
-var __decorate$100 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$101 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$63 = (this && this.__metadata) || function (k, v) {
+var __metadata$64 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var DisableDirective = /** @class */ (function () {
@@ -9577,15 +9616,15 @@ var DisableDirective = /** @class */ (function () {
             this.disabled = this.tableService.ClassToggle('vclDisabled', this.disabled, 'tr');
         }
     };
-    __decorate$100([
+    __decorate$101([
         Input('disabled'),
-        __metadata$63("design:type", Object)
+        __metadata$64("design:type", Object)
     ], DisableDirective.prototype, "disabled", void 0);
-    DisableDirective = __decorate$100([
+    DisableDirective = __decorate$101([
         Directive({
             selector: '[disabled]'
         }),
-        __metadata$63("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$64("design:paramtypes", [Renderer2, ElementRef])
     ], DisableDirective);
     return DisableDirective;
 }());
@@ -9595,13 +9634,13 @@ Alternating row color
 
 Optionally an alternating row color can be defined by using the modifier vclAltRowColor.
 */
-var __decorate$101 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$102 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$64 = (this && this.__metadata) || function (k, v) {
+var __metadata$65 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var AltRowColorDirective = /** @class */ (function () {
@@ -9615,55 +9654,17 @@ var AltRowColorDirective = /** @class */ (function () {
             this.alt = this.tableService.ClassToggle('vclAltRowColor', this.alt, 'table');
         }
     };
-    __decorate$101([
+    __decorate$102([
         Input('altrow'),
-        __metadata$64("design:type", Object)
+        __metadata$65("design:type", Object)
     ], AltRowColorDirective.prototype, "alt", void 0);
-    AltRowColorDirective = __decorate$101([
+    AltRowColorDirective = __decorate$102([
         Directive({
             selector: '[altrow]',
         }),
-        __metadata$64("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$65("design:paramtypes", [Renderer2, ElementRef])
     ], AltRowColorDirective);
     return AltRowColorDirective;
-}());
-
-/*
-Border configuration
-
-The cell borders are removed with vclNoBorder. The border style can be changed from solid to dotted by using the vclDottedBorder modifier.
-*/
-var __decorate$102 = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$65 = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var NoBorderDirective = /** @class */ (function () {
-    function NoBorderDirective(renderer, el) {
-        this.renderer = renderer;
-        this.el = el;
-        this.tableService = new TableService(renderer, el);
-    }
-    NoBorderDirective.prototype.ngOnChanges = function (changes) {
-        if (changes.noborder) {
-            this.noborder = this.tableService.ClassToggle('vclNoBorder', this.noborder, 'table');
-        }
-    };
-    __decorate$102([
-        Input('noborder'),
-        __metadata$65("design:type", Object)
-    ], NoBorderDirective.prototype, "noborder", void 0);
-    NoBorderDirective = __decorate$102([
-        Directive({
-            selector: '[noborder]',
-        }),
-        __metadata$65("design:paramtypes", [Renderer2, ElementRef])
-    ], NoBorderDirective);
-    return NoBorderDirective;
 }());
 
 /*
@@ -9680,6 +9681,44 @@ var __decorate$103 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$66 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var NoBorderDirective = /** @class */ (function () {
+    function NoBorderDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    NoBorderDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.noborder) {
+            this.noborder = this.tableService.ClassToggle('vclNoBorder', this.noborder, 'table');
+        }
+    };
+    __decorate$103([
+        Input('noborder'),
+        __metadata$66("design:type", Object)
+    ], NoBorderDirective.prototype, "noborder", void 0);
+    NoBorderDirective = __decorate$103([
+        Directive({
+            selector: '[noborder]',
+        }),
+        __metadata$66("design:paramtypes", [Renderer2, ElementRef])
+    ], NoBorderDirective);
+    return NoBorderDirective;
+}());
+
+/*
+Border configuration
+
+The cell borders are removed with vclNoBorder. The border style can be changed from solid to dotted by using the vclDottedBorder modifier.
+*/
+var __decorate$104 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$67 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var DottedBorderDirective = /** @class */ (function () {
     function DottedBorderDirective(renderer, el) {
         this.renderer = renderer;
@@ -9691,15 +9730,15 @@ var DottedBorderDirective = /** @class */ (function () {
             this.dottedborder = this.tableService.ClassToggle('vclDottedBorder', this.dottedborder, 'table');
         }
     };
-    __decorate$103([
+    __decorate$104([
         Input('dottedborder'),
-        __metadata$66("design:type", Object)
+        __metadata$67("design:type", Object)
     ], DottedBorderDirective.prototype, "dottedborder", void 0);
-    DottedBorderDirective = __decorate$103([
+    DottedBorderDirective = __decorate$104([
         Directive({
             selector: '[dottedborder]',
         }),
-        __metadata$66("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$67("design:paramtypes", [Renderer2, ElementRef])
     ], DottedBorderDirective);
     return DottedBorderDirective;
 }());
@@ -9709,13 +9748,13 @@ Padding style
 
 If the default cell padding is too extensive, vclCondensed makes it more compact.
 */
-var __decorate$104 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$105 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$67 = (this && this.__metadata) || function (k, v) {
+var __metadata$68 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var CondensedDirective = /** @class */ (function () {
@@ -9729,15 +9768,15 @@ var CondensedDirective = /** @class */ (function () {
             this.condensed = this.tableService.ClassToggle('vclCondensed', this.condensed, 'table');
         }
     };
-    __decorate$104([
+    __decorate$105([
         Input('condensed'),
-        __metadata$67("design:type", Object)
+        __metadata$68("design:type", Object)
     ], CondensedDirective.prototype, "condensed", void 0);
-    CondensedDirective = __decorate$104([
+    CondensedDirective = __decorate$105([
         Directive({
             selector: '[condensed]',
         }),
-        __metadata$67("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$68("design:paramtypes", [Renderer2, ElementRef])
     ], CondensedDirective);
     return CondensedDirective;
 }());
@@ -9747,13 +9786,13 @@ Borders style
 
 By default, only horizontal borders are shown. For vertical borders, use the vclVerticalBorder modifier.
 */
-var __decorate$105 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$106 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$68 = (this && this.__metadata) || function (k, v) {
+var __metadata$69 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var VerticalBorderDirective = /** @class */ (function () {
@@ -9767,55 +9806,17 @@ var VerticalBorderDirective = /** @class */ (function () {
             this.border = this.tableService.ClassToggle('vclVerticalBorder', this.border, 'table');
         }
     };
-    __decorate$105([
+    __decorate$106([
         Input('vertical-border'),
-        __metadata$68("design:type", Object)
+        __metadata$69("design:type", Object)
     ], VerticalBorderDirective.prototype, "border", void 0);
-    VerticalBorderDirective = __decorate$105([
+    VerticalBorderDirective = __decorate$106([
         Directive({
             selector: '[vertical-border]',
         }),
-        __metadata$68("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$69("design:paramtypes", [Renderer2, ElementRef])
     ], VerticalBorderDirective);
     return VerticalBorderDirective;
-}());
-
-/*
-Text alignment
-
-Left alignment is default, for centered text use class vclAlignCentered and for right aligned text vclAlignRight on tds.
-*/
-var __decorate$106 = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$69 = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var AlignmentCenterDirective = /** @class */ (function () {
-    function AlignmentCenterDirective(renderer, el) {
-        this.renderer = renderer;
-        this.el = el;
-        this.tableService = new TableService(renderer, el);
-    }
-    AlignmentCenterDirective.prototype.ngOnChanges = function (changes) {
-        if (changes.align) {
-            this.align = this.tableService.ClassToggle('vclAlignCentered', this.align, 'td');
-        }
-    };
-    __decorate$106([
-        Input('align-center'),
-        __metadata$69("design:type", Object)
-    ], AlignmentCenterDirective.prototype, "align", void 0);
-    AlignmentCenterDirective = __decorate$106([
-        Directive({
-            selector: '[align-center]',
-        }),
-        __metadata$69("design:paramtypes", [Renderer2, ElementRef])
-    ], AlignmentCenterDirective);
-    return AlignmentCenterDirective;
 }());
 
 /*
@@ -9832,6 +9833,44 @@ var __decorate$107 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$70 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var AlignmentCenterDirective = /** @class */ (function () {
+    function AlignmentCenterDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    AlignmentCenterDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.align) {
+            this.align = this.tableService.ClassToggle('vclAlignCentered', this.align, 'td');
+        }
+    };
+    __decorate$107([
+        Input('align-center'),
+        __metadata$70("design:type", Object)
+    ], AlignmentCenterDirective.prototype, "align", void 0);
+    AlignmentCenterDirective = __decorate$107([
+        Directive({
+            selector: '[align-center]',
+        }),
+        __metadata$70("design:paramtypes", [Renderer2, ElementRef])
+    ], AlignmentCenterDirective);
+    return AlignmentCenterDirective;
+}());
+
+/*
+Text alignment
+
+Left alignment is default, for centered text use class vclAlignCentered and for right aligned text vclAlignRight on tds.
+*/
+var __decorate$108 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$71 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var AlignmentRightDirective = /** @class */ (function () {
     function AlignmentRightDirective(renderer, el) {
         this.renderer = renderer;
@@ -9843,56 +9882,17 @@ var AlignmentRightDirective = /** @class */ (function () {
             this.align = this.tableService.ClassToggle('vclAlignRight', this.align, 'td');
         }
     };
-    __decorate$107([
+    __decorate$108([
         Input('align-right'),
-        __metadata$70("design:type", Object)
+        __metadata$71("design:type", Object)
     ], AlignmentRightDirective.prototype, "align", void 0);
-    AlignmentRightDirective = __decorate$107([
+    AlignmentRightDirective = __decorate$108([
         Directive({
             selector: '[align-right]',
         }),
-        __metadata$70("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$71("design:paramtypes", [Renderer2, ElementRef])
     ], AlignmentRightDirective);
     return AlignmentRightDirective;
-}());
-
-/*
-Vertical alignment
-
-Top alignment is default, for vertically centered content use class
-vclVAlignMiddle and for bottom aligned content vclVAlignBottom on a table or tds.
-*/
-var __decorate$108 = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$71 = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var AlignmentbottomDirective = /** @class */ (function () {
-    function AlignmentbottomDirective(renderer, el) {
-        this.renderer = renderer;
-        this.el = el;
-        this.tableService = new TableService(renderer, el);
-    }
-    AlignmentbottomDirective.prototype.ngOnChanges = function (changes) {
-        if (changes.align) {
-            this.align = this.tableService.ClassToggle('vclVAlignBottom', this.align, '');
-        }
-    };
-    __decorate$108([
-        Input('align-bottom'),
-        __metadata$71("design:type", Object)
-    ], AlignmentbottomDirective.prototype, "align", void 0);
-    AlignmentbottomDirective = __decorate$108([
-        Directive({
-            selector: '[align-bottom]',
-        }),
-        __metadata$71("design:paramtypes", [Renderer2, ElementRef])
-    ], AlignmentbottomDirective);
-    return AlignmentbottomDirective;
 }());
 
 /*
@@ -9910,6 +9910,45 @@ var __decorate$109 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$72 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var AlignmentbottomDirective = /** @class */ (function () {
+    function AlignmentbottomDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    AlignmentbottomDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.align) {
+            this.align = this.tableService.ClassToggle('vclVAlignBottom', this.align, '');
+        }
+    };
+    __decorate$109([
+        Input('align-bottom'),
+        __metadata$72("design:type", Object)
+    ], AlignmentbottomDirective.prototype, "align", void 0);
+    AlignmentbottomDirective = __decorate$109([
+        Directive({
+            selector: '[align-bottom]',
+        }),
+        __metadata$72("design:paramtypes", [Renderer2, ElementRef])
+    ], AlignmentbottomDirective);
+    return AlignmentbottomDirective;
+}());
+
+/*
+Vertical alignment
+
+Top alignment is default, for vertically centered content use class
+vclVAlignMiddle and for bottom aligned content vclVAlignBottom on a table or tds.
+*/
+var __decorate$110 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$73 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var AlignmentMiddleDirective = /** @class */ (function () {
     function AlignmentMiddleDirective(renderer, el) {
         this.renderer = renderer;
@@ -9921,15 +9960,15 @@ var AlignmentMiddleDirective = /** @class */ (function () {
             this.align = this.tableService.ClassToggle('vclVAlignMiddle', this.align, '');
         }
     };
-    __decorate$109([
+    __decorate$110([
         Input('align-middle'),
-        __metadata$72("design:type", Object)
+        __metadata$73("design:type", Object)
     ], AlignmentMiddleDirective.prototype, "align", void 0);
-    AlignmentMiddleDirective = __decorate$109([
+    AlignmentMiddleDirective = __decorate$110([
         Directive({
             selector: '[align-middle]',
         }),
-        __metadata$72("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$73("design:paramtypes", [Renderer2, ElementRef])
     ], AlignmentMiddleDirective);
     return AlignmentMiddleDirective;
 }());
@@ -9939,13 +9978,13 @@ Layout
 
 The auto layout mode is used by default. For tables with toolbars however, the vclFixed class must be used to enable the fixed table layout mode.
 */
-var __decorate$110 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$111 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$73 = (this && this.__metadata) || function (k, v) {
+var __metadata$74 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var LayoutDirective = /** @class */ (function () {
@@ -9959,57 +9998,17 @@ var LayoutDirective = /** @class */ (function () {
             this.fixed = this.tableService.ClassToggle('vclFixed', this.fixed, 'table');
         }
     };
-    __decorate$110([
+    __decorate$111([
         Input('fixed'),
-        __metadata$73("design:type", Object)
+        __metadata$74("design:type", Object)
     ], LayoutDirective.prototype, "fixed", void 0);
-    LayoutDirective = __decorate$110([
+    LayoutDirective = __decorate$111([
         Directive({
             selector: '[fixed]',
         }),
-        __metadata$73("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$74("design:paramtypes", [Renderer2, ElementRef])
     ], LayoutDirective);
     return LayoutDirective;
-}());
-
-/*
-Truncation
-
-In conjunction with the fixed layout mode, the modifier vclNoWrap can be used to truncate all cell content which would
-span more than one line and show an ellipsis to indicate truncated content instead.
-Individual cells can also be truncated using the general vclNoWrap and vclOverflowEllipsis modifiers from the utils module.
-*/
-var __decorate$111 = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata$74 = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var NoWrapDirective = /** @class */ (function () {
-    function NoWrapDirective(renderer, el) {
-        this.renderer = renderer;
-        this.el = el;
-        this.tableService = new TableService(renderer, el);
-    }
-    NoWrapDirective.prototype.ngOnChanges = function (changes) {
-        if (changes.nowrap) {
-            this.nowrap = this.tableService.ClassToggle('vclNoWrap', this.nowrap, 'td');
-        }
-    };
-    __decorate$111([
-        Input('nowrap'),
-        __metadata$74("design:type", Object)
-    ], NoWrapDirective.prototype, "nowrap", void 0);
-    NoWrapDirective = __decorate$111([
-        Directive({
-            selector: '[nowrap]'
-        }),
-        __metadata$74("design:paramtypes", [Renderer2, ElementRef])
-    ], NoWrapDirective);
-    return NoWrapDirective;
 }());
 
 /*
@@ -10028,6 +10027,46 @@ var __decorate$112 = (this && this.__decorate) || function (decorators, target, 
 var __metadata$75 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var NoWrapDirective = /** @class */ (function () {
+    function NoWrapDirective(renderer, el) {
+        this.renderer = renderer;
+        this.el = el;
+        this.tableService = new TableService(renderer, el);
+    }
+    NoWrapDirective.prototype.ngOnChanges = function (changes) {
+        if (changes.nowrap) {
+            this.nowrap = this.tableService.ClassToggle('vclNoWrap', this.nowrap, 'td');
+        }
+    };
+    __decorate$112([
+        Input('nowrap'),
+        __metadata$75("design:type", Object)
+    ], NoWrapDirective.prototype, "nowrap", void 0);
+    NoWrapDirective = __decorate$112([
+        Directive({
+            selector: '[nowrap]'
+        }),
+        __metadata$75("design:paramtypes", [Renderer2, ElementRef])
+    ], NoWrapDirective);
+    return NoWrapDirective;
+}());
+
+/*
+Truncation
+
+In conjunction with the fixed layout mode, the modifier vclNoWrap can be used to truncate all cell content which would
+span more than one line and show an ellipsis to indicate truncated content instead.
+Individual cells can also be truncated using the general vclNoWrap and vclOverflowEllipsis modifiers from the utils module.
+*/
+var __decorate$113 = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$76 = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var OverflowEllipsisDirective = /** @class */ (function () {
     function OverflowEllipsisDirective(renderer, el) {
         this.renderer = renderer;
@@ -10039,15 +10078,15 @@ var OverflowEllipsisDirective = /** @class */ (function () {
             this.ellipsis = this.tableService.ClassToggle('vclOverflowEllipsis', this.ellipsis, 'td');
         }
     };
-    __decorate$112([
+    __decorate$113([
         Input('overflow-ellipsis'),
-        __metadata$75("design:type", Object)
+        __metadata$76("design:type", Object)
     ], OverflowEllipsisDirective.prototype, "ellipsis", void 0);
-    OverflowEllipsisDirective = __decorate$112([
+    OverflowEllipsisDirective = __decorate$113([
         Directive({
             selector: '[overflow-ellipsis]'
         }),
-        __metadata$75("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$76("design:paramtypes", [Renderer2, ElementRef])
     ], OverflowEllipsisDirective);
     return OverflowEllipsisDirective;
 }());
@@ -10057,13 +10096,13 @@ Wrapping behavior
 
 To allow breaking words of textual cell content apart, use the modifier vclBreakWords. This works best in combination with the fixed layout mode.
 */
-var __decorate$113 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$114 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$76 = (this && this.__metadata) || function (k, v) {
+var __metadata$77 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var BreakingWordsDirective = /** @class */ (function () {
@@ -10077,15 +10116,15 @@ var BreakingWordsDirective = /** @class */ (function () {
             this.breakWords = this.tableService.ClassToggle('vclBreakWords', this.breakWords, '');
         }
     };
-    __decorate$113([
+    __decorate$114([
         Input('break-words'),
-        __metadata$76("design:type", Object)
+        __metadata$77("design:type", Object)
     ], BreakingWordsDirective.prototype, "breakWords", void 0);
-    BreakingWordsDirective = __decorate$113([
+    BreakingWordsDirective = __decorate$114([
         Directive({
             selector: '[break-words]',
         }),
-        __metadata$76("design:paramtypes", [Renderer2, ElementRef])
+        __metadata$77("design:paramtypes", [Renderer2, ElementRef])
     ], BreakingWordsDirective);
     return BreakingWordsDirective;
 }());
@@ -10114,7 +10153,7 @@ var directives = [
     BreakingWordsDirective
 ];
 
-var __decorate$90 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$91 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -10123,7 +10162,7 @@ var __decorate$90 = (this && this.__decorate) || function (decorators, target, k
 var VCLTableModule = /** @class */ (function () {
     function VCLTableModule() {
     }
-    VCLTableModule = __decorate$90([
+    VCLTableModule = __decorate$91([
         NgModule({
             imports: [CommonModule, L10nModule],
             exports: [SortIconComponent].concat(directives),
@@ -10135,13 +10174,13 @@ var VCLTableModule = /** @class */ (function () {
     return VCLTableModule;
 }());
 
-var __decorate$115 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$116 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$77 = (this && this.__metadata) || function (k, v) {
+var __metadata$78 = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$13 = {
@@ -10198,39 +10237,39 @@ var PasswordInputComponent = /** @class */ (function () {
         this.disabled = isDisabled;
         this.cdRef.markForCheck();
     };
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "inputId", void 0);
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "visibleIcon", void 0);
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "invisibleIcon", void 0);
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "visible", void 0);
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "disabled", void 0);
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "selectOnFocus", void 0);
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "tabindex", void 0);
-    __decorate$115([
+    __decorate$116([
         Input(),
-        __metadata$77("design:type", Object)
+        __metadata$78("design:type", Object)
     ], PasswordInputComponent.prototype, "placeholder", void 0);
-    PasswordInputComponent = __decorate$115([
+    PasswordInputComponent = __decorate$116([
         Component({
             template: "<input  vcl-input [attr.id]=\"inputId\" [attr.type]=\"visible ? 'text' : 'password'\" [disabled]=\"disabled\" [tabindex]=\"tabindex\" [selectOnFocus]=\"selectOnFocus\" [placeholder]=\"placeholder\" [ngModel]=\"value\" (ngModelChange)=\"onModelChange($event)\" (blur)=\"onBlur()\"> <span class=\"vclInputGroupButton\"> <button vcl-button [prepIcon]=\"buttonIcon\"  [disabled]=\"disabled\" class=\"vclSquare\"  (click)=\"toggle()\"> </button> </span> ",
             selector: 'vcl-password-input',
@@ -10241,12 +10280,12 @@ var PasswordInputComponent = /** @class */ (function () {
                 '[attr.tabindex]': '-1'
             }
         }),
-        __metadata$77("design:paramtypes", [ChangeDetectorRef])
+        __metadata$78("design:paramtypes", [ChangeDetectorRef])
     ], PasswordInputComponent);
     return PasswordInputComponent;
 }());
 
-var __decorate$114 = (this && this.__decorate) || function (decorators, target, key, desc) {
+var __decorate$115 = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
@@ -10255,7 +10294,7 @@ var __decorate$114 = (this && this.__decorate) || function (decorators, target, 
 var VCLPasswordInputModule = /** @class */ (function () {
     function VCLPasswordInputModule() {
     }
-    VCLPasswordInputModule = __decorate$114([
+    VCLPasswordInputModule = __decorate$115([
         NgModule({
             imports: [FormsModule, VCLInputModule, VCLButtonModule],
             exports: [PasswordInputComponent],
