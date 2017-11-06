@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Injectable, OpaqueToken, Inject } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/observable/combineLatest';
@@ -20,7 +20,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/publishReplay';
 import { L10nLoaderService } from './l10n-loader.service';
 import { L10nParserService } from './l10n-parser.service';
-export var L10N_CONFIG = new OpaqueToken('l10n.config');
+export var L10N_CONFIG = new InjectionToken('l10n.config');
 var L10nService = /** @class */ (function () {
     function L10nService(config, // TODO: L10nConfig - problem with ngc
         loader, parser) {

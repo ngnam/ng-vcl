@@ -9,10 +9,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VCLButtonModule } from './../button/index';
 import { VCLLayerModule } from './../layer/index';
+import { VCLWormholeModule } from './../wormhole/index';
 import { NotificationComponent } from './notification.component';
 import { NotificationService } from './notification.service';
 import { Notification } from './notification';
-import { NotificationType, NotificationPosition } from './types';
+import { NotificationPosition, NotificationType } from './types';
+import { VCLNotificationContentComponent } from './notification-content.component';
 export { Notification, NotificationService, NotificationType, NotificationPosition, NotificationComponent };
 var VCLNotificationModule = /** @class */ (function () {
     function VCLNotificationModule() {
@@ -23,10 +25,11 @@ var VCLNotificationModule = /** @class */ (function () {
                 FormsModule,
                 CommonModule,
                 VCLButtonModule,
-                VCLLayerModule.forChild()
+                VCLLayerModule.forChild(),
+                VCLWormholeModule,
             ],
             exports: [],
-            declarations: [NotificationComponent],
+            declarations: [NotificationComponent, VCLNotificationContentComponent],
             entryComponents: [NotificationComponent],
             providers: [
                 NotificationService

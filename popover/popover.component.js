@@ -20,7 +20,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Component, Input, Output, EventEmitter, ElementRef, trigger, HostListener, HostBinding, ChangeDetectionStrategy, OpaqueToken, Inject, Optional, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, HostListener, Inject, InjectionToken, Input, Optional, Output, trigger } from '@angular/core';
 import { ObservableComponent } from "../core/index";
 import { AnimationBuilder } from "@angular/animations";
 export var AttachmentX = {
@@ -44,7 +44,7 @@ export var PopoverState;
     PopoverState[PopoverState["opening"] = 2] = "opening";
     PopoverState[PopoverState["closing"] = 3] = "closing";
 })(PopoverState || (PopoverState = {}));
-export var POPOVER_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#popover_animations');
+export var POPOVER_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#popover_animations');
 var PopoverComponent = /** @class */ (function (_super) {
     __extends(PopoverComponent, _super);
     function PopoverComponent(me, builder, cdRef, animations) {

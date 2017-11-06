@@ -20,11 +20,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Inject, Injectable, OpaqueToken } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
-export var L10N_LOADER_CONFIG = new OpaqueToken('l10n.loader.config');
+export var L10N_LOADER_CONFIG = new InjectionToken('l10n.loader.config');
 var L10nLoaderService = /** @class */ (function () {
     function L10nLoaderService() {
     }

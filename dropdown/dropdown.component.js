@@ -45,7 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter, forwardRef, ElementRef, ViewChild, ContentChildren, QueryList, ChangeDetectorRef, OpaqueToken, Optional, Inject, } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Inject, InjectionToken, Input, Optional, Output, QueryList, ViewChild, } from '@angular/core';
 import { AnimationBuilder } from "@angular/animations";
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DropdownOption } from "./dropdown-option.component";
@@ -57,7 +57,7 @@ export var DropdownState;
     DropdownState[DropdownState["Expanding"] = 2] = "Expanding";
     DropdownState[DropdownState["Closing"] = 3] = "Closing";
 })(DropdownState || (DropdownState = {}));
-export var DROPDOWN_ANIMATIONS = new OpaqueToken('@ng-vcl/ng-vcl#dropdown_animations');
+export var DROPDOWN_ANIMATIONS = new InjectionToken('@ng-vcl/ng-vcl#dropdown_animations');
 export var CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return DropdownComponent; }),

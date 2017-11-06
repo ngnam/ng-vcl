@@ -1,3 +1,4 @@
+import { WormholeAttributes } from '../wormhole/wormhole';
 export declare enum NotificationType {
     None = 0,
     Info = 1,
@@ -16,6 +17,10 @@ export declare enum NotificationPosition {
 export interface NotificationOptions {
     text?: string;
     html?: boolean;
+    contentComponentDetails?: {
+        contentComponentClass: any;
+        attributes?: WormholeAttributes;
+    };
     type?: NotificationType;
     showCloseButton?: boolean;
     position?: NotificationPosition;
@@ -25,13 +30,49 @@ export interface NotificationOptions {
 }
 export declare const NOTIFICATION_DEFAULTS: NotificationOptions;
 export declare const TYPE_CLASS_MAP: {
-    [x: number]: {
+    [NotificationType.None]: {
+        notificationClass: string;
+        iconClass: string;
+    };
+    [NotificationType.Info]: {
+        notificationClass: string;
+        iconClass: string;
+    };
+    [NotificationType.Success]: {
+        notificationClass: string;
+        iconClass: string;
+    };
+    [NotificationType.Warning]: {
+        notificationClass: string;
+        iconClass: string;
+    };
+    [NotificationType.Error]: {
         notificationClass: string;
         iconClass: string;
     };
 };
 export declare const POSITION_MAP: {
-    [x: number]: {
+    [NotificationPosition.TopRight]: {
+        class: string;
+        reverse: boolean;
+    };
+    [NotificationPosition.Top]: {
+        class: string;
+        reverse: boolean;
+    };
+    [NotificationPosition.TopLeft]: {
+        class: string;
+        reverse: boolean;
+    };
+    [NotificationPosition.BottomRight]: {
+        class: string;
+        reverse: boolean;
+    };
+    [NotificationPosition.Bottom]: {
+        class: string;
+        reverse: boolean;
+    };
+    [NotificationPosition.BottomLeft]: {
         class: string;
         reverse: boolean;
     };

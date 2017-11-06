@@ -1,5 +1,5 @@
-import { EventEmitter, ElementRef, QueryList, ChangeDetectorRef, OpaqueToken, OnInit } from '@angular/core';
-import { AnimationMetadata, AnimationFactory, AnimationBuilder } from "@angular/animations";
+import { ChangeDetectorRef, ElementRef, EventEmitter, InjectionToken, OnInit, QueryList } from '@angular/core';
+import { AnimationBuilder, AnimationFactory, AnimationMetadata } from "@angular/animations";
 import { ControlValueAccessor } from '@angular/forms';
 import { DropdownOption } from "./dropdown-option.component";
 import { MetalistComponent, MetalistItem, SelectionMode } from "../metalist/index";
@@ -9,7 +9,7 @@ export declare enum DropdownState {
     Expanding = 2,
     Closing = 3,
 }
-export declare const DROPDOWN_ANIMATIONS: OpaqueToken;
+export declare const DROPDOWN_ANIMATIONS: InjectionToken<{}>;
 export interface DropdownAnimationConfig {
     enter?: AnimationMetadata | AnimationMetadata[];
     leave?: AnimationMetadata | AnimationMetadata[];

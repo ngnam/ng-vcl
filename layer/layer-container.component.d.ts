@@ -1,9 +1,9 @@
-import { ViewContainerRef, ChangeDetectorRef, Type, ElementRef, TemplateRef, OpaqueToken } from '@angular/core';
-import { AnimationFactory, AnimationBuilder, AnimationMetadata } from '@angular/animations';
+import { ChangeDetectorRef, ElementRef, InjectionToken, TemplateRef, Type, ViewContainerRef } from '@angular/core';
+import { AnimationBuilder, AnimationFactory, AnimationMetadata } from '@angular/animations';
 import { Wormhole } from '../wormhole/index';
-import { LayerRef, LayerAttributes } from './layer-ref';
+import { LayerAttributes, LayerRef } from './layer-ref';
 export declare const COMPONENT_LAYER_ANNOTATION_ID = "ng-vcl_component_layer";
-export declare const LAYER_ANIMATIONS: OpaqueToken;
+export declare const LAYER_ANIMATIONS: InjectionToken<{}>;
 export interface LayerAnimationConfig {
     boxEnter?: AnimationMetadata | AnimationMetadata[];
     boxLeave?: AnimationMetadata | AnimationMetadata[];
