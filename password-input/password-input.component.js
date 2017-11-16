@@ -97,7 +97,7 @@ var PasswordInputComponent = /** @class */ (function () {
     ], PasswordInputComponent.prototype, "placeholder", void 0);
     PasswordInputComponent = __decorate([
         Component({
-            template: "<input  vcl-input [attr.id]=\"inputId\" [attr.type]=\"visible ? 'text' : 'password'\" [disabled]=\"disabled\" [tabindex]=\"tabindex\" [selectOnFocus]=\"selectOnFocus\" [placeholder]=\"placeholder\" [ngModel]=\"value\" (ngModelChange)=\"onModelChange($event)\" (blur)=\"onBlur()\"> <span class=\"vclInputGroupButton\"> <button vcl-button [prepIcon]=\"buttonIcon\"  [disabled]=\"disabled\" class=\"vclSquare\"  (tap)=\"toggle()\"> </button> </span> ",
+            template: "<input  vcl-input [attr.id]=\"inputId\" [attr.type]=\"visible ? 'text' : 'password'\" [disabled]=\"disabled\" [tabindex]=\"tabindex\" [selectOnFocus]=\"selectOnFocus\" [placeholder]=\"placeholder\" [ngModel]=\"value\" (ngModelChange)=\"onModelChange($event)\" (blur)=\"onBlur()\"> <button vcl-button [prepIcon]=\"buttonIcon\"  [disabled]=\"disabled\" class=\"vclSquare\"  (tap)=\"toggle()\"> </button> ",
             selector: 'vcl-password-input',
             changeDetection: ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],

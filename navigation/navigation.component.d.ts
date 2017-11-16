@@ -17,7 +17,6 @@ export declare class NavigationComponent {
     contentItems: QueryList<NavigationItem>;
     constructor(router: Router);
     readonly navigationItems: QueryList<NavigationItem>;
-    readonly isVertical: boolean;
     private runItems(cb);
     selectRoute(route: any[], openParents?: boolean): void;
     private selectedItem;

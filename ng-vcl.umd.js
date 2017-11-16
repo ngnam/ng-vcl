@@ -5456,7 +5456,7 @@ var NavigationComponent = /** @class */ (function () {
         this.router = router$$1;
         this.ariaRole = 'presentation';
         this.tabindex = 0;
-        this.type = 'horizontal';
+        this.type = 'vertical';
         this.useRouter = false;
         this.subLevelHintIconClosed = 'fa:chevron-right';
         this.subLevelHintIconOpened = 'fa:chevron-down';
@@ -5467,13 +5467,6 @@ var NavigationComponent = /** @class */ (function () {
     Object.defineProperty(NavigationComponent.prototype, "navigationItems", {
         get: function () {
             return this.inputItems || this.contentItems || [];
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(NavigationComponent.prototype, "isVertical", {
-        get: function () {
-            return this.type === 'vertical';
         },
         enumerable: true,
         configurable: true
@@ -5580,18 +5573,13 @@ var NavigationComponent = /** @class */ (function () {
         core.ContentChildren(NavigationItemDirective),
         __metadata$32("design:type", core.QueryList)
     ], NavigationComponent.prototype, "contentItems", void 0);
-    __decorate$53([
-        core.HostBinding('class.vclVertical'),
-        __metadata$32("design:type", Object),
-        __metadata$32("design:paramtypes", [])
-    ], NavigationComponent.prototype, "isVertical", null);
     NavigationComponent = __decorate$53([
         core.Component({
             selector: 'vcl-navigation',
             host: {
                 '[class.vclNavigation]': 'true'
             },
-            template: "  <ul> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selectable && item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selectable && item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (tap)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
+            template: "  <ul [class.vclLayoutHorizontal]=\"type === 'horizontal'\"> <li *ngFor=\"let item of navigationItems\" [class.vclSelected]=\"item.selectable && item.selected\" [class.vclOpen]=\"item.opened\" [class.vclClose]=\"!item.opened\" [class.vclNavigationHeading]=\"item.heading\" [class.vclNavigationItem]=\"!item.heading\" [attr.aria-selected]=\"item.selectable && item.selected\" [attr.role]=\"item.heading && 'sectionhead' || ariaRole\" [attr.tabindex]=\"tabindex\" [ngClass]=\"item.class\" > <span *ngIf=\"item.heading\"> {{item.label | loc}} </span> <a vcl-link class=\"vclNavigationItemLabel\" *ngIf=\"!item.heading\" [label]=\"item.label | loc\" [prepIcon]=\"item.calcPrepIcon\" [appIcon]=\"item.calcAppIcon\" (tap)=\"selectItem(item)\"> </a> <vcl-navigation *ngIf=\"item.items && item.items.length > 0\" [inputItems]=\"item.items\" [type]=\"type\" [useRouter]=\"useRouter\" [subLevelHintIconOpened]=\"subLevelHintIconOpened\" [subLevelHintIconClosed]=\"subLevelHintIconClosed\" [subLevelHintIconSide]=\"subLevelHintIconSide\" (select)=\"onSubItemSelect($event)\"> </vcl-navigation> </li> </ul> ",
         }),
         __metadata$32("design:paramtypes", [router.Router])
     ], NavigationComponent);
@@ -10269,7 +10257,7 @@ var PasswordInputComponent = /** @class */ (function () {
     ], PasswordInputComponent.prototype, "placeholder", void 0);
     PasswordInputComponent = __decorate$116([
         core.Component({
-            template: "<input  vcl-input [attr.id]=\"inputId\" [attr.type]=\"visible ? 'text' : 'password'\" [disabled]=\"disabled\" [tabindex]=\"tabindex\" [selectOnFocus]=\"selectOnFocus\" [placeholder]=\"placeholder\" [ngModel]=\"value\" (ngModelChange)=\"onModelChange($event)\" (blur)=\"onBlur()\"> <span class=\"vclInputGroupButton\"> <button vcl-button [prepIcon]=\"buttonIcon\"  [disabled]=\"disabled\" class=\"vclSquare\"  (tap)=\"toggle()\"> </button> </span> ",
+            template: "<input  vcl-input [attr.id]=\"inputId\" [attr.type]=\"visible ? 'text' : 'password'\" [disabled]=\"disabled\" [tabindex]=\"tabindex\" [selectOnFocus]=\"selectOnFocus\" [placeholder]=\"placeholder\" [ngModel]=\"value\" (ngModelChange)=\"onModelChange($event)\" (blur)=\"onBlur()\"> <button vcl-button [prepIcon]=\"buttonIcon\"  [disabled]=\"disabled\" class=\"vclSquare\"  (tap)=\"toggle()\"> </button> ",
             selector: 'vcl-password-input',
             changeDetection: core.ChangeDetectionStrategy.OnPush,
             providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR$13],
