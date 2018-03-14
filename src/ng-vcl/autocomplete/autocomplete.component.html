@@ -1,0 +1,21 @@
+<ng-container *ngIf="(target$ | async) as target">
+
+<vcl-popover #popover [target]="target.element" [visible]="visible$ | async" targetX="left" targetY="bottom" attachmentX="left" attachmentY="top">
+  <ul class="vclDropdown vclNoBorder vclOpen" role="menu" (offClick)="target.offClick.next()" [offClickExcludes]="[target.element]">
+    <ng-container *ngFor="let item of items$ | async; let idx = index">
+      <li *ngIf="item.type==='item'" tabindex="0" class="vclDropdownItem" [class.vclHighlighted]="idx === highlightedItem" [class.vclDisabled]="disabled || item.disabled" role="menuitem">
+        <div role="menuitem" class="vclDropdownItemLabel" (click)="target.select.next(item)">{{item.label}}</div>
+        <div *ngIf="item.sublabel" class="vclDropdownItemSubLabel">{{item.sublabel}}</div>
+      </li>
+      <li *ngIf="item.type==='separator'" role="menuitem">
+        <div class="vclSeparator" role="separator"></div>
+      </li>
+      <li *ngIf="item.type==='header'" class="vclDropdownItemGroupHeader" role="menuitem">
+        <div class="vclDropdownItemGroupHeaderLabel">{{item.label}}</div>
+      </li>
+    </ng-container>
+  </ul>
+  <ng-content select="autocomplete-content"></ng-content>
+</vcl-popover>
+
+</ng-container>

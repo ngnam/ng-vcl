@@ -14,6 +14,7 @@ export interface Token {
   label: string;
   selected?: boolean;
   removable?: boolean;
+  value?: any;
 }
 
 @Component({
@@ -25,12 +26,15 @@ export interface Token {
     '[@checkState]': 'selected'
   },
   // Used by select
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TokenComponent implements Token {
 
   @Input()
   label: string;
+
+  @Input()
+  value: string;
 
   @Input()
   disabled: boolean = false;
