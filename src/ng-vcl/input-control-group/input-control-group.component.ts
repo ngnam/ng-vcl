@@ -1,5 +1,5 @@
 import { OnInit, Component, Input, ViewChildren, EventEmitter, Output, HostListener, ElementRef, ChangeDetectionStrategy, HostBinding } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'vcl-input-control-group, [vcl-input-control-group]',

@@ -1,8 +1,6 @@
 import { SimpleChanges, SimpleChange, OnDestroy, OnChanges } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Subject ,  Observable ,  ConnectableObservable } from 'rxjs';
 import { filter, map, publishReplay } from 'rxjs/operators';
-import { ConnectableObservable } from 'rxjs/observable/ConnectableObservable';
 
 export abstract class ObservableComponent implements OnDestroy, OnChanges  {
   private changesSubject = new Subject<SimpleChanges>();
